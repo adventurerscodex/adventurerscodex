@@ -4,7 +4,6 @@ import {
     Utility
 } from 'charactersheet/utilities';
 import { CardEditActionComponent } from 'charactersheet/components/card-edit-actions';
-import { Clazz } from 'charactersheet/models';
 import { DELAY } from 'charactersheet/constants';
 import { defer } from 'lodash';
 

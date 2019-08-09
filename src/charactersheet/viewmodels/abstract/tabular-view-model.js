@@ -1,5 +1,4 @@
 import { CoreManager, Notifications } from 'charactersheet/utilities';
-import { Clazz } from 'charactersheet/models';
 import { DELAY } from 'charactersheet/constants';
 import { SortService } from 'charactersheet/services/common';
 import { Utility } from 'charactersheet/utilities';
@@ -133,6 +132,10 @@ export class AbstractTabularViewModel {
     }
 
     setUpSubscriptions() {
+        const modelName = this.modelClass().name.toLowerCase();
+        this.subscriptions.push(Notifications[modelName].added.add(this.addToList));
+        this.subscriptions.push(Notifications[modelName].changed.add(this.replaceInList));
+        this.subscriptions.push(Notifications[modelName].deleted.add(this.removeFromList));
     }
 
     disposeOfSubscriptions() {

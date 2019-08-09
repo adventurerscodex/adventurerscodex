@@ -45,12 +45,6 @@ export class ItemsViewModel extends AbstractTabularViewModel {
     totalWeight = ko.pureComputed(() => {
         return calculateTotalLoad(this.entities());
     });
-
-    setUpSubscriptions() {
-        this.subscriptions.push(Notifications.item.added.add(this.addToList));
-        this.subscriptions.push(Notifications.item.changed.add(this.replaceInList));
-        this.subscriptions.push(Notifications.item.deleted.add(this.removeFromList));
-    }
 }
 
 ko.components.register('items', {

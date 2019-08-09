@@ -38,9 +38,6 @@ export class SkillsViewModel extends AbstractGridViewModel {
 
     setUpSubscriptions () {
         super.setUpSubscriptions();
-        this.subscriptions.push(Notifications.skill.added.add(this.addToList));
-        this.subscriptions.push(Notifications.skill.changed.add(this.replaceInList));
-        this.subscriptions.push(Notifications.skill.deleted.add(this.removeFromList));
         this.subscriptions.push(Notifications.abilityscore.changed.add(this.updateAbilityScoreValues));
     }
 

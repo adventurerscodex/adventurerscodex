@@ -61,9 +61,7 @@
                 containerId: elementId,
                 show: showBack,
                 flip: flip,
-                forceCardResize: forceCardResize,
-                replaceInParent: context.replaceInList,
-                removeFromParent: context.removeFromList
+                forceCardResize: forceCardResize
                }"></proficiency-form>
             </div>
           </flip-card>
@@ -80,8 +78,7 @@
               addForm: true,
               containerId:'add-proficiency',
               show: $component.displayAddForm,
-              flip: $component.toggleShowAddForm,
-              addToParent: $component.addToList,
+              flip: $component.toggleShowAddForm
              }"></proficiency-form>
           </div>
           <!-- ko ifnot: $component.displayAddForm -->

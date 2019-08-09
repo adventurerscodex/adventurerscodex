@@ -103,9 +103,6 @@ class SpellSlotsViewModel extends AbstractTabularViewModel {
 
     setUpSubscriptions() {
         super.setUpSubscriptions();
-        this.subscriptions.push(Notifications.spellslot.added.add(this.addToList));
-        this.subscriptions.push(Notifications.spellslot.changed.add(this.replaceInList));
-        this.subscriptions.push(Notifications.spellslot.deleted.add(this.removeFromList));
         this.subscriptions.push(Notifications.events.shortRest.add(this.resetShortRestFeatures));
         this.subscriptions.push(Notifications.events.longRest.add(this.resetLongRestFeatures));
     }
