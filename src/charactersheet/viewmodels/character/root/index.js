@@ -165,10 +165,11 @@ export function CharacterRootViewModel() {
 
         const contentRoot = $('#root-tab-content').get(0);
 
+        const MINIMUM_SWIPE_DISTANCE = 150;
         const hammer = new Hammer.Manager(contentRoot, {
             recognizers: [
-              [Hammer.Pan,{ direction: Hammer.DIRECTION_HORIZONTAL, threshold: 100 }],
-              [Hammer.Swipe,{ direction: Hammer.DIRECTION_HORIZONTAL, threshold: 100 }]
+              [Hammer.Pan,{ direction: Hammer.DIRECTION_HORIZONTAL, threshold: MINIMUM_SWIPE_DISTANCE }],
+              [Hammer.Swipe,{ direction: Hammer.DIRECTION_HORIZONTAL, threshold: MINIMUM_SWIPE_DISTANCE }]
             ]
         });
 
@@ -185,7 +186,7 @@ export function CharacterRootViewModel() {
 
         hammer.on('swiperight panright', function(event) {
             const currentPosition = self.characterTabList.indexOf(self.activeTab());
-            if (event.distance > 199 && currentPosition > 0) {
+            if (event.distance > MINIMUM_SWIPE_DISTANCE && currentPosition > 0) {
                 self._setActiveTab(self.characterTabList[currentPosition - 1]);
                 hammer.stop();
             }
@@ -193,7 +194,7 @@ export function CharacterRootViewModel() {
 
         hammer.on('swipeleft panleft', function(event) {
             const currentPosition = self.characterTabList.indexOf(self.activeTab());
-            if (event.distance > 199 && currentPosition < self.characterTabList.length) {
+            if (event.distance > MINIMUM_SWIPE_DISTANCE && currentPosition < self.characterTabList.length - 1) {
                 self._setActiveTab(self.characterTabList[currentPosition + 1]);
                 hammer.stop();
             }
