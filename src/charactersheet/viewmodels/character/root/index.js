@@ -165,11 +165,19 @@ export function CharacterRootViewModel() {
 
         const contentRoot = $('#root-tab-content').get(0);
 
-        const MINIMUM_SWIPE_DISTANCE = 150;
+        const MINIMUM_PAN_DISTANCE = 199;
+        const MINIMUM_SWIPE_DISTANCE = 49;
         const hammer = new Hammer.Manager(contentRoot, {
             recognizers: [
-              [Hammer.Pan,{ direction: Hammer.DIRECTION_HORIZONTAL, threshold: MINIMUM_SWIPE_DISTANCE }],
-              [Hammer.Swipe,{ direction: Hammer.DIRECTION_HORIZONTAL, threshold: MINIMUM_SWIPE_DISTANCE }]
+              [Hammer.Pan,{
+                  direction: Hammer.DIRECTION_HORIZONTAL,
+                  threshold: MINIMUM_PAN_DISTANCE
+              }],
+              [Hammer.Swipe,{
+                  direction: Hammer.DIRECTION_HORIZONTAL,
+                  threshold: MINIMUM_SWIPE_DISTANCE,
+                  velocity: 0.5
+              }]
             ]
         });
 
@@ -186,7 +194,8 @@ export function CharacterRootViewModel() {
 
         hammer.on('swiperight panright', function(event) {
             const currentPosition = self.characterTabList.indexOf(self.activeTab());
-            if (event.distance > MINIMUM_SWIPE_DISTANCE && currentPosition > 0) {
+            const dist = event.type === 'swiperight' && MINIMUM_SWIPE_DISTANCE || MINIMUM_PAN_DISTANCE;
+            if (event.deltaX > dist && currentPosition > 0) {
                 self._setActiveTab(self.characterTabList[currentPosition - 1]);
                 hammer.stop();
             }
@@ -194,11 +203,13 @@ export function CharacterRootViewModel() {
 
         hammer.on('swipeleft panleft', function(event) {
             const currentPosition = self.characterTabList.indexOf(self.activeTab());
-            if (event.distance > MINIMUM_SWIPE_DISTANCE && currentPosition < self.characterTabList.length - 1) {
+            const dist = event.type === 'swipeleft' && MINIMUM_SWIPE_DISTANCE || MINIMUM_PAN_DISTANCE;
+            if (event.deltaX < -dist && currentPosition < self.characterTabList.length - 1) {
                 self._setActiveTab(self.characterTabList[currentPosition + 1]);
                 hammer.stop();
             }
         });
+
 
         $(`.nav-tabs a[href="#${self.activeTab()}"]`).tab('show');
 
