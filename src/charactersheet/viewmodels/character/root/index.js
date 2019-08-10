@@ -165,14 +165,10 @@ export function CharacterRootViewModel() {
 
         const contentRoot = $('#root-tab-content').get(0);
 
-        const MINIMUM_PAN_DISTANCE = 199;
         const MINIMUM_SWIPE_DISTANCE = 49;
+        delete Hammer.defaults.cssProps.userSelect; // allow selecting of text on desktop
         const hammer = new Hammer.Manager(contentRoot, {
             recognizers: [
-              [Hammer.Pan,{
-                  direction: Hammer.DIRECTION_HORIZONTAL,
-                  threshold: MINIMUM_PAN_DISTANCE
-              }],
               [Hammer.Swipe,{
                   direction: Hammer.DIRECTION_HORIZONTAL,
                   threshold: MINIMUM_SWIPE_DISTANCE,
@@ -192,10 +188,9 @@ export function CharacterRootViewModel() {
             'exhibit'
         ];
 
-        hammer.on('swiperight panright', function(event) {
+        hammer.on('swiperight', function(event) {
             const currentPosition = self.characterTabList.indexOf(self.activeTab());
-            const dist = event.type === 'swiperight' && MINIMUM_SWIPE_DISTANCE || MINIMUM_PAN_DISTANCE;
-            if (event.deltaX > dist && currentPosition > 0) {
+            if (event.deltaX > MINIMUM_SWIPE_DISTANCE && currentPosition > 0) {
                 self._setActiveTab(self.characterTabList[currentPosition - 1]);
                 hammer.stop();
             }
@@ -203,8 +198,7 @@ export function CharacterRootViewModel() {
 
         hammer.on('swipeleft panleft', function(event) {
             const currentPosition = self.characterTabList.indexOf(self.activeTab());
-            const dist = event.type === 'swipeleft' && MINIMUM_SWIPE_DISTANCE || MINIMUM_PAN_DISTANCE;
-            if (event.deltaX < -dist && currentPosition < self.characterTabList.length - 1) {
+            if (event.deltaX < -MINIMUM_SWIPE_DISTANCE && currentPosition < self.characterTabList.length - 1) {
                 self._setActiveTab(self.characterTabList[currentPosition + 1]);
                 hammer.stop();
             }
