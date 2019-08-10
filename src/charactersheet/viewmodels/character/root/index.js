@@ -12,6 +12,7 @@ import {
     Notifications,
     TabFragmentManager
 } from 'charactersheet/utilities';
+import Hammer from 'hammerjs';
 import { PlayerTypes } from 'charactersheet/models/common/player_types';
 import { Profile } from 'charactersheet/models/character';
 import armorSection from 'images/checked-shield.svg';
@@ -32,7 +33,6 @@ import spellsTab from 'images/tab_icons/fire-tail.svg';
 import statsTab from 'images/tab_icons/weight-lifting-up.svg';
 import template from './index.html';
 import weaponSection from 'images/spinning-sword.svg';
-
 
 export function CharacterRootViewModel() {
     var self = this;
@@ -162,6 +162,42 @@ export function CharacterRootViewModel() {
 
     self.load = () => {
         self.activeTab(TabFragmentManager.activeTab());
+
+        const contentRoot = $('#root-tab-content').get(0);
+
+        const hammer = new Hammer.Manager(contentRoot, {
+            recognizers: [
+              [Hammer.Pan,{ direction: Hammer.DIRECTION_HORIZONTAL, threshold: 100 }],
+              [Hammer.Swipe,{ direction: Hammer.DIRECTION_HORIZONTAL, threshold: 100 }]
+            ]
+        });
+
+        self.characterTabList = [
+            'stats',
+            'skills',
+            'spells',
+            'equipment',
+            'inventory',
+            'notes',
+            'chat',
+            'exhibit'
+        ];
+
+        hammer.on('swiperight panright', function(event) {
+            const currentPosition = self.characterTabList.indexOf(self.activeTab());
+            if (event.distance > 199 && currentPosition > 0) {
+                self._setActiveTab(self.characterTabList[currentPosition - 1]);
+                hammer.stop();
+            }
+        });
+
+        hammer.on('swipeleft panleft', function(event) {
+            const currentPosition = self.characterTabList.indexOf(self.activeTab());
+            if (event.distance > 199 && currentPosition < self.characterTabList.length) {
+                self._setActiveTab(self.characterTabList[currentPosition + 1]);
+                hammer.stop();
+            }
+        });
 
         $(`.nav-tabs a[href="#${self.activeTab()}"]`).tab('show');
 
