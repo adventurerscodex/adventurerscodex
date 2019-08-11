@@ -165,14 +165,20 @@ export function CharacterRootViewModel() {
 
         const contentRoot = $('#root-tab-content').get(0);
 
+        // These settings reduce accidental navigation by requiring a higher
+        // speed and distance than the default.
         const MINIMUM_SWIPE_DISTANCE = 49;
-        delete Hammer.defaults.cssProps.userSelect; // allow selecting of text on desktop
+        const MINIMUM_VELOCITY = 0.5;
+
+        // disable a css setting that provides desktop support to gestures,
+        // that unfortunately disables selecting of text on desktop
+        delete Hammer.defaults.cssProps.userSelect;
         const hammer = new Hammer.Manager(contentRoot, {
             recognizers: [
               [Hammer.Swipe,{
                   direction: Hammer.DIRECTION_HORIZONTAL,
                   threshold: MINIMUM_SWIPE_DISTANCE,
-                  velocity: 0.5
+                  velocity: MINIMUM_VELOCITY
               }]
             ]
         });
@@ -192,15 +198,15 @@ export function CharacterRootViewModel() {
             const currentPosition = self.characterTabList.indexOf(self.activeTab());
             if (event.deltaX > MINIMUM_SWIPE_DISTANCE && currentPosition > 0) {
                 self._setActiveTab(self.characterTabList[currentPosition - 1]);
-                hammer.stop();
+                hammer.stop(); // Stop handling this swipe action
             }
         });
 
-        hammer.on('swipeleft panleft', function(event) {
+        hammer.on('swipeleft', function(event) {
             const currentPosition = self.characterTabList.indexOf(self.activeTab());
             if (event.deltaX < -MINIMUM_SWIPE_DISTANCE && currentPosition < self.characterTabList.length - 1) {
                 self._setActiveTab(self.characterTabList[currentPosition + 1]);
-                hammer.stop();
+                hammer.stop(); // Stop handling this swipe action
             }
         });
 
