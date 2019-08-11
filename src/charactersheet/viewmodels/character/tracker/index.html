@@ -6,14 +6,13 @@
   <table class="table table-responsive table-ac-bordered">
     <thead class="ac-table-header">
       <tr>
-        <th data-bind="click: ()=> {sortBy('name');}">Name
-          <i data-bind="css: sortArrow('name')"></i>
+        <th data-bind="click: ()=> {sortBy('name');}" class="col-sm-3">
+          Name<i data-bind="css: sortArrow('name')"></i>
         </th>
-        <th class="hidden-xs" colspan="4">Resets&nbsp;on
-        </th>
-        <th class="visible-xs" colspan="3"></th>
-        <th class="text-right" style="width: 5%">Used</th>
-        <th class="col-xs-1 text-right">
+        <th class="hidden-xs col-sm-1">Resets&nbsp;on</th>
+        <th class="col-sm-6" colspan="3"></th>
+        <th class="text-center col-sm-1">Used</th>
+        <th class="col-sm-1 text-right">
           <a href="#"
              data-bind="{click: collapseAll}">
             <span class="fa fa-minus"></span></a>
@@ -32,7 +31,7 @@
         <td>
           <span data-bind="text: $component.shortText(name)"></span>
         </td>
-        <td style="padding: 6px;" class="hidden-xs">
+        <td style="padding: 6px;" class="hidden-xs text-center">
           <div data-bind="attr: {'class': $component.resetsOnImg(tracked)}"></div>
         </td>
         <td style="padding: 6px;">
@@ -41,19 +40,19 @@
           </mini-plus-minus>
         </td>
         <td style="padding: 6px;">
+          <div style="padding: 10px"
+          data-bind="barProgress: $component.mapToChart($data)"> </div>
+        </td>
+        <td style="padding: 6px;">
           <mini-plus-minus params="value: tracked().used,
                     max: tracked().max, hideDown: true, onChange: ()=>{$component.onUsedChange($data)}">
           </mini-plus-minus>
         </td>
-        <td style="padding: 6px;">
-          <div style="padding: 10px"
-               data-bind="barProgress: $component.mapToChart($data)"> </div>
-        </td>
 
-        <td style="padding: 6px; width: 5%" class="text-right">
-          <span data-bind="text: parseInt(tracked().max()) - parseInt(tracked().used())"></span>&nbsp;/&nbsp;<span data-bind=" text: tracked().max"></span>
+        <td style="padding: 6px" class="text-center">
+          <span data-bind="text: tracked().usesDisplay"></span>
         </td>
-        <td style="padding: 6px;" class="col-xs-1 text-right">
+        <td style="padding: 6px;" class="text-right">
           <span data-toggle="collapse"
                 data-bind="attr:{'data-target': `#tracked_${$data.uuid()}`}"
                 class="rotate fa fa-chevron-left"></span>
@@ -77,14 +76,19 @@
               <div class="h4 collapsable-card-title">
                 <span data-bind="text: context.data.name"></span>
                 <small data-bind="text: context.nameMeta(context.data)"></small>
-              </div>
-              <div data-bind="with: context.data.tracked" class="panel-footer rest-description">
-                <span
-                    style="opacity: .9;"
-                    class="glyphicon glyphicon-time"
-                    aria-hidden="true" /> Max uses: <strong data-bind="text: max" />.
-                    <span data-bind="visible: resetsOn() == 'long'">Resets on Long Rest <span class="rest-icon long-rest-icon" aria-hidden="true" /> </span>
-                    <span data-bind="visible: resetsOn() == 'short'">Resets on Short Rest <span class="rest-icon short-rest-icon" aria-hidden="true" /> </span>
+                <div data-bind="with: context.data.tracked">
+                  <small>
+                    Max uses: <span data-bind="text: max"></span>
+                  </small><br>
+                  <small>
+                    <span data-bind="visible: resetsOn() == 'long'">
+                      Resets on: Long Rest
+                    </span>
+                    <span data-bind="visible: resetsOn() == 'short'">
+                      Resets on: Short Rest
+                    </span>
+                  </small>
+                </div>
               </div>
               <div class="panel-body">
               <div class="card-description"

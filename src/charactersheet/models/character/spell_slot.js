@@ -16,6 +16,7 @@ export class SpellSlot extends KOModel {
     used = ko.observable(0);
     resetsOn = ko.observable('long');
     color = ko.observable('');
+    usesDisplay = ko.observable('');
 
     spellSlots = ko.pureComputed(() => {
         return this.getMaxSpellSlots() - this.getUsedSpellSlots();
@@ -55,7 +56,6 @@ export class SpellSlot extends KOModel {
         await this.ps.delete();
         Notifications.spellslot.deleted.dispatch(this);
     }
-
 }
 
 SpellSlot.validationConstraints = {

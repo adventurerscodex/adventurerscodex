@@ -5,31 +5,37 @@
 <table class="table table-responsive table-ac-bordered table-hover ac-table-data-cell score-save-table">
   <thead class="ac-table-header">
     <tr>
-      <th style="width:15%"> Score </th>
+      <th style="width: 15%"> Score </th>
       <th style="width: 40%"> Ability </th>
-      <th style="width: 20%"> Bonus </th>
-      <th style="width: 15%"> Save </th>
+      <th style="width: 25%"> Bonus </th>
+      <th style="width: 20%"> Save </th>
     </tr>
   </thead>
   <!-- ko ifnot: loaded(), completeOn: 'render' -->
-  <tbody><tr><td colspan=4><div class="loader-wrapper"><div class="loader"></div></div></td></tr></tbody>
+  <tbody><tr><td colspan="4"><div class="loader-wrapper"><div class="loader"></div></div></td></tr></tbody>
   <!-- /ko -->
   <!-- ko if: loaded(), completeOn: 'render' -->
   <tbody>
     <!-- ko foreach: order -->
     <tr data-bind="with: $component.findSaveByName($data)">
       <td>
-        <span data-bind="text: abilityScore().value" />
+        <span data-bind="text: abilityScore().value"></span>
       </td>
       <td>
-        <span data-bind="text: abilityScore().abbreviation" />
+        <span data-bind="text: abilityScore().shortName"></span>
       </td>
       <td>
-        <strong data-bind="text: $component.modifierLabel(abilityScore().getModifier())" />
+        <strong data-bind="text: $component.modifierLabel(abilityScore().getModifier())"></strong>
       </td>
       <td>
+        <!-- ko if: proficiency -->
         <span class="defenseShield"
-            data-bind="text: $component.modifierLabel(bonus())" />
+            data-bind="text: $component.modifierLabel(bonus())"></span>
+        <!-- /ko -->
+        <!-- ko ifnot: proficiency -->
+        <span
+            data-bind="text: $component.modifierLabel(bonus())"></span>
+        <!-- /ko -->
       </td>
     </tr>
     <!-- /ko -->

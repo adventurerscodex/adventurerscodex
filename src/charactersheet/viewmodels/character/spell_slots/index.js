@@ -85,7 +85,8 @@ class SpellSlotsViewModel extends AbstractTabularViewModel {
                 svgStyle: {
                     display: 'block',
                     width: '100%',
-                    minHeight: '3px'
+                    minHeight: '5px',
+                    maxHeight: '5px'
                 },
                 from: {
                     color: this.mapToColor(slot.level())

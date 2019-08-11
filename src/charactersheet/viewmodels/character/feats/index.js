@@ -14,6 +14,14 @@ export class FeatsViewModel extends AbstractTabularViewModel {
         autoBind(this);
     }
 
+    sorts() {
+        return {
+            ...super.sorts(),
+            'isTracked asc': { field: 'isTracked', direction: 'asc'},
+            'isTracked desc': { field: 'isTracked', direction: 'desc'}
+        };
+    }
+
     modelClass() {
         return Feat;
     }
@@ -23,7 +31,6 @@ export class FeatsViewModel extends AbstractTabularViewModel {
         this.subscriptions.push(Notifications.feat.changed.add(this.replaceInList));
         this.subscriptions.push(Notifications.feat.deleted.add(this.removeFromList));
     }
-
 }
 
 ko.components.register('feats', {

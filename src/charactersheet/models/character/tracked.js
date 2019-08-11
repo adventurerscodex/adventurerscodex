@@ -7,19 +7,19 @@ import ko from 'knockout';
 export class Tracked {
 
     mapping = {
-        include: ['max', 'used', 'resetsOn', 'type']
+        include: ['max', 'used', 'resetsOn', 'type', 'usesDisplay']
     };
 
     max = ko.observable(0);
     used = ko.observable(0);
     resetsOn = ko.observable('long');
     type = ko.observable(null);
+    usesDisplay = ko.observable('');
 
     equals(tracked) {
-        return (
-          ko.utils.unwrapObservable(this.max) === ko.utils.unwrapObservable(tracked.max) &&
-        ko.utils.unwrapObservable(this.used) === ko.utils.unwrapObservable(tracked.used) &&
-        ko.utils.unwrapObservable(this.resetsOn) === ko.utils.unwrapObservable(tracked.resetsOn));
+        return (ko.utils.unwrapObservable(this.max) === ko.utils.unwrapObservable(tracked.max)
+          && ko.utils.unwrapObservable(this.used) === ko.utils.unwrapObservable(tracked.used)
+          && ko.utils.unwrapObservable(this.resetsOn) === ko.utils.unwrapObservable(tracked.resetsOn));
     }
 
     clearValues() {
@@ -30,10 +30,8 @@ export class Tracked {
     }
 
     importValues(values) {
-        // if (!isEmpty(values)) {
         const mapping = ko.mapping.autoignore(this, this.mapping);
         ko.mapping.fromJS(values, mapping, this);
-        // }
     }
 
     exportValues () {

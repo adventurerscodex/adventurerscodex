@@ -42,7 +42,7 @@ class TrackerViewModel extends AbstractTabularViewModel {
             metaText = `${tracked.characterClass()}`;
         }
         if (tracked.level) {
-            metaText += ` (Lvl ${tracked.level()})`;
+            metaText += ` (Level ${tracked.level()})`;
         }
         if (tracked.race) {
             metaText = `${tracked.race()}`;
@@ -67,7 +67,8 @@ class TrackerViewModel extends AbstractTabularViewModel {
                 svgStyle: {
                     display: 'block',
                     width: '100%',
-                    minHeight: '3px'
+                    minHeight: '5px',
+                    maxHeight: '5px'
                 },
                 from: {
                     color
