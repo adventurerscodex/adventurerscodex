@@ -1,12 +1,14 @@
+import 'bin/knockout-bar-progress';
 import {
   AbstractTabularViewModel,
   calculateTotalLoad
  } from 'charactersheet/viewmodels/abstract';
+import { Fixtures, Notifications } from 'charactersheet/utilities';
 import { MagicItem } from 'charactersheet/models';
 import { MagicItemFormViewModel } from './form';
-import { Notifications } from 'charactersheet/utilities';
 
 import autoBind from 'auto-bind';
+import { findIndex } from 'lodash';
 import ko from 'knockout';
 import template from './index.html';
 
@@ -29,10 +31,47 @@ export class MagicItemsViewModel extends AbstractTabularViewModel {
             'type desc': { field: 'type', direction: 'desc'},
             'weight asc': { field: 'weight', direction: 'asc', numeric: true},
             'weight desc': { field: 'weight', direction: 'desc', numeric: true},
+            'maxCharges asc': { field: 'maxCharges', direction: 'asc'},
+            'maxCharges desc': { field: 'maxCharges', direction: 'desc'},
             'usedCharges asc': { field: 'usedCharges', direction: 'asc'},
             'usedCharges desc': { field: 'usedCharges', direction: 'desc'},
             'attuned asc': { field: 'attuned', direction: 'asc', booleanType: true},
             'attuned desc': { field: 'attuned', direction: 'desc', booleanType: true}
+        };
+    }
+
+    async onUsedChange(magicitem) {
+        await magicitem.save();
+    }
+
+    mapToChart(magicitem) {
+        const magicitemIndex = findIndex(this.entities(), (entity) => {
+            return entity.uuid === magicitem.uuid;
+        });
+        let color = Fixtures.general.colorHexList[magicitemIndex % 12];
+        if (magicitem.requiresAttunement() && !magicitem.attuned()) {
+            color = '#ccc';
+        }
+        return {
+            data: {
+                value: parseInt(magicitem.maxCharges()) - parseInt(magicitem.usedCharges()),
+                maxValue: magicitem.maxCharges()
+            },
+            config: {
+                strokeWidth: 2,
+                trailWidth: 1,
+                svgStyle: {
+                    display: 'block',
+                    width: '100%',
+                    minHeight: '3px'
+                },
+                from: {
+                    color: color
+                },
+                to: {
+                    color: color
+                }
+            }
         };
     }
 

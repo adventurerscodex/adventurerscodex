@@ -5,17 +5,18 @@
   <table class="table table-responsive table-ac-bordered table-hover">
     <thead>
       <tr class="ac-table-header">
-        <th class="col-xs-1" data-bind="click: function(){sortBy('attuned');}"> Attuned <span data-bind="css: sortArrow('attuned')"></span>
+        <th class="col-xs-9 col-sm-4 col-md-5 col-lg-4" data-bind="click: function(){sortBy('name');}"> Magic Item <span data-bind="css: sortArrow('name')"></span>
         </th>
-        <th data-bind="click: function(){sortBy('name');}"> Magic Item <span data-bind="css: sortArrow('name')"></span>
-        </th>
-        <th class="hidden-xs"
+        <th class="col-xs-1" style="width: 5%"
             data-bind="click: function(){sortBy('type');}"> Type <span data-bind="css: sortArrow('type')"></span>
         </th>
-        <th class="hidden-xs"
-            data-bind="click: function(){sortBy('usedCharges');}"> Charges <span data-bind="css: sortArrow('usedCharges')"></span>
+        <th class="hidden-xs col-sm-1" style="width: 5%"></th>
+        <th class="hidden-xs col-sm-1" style="width: 5%"></th>
+        <th class="col-sm-3 col-md-2 col-lg-3 hidden-xs"
+            data-bind="click: function(){sortBy('maxCharges');}"> Charges <span data-bind="css: sortArrow('maxCharges')"></span>
         </th>
-        <th class="col-xs-1 text-right">
+        <th class="col-xs-1 text-right">Used</th>
+        <th class="col-xs-1 text-right" style="width: 5%">
           <a href="#"
               data-bind="{click: collapseAll}">
             <span class="fa fa-minus"></span>
@@ -24,7 +25,7 @@
       </tr>
     </thead>
     <!-- ko ifnot: loaded(), completeOn: 'render' -->
-    <tbody><tr><td colspan=5><div class="loader-wrapper"><div class="loader"></div></div></td></tr></tbody>
+    <tbody><tr><td colspan=7><div class="loader-wrapper"><div class="loader"></div></div></td></tr></tbody>
     <!-- /ko -->
     <!-- ko if: loaded(), completeOn: 'render' -->
     <tbody>
@@ -35,33 +36,55 @@
             notCastable: requiresAttunement() == true && !attuned()
           },
           attr:{ 'data-target': `#magic_item_${uuid()}` }">
-        <td class="col-xs-1 checkbox-data-cell" data-bind="click: $component.attuneItem">
-          <div data-bind="visible: requiresAttunement() === true">
-            <input type='checkbox'
-                class='pseudo-checkbox sr-only'
-                data-bind="checked: attuned, attr: {id: `magic_item_attuned_${uuid()}`}"></input>
-            <label data-bind="attr: {for: `magic_item_attuned_${uuid()}`}"
-                class='fancy-checkbox-label'>
-            </label>
-          </div>
-        </td>
         <td>
           <span data-bind="text: $component.shortText(name)" />
+          <span data-bind="visible: requiresAttunement"
+              style="opacity: .9; color: #18bc9c;"
+              class="glyphicon glyphicon-off"
+              aria-hidden="true" />
         </td>
-        <td class="hidden-xs">
-          <span data-bind="text: $component.shortText(type)" />
+        <td>
+          <div data-bind="css: 'magic-item-icon ' + cardIcon()" />
         </td>
-        <td class="hidden-xs">
-          <span data-bind="text: chargesDisplay"></span>
+        <td class="hidden-xs" style="padding: 6px;">
+          <!-- ko if: maxCharges() > 0 -->
+          <mini-plus-minus params="value: usedCharges,
+                    max: maxCharges,
+                    hideUp: true,
+                    disabled: requiresAttunement() && !attuned(),
+                    onChange: ()=>{$component.onUsedChange($data)}">
+          </mini-plus-minus>
+          <!-- /ko -->
         </td>
-        <td class="col-xs-1 text-right">
+        <td class="hidden-xs" style="padding: 6px;">
+          <!-- ko if: maxCharges() > 0 -->
+          <mini-plus-minus params="value: usedCharges,
+                    max: maxCharges,
+                    hideDown: true,
+                    disabled: requiresAttunement() && !attuned(),
+                    onChange: ()=>{$component.onUsedChange($data)}">
+          </mini-plus-minus>
+          <!-- /ko -->
+        </td>
+        <td class="hidden-xs" style="padding: 6px;">
+          <!-- ko if: maxCharges() > 0 -->
+          <div style="padding: 10px"
+               data-bind="barProgress: $component.mapToChart($data)"> </div>
+          <!-- /ko -->
+        </td>
+        <td style="padding: 6px;" class="text-right">
+          <!-- ko if: maxCharges() > 0 -->
+          <span data-bind="text: parseInt(maxCharges()) - parseInt(usedCharges())"></span>&nbsp;/&nbsp;<span data-bind=" text: maxCharges"></span>
+          <!-- /ko -->
+        </td>
+        <td class="text-right">
           <span data-toggle="collapse"
               data-bind="attr:{'data-target': `#magic_item_${uuid()}`}"
               class="rotate fa fa-chevron-left"></span>
         </td>
       </tr>
       <tr class="collapseRow">
-        <td colspan="5">
+        <td colspan="7">
           <flip-card params="{
                   dataId: $data.uuid,
                   tabId: $parent.tabId,
@@ -77,7 +100,7 @@
                   <small data-bind="text: rarity"></small>
                 </div>
                 <div class="panel-body row"
-                    data-bind="css: cardBackground">
+                    data-bind="css: cardBackground()">
                   <div class="col-sm-5 col-md-12 col-lg-5">
                     <table class="spellDetail table table-hover table-condensed table-ac-bordered">
                       <tbody>
@@ -88,7 +111,7 @@
                         <!-- ko if: maxCharges() > 0 -->
                         <tr>
                           <th>Charges:</th>
-                          <td><span data-bind="text: usedCharges"></span> of <span data-bind="text: maxCharges"></span></td>
+                          <td><span data-bind="text: parseInt(maxCharges()) - parseInt(usedCharges())"></span> of <span data-bind="text: maxCharges"></span></td>
                         </tr>
                         <!-- /ko -->
                         <tr>

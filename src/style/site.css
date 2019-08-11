@@ -780,8 +780,20 @@ ul.ui-autocomplete .ui-state-active {
   background-position: center;
 }
 
+.armor-magic-item-icon {
+  background-image: url('../images/magic_items_icons_opaque/armor.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 .potion-magic-item-card {
   background-image: url('../images/magic_items_icons/potion.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.potion-magic-item-icon {
+  background-image: url('../images/magic_items_icons_opaque/potion.svg');
   background-repeat: no-repeat;
   background-position: center;
 }
@@ -792,8 +804,20 @@ ul.ui-autocomplete .ui-state-active {
   background-position: center;
 }
 
+.ring-magic-item-icon {
+  background-image: url('../images/magic_items_icons_opaque/ring.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 .rod-magic-item-card {
   background-image: url('../images/magic_items_icons/rod.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.rod-magic-item-icon {
+  background-image: url('../images/magic_items_icons_opaque/rod.svg');
   background-repeat: no-repeat;
   background-position: center;
 }
@@ -804,8 +828,20 @@ ul.ui-autocomplete .ui-state-active {
   background-position: center;
 }
 
+.scroll-magic-item-icon {
+  background-image: url('../images/magic_items_icons_opaque/scroll.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 .staff-magic-item-card {
   background-image: url('../images/magic_items_icons/staff.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.staff-magic-item-icon {
+  background-image: url('../images/magic_items_icons_opaque/staff.svg');
   background-repeat: no-repeat;
   background-position: center;
 }
@@ -816,8 +852,8 @@ ul.ui-autocomplete .ui-state-active {
   background-position: center;
 }
 
-.armor-wand-item-card {
-  background-image: url('../images/magic_items_icons/armor.svg');
+.sword-magic-item-icon {
+  background-image: url('../images/magic_items_icons_opaque/sword.svg');
   background-repeat: no-repeat;
   background-position: center;
 }
@@ -828,14 +864,32 @@ ul.ui-autocomplete .ui-state-active {
   background-position: center;
 }
 
+.wand-magic-item-icon {
+  background-image: url('../images/magic_items_icons_opaque/wand.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 .weapon-magic-item-card {
   background-image: url('../images/magic_items_icons/weapon.svg');
   background-repeat: no-repeat;
   background-position: center;
 }
 
+.weapon-magic-item-icon {
+  background-image: url('../images/magic_items_icons_opaque/weapon.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 .wondrous-magic-item-card {
   background-image: url('../images/magic_items_icons/wondrous.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.wondrous-magic-item-icon {
+  background-image: url('../images/magic_items_icons_opaque/wondrous.svg');
   background-repeat: no-repeat;
   background-position: center;
 }
@@ -1175,6 +1229,11 @@ input[type='checkbox']:checked.filter-checkbox + label:before{/*checked icon*/
 .notCastable {
   color: #999;
 }
+
+.notCastable .glyphicon {
+  color: #999 !important;
+}
+
 .spellRow[aria-expanded="true"],
 .spellRow[aria-expanded="true"]:hover {
   background-color:  #2c3e50;
@@ -1697,6 +1756,18 @@ hr.ac-table-header {
   padding: 0px 0 0 0px;
   margin: 0px 2px 0px 2px;
   opacity: 0.6;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  vertical-align: text-bottom;
+}
+
+.magic-item-icon {
+  width: 1.25em;
+  height: 2.5ex;
+  display: inline-block;
+  padding: 0px 0 0 0px;
+  margin: 0px 2px 0px 2px;
+  opacity: 0.8;
   background-repeat: no-repeat;
   background-position: bottom;
   vertical-align: text-bottom;
