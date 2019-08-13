@@ -2020,3 +2020,16 @@ tr .panel {
     transform: rotate(360deg);
   }
 }
+
+.modal-backdrop.in {
+  transform: translateZ(800px);
+}
+
+.modal {
+  transform: translateZ(801px);
+}
+
+.modal-dialog {
+  transform: translateZ(802px);
+}
+
