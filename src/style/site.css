@@ -1432,6 +1432,10 @@ transition : height 0.25s ease opacity 0.2s linear;
      padding: 10px;
      white-space: nowrap;
      padding-top: 3px;
+     text-shadow: 1px  1px 1px #2c3e50, 
+                 -1px  1px 1px #2c3e50,
+                  1px -1px 1px #2c3e50,
+                 -1px -1px 1px #2c3e50;
     }
 
   #ArmorClassShield > * {
