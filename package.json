@@ -49,6 +49,7 @@
     "dropbox": "^4.0.27",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "file-loader": "^2.0.0",
+    "hammerjs": "^2.0.8",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "hypnos": "git+https://github.com/adventurerscodex/hypnos.git#v0.1.1",

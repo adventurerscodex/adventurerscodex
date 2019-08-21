@@ -255,6 +255,20 @@ div.hr {
   padding-top:10px;
 }
 
+.tab-pane.active {
+  animation: opac 0.5s
+}
+
+@keyframes opac {
+    from {
+        opacity: 0
+    }
+
+    to {
+        opacity: 1
+    }
+}
+
 .dice-full {
   cursor:pointer;
   background: url('../images/dice-twenty-faces-twenty.svg');

@@ -12,6 +12,7 @@ import {
     Notifications,
     TabFragmentManager
 } from 'charactersheet/utilities';
+import Hammer from 'hammerjs';
 import { PlayerTypes } from 'charactersheet/models/common/player_types';
 import { Profile } from 'charactersheet/models/character';
 import armorSection from 'images/checked-shield.svg';
@@ -32,7 +33,6 @@ import spellsTab from 'images/tab_icons/fire-tail.svg';
 import statsTab from 'images/tab_icons/weight-lifting-up.svg';
 import template from './index.html';
 import weaponSection from 'images/spinning-sword.svg';
-
 
 export function CharacterRootViewModel() {
     var self = this;
@@ -162,6 +162,54 @@ export function CharacterRootViewModel() {
 
     self.load = () => {
         self.activeTab(TabFragmentManager.activeTab());
+
+        const contentRoot = $('#root-tab-content').get(0);
+
+        // These settings reduce accidental navigation by requiring a higher
+        // speed and distance than the default.
+        const MINIMUM_SWIPE_DISTANCE = 49;
+        const MINIMUM_VELOCITY = 0.5;
+
+        // disable a css setting that provides desktop support to gestures,
+        // that unfortunately disables selecting of text on desktop
+        delete Hammer.defaults.cssProps.userSelect;
+        const hammer = new Hammer.Manager(contentRoot, {
+            recognizers: [
+              [Hammer.Swipe,{
+                  direction: Hammer.DIRECTION_HORIZONTAL,
+                  threshold: MINIMUM_SWIPE_DISTANCE,
+                  velocity: MINIMUM_VELOCITY
+              }]
+            ]
+        });
+
+        self.characterTabList = [
+            'stats',
+            'skills',
+            'spells',
+            'equipment',
+            'inventory',
+            'notes',
+            'chat',
+            'exhibit'
+        ];
+
+        hammer.on('swiperight', function(event) {
+            const currentPosition = self.characterTabList.indexOf(self.activeTab());
+            if (event.deltaX > MINIMUM_SWIPE_DISTANCE && currentPosition > 0) {
+                self._setActiveTab(self.characterTabList[currentPosition - 1]);
+                hammer.stop(); // Stop handling this swipe action
+            }
+        });
+
+        hammer.on('swipeleft', function(event) {
+            const currentPosition = self.characterTabList.indexOf(self.activeTab());
+            if (event.deltaX < -MINIMUM_SWIPE_DISTANCE && currentPosition < self.characterTabList.length - 1) {
+                self._setActiveTab(self.characterTabList[currentPosition + 1]);
+                hammer.stop(); // Stop handling this swipe action
+            }
+        });
+
 
         $(`.nav-tabs a[href="#${self.activeTab()}"]`).tab('show');
 
