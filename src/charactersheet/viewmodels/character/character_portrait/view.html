@@ -1,0 +1,50 @@
+<card-edit-actions params="{ flip: $component.flip }"></card-edit-actions>
+<div id="characters"
+    class="container-fluid characters-module-style">
+  <div class="row" style="padding-right: 15px"> <!-- padding for edit button -->
+    <!-- ko ifnot: loaded(), completeOn: 'render' -->
+    <div style="hieight: 100px" class="loader-wrapper"><div style="width: 75px; height:75px; margin: 25px auto" class="loader"></div></div>
+    <!-- /ko -->
+    <!-- ko if: loaded(), completeOn: 'render' -->
+    <div class="col-sm-2 col-xs-12">
+      <div class="circular-profile no-padding center-block"
+        data-bind="attr: {
+            height: $component.imageHeight,
+            width: $component.imageWidth,
+          },
+          css: imageBorderClass">
+        <div class="image-upload-preview text-center" data-bind="with: profileImage">
+          <!-- ko if: imageUrl -->
+          <img class="img-circle"
+            data-bind="attr: {
+              src: imageUrl,
+              height: $component.imageHeight,
+              width: $component.imageWidth
+            }">
+          <!-- /ko -->
+          <!-- ko ifnot: imageUrl -->
+          <div class="text-muted player-image-style" id="profilePictureAddToggle">
+            <small>A mysterious stranger</small>
+          </div>
+          <!-- /ko -->
+        </div>
+      </div>
+      <!-- <character-image></character-image> -->
+    </div>
+    <div class="col-sm-10 col-xs-12 characters-player-name">
+      <div class="row">
+        <div class="col-xs-12 col-md-12 text-center-xs text-left-sm" data-bind="with: profile">
+            <h3><span id="characterNameLabel" data-bind="text: characterName" /> <small data-bind="with: $component.core">by <span data-bind="text: playerName" /></small></h3>
+
+        </div>
+        <div class="col-xs-12">
+          <character-status-line></character-status-line>
+        </div>
+        <div class="col-xs-12">
+          <party-status></party-status>
+        </div>
+      </div>
+    </div>
+    <!-- /ko -->
+  </div>
+</div>

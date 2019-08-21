@@ -74,7 +74,8 @@ export class Profile extends KOModel {
 Profile.validationConstraints = {
     fieldParams: {
         characterName: {
-            maxlength: 256
+            maxlength: 256,
+            required: true
         },
         alignment: {
             maxlength: 64

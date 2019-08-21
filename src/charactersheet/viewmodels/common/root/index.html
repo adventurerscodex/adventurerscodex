@@ -1,255 +1,301 @@
 <!-- ko if: environment == 'dev' -->
-<div class="" style="background-color: lightgray;">
-  <div class="text-center" style="text-transform: uppercase;"
-    data-bind="text: environment"></div>
+<div class=""
+    style="background-color: lightgray;">
+  <div class="text-center"
+      style="text-transform: uppercase;"
+      data-bind="text: environment"></div>
 </div>
 <!-- /ko -->
 <!-- ko if: environment == 'test' -->
-<div class="" style="background-color: orange;">
-  <div class="text-center" style="text-transform: uppercase;"
-    data-bind="text: environment"></div>
+<div class=""
+    style="background-color: orange;">
+  <div class="text-center"
+      style="text-transform: uppercase;"
+      data-bind="text: environment"></div>
 </div>
 <!-- /ko -->
-
 <div id="content">
-<!-- Begin Nav -->
-<nav class="navbar navbar-default navbar-static-top">
-<div class="container-fluid">
-  <div style="padding-left: 5%; padding-right: 5%" class="col-xs-12 ">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-        data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-        <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span>
-        <span class="icon-bar"></span><span class="icon-bar"></span>
-      </button>
-      <a data-bind="attr: { href: homeURL }, css: { 'navbar-divider': shouldShowApp }" class="navbar-brand">
-    	  <img data-bind="attr: { src: navLogo }"
-    	       class="pull-left img-rounded inline-block brand-icon resize_logo_nav"
-    	       alt="Adventurer's Codex"/>
-        <span class="inline-block pull-right">Adventurer's Codex</span>
-      </a>
-    </div>
-    <!-- ko if: shouldShowApp -->
-    <div id="navbar" class="collapse navbar-collapse">
-      <ul class="nav navbar-nav">
-        <li>
-          <a data-toggle="modal" data-target="#newModal" href="#">
-            <i class="fa fa-download"></i>&nbsp;&nbsp;New/Import
+  <!-- Begin Nav -->
+  <nav class="navbar navbar-default navbar-static-top">
+    <div class="container-fluid">
+      <div style="padding-left: 15px; padding-right: 15px"
+          class="col-xs-12 ">
+        <div class="navbar-header">
+          <button type="button"
+              class="navbar-toggle collapsed"
+              data-toggle="collapse"
+              data-target="#navbar"
+              aria-expanded="false"
+              aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span>
+            <span class="icon-bar"></span><span class="icon-bar"></span>
+          </button>
+          <a data-bind="attr: { href: homeURL }, css: { 'navbar-divider': shouldShowApp }"
+              class="navbar-brand">
+            <img data-bind="attr: { src: navLogo }"
+                class="pull-left img-rounded inline-block brand-icon resize_logo_nav"
+                alt="Adventurer's Codex" />
+            <span class="inline-block pull-right">Adventurer's Codex</span>
           </a>
-        </li>
-        <li>
-          <a data-bind="click: toggleCharacterAndGamesModal" href="#">
-            <i class="fa fa-address-card"></i>&nbsp;&nbsp;Characters and Games
-          </a>
-        </li>
-        <li>
-          <a data-bind="click: togglePartyManagerModal" href="#">
-            <i class="fa fa-users"></i>&nbsp;&nbsp;Manage Party
-          </a>
-        </li>
-        <!-- ko if: selectedCore() && selectedCore().type.name() != 'dm' -->
-        <li>
-          <a data-bind="click: toggleShareModal" href="#">
-            <i class="fa fa-share-square-o"></i>&nbsp;&nbsp;Share
-          </a>
-        </li>
+        </div>
+        <!-- ko if: shouldShowApp -->
+        <div id="navbar"
+            class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li>
+              <a data-toggle="modal"
+                  data-target="#newModal"
+                  href="#">
+                <i class="fa fa-download"></i>&nbsp;&nbsp;New/Import </a>
+            </li>
+            <li>
+              <a data-bind="click: toggleCharacterAndGamesModal"
+                  href="#">
+                <i class="fa fa-address-card"></i>&nbsp;&nbsp;Characters and Games </a>
+            </li>
+            <li>
+              <a data-bind="click: togglePartyManagerModal"
+                  href="#">
+                <i class="fa fa-users"></i>&nbsp;&nbsp;Manage Party </a>
+            </li>
+            <!-- ko if: selectedCore() && selectedCore().type.name() != 'dm' -->
+            <li>
+              <a data-bind="click: toggleShareModal"
+                  href="#">
+                <i class="fa fa-share-square-o"></i>&nbsp;&nbsp;Share </a>
+            </li>
+            <!-- /ko -->
+          </ul>
+          <login></login>
+        </div>
         <!-- /ko -->
-      </ul>
-      <login></login>
+        <!-- ko ifnot: shouldShowApp -->
+        <login></login>
+        <!-- /ko -->
+        <!--/.nav-collapse -->
+      </div>
     </div>
-    <!-- /ko -->
-    <!-- ko ifnot: shouldShowApp -->
-    <login></login>
-    <!-- /ko -->
-  <!--/.nav-collapse -->
-  </div>
-</div>
-</nav>
-
-<!-- Session expiry modal -->
-<div class="modal fade" tabindex="-1" role="dialog"
-   data-bind="modal: {
+  </nav>
+  <!-- Session expiry modal -->
+  <div class="modal fade"
+      tabindex="-1"
+      role="dialog"
+      data-bind="modal: {
       open: sessionExpiryModalStatus,
       onclose: refreshPage
     }">
-  <div class="modal-dialog modal-sm" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title text-center">
-          Are you still there?
-        </h3>
-      </div>
-      <div class="modal-body text-center">
-        <a data-bind="attr: { href: homeURL }" class="btn btn-primary">
-          Refresh & Continue Playing
-        </a>
+    <div class="modal-dialog modal-sm"
+        role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title text-center"> Are you still there? </h3>
+        </div>
+        <div class="modal-body text-center">
+          <a data-bind="attr: { href: homeURL }"
+              class="btn btn-primary"> Refresh & Continue Playing </a>
+        </div>
       </div>
     </div>
   </div>
-</div>
-
-<!-- New Modal -->
-<div class="modal fade" id="newModal" tabindex="-1" role="dialog" aria-labelledby="newModal">
-  <div class="modal-dialog" role="document">
+  <!-- New Modal -->
+  <div class="modal fade"
+      id="newModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="newModal">
+    <div class="modal-dialog"
+        role="document">
       <div class="modal-content container-fluid">
-          <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-              </button>
-              <h4 class="modal-title" data-dismiss="modal">Create a new character or campaign</h4>
-          </div>
-          <div class="modal-body">
-              <p>If you play more than one character,
-                  run multiple campaigns, or do a little of both, you're
-                  in luck! Create a new character or campaign and then use
-                  the "Characters and Games" menu to switch between them.</p>
-          </div>
-          <div class="modal-footer">
-              <button data-bind="click: showWizard"
-                  type="button" data-dismiss="modal"
-                  class="btn btn-primary">Get started!
-              </button>
-          </div>
+        <div class="modal-header">
+          <button type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title"
+              data-dismiss="modal">Create a new character or campaign</h4>
+        </div>
+        <div class="modal-body">
+          <p>If you play more than one character, run multiple campaigns, or do a little of both, you're in luck! Create a new character or campaign and then use the "Characters and Games" menu to switch between them.</p>
+        </div>
+        <div class="modal-footer">
+          <button data-bind="click: showWizard"
+              type="button"
+              data-dismiss="modal"
+              class="btn btn-primary">Get started! </button>
+        </div>
       </div>
+    </div>
   </div>
-</div>
-<user-notifications></user-notifications>
-
-<!-- ko if: shouldShowApp -->
-<div class="container-fluid main">
-  <div style="padding-left: 5%; padding-right: 5%" class="col-xs-12 ">
-  <div id="characters" class="container-fluid characters-module-style">
-    <div class="row">
-      <div class="col-sm-12">
+  <user-notifications></user-notifications>
+  <!-- ko if: shouldShowApp -->
+  <div class="container-fluid main">
+    <div style="padding-left: 15px; padding-right: 15px"
+        class="col-xs-12 ">
+      <!-- ko if: selectedCore() -->
+      <!-- ko if: selectedCore().type.name() == 'character' -->
+      <!-- <div id="characters"
+          class="container-fluid characters-module-style">
         <div class="row">
-          <div class="col-sm-2 col-xs-12">
-            <player-image></player-image>
-          </div>
-          <div class="col-sm-10 col-xs-12 characters-player-name">
-            <player-name></player-name>
-            <div class="row row-padded">
-              <div class="col-xs-12">
-                <!-- ko if: selectedCore() -->
-                  <!-- ko if: selectedCore().type.name() == 'character' -->
-                    <player-status-line params="character: selectedCore"></player-status-line>
-                  <!-- /ko -->
-                  <!-- ko if: selectedCore().type.name() == 'dm' -->
-                    <party-status-line params="character: selectedCore"></party-status-line>
-                  <!-- /ko -->
-                <!-- /ko -->
-              </div>
-            </div>
+          <div class="col-sm-12">
             <div class="row">
-              <party-status></party-status>
+              <div class="col-sm-2 col-xs-12">
+                <player-image></player-image>
+              </div>
+              <div class="col-sm-10 col-xs-12 characters-player-name">
+                <player-name></player-name>
+                <div class="row row-padded">
+                  <div class="col-xs-12">
+                    <player-status-line params="character: selectedCore"></player-status-line>
+                  </div>
+                </div>
+                <div class="row">
+                  <party-status></party-status>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      </div>
-    </div>
-    <div class="spacer"></div>
-      <!-- ko if: selectedCore() -->
-        <!-- ko if: selectedCore().type.name() == 'character' -->
-        <character-root params="activeCharacter: selectedCore"></character-root>
-        <!-- /ko -->
-        <!-- ko if: selectedCore().type.name() == 'dm' -->
-        <dm-root params="activeCharacter: selectedCore"></dm-root>
-        <!-- /ko -->
+      <div class="spacer"></div> -->
+      <character-root params="activeCharacter: selectedCore"></character-root>
       <!-- /ko -->
-	</div>
-</div>
+      <!-- ko if: selectedCore().type.name() == 'dm' -->
+      <div id="characters"
+          class="container-fluid characters-module-style">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="row">
+              <div class="col-sm-2 col-xs-12">
+                <player-image></player-image>
+              </div>
+              <div class="col-sm-10 col-xs-12 characters-player-name">
+                <player-name></player-name>
+                <div class="row row-padded">
+                  <div class="col-xs-12">
+                    <party-status-line params="character: selectedCore"></party-status-line>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-12">
+                    <party-status></party-status>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="spacer"></div>
+      <dm-root params="activeCharacter: selectedCore"></dm-root>
+      <!-- /ko -->
+      <!-- /ko -->
+    </div>
+  </div>
 
-<!-- Switch Characters Modal -->
-<!-- ko if: characterAndGamesModalStatus -->
-<characters params="modalStatus: characterAndGamesModalStatus"></characters>
-<!-- /ko -->
-
-<!-- Party Manager Modal -->
-<div class="modal fade" id="partyModal" tabindex="-1" role="dialog"
-  aria-labelledby="partyModalLabel"
-  data-bind="modal: {
+  <!-- Switch Characters Modal -->
+  <!-- ko if: characterAndGamesModalStatus -->
+  <characters params="modalStatus: characterAndGamesModalStatus"></characters>
+  <!-- /ko -->
+  <!-- Party Manager Modal -->
+  <div class="modal fade"
+      id="partyModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="partyModalLabel"
+      data-bind="modal: {
   open: partyManagerModalStatus,
   onclose: partyModalFinishedClosing
   }">
-  <party-manager></party-manager>
+    <party-manager></party-manager>
+  </div>
+  <!-- Share Modal -->
+  <!-- ko if: shareModalStatus -->
+  <share params="modalStatus: shareModalStatus"></share>
+  <!-- /ko -->
+  <!-- /ko -->
+  <!-- ko if: shouldShowWizard -->
+  <wizard></wizard>
+  <!-- /ko -->
+  <!-- ko if: shouldShowPicker -->
+  <core-picker params="state: state"></core-picker>
+  <!-- /ko -->
 </div>
-
-<!-- Share Modal -->
-<!-- ko if: shareModalStatus -->
-<share params="modalStatus: shareModalStatus"></share>
-<!-- /ko -->
-<!-- /ko -->
-
-<!-- ko if: shouldShowWizard -->
-<wizard></wizard>
-<!-- /ko -->
-
-<!-- ko if: shouldShowPicker -->
-<core-picker params="state: state"></core-picker>
-<!-- /ko -->
-</div>
-
 <!-- Footer -->
 <div class="container-fluid footer">
-  <div style="padding-left: 5%; padding-right: 5%" class="col-xs-12">
+  <div style="padding-left: 5%; padding-right: 5%"
+      class="col-xs-12">
     <div style="text-align: center">
-      <ul class="footer-icons" style="padding:0px;">
+      <ul class="footer-icons"
+          style="padding:0px;">
         <li>
-          <a href="//facebook.com/adventurerscodex" id="footerFacebookLink" target="_blank">
-            <i class="fa fa-facebook social-media" aria-hidden="true"></i>
+          <a href="//facebook.com/adventurerscodex"
+              id="footerFacebookLink"
+              target="_blank">
+            <i class="fa fa-facebook social-media"
+                aria-hidden="true"></i>
           </a>
         </li>
         <li>
-          <a href="//twitter.com/adventurercodex" id="footerTwitterLink" target="_blank">
-            <i class="fa fa-twitter social-media" aria-hidden="true"></i>
+          <a href="//twitter.com/adventurercodex"
+              id="footerTwitterLink"
+              target="_blank">
+            <i class="fa fa-twitter social-media"
+                aria-hidden="true"></i>
           </a>
         </li>
         <li>
-          <a href="//www.reddit.com/r/adventurerscodex/" id="footerRedditLink" target="_blank">
-            <i class="fa fa-reddit social-media" aria-hidden="true"></i>
+          <a href="//www.reddit.com/r/adventurerscodex/"
+              id="footerRedditLink"
+              target="_blank">
+            <i class="fa fa-reddit social-media"
+                aria-hidden="true"></i>
           </a>
         </li>
         <li>
-          <a href="//plus.google.com/105624626079092258118" id="footerGooglePlusLink" target="_blank">
-            <i class="fa fa-google-plus social-media" aria-hidden="true"></i>
+          <a href="//plus.google.com/105624626079092258118"
+              id="footerGooglePlusLink"
+              target="_blank">
+            <i class="fa fa-google-plus social-media"
+                aria-hidden="true"></i>
           </a>
         </li>
         <li>
-          <a href="//github.com/adventurerscodex" id="footerGithubLink" target="_blank">
-            <i class="fa fa-github social-media" aria-hidden="true"></i>
+          <a href="//github.com/adventurerscodex"
+              id="footerGithubLink"
+              target="_blank">
+            <i class="fa fa-github social-media"
+                aria-hidden="true"></i>
           </a>
         </li>
         <li>
-          <a href="//adventurerscodex.com/feed.xml" id="footerRSSLink" target="_blank">
-            <i class="fa fa-rss social-media" aria-hidden="true"></i>
+          <a href="//adventurerscodex.com/feed.xml"
+              id="footerRSSLink"
+              target="_blank">
+            <i class="fa fa-rss social-media"
+                aria-hidden="true"></i>
           </a>
         </li>
         <li>
-          <a href="//tinyletter.com/adventurerscodex" id="footerTinyLetterLink" target="_blank">
-            <i class="fa fa-envelope social-media" aria-hidden="true"></i>
+          <a href="//tinyletter.com/adventurerscodex"
+              id="footerTinyLetterLink"
+              target="_blank">
+            <i class="fa fa-envelope social-media"
+                aria-hidden="true"></i>
           </a>
         </li>
       </ul>
-      <small class="text-muted">
-      &copy; 2016-<span data-bind="text: currentYear"></span> Adventurer's Codex, LLC. All rights reserved.<br />
-      <a href="//adventurerscodex.com"
-         id="footerBlogLink"
-         target='_blank'>Check out our blog</a>&#32;&#32;&#124;&#32;
-      <a href="//adventurerscodex.com/support.html"
-         id="footerContactUsLink"
-         target='_blank'>Contact Us</a> &#32;&#32;&#124;&#32;
-      <a href="https://www.patreon.com/bePatron?u=5313385"
-         id="footerPatreonLink"
-         target='_blank'>Support us on Patreon</a><br />
-      Version: <span data-bind="text: version"></span>,
-        Build Date: <span data-bind="text: buildDate"></span><br/>
-      Autofilled data is distributed under the
-        <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
-           id="footerOGLLink"
-           target='_blank'>
-           OGL</a><br/>
-          Open	Game	License	v	1.0a	Copyright	2000,	Wizards	of	the	Coast,	LLC.
-      </small>
+      <small class="text-muted"> &copy; 2016-<span data-bind="text: currentYear"></span> Adventurer's Codex, LLC. All rights reserved.<br />
+        <a href="//adventurerscodex.com"
+            id="footerBlogLink"
+            target='_blank'>Check out our blog</a>&#32;&#32;&#124;&#32; <a href="//adventurerscodex.com/support.html"
+            id="footerContactUsLink"
+            target='_blank'>Contact Us</a> &#32;&#32;&#124;&#32; <a href="https://www.patreon.com/bePatron?u=5313385"
+            id="footerPatreonLink"
+            target='_blank'>Support us on Patreon</a><br /> Version: <span data-bind="text: version"></span>, Build Date: <span data-bind="text: buildDate"></span><br /> Autofilled data is distributed under the <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
+            id="footerOGLLink"
+            target='_blank'> OGL</a><br /> Open Game License v 1.0a Copyright 2000, Wizards of the Coast, LLC. </small>
     </div>
   </div>
 </div>

@@ -39,6 +39,12 @@ export class Core extends KOModel {
 }
 
 Core.validationConstraints = {
+    fieldParams: {
+        playerName: {
+            required: true,
+            maxlength: 256
+        }
+    },
     rules: {
         playerName: {
             required: true,

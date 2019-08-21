@@ -38,7 +38,7 @@ export var CharacterCardFields = [
         shouldRefresh: () => true
     }, {
         name: 'imageUrl',
-        refreshOn: Notifications.playerImage.changed,
+        refreshOn: Notifications.playerimage.changed,
         shouldRefresh: () => true
     }, {
         name: 'armorClass',
