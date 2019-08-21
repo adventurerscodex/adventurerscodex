@@ -58,9 +58,6 @@ export class ArmorViewModel extends AbstractTabularViewModel {
 
     setUpSubscriptions () {
         super.setUpSubscriptions();
-        this.subscriptions.push(Notifications.armor.added.add(this.addToList));
-        this.subscriptions.push(Notifications.armor.changed.add(this.replaceInList));
-        this.subscriptions.push(Notifications.armor.deleted.add(this.removeFromList));
         this.subscriptions.push(Notifications.armor.added.add(this.handleArmorChange));
         this.subscriptions.push(Notifications.armor.changed.add(this.handleArmorChange));
 

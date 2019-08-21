@@ -75,9 +75,6 @@ export class WeaponsViewModel extends AbstractTabularViewModel {
 
     setUpSubscriptions = () => {
         super.setUpSubscriptions();
-        this.subscriptions.push(Notifications.weapon.added.add(this.addToList));
-        this.subscriptions.push(Notifications.weapon.changed.add(this.replaceInList));
-        this.subscriptions.push(Notifications.weapon.deleted.add(this.removeFromList));
         this.subscriptions.push(Notifications.abilityscore.changed.add(this.updateAbilityScore));
     }
 

@@ -26,12 +26,6 @@ export class ProficienciesViewModel extends AbstractTabularViewModel {
             'type desc': { field: 'type', direction: 'desc'}
         };
     }
-
-    setUpSubscriptions() {
-        this.subscriptions.push(Notifications.proficiency.added.add(this.addToList));
-        this.subscriptions.push(Notifications.proficiency.changed.add(this.replaceInList));
-        this.subscriptions.push(Notifications.proficiency.deleted.add(this.removeFromList));
-    }
 }
 
 ko.components.register('proficiencies', {

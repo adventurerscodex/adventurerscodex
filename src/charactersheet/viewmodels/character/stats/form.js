@@ -29,9 +29,7 @@ export class StatsHealthFormViewModel extends AbstractFormModel {
     }
 
     generateBlank() {
-        const thisClazz = this.modelClass();
-        const newEntity = new thisClazz();
-        return newEntity;
+        return new Health();
     }
 
     async refresh () {

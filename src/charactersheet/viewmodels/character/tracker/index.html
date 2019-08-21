@@ -68,8 +68,7 @@
                         elementId: 'tracked',
                           context: {
                               data: $data,
-                              nameMeta: $component.nameMeta,
-                              replaceInList: $component.replaceInList
+                              nameMeta: $component.nameMeta
                           }
                         }">
             <div class="front">
@@ -99,11 +98,9 @@
               <tracked-form params="{
                                 containerId: elementId,
                                 data: context.data,
-                                modelName: context.data.constructor.name,
                                 show: showBack,
                                 flip: flip,
-                                forceCardResize: forceCardResize,
-                                replaceInParent: context.replaceInList,
+                                forceCardResize: forceCardResize
                                  }">
               </tracked-form>
             </div>
