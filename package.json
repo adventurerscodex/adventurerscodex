@@ -58,7 +58,7 @@
     "knockout-mapping": "^2.6.0",
     "less": "^3.9.0",
     "linkifyjs": "^2.1.5",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.13",
     "lz-string": "^1.4.4",
     "node-uuid": "^1.4.8",
     "random-js": "^1.0.8",
