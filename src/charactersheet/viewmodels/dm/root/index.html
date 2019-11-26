@@ -1,3 +1,4 @@
+
 <ul class="nav nav-tabs tabs">
   <li role="presentation" id="tabOverviewLink" data-bind="click: activateOverviewTab, css: overviewTabStatus">
     <a href="#campaign-header" aria-controls="overview-tab" role="tab" data-toggle="tab" class="tab-subtext">
@@ -23,18 +24,22 @@
       <span class="text-center" id="tabNotesSpan"><small>Notes</small></span>
     </a>
   </li>
+<!--
   <li role="presentation" id="tabPartyLink" data-bind="click: activatePartyTab, css: partyTabStatus">
     <a href="#party-header" aria-controls="party-tab" role="tab" data-toggle="tab" class="tab-subtext">
       <img class="tab-icon" data-bind="attr: { src: partyTabImage }"></img></br>
       <span class="text-center" id="tabPartySpan"><small>Party</small></span>
     </a>
   </li>
+ -->
+<!--
   <li role="presentation" id="tabChatLink" data-bind="click: activateChatTab, css: chatTabStatus">
     <a href="#chat-header" aria-controls="chat-tab" role="tab" data-toggle="tab" class="tab-subtext">
       <img class="tab-icon" data-bind="attr: { src: chatTabImage }"></img></br>
       <span class="text-center" id="tabChatSpan"><small>Chat</small></span>
     </a>
   </li>
+ -->
 </ul>
 <div class="tab-content">
   <div role="tabpanel" class="tab-pane" id="overview-tab" data-bind="css: overviewTabStatus">
@@ -47,12 +52,16 @@
   <div role="tabpanel" class="tab-pane" id="dmscreen-tab" data-bind="css: dmscreenTabStatus">
     <dm-screen></dm-screen>
   </div>
+<!--
   <div role="tabpanel" class="tab-pane" id="party-tab" data-bind="css: partyTabStatus">
     <party></party>
   </div>
+ -->
+<!--
   <div role="tabpanel" class="tab-pane" id="chat-tab" data-bind="css: chatTabStatus">
     <chat params="isActive: chatTabStatus"></chat>
   </div>
+ -->
 <div role="tabpanel" class="tab-pane" id="notes" data-bind="css: notesTabStatus">
   <div class="row">
     <div class="col-sm-12 col-padded">

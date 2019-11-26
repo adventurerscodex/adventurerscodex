@@ -18,7 +18,7 @@
   <!-- Begin Nav -->
   <nav class="navbar navbar-default navbar-static-top">
     <div class="container-fluid">
-      <div style="padding-left: 15px; padding-right: 15px"
+      <div style="padding-left: 5%; padding-right: 5%"
           class="col-xs-12 ">
         <div class="navbar-header">
           <button type="button"
@@ -53,11 +53,13 @@
                   href="#">
                 <i class="fa fa-address-card"></i>&nbsp;&nbsp;Characters and Games </a>
             </li>
+<!--
             <li>
               <a data-bind="click: togglePartyManagerModal"
                   href="#">
                 <i class="fa fa-users"></i>&nbsp;&nbsp;Manage Party </a>
             </li>
+ -->
             <!-- ko if: selectedCore() && selectedCore().type.name() != 'dm' -->
             <li>
               <a data-bind="click: toggleShareModal"
@@ -131,7 +133,7 @@
   <user-notifications></user-notifications>
   <!-- ko if: shouldShowApp -->
   <div class="container-fluid main">
-    <div style="padding-left: 15px; padding-right: 15px"
+    <div style="padding-left: 5%; padding-right: 5%"
         class="col-xs-12 ">
       <!-- ko if: selectedCore() -->
       <!-- ko if: selectedCore().type.name() == 'character' -->
