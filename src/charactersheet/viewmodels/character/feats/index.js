@@ -16,9 +16,7 @@ export class FeatsViewModel extends AbstractTabularViewModel {
 
     sorts() {
         return {
-            ...super.sorts(),
-            'isTracked asc': { field: 'isTracked', direction: 'asc'},
-            'isTracked desc': { field: 'isTracked', direction: 'desc'}
+            ...super.sorts()
         };
     }
 

@@ -46,14 +46,14 @@ ko.components.register('mini-plus-minus', {
         <!-- ko if: !hideDown -->\
         <button type="button" style="padding: 0px; border-width: 0px" class="btn btn-link"\
         data-bind="click: increase">\
-            <i class="fa fa-minus fa-red fa-lg"></i>\
+            <i class="fa fa-minus fa-lg"></i>\
         </button>\
         <!-- /ko -->\
         \
         <!-- ko if: !hideUp -->\
         <button class="btn btn-link" style="padding: 0px; border-width: 0px"\
             data-bind="click: decrease">\
-            <i class="fa fa-plus fa-green fa-lg"> </i></button>\
+            <i class="fa fa-plus fa-lg"> </i></button>\
         <!-- /ko -->\
     </div>'
 });

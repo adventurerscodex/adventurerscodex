@@ -82,7 +82,7 @@ class TrackerViewModel extends AbstractTabularViewModel {
     };
 
     resetsOnImg = (tracked) => {
-        if(tracked().resetsOn() === 'long') {
+        if (tracked().resetsOn() === 'long') {
             return 'rest-icon long-rest-icon';
         } else if (tracked().resetsOn() === 'short') {
             return 'rest-icon short-rest-icon';

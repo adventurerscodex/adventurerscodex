@@ -16,7 +16,6 @@ export class SpellSlot extends KOModel {
     used = ko.observable(0);
     resetsOn = ko.observable('long');
     color = ko.observable('');
-    usesDisplay = ko.observable('');
 
     spellSlots = ko.pureComputed(() => {
         return this.getMaxSpellSlots() - this.getUsedSpellSlots();
@@ -32,6 +31,10 @@ export class SpellSlot extends KOModel {
 
     getUsedSpellSlots() {
         return this.used() ? parseInt(this.used()) : 0;
+    }
+
+    usesDisplay = () => {
+        return (this.max() - this.used()) + '/' + this.max();
     }
 
     load = async (params) => {

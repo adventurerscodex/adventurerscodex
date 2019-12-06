@@ -20,12 +20,12 @@
               data-bind="checked: filteredByCastable"/>
           <label for="filterByCastable" class="clickable"></label>
         </th>
+        <th data-bind="click: ()=> {sortBy('name');}" class="col-xs-3">
+          Spell <span data-bind="css: sortArrow('name')"></span>
+        </th>
         <th class="ac-table-data-cell col-xs-1"
           data-bind="click: () => {sortBy('level');}">
           Level <span data-bind="css: sortArrow('level')"></span>
-        </th>
-        <th data-bind="click: ()=> {sortBy('name');}" class="col-xs-3">
-          Spell <span data-bind="css: sortArrow('name')"></span>
         </th>
         <th class="hidden-xs col-sm-2"
           data-bind="click: () => {sortBy('typeLabel');}">
@@ -72,15 +72,15 @@
           <span class="glyphicon glyphicon-ok-sign"></span>
           <!-- /ko -->
         </td>
-        <td class="ac-table-data-cell">
-          <span data-bind="text: levelLabel"></span>
-        </td>
         <td>
           <span data-bind="text: $component.shortText(name)"></span>
           <!-- ko if: isConcentration -->
           <span style="color: #18bc9c"
               class="glyphicon glyphicon-copyright-mark"></span>
           <!-- /ko -->
+        </td>
+        <td class="ac-table-data-cell">
+          <span data-bind="text: levelLabel"></span>
         </td>
         <td class="hidden-xs">
           <span data-bind="html: $component.spellTypeLabel($data)"></span>
@@ -164,12 +164,12 @@
                           <th>Components:</th>
                           <td>
                             <span data-bind="text: components"></span>
-                            <span data-bind="visible: materialComponents">
-                              &nbsp;
-                              <small>
-                                (<i data-bind="text: materialComponents"></i>)
-                              </small>
-                            </span>
+                          </td>
+                        </tr>
+                        <tr data-bind="visible: materialComponents">
+                          <th>Material Components:</th>
+                          <td>
+                            <span data-bind="text: materialComponents"></span>
                           </td>
                         </tr>
                       </tbody>

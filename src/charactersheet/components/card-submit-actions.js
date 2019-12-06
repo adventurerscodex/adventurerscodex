@@ -31,7 +31,7 @@ ko.components.register('card-submit-actions', {
     template: '\
     <div class="btn-group edit-btn" role="group" aria-label="actionButtons">\
       <button class="btn btn-link" data-bind="click: clickReset" type="reset">\
-        <span class="fa fa-color fa-undo fa-color-hover" aria-hidden="true"></span>\
+        <span class="fa fa-color fa-times-circle fa-color-hover" aria-hidden="true"></span>\
       </button>\
       <button class="btn btn-link" type="submit" value="submit">\
         <span class="fa fa-color fa-floppy-o fa-color-hover-success" aria-hidden="true"></span>\

@@ -3,12 +3,6 @@
   <table class="table table-responsive table-ac-bordered table-hover">
     <thead class="ac-table-header">
       <tr>
-        <th class="col-xs-2" data-bind="click: function(){sortBy('isTracked');}">
-          <span style="opacity: .9; color: #18bc9c"
-            class="glyphicon glyphicon-time clickable"
-            aria-hidden="true"></span>
-          <span data-bind="css: sortArrow('isTracked')"></span>
-        </th>
         <th data-bind="click: function(){sortBy('name');}" class="col-xs-6">
           <span class="clickable">Trait</span>
           <span data-bind="css: sortArrow('name')"></span>
@@ -34,12 +28,6 @@
           class="clickable expandRow"
           data-bind="attr:{'data-target': `#trait_list_${uuid()}`, id: `#trait_row_${uuid()}`}">
         <td>
-          <span data-bind="visible: isTracked"
-            style="opacity: .9; color: #18bc9c"
-            class="glyphicon glyphicon-time"
-            aria-hidden="true"></span>
-        </td>
-        <td>
           <span data-bind="text: $component.shortText(name)"></span>
         </td>
         <td>
@@ -63,22 +51,32 @@
             <div class="front"
                 data-bind="with: context.data">
               <card-edit-actions params="{ flip: $parent.flip }"></card-edit-actions>
-              <div class="h4 collapsable-card-title">
-                <div data-bind="text:name"></div>
-                <small><span data-bind="text: race"></span></small>
+              <div>
+                <div class="h4 collapsable-card-title">
+                  <div data-bind="text:name"></div>
+                  <small><span data-bind="text: race"></span></small>
+                </div>
                 <!-- ko if: isTracked -->
-                <div data-bind="with: tracked">
-                  <small>
-                    Max uses: <span data-bind="text: max"></span>
-                  </small><br>
-                  <small>
-                    <span data-bind="visible: resetsOn() == 'long'">
-                      Resets on: Long Rest
-                    </span>
-                    <span data-bind="visible: resetsOn() == 'short'">
-                      Resets on: Short Rest
-                    </span>
-                  </small>
+                <div data-bind="with: tracked" class="rest-description" style="padding-left: 15px;">
+                  <table>
+                    <tr>
+                      <td width="10%" style="text-align:center">
+                        <span style="opacity: .9; color: #2c3e50;"
+                          class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                      </td>
+                      <td>
+                          Max uses: <span data-bind="text: max"></span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td width="10%" style="text-align:center">
+                          <span data-bind="attr: {'class': resetsOnImg()}" aria-hidden="true"></span>
+                      </td>
+                      <td>
+                          Resets on:&nbsp;<span data-bind="text: resetsOnDescription()"></span>
+                      </td>
+                    </tr>
+                  </table>
                 </div>
                 <!-- /ko -->
               </div>

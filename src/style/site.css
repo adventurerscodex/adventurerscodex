@@ -1724,7 +1724,7 @@ hr.ac-table-header {
 }
 
 .rest-description {
-  text-align: center;
+  text-align: left;
 }
 .rest-description .rest-icon {
   vertical-align: bottom;
@@ -1741,7 +1741,7 @@ hr.ac-table-header {
 
 
 .trackedRow .long-rest-icon,
-.rest-description .long-rest-icon  {
+.rest-description .long-rest-icon {
   background: url('../images/camping-tent-blue.svg');
 }
 

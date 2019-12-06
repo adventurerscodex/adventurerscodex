@@ -7,14 +7,37 @@ import ko from 'knockout';
 export class Tracked {
 
     mapping = {
-        include: ['max', 'used', 'resetsOn', 'type', 'usesDisplay']
+        include: ['max', 'used', 'resetsOn', 'type']
     };
 
     max = ko.observable(0);
     used = ko.observable(0);
     resetsOn = ko.observable('long');
     type = ko.observable(null);
-    usesDisplay = ko.observable('');
+
+    usesDisplay = () => {
+        return (this.max() - this.used()) + '/' + this.max();
+    }
+
+    resetsOnImg = () => {
+        if (this.resetsOn() === 'long') {
+            return 'rest-icon long-rest-icon';
+        } else if (this.resetsOn() === 'short') {
+            return 'rest-icon short-rest-icon';
+        } else {
+            throw 'Unexpected feature resets on string.';
+        }
+    };
+
+    resetsOnDescription = () => {
+        if (this.resetsOn() === 'long') {
+            return 'Long Rest';
+        } else if (this.resetsOn() === 'short') {
+            return 'Short Rest';
+        } else {
+            throw 'Unexpected feature resets on string.';
+        }
+    };
 
     equals(tracked) {
         return (ko.utils.unwrapObservable(this.max) === ko.utils.unwrapObservable(tracked.max)

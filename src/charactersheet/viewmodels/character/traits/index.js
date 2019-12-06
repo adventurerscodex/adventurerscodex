@@ -23,9 +23,7 @@ export class TraitsViewModel extends AbstractTabularViewModel {
         return {
             ...super.sorts(),
             'race asc': { field: 'race', direction: 'asc' },
-            'race desc': { field: 'race', direction: 'desc' },
-            'isTracked asc': { field: 'isTracked', direction: 'asc'},
-            'isTracked desc': { field: 'isTracked', direction: 'desc'}
+            'race desc': { field: 'race', direction: 'desc' }
         };
     }
 
