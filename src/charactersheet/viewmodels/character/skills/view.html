@@ -4,16 +4,19 @@
     <tr>
       <th data-bind="click: () => {$component.sortBy('proficiency');}"
           style="min-width: 40px">
-        <span class="glyphicon glyphicon-ok" /><span data-bind="css: $component.sortArrow('proficiency')" />
+        <span class="glyphicon glyphicon-ok clickable"></span>
+        <span data-bind="css: $component.sortArrow('proficiency')" />
       </th>
-      <th data-bind="click: () => {$component.sortBy('name');}"> Skill&nbsp;<span data-bind="css: $component.sortArrow('name')" />
+      <th data-bind="click: () => {$component.sortBy('name');}">
+        <span class="clickable">Skill</span>
+        <span data-bind="css: $component.sortArrow('name')"></span>
       </th>
       <th class="ac-table-data-cell"> Modifier </th>
       <th class="ac-table-data-cell"> Passive </th>
     </tr>
   </thead>
   <!-- ko ifnot: loaded(), completeOn: 'render' -->
-  <tbody><tr><td colspan=4><div class="loader-wrapper"><div class="loader"></div></div></td></tr></tbody>
+  <tbody><tr><td colspan="4"><div class="loader-wrapper"><div class="loader"></div></div></td></tr></tbody>
   <!-- /ko -->
   <!-- ko if: loaded(), completeOn: 'render' -->
   <tbody>
@@ -23,15 +26,20 @@
         <prof-marker params="proficiency: proficiency"></prof-marker>
       </td>
       <td>
-        <span data-bind="text: $component.shortText(name)" />
+        <span data-bind="text: $component.shortText(name)"></span>
+        <i><small class="skills-ability-type">
+          (<span data-bind="text: abilityScore().abbreviation()"></span>)
+        </small></i>
       </td>
       <td class="ac-table-data-cell"
           style="white-space: nowrap">
-        <strong><span data-bind="text: $component.bonusLabel(bonus)" /></strong> <i><small class="skills-ability-type">(<span data-bind="text: abilityScore().abbreviation()" />)</small></i>
+        <strong>
+          <span data-bind="text: $component.bonusLabel(bonus)"></span>
+        </strong>
       </td>
       <td class="ac-table-data-cell">
         <span style="color: #666"
-            data-bind="text: passiveBonus" />
+            data-bind="text: passiveBonus"></span>
       </td>
     </tr>
     <!-- /ko -->

@@ -51,25 +51,27 @@
     <table class="table table-responsive table-ac-bordered table-hover score-save-table">
       <thead class="ac-table-header">
         <tr>
-          <th> Prof </th>
+          <th> Prof. </th>
           <th> Ability </th>
-          <th> Modify </th>
+          <th> Modifier </th>
         </tr>
       </thead>
       <tbody>
         <!-- ko foreach: $component.order -->
         <tr data-bind="with: $component.findSaveByName($data)">
           <td>
-            <input type='checkbox'
-                class='ac-checkbox sr-only'
+            <input type="checkbox"
+                class="ac-checkbox sr-only"
                 data-bind="checked: proficiency,
                    event: { change: $component.updateEntity,
                             blur: $component.reviewInput,
                             invalid: $component.invalidate },
                    attr: { id: `savingThrow-${name()}-proficiency`,
                            name: `savingThrow-${name()}-proficiency`,
-                           ...$component.validation.SavingThrow.proficiency }"></input>
-            <label data-bind="attr: { for: `savingThrow-${name()}-proficiency`}">
+                           ...$component.validation.SavingThrow.proficiency }"/>
+            <label data-bind="attr: { for: `savingThrow-${name()}-proficiency`}"
+                    class="clickable">
+            </label>
           </td>
           <td data-bind="text: name"></td>
           <td>
@@ -81,7 +83,7 @@
                              blur: $component.reviewInput,
                              invalid: $component.invalidate },
                     attr: { name: `savingThrow-${name()}-modifier`,
-                           ...$component.validation.SavingThrow.modifier }"></input>
+                           ...$component.validation.SavingThrow.modifier }"/>
           </td>
         </tr>
         <!-- /ko -->

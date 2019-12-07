@@ -5,20 +5,30 @@
   <table class="table table-responsive table-ac-bordered table-hover">
     <thead>
       <tr class="ac-table-header">
-        <th data-bind="click: function(){sortBy('name');}"> Weapon <span data-bind="css: sortArrow('name')"></span>
+        <th data-bind="click: function(){sortBy('name');}"
+          class="col-xs-3">
+          Weapon
+          <span data-bind="css: sortArrow('name')"></span>
         </th>
-        <th data-bind="click: function(){sortBy('totalBonus');}"> To Hit <span data-bind="css: sortArrow('totalBonus')"></span>
+        <th data-bind="click: function(){sortBy('totalBonus');}"
+          class="col-xs-1">
+          To Hit
+          <span data-bind="css: sortArrow('totalBonus')"></span>
         </th>
-        <th data-bind="click: function(){sortBy('damageType');}"> Damage <span data-bind="css: sortArrow('damage')"></span>
+        <th data-bind="click: function(){sortBy('damageType');}"
+          class="col-xs-2">
+          Damage
+          <span data-bind="css: sortArrow('damage')"></span>
         </th>
-        <th class="hidden-xs"
-            data-bind="click: function(){sortBy('range');}"> Range <span data-bind="css: sortArrow('range')"></span>
+        <th class="hidden-xs col-sm-2"
+          data-bind="click: function(){sortBy('range');}">
+          Range
+          <span data-bind="css: sortArrow('range')"></span>
         </th>
-        <th class="hidden-xs  hidden-sm"
-            data-bind="click: function(){sortBy('property');}"> Property <span data-bind="css: sortArrow('property')"></span>
-        </th>
-        <th class="hidden-xs"
-            data-bind="click: function(){sortBy('quantity');}"> Quantity <span data-bind="css: sortArrow('quantity')"></span>
+        <th class="hidden-xs hidden-sm col-md-3"
+          data-bind="click: function(){sortBy('property');}">
+          Property
+          <span data-bind="css: sortArrow('property')"></span>
         </th>
         <th class="col-xs-1 text-right">
           <a href="#"
@@ -29,7 +39,15 @@
       </tr>
     </thead>
     <!-- ko ifnot: loaded(), completeOn: 'render' -->
-    <tbody><tr><td colspan=7><div class="loader-wrapper"><div class="loader"></div></div></td></tr></tbody>
+    <tbody>
+      <tr>
+        <td colspan="7">
+          <div class="loader-wrapper">
+            <div class="loader"></div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
     <!-- /ko -->
     <!-- ko if: loaded(), completeOn: 'render' -->
     <tbody>
@@ -50,11 +68,8 @@
         <td class="hidden-xs">
           <span data-bind="text: weaponRangeLabel"></span>
         </td>
-        <td class="hidden-xs  hidden-sm">
+        <td class="hidden-xs hidden-sm">
           <span data-bind="text: $component.shortText(property)"></span>
-        </td>
-        <td class="hidden-xs">
-          <span data-bind="text: quantity"></span>
         </td>
         <td class="col-xs-1 text-right">
           <span data-toggle="collapse"
@@ -82,69 +97,76 @@
                   <strong data-bind="text: magicalModifierLabel"></strong>
                 </div>
                 <div class="panel-body row">
-                  <div class="col col-sm-6 col-md-4 col-lg-3">
+                  <div class="col-sm-6 col-xs-12">
                     <table class="weaponDetail table table-hover table-condensed table-ac-bordered">
                       <tbody>
                         <tr>
-                          <th style="width: 40%">To Hit:</th>
-                          <td>
+                          <th class="col-xs-5">To Hit:</th>
+                          <td class="col-xs-7">
                             <strong data-bind="text: $parent.context.weaponBonusLabel($data)"></strong>
                           </td>
                         </tr>
                         <tr>
-                          <th style="width: 40%">Damage:</th>
+                          <th>Damage:</th>
                           <td>
                             <strong data-bind="text: damage"></strong>
                           </td>
                         </tr>
                         <tr>
-                          <th style="width: 40%">Damage Type:</th>
+                          <th>Damage Type:</th>
                           <td>
                             <span data-bind="text: damageType"></span>
                             <span data-bind="css: weaponDamageIcon"></span>
                           </td>
                         </tr>
                         <tr>
-                          <th style="width: 40%">Type:</th>
+                          <th>Type:</th>
                           <td><span data-bind="text: type"></span></td>
                         </tr>
                         <tr>
-                          <th style="width: 40%">Range:</th>
+                          <th>Range:</th>
                           <td><span data-bind="text: weaponRangeLabel"></span></td>
+                        </tr>
+                        <tr>
+                          <th>Price:</th>
+                          <td>
+                            <span data-bind="text: price"></span>
+                            <span data-bind="text: currencyDenomination"></span>
+                          </td>
                         </tr>
                       </tbody>
                     </table>
                   </div>
-                  <div class="col col-sm-6 col-md-4 col-md-push-4 col-lg-3 col-lg-push-6">
+                  <div class="col-sm-6 col-xs-12">
                     <table class="weaponDetail table table-hover table-condensed table-ac-bordered">
                       <tbody>
                         <tr>
-                          <th style="width: 40%">Quantity:</th>
-                          <td><span data-bind="text: quantity"></span></td>
+                          <th class="col-xs-4">Quantity:</th>
+                          <td class="col-xs-8"><span data-bind="text: quantity"></span></td>
                         </tr>
                         <tr>
-                          <th style="width: 40%">Handedness:</th>
+                          <th>Handedness:</th>
                           <td><span data-bind="text: handedness"></span></td>
                         </tr>
                         <tr>
-                          <th style="width: 40%">Property:</th>
+                          <th>Property:</th>
                           <td><span data-bind="text: property"></span></td>
                         </tr>
                         <tr>
-                          <th style="width: 40%">Proficiency:</th>
+                          <th>Proficiency:</th>
                           <td><span data-bind="text: proficiency"></span></td>
                         </tr>
                         <tr>
-                          <th style="width: 40%">Weight:</th>
+                          <th>Weight:</th>
                           <td><span data-bind="text: weaponWeightLabel"></span></td>
                         </tr>
                       </tbody>
                     </table>
                   </div>
-                  <div class="col col-xs-12 col-md-4 col-md-pull-4 col-lg-6 col-lg-pull-3">
+                  <div class="col-xs-12">
+                    <h4>Description</h4>
                     <div data-bind="markdownPreview: weaponDescriptionHTML"
-                        class="card-description"
-                        style="text-align: center">
+                        class="card-description">
                     </div>
                   </div>
                 </div>
@@ -182,10 +204,13 @@
         <td colspan="7">
           <div class="row">
             <div class="col col-xs-4 text-muted">
-              <small class="table-foot-content visible-xs"><span id="weaponTableTotalWeightSpan"
-                    data-bind="text: totalWeight"></span></small>
-              <span class="table-foot-content hidden-xs">Weight: <span id="weaponTableTotalWeightSpan"
-                    data-bind="text: totalWeight"></span></span>
+              <small class="table-foot-content visible-xs">
+                <span id="weaponTableTotalWeightSpanXs"
+                    data-bind="text: totalWeight"></span>
+                </small>
+                <span class="table-foot-content hidden-xs">Weight:
+                  <span id="weaponTableTotalWeightSpan" data-bind="text: totalWeight"></span>
+                </span>
             </div>
             <div class="col col-xs-4">
               <!-- ko ifnot: $component.displayAddForm -->
@@ -204,6 +229,7 @@
               <span class="table-foot-content hidden-xs">Value: <span data-bind="text: totalCost"></span>
               </span>
             </div>
+          </div>
         </td>
       </tr>
     </tfoot>

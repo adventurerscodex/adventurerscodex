@@ -27,7 +27,7 @@ ko.components.register('card-edit-actions', {
     template: '\
     <div class="btn-group edit-btn" role="group" aria-label="actionButtons">\
       <button class="btn btn-link" data-bind="click: $component.clickFlip">\
-        <span class="glyphicon glyphicon-edit" style="color: #204d74" aria-hidden="true"></span>\
+        <span class="fa fa-pencil-square-o fa-color-hover-success fa-color fa-lg clickable" aria-hidden="true"></span>\
       </button>\
     </div>\
     '

@@ -15,11 +15,34 @@ export class Tracked {
     resetsOn = ko.observable('long');
     type = ko.observable(null);
 
+    usesDisplay = () => {
+        return (this.max() - this.used()) + '/' + this.max();
+    }
+
+    resetsOnImg = () => {
+        if (this.resetsOn() === 'long') {
+            return 'rest-icon long-rest-icon';
+        } else if (this.resetsOn() === 'short') {
+            return 'rest-icon short-rest-icon';
+        } else {
+            throw 'Unexpected feature resets on string.';
+        }
+    };
+
+    resetsOnDescription = () => {
+        if (this.resetsOn() === 'long') {
+            return 'Long Rest';
+        } else if (this.resetsOn() === 'short') {
+            return 'Short Rest';
+        } else {
+            throw 'Unexpected feature resets on string.';
+        }
+    };
+
     equals(tracked) {
-        return (
-          ko.utils.unwrapObservable(this.max) === ko.utils.unwrapObservable(tracked.max) &&
-        ko.utils.unwrapObservable(this.used) === ko.utils.unwrapObservable(tracked.used) &&
-        ko.utils.unwrapObservable(this.resetsOn) === ko.utils.unwrapObservable(tracked.resetsOn));
+        return (ko.utils.unwrapObservable(this.max) === ko.utils.unwrapObservable(tracked.max)
+          && ko.utils.unwrapObservable(this.used) === ko.utils.unwrapObservable(tracked.used)
+          && ko.utils.unwrapObservable(this.resetsOn) === ko.utils.unwrapObservable(tracked.resetsOn));
     }
 
     clearValues() {
@@ -30,10 +53,8 @@ export class Tracked {
     }
 
     importValues(values) {
-        // if (!isEmpty(values)) {
         const mapping = ko.mapping.autoignore(this, this.mapping);
         ko.mapping.fromJS(values, mapping, this);
-        // }
     }
 
     exportValues () {

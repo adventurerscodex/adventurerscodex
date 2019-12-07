@@ -57,7 +57,7 @@ ko.components.register('form-submit-actions', {
             </i>\
         <sm>\
       </p>\
-      <div class="col col-xs-12">\
+      <div class="col-xs-12" style="padding: 0px;">\
         <div data-bind="if: $component.showDelete()" class="pull-left">\
           <button class="btn btn-sm btn-danger"\
                   type="button"\

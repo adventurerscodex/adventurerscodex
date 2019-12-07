@@ -3,7 +3,9 @@
   <table class="table table-responsive table-ac-bordered table-hover">
     <thead class="ac-table-header">
       <tr>
-        <th data-bind="click: function(){sortBy('name');}"> Feat <span data-bind="css: sortArrow('name')"></span>
+        <th class="col-xs-9" data-bind="click: function(){sortBy('name');}">
+          <span class="clickable">Feat</span>
+          <span data-bind="css: sortArrow('name')"></span>
         </th>
         <th class="col-xs-1 text-right">
           <a href="#"
@@ -13,7 +15,7 @@
       </tr>
     </thead>
     <!-- ko ifnot: loaded(), completeOn: 'render' -->
-    <tbody><tr><td colspan=2><div class="loader-wrapper"><div class="loader"></div></div></td></tr></tbody>
+    <tbody><tr><td colspan="2"><div class="loader-wrapper"><div class="loader"></div></div></td></tr></tbody>
     <!-- /ko -->
     <!-- ko if: loaded(), completeOn: 'render' -->
     <tbody>
@@ -23,10 +25,6 @@
           data-bind="attr:{'data-target': `#feat_list_${uuid()}`, id: `#feat_row_${uuid()}`}">
         <td>
           <span data-bind="text: $component.shortText(name)"></span>
-          <span data-bind="visible: isTracked"
-              style="opacity: .9; color: #18bc9c"
-              class="glyphicon glyphicon-time"
-              aria-hidden="true"></span>
         </td>
         <td class="col-xs-1 text-right">
           <span data-toggle="collapse"
@@ -43,22 +41,36 @@
                 elementId: 'feat_list',
                 context: { data: $data }
               }">
-            <div class="front"
-                data-bind="with: context.data">
+            <div class="front" data-bind="with: context.data">
               <card-edit-actions params="{ flip: $parent.flip }"></card-edit-actions>
-              <div class="h4 collapsable-card-title">
-                <span data-bind="text: name"></span>
+              <div>
+                <div class="h4 collapsable-card-title">
+                  <span data-bind="text: name"></span>
+                </div>
+                <!-- ko if: isTracked -->
+                <div data-bind="with: tracked" class="rest-description" style="padding-left: 15px;">
+                  <table>
+                    <tr>
+                      <td width="10%" style="text-align:center">
+                        <span style="opacity: .9; color: #2c3e50;"
+                          class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                      </td>
+                      <td>
+                          Max uses: <span data-bind="text: max"></span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td width="10%" style="text-align:center">
+                          <span data-bind="attr: {'class': resetsOnImg()}" aria-hidden="true"></span>
+                      </td>
+                      <td>
+                          Resets on:&nbsp;<span data-bind="text: resetsOnDescription()"></span>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                <!-- /ko -->
               </div>
-              <!-- ko if: isTracked -->
-              <div data-bind="with: tracked" class="panel-footer rest-description">
-                <span
-                    style="opacity: .9; color: #18bc9c"
-                    class="glyphicon glyphicon-time"
-                    aria-hidden="true" /> Max uses: <strong data-bind="text: max" />.
-                    <span data-bind="visible: resetsOn() == 'long'">Resets on Long Rest <span class="rest-icon long-rest-icon" aria-hidden="true" /> </span>
-                    <span data-bind="visible: resetsOn() == 'short'">Resets on Short Rest <span class="rest-icon short-rest-icon" aria-hidden="true" /> </span>
-              </div>
-              <!-- /ko -->
               <div class="panel-body">
                 <!-- ko if: description -->
                 <div class="card-description"
@@ -96,14 +108,13 @@
              }"></feat-form>
           </div>
           <!-- ko ifnot: $component.displayAddForm -->
-          <center>
-            <button type="button"
-                class="btn btn-link btn-sm btn-block"
-                id="proficiencyAddButton"
-                data-toggle="collapse"
-                data-target="#add-feat"
-                data-bind="click: $component.toggleShowAddForm"><i class="fa fa-plus"></i> Add Feat</button>
-          </center>
+          <button type="button"
+              class="btn btn-link btn-sm btn-block"
+              id="proficiencyAddButton"
+              data-toggle="collapse"
+              data-target="#add-feat"
+              data-bind="click: $component.toggleShowAddForm">
+              <i class="fa fa-plus"></i> Add New Feat</button>
           <!-- /ko -->
         </td>
       </tr>
