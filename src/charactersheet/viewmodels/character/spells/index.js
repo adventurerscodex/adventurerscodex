@@ -111,29 +111,29 @@ class SpellbookViewModel extends AbstractTabularViewModel {
 
     spellTypeLabel = (spell) => {
         switch(spell.type()) {
-        case 'Savings Throw': {
-            return (
-              `Save vs <strong>${spell.spellSaveAttribute()}</strong>` +
-              ` <span class="small">DC:<strong>${this.spellStats().spellSaveDc()}</strong></span>`);
-        }
-        case 'Melee Spell Attack': {
-            const spellAttackLabel = this.spellStats().spellAttackBonus();
-            let sign = ' +';
-            if (parseInt(spellAttackLabel) < 0 ) {
-                sign = ' -';
+            case 'Savings Throw': {
+                return (
+                `Save vs <strong>${spell.spellSaveAttribute()}</strong>` +
+                ` <span class="small">DC:<strong>${this.spellStats().spellSaveDc()}</strong></span>`);
             }
-            return (`Melee Spell: <strong>${sign}${spellAttackLabel}</strong>`);
-        }
-        case 'Ranged Spell Attack': {
-            const spellAttackLabel = this.spellStats().spellAttackBonus();
-            let sign = ' +';
-            if (parseInt(spellAttackLabel) < 0 ) {
-                sign = ' -';
+            case 'Melee Spell Attack': {
+                const spellAttackLabel = this.spellStats().spellAttackBonus();
+                let sign = ' +';
+                if (parseInt(spellAttackLabel) < 0 ) {
+                    sign = ' -';
+                }
+                return (`Melee Spell: <strong>${sign}${spellAttackLabel}</strong>`);
             }
-            return (`Ranged Spell: <strong>${sign}${spellAttackLabel}</strong>`);
-        }
-        default:
-            return spell.type();
+            case 'Ranged Spell Attack': {
+                const spellAttackLabel = this.spellStats().spellAttackBonus();
+                let sign = ' +';
+                if (parseInt(spellAttackLabel) < 0 ) {
+                    sign = ' -';
+                }
+                return (`Ranged Spell: <strong>${sign}${spellAttackLabel}</strong>`);
+            }
+            default:
+                return spell.type();
         }
     };
 

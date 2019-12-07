@@ -39,9 +39,9 @@
       <textarea type="text"
           rows="6"
           class="form-control"
-          data-bind='value: description,
+          data-bind="value: description,
                 event: { blur: $component.reviewInput, invalid: $component.invalidate },
-                markdownEditor: true'></textarea>
+                markdownEditor: true"></textarea>
       <small class="text-muted"> Text in this panel can be styled using Markdown. Click <a target="_blank"
             href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">here</a> to see a guide. </small>
       <!-- /ko -->
@@ -49,7 +49,7 @@
     <div class="form-group">
       <input type="checkbox"
           class="ac-checkbox sr-only"
-          data-bind="checked: isTracked, attr: {id: `${$component.containerId}_tracked`}"></input>
+          data-bind="checked: isTracked, attr: {id: `${$component.containerId}_tracked`}"/>
       <label data-bind="attr: {for: `${$component.containerId}_tracked`}"> Tracked? </label>&nbsp;<a class="fa fa-info-circle statsPopover"
           data-bind="popover: { content: $component.popoverText }" role="button" tabindex="0"></a>
     </div>

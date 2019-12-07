@@ -92,47 +92,34 @@ export class Spell extends KOModel {
 
     spellDamageIcon = ko.pureComputed(() => {
         switch(this.damageType().toLowerCase()) {
-        case 'fire': {
-            return 'damage-icon damage-fire';
-        }
-        case 'cold': {
-            return 'damage-icon damage-cold';
-        }
-        case 'lightning': {
-            return 'damage-icon damage-lightning';
-        }
-        case 'thunder': {
-            return 'damage-icon damage-thunder';
-        }
-        case 'poison': {
-            return 'damage-icon damage-poison';
-        }
-        case 'acid': {
-            return 'damage-icon damage-acid';
-        }
-        case 'psychic': {
-            return 'damage-icon damage-psychic';
-        }
-        case 'necrotic': {
-            return 'damage-icon damage-necrotic';
-        }
-        case 'radiant': {
-            return 'damage-icon damage-radiant';
-        }
-        case 'force': {
-            return 'damage-icon damage-force';
-        }
-        case 'bludgeoning': {
-            return 'damage-icon damage-bludgeoning';
-        }
-        case 'piercing': {
-            return 'damage-icon damage-piercing';
-        }
-        case 'slashing': {
-            return 'damage-icon damage-slashing';
-        }
-        default:
-            return '';
+            case 'fire':
+                return 'damage-icon damage-fire';
+            case 'cold':
+                return 'damage-icon damage-cold';
+            case 'lightning':
+                return 'damage-icon damage-lightning';
+            case 'thunder':
+                return 'damage-icon damage-thunder';
+            case 'poison':
+                return 'damage-icon damage-poison';
+            case 'acid':
+                return 'damage-icon damage-acid';
+            case 'psychic':
+                return 'damage-icon damage-psychic';
+            case 'necrotic':
+                return 'damage-icon damage-necrotic';
+            case 'radiant':
+                return 'damage-icon damage-radiant';
+            case 'force':
+                return 'damage-icon damage-force';
+            case 'bludgeoning':
+                return 'damage-icon damage-bludgeoning';
+            case 'piercing':
+                return 'damage-icon damage-piercing';
+            case 'slashing':
+                return 'damage-icon damage-slashing';
+            default:
+                return '';
         }
     }, this);
 

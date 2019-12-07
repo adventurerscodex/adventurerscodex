@@ -14,6 +14,12 @@ export class FeatsViewModel extends AbstractTabularViewModel {
         autoBind(this);
     }
 
+    sorts() {
+        return {
+            ...super.sorts()
+        };
+    }
+
     modelClass() {
         return Feat;
     }

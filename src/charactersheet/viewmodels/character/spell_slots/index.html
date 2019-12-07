@@ -2,10 +2,24 @@
   <div class="h4 card-title"> Spell Slots<br />
     <small>These slots are configurable to reset on a short or long rest. Click on a slot to edit it.</small>
   </div>
-  <hr class="ac-table-header" />
   <table class="table table-responsive table-ac-bordered">
+    <thead class="ac-table-header">
+      <tr>
+        <th data-bind="click: ()=> {sortBy('level');}" class="col-sm-2 col-lg-1 text-center">
+            Level<i data-bind="css: sortArrow('level')"></i>
+          </th>
+          <th class="hidden-xs col-sm-1 text-center">Resets&nbsp;On</th>
+          <th class="col-sm-7 col-lg-8" colspan="3"></th>
+          <th class="text-center col-sm-1">Used</th>
+          <th class="col-sm-1 text-right">
+            <a href="#"
+                data-bind="{click: collapseAll}">
+              <span class="fa fa-minus"></span></a>
+          </th>
+      </tr>
+    </thead>
     <!-- ko ifnot: loaded(), completeOn: 'render' -->
-    <tbody><tr><td><div class="loader-wrapper"><div class="loader"></div></div></td></tr></tbody>
+    <tbody><tr><td colspan="8"><div class="loader-wrapper"><div class="loader"></div></div></td></tr></tbody>
     <!-- /ko -->
     <!-- ko if: loaded(), completeOn: 'render' -->
     <tbody>
@@ -13,30 +27,31 @@
       <tr class="clickable expandRow trackedRow"
           data-toggle="collapse"
           data-bind="attr:{'data-target': `#spell_slot_${uuid()}`}">
-        <td style="padding: 6px; width: 10%">Lvl&nbsp;<span data-bind="text: level"></span>
+        <td style="padding: 6px;" class="text-center">
+          <span data-bind="text: level"></span>
         </td>
-        <td style="padding: 6px; width: 10%"
-            class="hidden-xs">
+        <td style="padding: 6px;"
+            class="hidden-xs text-center">
           <div data-bind="attr: {'class': $component.resetsOnImg($data)}"></div>
         </td>
-        <td style="padding: 6px; width: 5%">
+        <td style="padding: 6px;">
           <mini-plus-minus params="value: used,
                     max: max, hideUp: true, onChange: ()=>{$component.onUsedChange($data)}">
           </mini-plus-minus>
         </td>
-        <td style="padding: 6px; width: 5%">
+        <td style="padding: 6px;">
+          <div style="padding: 10px"
+          data-bind="barProgress: $component.mapToChart({max, used, level})"> </div>
+        </td>
+        <td style="padding: 6px;">
           <mini-plus-minus params="value: used,
                     max: max, hideDown: true, onChange: ()=>{$component.onUsedChange($data)}">
           </mini-plus-minus>
         </td>
-        <td style="padding: 6px; width: auto">
-          <div style="padding: 10px"
-              data-bind="barProgress: $component.mapToChart({max, used, level})"> </div>
+        <td class="text-center">
+          <span data-bind="text: usesDisplay()"></span>
         </td>
-        <td style="padding: 6px; width: 5%">
-          <span data-bind="text: parseInt(max()) - parseInt(used())"></span>&nbsp;/&nbsp;<span data-bind=" text: max"></span>
-        </td>
-        <td style="padding: 6px;" class="col-xs-1 text-right">
+        <td style="padding: 6px;" class="text-right">
           <span data-toggle="collapse"
               data-bind="attr:{'data-target': `#spell_slot_${uuid()}`}"
               class="rotate fa fa-chevron-left"></span>
