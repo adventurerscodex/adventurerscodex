@@ -464,6 +464,14 @@ textarea.dark-area {
   color: lightgray;
 }
 
+.fa-red {
+  color:#e74c3c;
+}
+
+.fa-green {
+  color:#128770;
+}
+
 .feature-row span {
   line-height: 3em;
 }
@@ -1161,7 +1169,7 @@ input[type='checkbox'].filter-checkbox + label:before{/*unchecked icon*/
   content:"\e138";
 }
 input[type='checkbox']:checked.filter-checkbox + label:before{/*checked icon*/
-  color: #2c3e50;
+  color: #5cb85c;
   content:"\e138";
 }
 
@@ -1365,7 +1373,7 @@ transition : height 0.25s ease opacity 0.2s linear;
 
 .panel-body .edit-btn {
   position: absolute;
-  top: -15px;
+  top: -10px;
   right: -15px;
   z-index: 6;
 }
@@ -1720,7 +1728,7 @@ hr.ac-table-header {
 }
 
 .rest-description {
-  text-align: center;
+  text-align: left;
 }
 .rest-description .rest-icon {
   vertical-align: bottom;
@@ -1737,7 +1745,7 @@ hr.ac-table-header {
 
 
 .trackedRow .long-rest-icon,
-.rest-description .long-rest-icon  {
+.rest-description .long-rest-icon {
   background: url('../images/camping-tent-blue.svg');
 }
 
@@ -1778,30 +1786,30 @@ hr.ac-table-header {
 }
 
 .damage-force {
-    background: url('../images/damage_types/ringed-beam.svg');
+    background: url('../images/damage_types/force.svg');
 }
 
 .weaponRow[aria-expanded="true"] .damage-force,
 .spellRow[aria-expanded="true"] .damage-force {
-    background: url('../images/damage_types/ringed-beam-white.svg');
+    background: url('../images/damage_types/force-white.svg');
 }
 
 .damage-necrotic {
-  background: url('../images/damage_types/death-zone.svg');
+  background: url('../images/damage_types/daemon-skull.svg');
 }
 
 .weaponRow[aria-expanded="true"] .damage-necrotic,
 .spellRow[aria-expanded="true"] .damage-necrotic {
-  background: url('../images/damage_types/death-zone-white.svg');
+  background: url('../images/damage_types/daemon-skull-white.svg');
 }
 
 .damage-bludgeoning {
-  background: url('../images/damage_types/flanged-mace.svg');
+  background: url('../images/damage_types/hammer-drop.svg');
 }
 
 .weaponRow[aria-expanded="true"] .damage-bludgeoning,
 .spellRow[aria-expanded="true"] .damage-bludgeoning {
-  background: url('../images/damage_types/flanged-mace-white.svg');
+  background: url('../images/damage_types/hammer-drop-white.svg');
 }
 
 .damage-acid {
@@ -1823,12 +1831,12 @@ hr.ac-table-header {
 }
 
 .damage-lightning {
-  background: url('../images/damage_types/power-lightning.svg');
+  background: url('../images/damage_types/lightning.svg');
 }
 
 .weaponRow[aria-expanded="true"] .damage-lightning,
 .spellRow[aria-expanded="true"] .damage-lightning {
-  background: url('../images/damage_types/power-lightning-white.svg');
+  background: url('../images/damage_types/lightning-white.svg');
 }
 
 .damage-piercing {

@@ -33,6 +33,10 @@ export class SpellSlot extends KOModel {
         return this.used() ? parseInt(this.used()) : 0;
     }
 
+    usesDisplay = () => {
+        return (this.max() - this.used()) + '/' + this.max();
+    }
+
     load = async (params) => {
         const response = await this.ps.model.ps.read(params);
         this.importValues(response.object.exportValues());
@@ -55,7 +59,6 @@ export class SpellSlot extends KOModel {
         await this.ps.delete();
         Notifications.spellslot.deleted.dispatch(this);
     }
-
 }
 
 SpellSlot.validationConstraints = {

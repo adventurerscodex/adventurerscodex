@@ -60,14 +60,6 @@ export class EncounterMagicItem extends KOModel {
         return Utility.string.truncateStringAtLength(this.description(), this.SHORT_DESCRIPTION_MAX_LENGTH);
     });
 
-    magicItemNameLabel = ko.pureComputed(() => {
-        if (this.attuned() === true) {
-            return (this.name() + ' (Attuned)' );
-        } else {
-            return this.name();
-        }
-    });
-
     magicItemWeightLabel = ko.pureComputed(() => {
         return this.weight() !== '' && this.weight() >= 0 ? this.weight() + ' lbs.' : '0 lbs.';
     });
