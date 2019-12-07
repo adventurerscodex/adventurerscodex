@@ -21,6 +21,11 @@ export function CorePickerViewModel(params) {
     };
 
     self.load = async () => {
+        await self.refresh();
+        Notifications.playerimage.changed.add(self.refresh);
+    };
+
+    self.refresh = async () => {
         const response = await Core.ps.list();
 
         // Build the hash of key -> modal open.

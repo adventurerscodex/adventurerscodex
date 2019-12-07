@@ -1,4 +1,3 @@
-import { Clazz } from 'charactersheet/models';
 import { CoreManager } from 'charactersheet/utilities';
 import { DELAY } from 'charactersheet/constants';
 import { defer } from 'lodash';

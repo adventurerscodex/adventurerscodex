@@ -23,12 +23,6 @@ export class FeatsViewModel extends AbstractTabularViewModel {
     modelClass() {
         return Feat;
     }
-
-    setUpSubscriptions() {
-        this.subscriptions.push(Notifications.feat.added.add(this.addToList));
-        this.subscriptions.push(Notifications.feat.changed.add(this.replaceInList));
-        this.subscriptions.push(Notifications.feat.deleted.add(this.removeFromList));
-    }
 }
 
 ko.components.register('feats', {

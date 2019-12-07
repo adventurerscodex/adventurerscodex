@@ -26,13 +26,6 @@ export class TraitsViewModel extends AbstractTabularViewModel {
             'race desc': { field: 'race', direction: 'desc' }
         };
     }
-
-    setUpSubscriptions() {
-        this.subscriptions.push(Notifications.trait.added.add(this.addToList));
-        this.subscriptions.push(Notifications.trait.changed.add(this.replaceInList));
-        this.subscriptions.push(Notifications.trait.deleted.add(this.removeFromList));
-    }
-
 }
 
 ko.components.register('traits', {

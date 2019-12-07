@@ -39,7 +39,7 @@ export var DMCardFields = [
         }
     }, {
         name: 'imageUrl',
-        refreshOn: Notifications.playerImage.changed,
+        refreshOn: Notifications.playerimage.changed,
         valueAccessor: async () => {
             const defaultImage = 'https://www.gravatar.com/avatar/{}?d=mm';
             const imageResponse = await ProfileImage.ps.read({uuid: CoreManager.activeCore().uuid()});

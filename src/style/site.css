@@ -1440,6 +1440,10 @@ transition : height 0.25s ease opacity 0.2s linear;
      padding: 10px;
      white-space: nowrap;
      padding-top: 3px;
+     text-shadow: 1px  1px 1px #2c3e50,
+                 -1px  1px 1px #2c3e50,
+                  1px -1px 1px #2c3e50,
+                 -1px -1px 1px #2c3e50;
     }
 
   #ArmorClassShield > * {
@@ -1935,8 +1939,8 @@ hr.ac-table-header {
   float: initial;
 }
 
-.secondary-nav {
-    text-align: right;
+.navbar ul.dropdown-menu {
+  transform: translateZ(801px);
 }
 
 .tab-pane>.row>.col {
@@ -2028,3 +2032,16 @@ tr .panel {
     transform: rotate(360deg);
   }
 }
+
+.modal-backdrop.in {
+  transform: translateZ(800px);
+}
+
+.modal {
+  transform: translateZ(801px);
+}
+
+.modal-dialog {
+  transform: translateZ(802px);
+}
+
