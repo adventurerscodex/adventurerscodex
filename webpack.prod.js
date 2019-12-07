@@ -7,7 +7,9 @@ const package_ = require('./package.json');
 
 let config = merge(common, {
     mode: 'production',
-    devtool: 'hidden-source-map',
+    // HACKALERT: THIS IS NOT SUITABLE FOR PRODUCTION. DEV SOURCEMAPS HIDE ERRORS
+    // AND THIS NEEDS TO BE ADDRESSED BEFORE SHIPPING.
+    devtool: 'cheap-module-eval-source-map',
     output: {
         filename: '[name].[chunkhash].js'
     },
