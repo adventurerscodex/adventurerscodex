@@ -2,19 +2,27 @@ const webpack = require('webpack');
 const merge = require('webpack-merge');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const common = require('./webpack.common.js');
 const package_ = require('./package.json');
 
 let config = merge(common, {
     mode: 'production',
-    // HACKALERT: THIS IS NOT SUITABLE FOR PRODUCTION. DEV SOURCEMAPS HIDE ERRORS
-    // AND THIS NEEDS TO BE ADDRESSED BEFORE SHIPPING.
-    devtool: 'cheap-module-eval-source-map',
     output: {
         filename: '[name].[chunkhash].js'
     },
     optimization: {
         minimize: true,
+        minimizer: [
+            new TerserPlugin({
+                cache: true,
+                parallel: true,
+                sourceMap: true,
+                terserOptions: {
+                    mangle: false,
+                }
+            })
+        ],
         splitChunks: {
             chunks: 'all'
         }
