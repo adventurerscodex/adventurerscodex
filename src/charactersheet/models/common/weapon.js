@@ -24,7 +24,7 @@ export class Weapon extends KOModel {
     static REACH = 'reach';
 
     coreUuid = ko.observable(null);
-    uuid = ko.observable(null);
+    uuid = ko.observable();
     name = ko.observable('');
     type = ko.observable('');
     damage = ko.observable('');
