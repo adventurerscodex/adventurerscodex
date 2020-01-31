@@ -197,7 +197,7 @@ Item.validationConstraints = {
             max: 1000000
         },
         weight: {
-            number:true,
+            number: true,
             min: 0,
             max: 1000000
         },
