@@ -2045,3 +2045,6 @@ tr .panel {
   transform: translateZ(802px);
 }
 
+.select2-container--open .select2-dropdown--above {
+  transform: translateZ(800px);
+}
