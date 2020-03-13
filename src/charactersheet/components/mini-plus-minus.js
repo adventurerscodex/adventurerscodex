@@ -46,17 +46,17 @@ ko.components.register('mini-plus-minus', {
     viewModel: MiniPlusMinusComponentViewModel,
     template: '\
     <div class="btn-group btn-group-vertical" role="group">\
-        <!-- ko if: !hideUp -->\
+        <!-- ko if: !hideDown -->\
         <button type="button" style="padding: 0px; border-width: 0px" class="btn btn-link"\
-          data-bind="enable: enabled, click: decrease">\
-              <i style="padding: 5px" class="glyphicon glyphicon-menu-up"> </i>\
+        data-bind="click: increase">\
+            <i class="fa fa-minus fa-lg"></i>\
         </button>\
         <!-- /ko -->\
-        <!-- ko if: !hideDown -->\
-        <button type="button" style="padding: 0px;  border-width: 0px" class="btn btn-link"\
-          data-bind="enable: enabled, click: increase">\
-              <i style="padding: 5px" class="glyphicon glyphicon-menu-down"> </i>\
-        </button>\
+        \
+        <!-- ko if: !hideUp -->\
+        <button class="btn btn-link" style="padding: 0px; border-width: 0px"\
+            data-bind="click: decrease">\
+            <i class="fa fa-plus fa-lg"> </i></button>\
         <!-- /ko -->\
     </div>'
 });

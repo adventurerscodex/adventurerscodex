@@ -6,7 +6,8 @@ export class Wealth extends KOModel {
     static __skeys__ = ['core', 'characters', 'wealth'];
 
     static mapping = {
-        include: ['coreUuid']
+        include: ['coreUuid'],
+        ignore: ['worthInGold']
     };
 
     coreUuid = ko.observable(null);
@@ -16,7 +17,7 @@ export class Wealth extends KOModel {
     silver = ko.observable(0);
     copper = ko.observable(0);
 
-    worthInGold = ko.computed(() => {
+    worthInGold = () => {
         const parsedPlatinum = parseInt(this.platinum()) || 0;
         const parsedGold = parseInt(this.gold()) || 0;
         const parsedElectrum = parseInt(this.electrum()) || 0;
@@ -37,6 +38,10 @@ export class Wealth extends KOModel {
         const total = platinumToGold + adjGold;
 
         return total;
+    };
+
+    worthInGoldLabel = ko.pureComputed(() => {
+        return this.worthInGold() + ' (gp)';
     }, this);
 
     totalWeight = ko.pureComputed(() => {

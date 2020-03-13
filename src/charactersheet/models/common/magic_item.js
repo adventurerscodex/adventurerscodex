@@ -51,14 +51,6 @@ export class MagicItem extends KOModel {
         return Utility.string.truncateStringAtLength(this.description(), this.DESCRIPTION_MAX_LENGTH);
     }, this);
 
-    magicItemNameLabel = ko.pureComputed(() => {
-        if (this.attuned() === true) {
-            return (this.name() + ' (Attuned)' );
-        } else {
-            return this.name();
-        }
-    }, this);
-
     magicItemWeightLabel = ko.pureComputed(() => {
         return this.weight() !== '' && this.weight() >= 0 ? this.weight() + ' lbs.' : '0 lbs.';
     }, this);

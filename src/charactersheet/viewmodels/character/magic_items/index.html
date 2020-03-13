@@ -96,7 +96,7 @@
               <card-edit-actions params="{ flip: flip }"></card-edit-actions>
               <div data-bind="with: context.data">
                 <div class="h4 collapsable-card-title">
-                  <span data-bind="text: name"></span>&nbsp;<span data-bind="visible: attuned">(Attuned)</span>
+                  <span data-bind="text: name"></span>
                   <small data-bind="text: rarity"></small>
                 </div>
                 <div class="panel-body row"
@@ -159,7 +159,8 @@
         <td colspan="5">
           <div class="row">
             <div class="col col-xs-4 text-muted">
-              <small class="table-foot-content"> Attuned:<span data-bind="text: numberOfAttuned" />
+              <small class="table-foot-content">
+                Attuned:&nbsp;<span data-bind="text: numberOfAttuned"></span>
               </small>
             </div>
             <div class="col col-xs-4">
@@ -175,10 +176,11 @@
             <div class="col col-xs-4 text-muted text-right">
               <small class="table-foot-content">
                 <span class="visible-xs"
-                    data-bind="text: totalWeight" />
-                <span class="hidden-xs">Weight:<span data-bind="text: totalWeight" /></span>
+                    data-bind="text: totalWeight"></span>
+                <span class="hidden-xs">Weight:&nbsp;<span data-bind="text: totalWeight"></span></span>
               </small>
             </div>
+          </div>
         </td>
       </tr>
     </tfoot>

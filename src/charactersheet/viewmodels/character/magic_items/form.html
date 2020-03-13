@@ -48,7 +48,7 @@
           name="rarity"
           data-bind="value: rarity,
              event: { blur: $component.reviewInput, invalid: $component.invalidate },
-             attr: { ...$component.validation.quantity },
+             attr: { ...$component.validation.rarity },
              autocomplete: { source: $component.rarityOptions,
                              onselect: $component.setMagicItemRarity }">
     </div>

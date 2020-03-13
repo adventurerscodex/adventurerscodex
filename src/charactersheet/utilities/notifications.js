@@ -208,7 +208,7 @@ export var Notifications = {
         }
     },
 
-    playerImage: {
+    playerimage: {
         changed: new Signal()
     },
 

@@ -76,9 +76,8 @@
                 <small>Equipped</small>
                 <!-- /ko -->
               </div>
-              <div data-bind="with: context.data"
-                  class="panel-body row">
-                <div class="col col-sm-5 col-md-12 col-lg-6">
+              <div data-bind="with: context.data" class="row">
+                <div class="col col-sm-5 col-md-12 col-lg-5">
                   <table class="table table-hover table-condensed table-ac-bordered">
                     <tbody>
                       <tr>
@@ -96,6 +95,13 @@
                       <tr>
                         <th>Weight:</th>
                         <td><span data-bind="text: armorWeightLabel"></span></td>
+                      </tr>
+                      <tr>
+                        <th>Price:</th>
+                        <td>
+                          <span data-bind="text: price"></span>
+                          <span data-bind="text: currencyDenomination"></span>
+                        </td>
                       </tr>
                     </tbody>
                   </table>

@@ -21,7 +21,7 @@ export function calculateLoad (
             quantity = 1;
         }
     }
-    return weight * quantity;
+    return Math.round(weight * quantity);
 }
 
 export function calculateTotalLoad (
@@ -45,18 +45,18 @@ const calculateCoinValue = (coin) => {
         return parseFloat(coin);
     }
     switch (`${coin}`.toLowerCase().trim()) {
-    case 'cp':
-        return 0.01;
-    case 'sp':
-        return 0.1;
-    case 'ep':
-        return 0.5;
-    case 'gp':
-        return 1;
-    case 'pp':
-        return 10;
-    default:
-        return 1;
+        case 'cp':
+            return 0.01;
+        case 'sp':
+            return 0.1;
+        case 'ep':
+            return 0.5;
+        case 'gp':
+            return 1;
+        case 'pp':
+            return 10;
+        default:
+            return 1;
     }
 };
 
@@ -86,7 +86,7 @@ export function calculateValue (
             value = 0;
         }
     }
-    return coinValue * quantity * value;
+    return Math.round(coinValue * quantity * value);
 }
 
 

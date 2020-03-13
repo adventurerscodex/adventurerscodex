@@ -1,6 +1,5 @@
+import { CoreManager, Notifications } from 'charactersheet/utilities';
 import { AbstractChildFormModel } from 'charactersheet/viewmodels/abstract';
-import { Clazz } from 'charactersheet/models';
-import { Notifications } from 'charactersheet/utilities';
 import { Tracked } from 'charactersheet/models';
 import { TrackedForm } from 'charactersheet/components/form-tracked-component';
 
@@ -11,21 +10,31 @@ import template from './form.html';
 export class TrackedDetailForm extends AbstractChildFormModel {
     constructor(params) {
         super(params);
-        this.modelName = params.modelName;
         autoBind(this);
     }
 
-    modelClass () {
-        if (!this.modelName) {
-            // TODO: something is causing modelClass to be called more
-            // Than desired, including *before* the constructor
-            // can set a modelName. This is crappy. BUT, its still getting
-            // called correctly .... soo we're leaving to discuss with Brian
-            // throw(`Model Name or modelClass must be implemented by ${this.constructor.name}`);
-            return undefined;
+    modelClass() {
+        if (this.existingData) {
+            return this.existingData.ps.model.name;
         }
-        return Clazz[this.modelName];
+        return;
     }
+
+    generateBlank() {
+      // HACKALERT. generateBlank needs to figure the model type out from the
+      // data for the tracker form. Since the tracker form does not support
+      // the adding of new, arbitrary tracked items, I am accessing the model
+      // from the data directly.
+        if (this.existingData) {
+            // Get a new model so we don't two-way bind data bleed.
+            const newEntity = new this.existingData.ps.model();
+            const coreKey = CoreManager.activeCore().uuid();
+            newEntity.coreUuid(coreKey);
+            return newEntity;
+        }
+        return null;
+    }
+
 
     validation = {
         ...Tracked.validationConstraints.fieldParams

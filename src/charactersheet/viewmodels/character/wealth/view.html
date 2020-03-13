@@ -1,6 +1,6 @@
 <card-edit-actions params="{ flip: $component.flip }"></card-edit-actions>
-<div class="h4 card-title"> Coins<br />
-  <small>Watch for pickpockets</small>
+<div class="h4 card-title">Coins<br />
+  <small>Watch out for pickpockets.</small>
 </div>
 <hr class="ac-table-header" />
 <!-- ko ifnot: loaded(), completeOn: 'render' -->
@@ -65,10 +65,12 @@
   </div>
   <div class="table-foot-content">
     <div class="pull-right text-muted">
-      <small>Total:&nbsp;<span data-bind='text: worthInGold' />&nbsp;(gp)</small>
+      <small>Total:&nbsp;<span id="coinsWorthInGoldLabel"
+                data-bind='text: worthInGoldLabel'></span></small>
     </div>
     <div class="pull-left text-muted">
-      <small>Weight:&nbsp;<span data-bind="text: totalWeightLabel" /></small>
+      <small>Weight:&nbsp;<span id="coinsTotalWeightLabel"
+                data-bind="text: totalWeightLabel"></span></small>
     </div>
   </div>
 </div>

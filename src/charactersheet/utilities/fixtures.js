@@ -269,19 +269,19 @@ export var Fixtures = {
             'Touch',
             'Unlimited'],
         damageTypeOptions: [
-            'acid',
-            'bludgeoning',
-            'cold',
-            'fire',
-            'force',
-            'lightning',
-            'necrotic',
-            'piercing',
-            'poison',
-            'psychic',
-            'radiant',
-            'slashing',
-            'thunder'
+            'Acid',
+            'Bludgeoning',
+            'Cold',
+            'Fire',
+            'Force',
+            'Lightning',
+            'Necrotic',
+            'Piercing',
+            'Poison',
+            'Psychic',
+            'Radiant',
+            'Slashing',
+            'Thunder'
         ]
     },
     spellStats : {

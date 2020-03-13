@@ -56,7 +56,7 @@ export function PlayerImageViewModel() {
 
     self.saveAndNotify = async () => {
         await self.save();
-        Notifications.playerImage.changed.dispatch();
+        Notifications.playerimage.changed.dispatch();
     };
 
     self.dataHasChanged = async () => {
@@ -165,7 +165,6 @@ export function PlayerImageViewModel() {
                 return self.getGravatarUrl();
             }
         }
-
         return '';
     });
 

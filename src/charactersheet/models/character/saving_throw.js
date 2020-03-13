@@ -61,7 +61,6 @@ export class SavingThrow extends KOModel {
         const response = await this.ps.read(params);
         this.importValues(response.object.exportValues());
         // Saving throws have no notification
-        // Notifications.savingThrows.changed.dispatch(this);
     }
 
 
@@ -69,7 +68,6 @@ export class SavingThrow extends KOModel {
         const response = await this.ps.save();
         this.importValues(response.object.exportValues());
         // Saving throws have no notification
-        // Notifications.savingThrows.changed.dispatch(this);
     }
 }
 
