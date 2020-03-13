@@ -19,7 +19,7 @@ export function MiniPlusMinusComponentViewModel(params) {
     self.hideDown = params.hideDown || false;
     self.max = params.max || ko.observable(1000000);
     self.min = params.min || ko.observable(0);
-
+    self.disabled = params.disabled || ko.observable(false);
     self.onChange = params.onChange ? params.onChange : () => {};
 
     self.increase = function(data, event) {
@@ -29,6 +29,10 @@ export function MiniPlusMinusComponentViewModel(params) {
             self.onChange();
         }
     };
+
+    self.enabled = ko.pureComputed(()=> {
+        return !ko.utils.unwrapObservable(self.disabled);
+    });
 
     self.decrease = function(data, event) {
         event.stopPropagation();
@@ -43,17 +47,19 @@ ko.components.register('mini-plus-minus', {
     viewModel: MiniPlusMinusComponentViewModel,
     template: '\
     <div class="btn-group btn-group-vertical" role="group">\
-        <!-- ko if: !hideDown -->\
-        <button type="button" style="padding: 0px; border-width: 0px" class="btn btn-link"\
-        data-bind="click: increase">\
-            <i class="fa fa-minus fa-lg"></i>\
-        </button>\
-        <!-- /ko -->\
-        \
-        <!-- ko if: !hideUp -->\
-        <button class="btn btn-link" style="padding: 0px; border-width: 0px"\
-            data-bind="click: decrease">\
-            <i class="fa fa-plus fa-lg"> </i></button>\
+        <!-- ko if: enabled -->\
+            <!-- ko if: !hideDown -->\
+            <button type="button" style="padding: 0px; border-width: 0px" class="btn btn-link"\
+                data-bind="click: increase">\
+                <i class="fa fa-minus fa-lg"></i>\
+            </button>\
+            <!-- /ko -->\
+            \
+            <!-- ko if: !hideUp -->\
+            <button class="btn btn-link" style="padding: 0px; border-width: 0px"\
+                data-bind="click: decrease">\
+                <i class="fa fa-plus fa-lg"> </i></button>\
+            <!-- /ko -->\
         <!-- /ko -->\
     </div>'
 });

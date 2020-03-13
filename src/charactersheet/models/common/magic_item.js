@@ -62,6 +62,13 @@ export class MagicItem extends KOModel {
         return '';
     }, this);
 
+    cardIcon = ko.pureComputed(()=> {
+        if (this.type()) {
+            return this.type().split(' ')[0].toLowerCase() + '-magic-item-icon';
+        }
+        return '';
+    }, this);
+
     toSchemaValues = (values) => {
         if (values.maxCharges === '') {
             values.maxCharges = 0;

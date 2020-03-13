@@ -41,7 +41,6 @@ Responsive Styles
     }
 }
 
-
 /*
 General Styling
 */
@@ -233,7 +232,6 @@ small {
 .progress-bar-forest {
   background-color: #2F972F !important;
 }
-
 
 /*******
  * Experimental stuff
@@ -683,7 +681,6 @@ body {
  * Modal Fix End
  */
 
-
 /*
 * translate3d fixes a z-index issue on safari
 * this number MUST be greater than the translateZ of the flip card to work
@@ -709,7 +706,6 @@ ul.ui-autocomplete li {
   min-height: 1em;
   font-size: 15px;
 }
-
 
 ul.ui-autocomplete .ui-state-active {
   background: #2c3e50;
@@ -788,8 +784,20 @@ ul.ui-autocomplete .ui-state-active {
   background-position: center;
 }
 
+.armor-magic-item-icon {
+  background-image: url('../images/magic_items_icons_opaque/armor.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 .potion-magic-item-card {
   background-image: url('../images/magic_items_icons/potion.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.potion-magic-item-icon {
+  background-image: url('../images/magic_items_icons_opaque/potion.svg');
   background-repeat: no-repeat;
   background-position: center;
 }
@@ -800,8 +808,20 @@ ul.ui-autocomplete .ui-state-active {
   background-position: center;
 }
 
+.ring-magic-item-icon {
+  background-image: url('../images/magic_items_icons_opaque/ring.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 .rod-magic-item-card {
   background-image: url('../images/magic_items_icons/rod.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.rod-magic-item-icon {
+  background-image: url('../images/magic_items_icons_opaque/rod.svg');
   background-repeat: no-repeat;
   background-position: center;
 }
@@ -812,8 +832,20 @@ ul.ui-autocomplete .ui-state-active {
   background-position: center;
 }
 
+.scroll-magic-item-icon {
+  background-image: url('../images/magic_items_icons_opaque/scroll.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 .staff-magic-item-card {
   background-image: url('../images/magic_items_icons/staff.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.staff-magic-item-icon {
+  background-image: url('../images/magic_items_icons_opaque/staff.svg');
   background-repeat: no-repeat;
   background-position: center;
 }
@@ -824,8 +856,8 @@ ul.ui-autocomplete .ui-state-active {
   background-position: center;
 }
 
-.armor-wand-item-card {
-  background-image: url('../images/magic_items_icons/armor.svg');
+.sword-magic-item-icon {
+  background-image: url('../images/magic_items_icons_opaque/sword.svg');
   background-repeat: no-repeat;
   background-position: center;
 }
@@ -836,14 +868,32 @@ ul.ui-autocomplete .ui-state-active {
   background-position: center;
 }
 
+.wand-magic-item-icon {
+  background-image: url('../images/magic_items_icons_opaque/wand.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 .weapon-magic-item-card {
   background-image: url('../images/magic_items_icons/weapon.svg');
   background-repeat: no-repeat;
   background-position: center;
 }
 
+.weapon-magic-item-icon {
+  background-image: url('../images/magic_items_icons_opaque/weapon.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 .wondrous-magic-item-card {
   background-image: url('../images/magic_items_icons/wondrous.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.wondrous-magic-item-icon {
+  background-image: url('../images/magic_items_icons_opaque/wondrous.svg');
   background-repeat: no-repeat;
   background-position: center;
 }
@@ -875,7 +925,6 @@ img.resize_logo_nav {
   width:36px;
   height:auto;
 }
-
 
 li.info-chat-highlight {
   border-left: 2px solid #3498db;
@@ -1053,7 +1102,6 @@ div.toggle-arrow-container {
    box-shadow: none;
 }
 
-
 .list-side-by-side  dt {
     float: left;
     margin-right: 10%;
@@ -1076,7 +1124,6 @@ div.toggle-arrow-container {
     margin-top: 10px;
     margin-bottom: 10px;
   }
-
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -1125,8 +1172,6 @@ input[type='checkbox']:checked.pseudo-checkbox + label:before{/*checked icon*/
     /* content:"\e138"; */
 }
 
-
-
 input[type='checkbox'].ac-checkbox + label:before,
 input[type='checkbox'].ac-checkbox + label:after{
     position: relative;
@@ -1150,7 +1195,6 @@ input[type='checkbox']:disabled.ac-checkbox + label:before{/*unchecked icon*/
 input[type='checkbox']:checked.ac-checkbox + label:before{/*checked icon*/
     content: "\e067";
 }
-
 
 input[type='checkbox'].filter-checkbox + label:before,
 input[type='checkbox'].filter-checkbox + label:after{
@@ -1183,6 +1227,11 @@ input[type='checkbox']:checked.filter-checkbox + label:before{/*checked icon*/
 .notCastable {
   color: #999;
 }
+
+.notCastable .glyphicon {
+  color: #999 !important;
+}
+
 .spellRow[aria-expanded="true"],
 .spellRow[aria-expanded="true"]:hover {
   background-color:  #2c3e50;
@@ -1194,7 +1243,6 @@ input[type='checkbox']:checked.filter-checkbox + label:before{/*checked icon*/
   background-color: #95a5a6;
   color: #fff!important;
 }
-
 
 tr.expandRow[aria-expanded="true"],
 tr.expandRow[aria-expanded="true"]:hover {
@@ -1319,7 +1367,6 @@ transition : height 0.25s ease opacity 0.2s linear;
 
 }
 
-
 /* front pane, placed above back */
 .card-flip-container > .card-flipper > .front {
   z-index: 2;
@@ -1425,7 +1472,6 @@ transition : height 0.25s ease opacity 0.2s linear;
   border-bottom: none;
 }
 
-
 @-moz-document url-prefix() {
   fieldset { display: table-cell; }
 }
@@ -1464,7 +1510,6 @@ fieldset.fieldset-bordered {
       padding: 0 1.4em 1.4em 1.4em;
       margin: 0 0 1.5em 0;
   }
-
 
 .fieldset-bordered>legend {
     font-size: 1.1em;
@@ -1682,17 +1727,14 @@ hr.ac-table-header {
   padding: 10px;
 }
 
-
 #coins-pane .input-group {
   padding-top:5px;
    padding-bottom:5px
 }
 
-
 .select-proficiency .select2-dropdown {
   width: 150px !important;
 }
-
 
 .healthBtn {
   width: 35px;
@@ -1714,6 +1756,17 @@ hr.ac-table-header {
   vertical-align: text-bottom;
 }
 
+.magic-item-icon {
+  width: 1.25em;
+  height: 2.5ex;
+  display: inline-block;
+  padding: 0px 0 0 0px;
+  margin: 0px 2px 0px 2px;
+  opacity: 0.8;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  vertical-align: text-bottom;
+}
 
 .rest-icon {
   width: 25px;
@@ -1742,7 +1795,6 @@ hr.ac-table-header {
 .trackedRow[aria-expanded="true"] .short-rest-icon {
   background: url('../images/meditation.svg');
 }
-
 
 .trackedRow .long-rest-icon,
 .rest-description .long-rest-icon {
@@ -1987,7 +2039,6 @@ tr .panel {
 .checkbox-data-cell {
   text-align: center
 }
-
 
 .rotate.fa.fa-chevron-left {
     padding-right: 4px;
