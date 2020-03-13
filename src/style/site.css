@@ -41,7 +41,6 @@ Responsive Styles
     }
 }
 
-
 /*
 General Styling
 */
@@ -233,7 +232,6 @@ small {
 .progress-bar-forest {
   background-color: #2F972F !important;
 }
-
 
 /*******
  * Experimental stuff
@@ -683,7 +681,6 @@ body {
  * Modal Fix End
  */
 
-
 /*
 * translate3d fixes a z-index issue on safari
 * this number MUST be greater than the translateZ of the flip card to work
@@ -709,7 +706,6 @@ ul.ui-autocomplete li {
   min-height: 1em;
   font-size: 15px;
 }
-
 
 ul.ui-autocomplete .ui-state-active {
   background: #2c3e50;
@@ -930,7 +926,6 @@ img.resize_logo_nav {
   height:auto;
 }
 
-
 li.info-chat-highlight {
   border-left: 2px solid #3498db;
   padding-left: 1em;
@@ -1107,7 +1102,6 @@ div.toggle-arrow-container {
    box-shadow: none;
 }
 
-
 .list-side-by-side  dt {
     float: left;
     margin-right: 10%;
@@ -1130,7 +1124,6 @@ div.toggle-arrow-container {
     margin-top: 10px;
     margin-bottom: 10px;
   }
-
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -1179,8 +1172,6 @@ input[type='checkbox']:checked.pseudo-checkbox + label:before{/*checked icon*/
     /* content:"\e138"; */
 }
 
-
-
 input[type='checkbox'].ac-checkbox + label:before,
 input[type='checkbox'].ac-checkbox + label:after{
     position: relative;
@@ -1204,7 +1195,6 @@ input[type='checkbox']:disabled.ac-checkbox + label:before{/*unchecked icon*/
 input[type='checkbox']:checked.ac-checkbox + label:before{/*checked icon*/
     content: "\e067";
 }
-
 
 input[type='checkbox'].filter-checkbox + label:before,
 input[type='checkbox'].filter-checkbox + label:after{
@@ -1253,7 +1243,6 @@ input[type='checkbox']:checked.filter-checkbox + label:before{/*checked icon*/
   background-color: #95a5a6;
   color: #fff!important;
 }
-
 
 tr.expandRow[aria-expanded="true"],
 tr.expandRow[aria-expanded="true"]:hover {
@@ -1378,7 +1367,6 @@ transition : height 0.25s ease opacity 0.2s linear;
 
 }
 
-
 /* front pane, placed above back */
 .card-flip-container > .card-flipper > .front {
   z-index: 2;
@@ -1484,7 +1472,6 @@ transition : height 0.25s ease opacity 0.2s linear;
   border-bottom: none;
 }
 
-
 @-moz-document url-prefix() {
   fieldset { display: table-cell; }
 }
@@ -1523,7 +1510,6 @@ fieldset.fieldset-bordered {
       padding: 0 1.4em 1.4em 1.4em;
       margin: 0 0 1.5em 0;
   }
-
 
 .fieldset-bordered>legend {
     font-size: 1.1em;
@@ -1741,17 +1727,14 @@ hr.ac-table-header {
   padding: 10px;
 }
 
-
 #coins-pane .input-group {
   padding-top:5px;
    padding-bottom:5px
 }
 
-
 .select-proficiency .select2-dropdown {
   width: 150px !important;
 }
-
 
 .healthBtn {
   width: 35px;
@@ -1785,7 +1768,6 @@ hr.ac-table-header {
   vertical-align: text-bottom;
 }
 
-
 .rest-icon {
   width: 25px;
   height: 25px;
@@ -1813,7 +1795,6 @@ hr.ac-table-header {
 .trackedRow[aria-expanded="true"] .short-rest-icon {
   background: url('../images/meditation.svg');
 }
-
 
 .trackedRow .long-rest-icon,
 .rest-description .long-rest-icon {
@@ -2058,7 +2039,6 @@ tr .panel {
 .checkbox-data-cell {
   text-align: center
 }
-
 
 .rotate.fa.fa-chevron-left {
     padding-right: 4px;

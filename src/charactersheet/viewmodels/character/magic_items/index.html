@@ -7,12 +7,7 @@
       <tr class="ac-table-header">
         <th class="col-xs-9 col-sm-4 col-md-5 col-lg-4" data-bind="click: function(){sortBy('name');}"> Magic Item <span data-bind="css: sortArrow('name')"></span>
         </th>
-        <th class="col-xs-1" style="width: 5%"
-            data-bind="click: function(){sortBy('type');}"> Type <span data-bind="css: sortArrow('type')"></span>
-        </th>
-        <th class="hidden-xs col-sm-1" style="width: 5%"></th>
-        <th class="hidden-xs col-sm-1" style="width: 5%"></th>
-        <th class="col-sm-3 col-md-2 col-lg-3 hidden-xs"
+        <th class="col-sm-6 text-center" colspan="3"
             data-bind="click: function(){sortBy('maxCharges');}"> Charges <span data-bind="css: sortArrow('maxCharges')"></span>
         </th>
         <th class="col-xs-1 text-right">Used</th>
@@ -37,39 +32,39 @@
           },
           attr:{ 'data-target': `#magic_item_${uuid()}` }">
         <td>
-          <span data-bind="text: $component.shortText(name)" />
-          <span data-bind="visible: requiresAttunement"
-              style="opacity: .9; color: #18bc9c;"
-              class="glyphicon glyphicon-off"
-              aria-hidden="true" />
+          <span data-bind="text: $component.shortText(name)"></span>
+          <span data-bind="visible: requiresAttunement() == true && !attuned()"
+              class="fa fa-circle-o"
+              aria-hidden="true" ></span>
+          <span data-bind="visible: requiresAttunement && attuned"
+              style="color: #18bc9c;"
+              class="fa fa-check-circle-o"
+              aria-hidden="true" ></span>
         </td>
-        <td>
-          <div data-bind="css: 'magic-item-icon ' + cardIcon()" />
-        </td>
-        <td class="hidden-xs" style="padding: 6px;">
+        <td style="padding: 6px;">
           <!-- ko if: maxCharges() > 0 -->
-          <mini-plus-minus params="value: usedCharges,
-                    max: maxCharges,
-                    hideUp: true,
-                    disabled: requiresAttunement() && !attuned(),
-                    onChange: ()=>{$component.onUsedChange($data)}">
-          </mini-plus-minus>
+            <mini-plus-minus params="value: usedCharges,
+                      max: maxCharges,
+                      hideUp: true,
+                      disabled: requiresAttunement() && !attuned(),
+                      onChange: ()=>{$component.onUsedChange($data)}">
+            </mini-plus-minus>
           <!-- /ko -->
         </td>
-        <td class="hidden-xs" style="padding: 6px;">
+        <td style="padding: 6px;">
           <!-- ko if: maxCharges() > 0 -->
-          <mini-plus-minus params="value: usedCharges,
-                    max: maxCharges,
-                    hideDown: true,
-                    disabled: requiresAttunement() && !attuned(),
-                    onChange: ()=>{$component.onUsedChange($data)}">
-          </mini-plus-minus>
+            <div style="padding: 10px"
+                data-bind="barProgress: $component.mapToChart($data)"> </div>
           <!-- /ko -->
         </td>
-        <td class="hidden-xs" style="padding: 6px;">
+        <td style="padding: 6px;">
           <!-- ko if: maxCharges() > 0 -->
-          <div style="padding: 10px"
-               data-bind="barProgress: $component.mapToChart($data)"> </div>
+            <mini-plus-minus params="value: usedCharges,
+                      max: maxCharges,
+                      hideDown: true,
+                      disabled: requiresAttunement() && !attuned(),
+                      onChange: ()=>{$component.onUsedChange($data)}">
+            </mini-plus-minus>
           <!-- /ko -->
         </td>
         <td style="padding: 6px;" class="text-right">
@@ -111,13 +106,33 @@
                         <!-- ko if: maxCharges() > 0 -->
                         <tr>
                           <th>Charges:</th>
-                          <td><span data-bind="text: parseInt(maxCharges()) - parseInt(usedCharges())"></span> of <span data-bind="text: maxCharges"></span></td>
+                          <td><span data-bind="text: parseInt(maxCharges()) - parseInt(usedCharges())"></span> / <span data-bind="text: maxCharges"></span></td>
                         </tr>
                         <!-- /ko -->
                         <tr>
                           <th>Weight:</th>
                           <td><span data-bind="text: magicItemWeightLabel"></span></td>
                         </tr>
+                        <!-- ko if: requiresAttunement -->
+                        <tr>
+                          <!-- ko if: attuned -->
+                          <th>Attuned</th>
+                          <td>
+                            <span style="color: #18bc9c;"
+                              class="fa fa-check-circle-o"
+                              aria-hidden="true"></span>
+                          </td>
+                          <!-- /ko -->
+                          <!-- ko ifnot: attuned -->
+                          <th>Not Attuned</th>
+                          <td>
+                            <span style="color: #999999;"
+                              class="fa fa-circle-o"
+                              aria-hidden="true"></span>
+                          </td>
+                          <!-- /ko -->
+                        </tr>
+                        <!-- /ko -->
                       </tbody>
                     </table>
                   </div>
