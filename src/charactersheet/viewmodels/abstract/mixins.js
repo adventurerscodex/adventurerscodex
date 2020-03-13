@@ -21,7 +21,7 @@ export function calculateLoad (
             quantity = 1;
         }
     }
-    return weight * quantity;
+    return Math.round(weight * quantity);
 }
 
 export function calculateTotalLoad (
@@ -86,7 +86,7 @@ export function calculateValue (
             value = 0;
         }
     }
-    return coinValue * quantity * value;
+    return Math.round(coinValue * quantity * value);
 }
 
 
