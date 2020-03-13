@@ -14,7 +14,7 @@
           name="name"
           data-bind="value: name,
                     event: { blur: $component.reviewInput, invalid: $component.invalidate },
-                    attr: { autocomplete: 'off', ...$component.validation.platinum }">
+                    attr: { autocomplete: 'off', ...$component.validation.name }">
       <!-- /ko -->
       <!-- ko if: $component.addForm -->
       <input class="form-control"
@@ -22,7 +22,7 @@
           name="name"
           data-bind="value: name,
                    event: { blur: $component.reviewInput, invalid: $component.invalidate },
-                   attr: { ...$component.validation.platinum },
+                   attr: { ...$component.validation.name },
                    hasFocus: $component.formElementHasFocus,
                    autocomplete: {
                    source: $component.prePopFilter,
