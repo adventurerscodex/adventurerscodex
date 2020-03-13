@@ -54,7 +54,7 @@
     "jquery": "^3.4.0",
     "jquery-ui": "^1.12.1",
     "jquery-validation": "^1.17.0",
-    "knockout": "~3.3.0",
+    "knockout": "~3.5.0",
     "knockout-mapping": "^2.6.0",
     "less": "^3.9.0",
     "linkifyjs": "^2.1.5",
