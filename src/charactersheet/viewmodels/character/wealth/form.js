@@ -12,7 +12,7 @@ import spCoins from 'images/sp-coin.svg';
 import template from './form.html';
 
 
-export class WealthFormViewModel  extends AbstractFormModel {
+export class WealthFormViewModel extends AbstractFormModel {
     constructor(params) {
         super(params);
         autoBind(this);
