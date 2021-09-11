@@ -1260,7 +1260,6 @@ transition : height 0.25s ease opacity 0.2s linear;
 .card-flip-container {
   position: relative;
   -webkit-perspective-origin: 0;
-  perspective: 0px;
   padding-top: 0px;
   -webkit-transition: all 0.4s ease height 0.35s ease;
   -moz-transition: all 0.4s ease height 0.35s ease;
