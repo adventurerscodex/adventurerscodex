@@ -76,7 +76,6 @@ class TrackerViewModel extends AbstractTabularViewModel {
                 to: {
                     color
                 }
-
             }
         };
     };
