@@ -114,26 +114,26 @@
               </div>
           </div>
           <!-- ko if: blankTreasure() -->
-          <!--ko if: armorShow()-->
+          <!-- ko if: armorShow() -->
             <div data-bind="template: { name: 'armorTemplate' }"></div>
-          <!--/ko-->
+          <!-- /ko -->
 
-          <!--ko if: coinsShow()-->
+          <!-- ko if: coinsShow() -->
             <div data-bind="template: { name: 'coinsTemplate' }"></div>
-          <!--/ko-->
+          <!-- /ko -->
 
-          <!--ko if: itemShow()-->
+          <!-- ko if: itemShow() -->
             <div data-bind="template: { name: 'itemTemplate' }"></div>
-          <!--/ko-->
+          <!-- /ko -->
 
-          <!--ko if: magicItemShow()-->
+          <!-- ko if: magicItemShow() -->
             <div data-bind="template: { name: 'magicItemTemplate' }"></div>
           <!--/ko-->
 
-          <!--ko if: weaponShow()-->
+          <!-- ko if: weaponShow() -->
             <div data-bind="template: { name: 'weaponTemplate' }"></div>
-          <!--/ko-->
-          <!--/ko-->
+          <!-- /ko -->
+          <!-- /ko -->
 
           <div class="modal-footer">
             <!-- ko if: showAddButton -->
@@ -197,49 +197,49 @@
         <div class="tab-content" data-bind="with: currentEditItem">
           <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane">
 
-            <!--ko if: type() == $parent.ARMOR-->
+            <!-- ko if: type() == $parent.ARMOR -->
              <div data-bind="template: { name: 'armorPreviewTemplate' }"></div>
-            <!--/ko-->
+            <!-- /ko -->
 
-            <!--ko if: type() == $parent.COINS-->
+            <!-- ko if: type() == $parent.COINS -->
              <div data-bind="template: { name: 'coinsPreviewTemplate' }"></div>
-            <!--/ko-->
+            <!-- /ko -->
 
-            <!--ko if: type() == $parent.ITEM-->
+            <!-- ko if: type() == $parent.ITEM -->
              <div data-bind="template: { name: 'itemPreviewTemplate' }"></div>
-            <!--/ko-->
+            <!-- /ko -->
 
-            <!--ko if: type() == $parent.MAGIC_ITEM-->
+            <!-- ko if: type() == $parent.MAGIC_ITEM -->
              <div data-bind="template: { name: 'magicItemPreviewTemplate' }"></div>
-            <!--/ko-->
+            <!-- /ko -->
 
-            <!--ko if: type() == $parent.WEAPON-->
+            <!-- ko if: type() == $parent.WEAPON -->
              <div data-bind="template: { name: 'weaponPreviewTemplate' }"></div>
-            <!--/ko-->
+            <!-- /ko -->
 
           </div> <!-- End Preview Tab -->
           <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane">
             <form class="form-horizontal" data-bind="validate: $parent.updateValidation">
 
-              <!--ko if: type() == $parent.ARMOR-->
+              <!-- ko if: type() == $parent.ARMOR -->
                <div data-bind="template: { name: 'armorEditTemplate' }"></div>
-              <!--/ko-->
+              <!-- /ko -->
 
-              <!--ko if: type() == $parent.COINS-->
+              <!-- ko if: type() == $parent.COINS -->
                <div data-bind="template: { name: 'coinsEditTemplate' }"></div>
-              <!--/ko-->
+              <!-- /ko -->
 
-              <!--ko if: type() == $parent.ITEM-->
+              <!-- ko if: type() == $parent.ITEM -->
                <div data-bind="template: { name: 'itemEditTemplate' }"></div>
-              <!--/ko-->
+              <!-- /ko -->
 
-              <!--ko if: type() == $parent.MAGIC_ITEM-->
+              <!-- ko if: type() == $parent.MAGIC_ITEM -->
                <div data-bind="template: { name: 'magicItemEditTemplate' }"></div>
-              <!--/ko-->
+              <!-- /ko -->
 
-              <!--ko if: type() == $parent.WEAPON-->
+              <!-- ko if: type() == $parent.WEAPON -->
                <div data-bind="template: { name: 'weaponEditTemplate' }"></div>
-              <!--/ko-->
+              <!-- /ko -->
 
               <div class="modal-footer">
                 <button type="submit"

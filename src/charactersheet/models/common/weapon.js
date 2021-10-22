@@ -242,6 +242,7 @@ Weapon.validationConstraints = {
         },
         price: {
             type: 'number',
+            required: true,
             pattern: '\\d*',
             min: 0,
             max: 100000000
@@ -263,6 +264,7 @@ Weapon.validationConstraints = {
         },
         weight: {
             type: 'number',
+            required: true,
             step: '0.25',
             min: 0,
             max: 100000000
@@ -304,6 +306,7 @@ Weapon.validationConstraints = {
         },
         price: {
             number:true,
+            required: true,
             min: 0,
             max: 100000000
         },
@@ -322,6 +325,7 @@ Weapon.validationConstraints = {
         },
         weight: {
             number: true,
+            required: true,
             min: 0,
             max: 100000000
         },

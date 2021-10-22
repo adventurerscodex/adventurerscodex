@@ -291,6 +291,7 @@ export function TreasureSectionViewModel(params) {
         if (self.itemType() == self.ARMOR) {
             self.blankTreasure(new EncounterArmor());
             self.armorShow(true);
+            self.validationConstraints = { ...Armor.validationConstraints };
             self.armorFirstElementFocus(true);
         } else if (self.itemType() == self.COINS) {
             self.blankTreasure(new EncounterCoins());

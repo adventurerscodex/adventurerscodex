@@ -2048,3 +2048,7 @@ tr .panel {
 .select2-container--open .select2-dropdown--above {
   transform: translateZ(800px);
 }
+
+.modal .preview-modal-image {
+  width: 100%;
+}
