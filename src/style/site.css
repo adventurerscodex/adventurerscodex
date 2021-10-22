@@ -2051,3 +2051,7 @@ tr .panel {
 .modal .preview-modal-image {
   width: 100%;
 }
+
+.overlay {
+  transform: translateZ(900px);
+}
