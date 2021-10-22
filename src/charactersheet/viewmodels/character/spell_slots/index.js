@@ -64,6 +64,10 @@ class SpellSlotsViewModel extends AbstractTabularViewModel {
             return 'rest-icon long-rest-icon';
         } else if (trackable.resetsOn() === 'short') {
             return 'rest-icon short-rest-icon';
+        } else if (tracked().resetsOn() === 'dawn') {
+            return 'rest-icon dawn-icon';
+        } else if (tracked().resetsOn() === 'none') {
+            return 'rest-icon manually-icon';
         } else {
             throw 'Unexpected feature resets on string.';
         }

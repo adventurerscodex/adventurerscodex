@@ -24,6 +24,10 @@ export class Tracked {
             return 'rest-icon long-rest-icon';
         } else if (this.resetsOn() === 'short') {
             return 'rest-icon short-rest-icon';
+        } else if (this.resetsOn() === 'dawn') {
+            return 'rest-icon dawn-icon';
+        } else if (this.resetsOn() === 'none') {
+            return 'rest-icon manually-icon';
         } else {
             throw 'Unexpected feature resets on string.';
         }
@@ -34,6 +38,10 @@ export class Tracked {
             return 'Long Rest';
         } else if (this.resetsOn() === 'short') {
             return 'Short Rest';
+        } else if (this.resetsOn() === 'dawn') {
+            return 'Dawn';
+        } else if (this.resetsOn() === 'none') {
+            return 'Manually';
         } else {
             throw 'Unexpected feature resets on string.';
         }

@@ -6,6 +6,7 @@ import {
 import campingTent from 'images/camping-tent.svg';
 import ko from 'knockout';
 import meditation from 'images/meditation.svg';
+import sunrise from 'images/sunrise.svg';
 import template from './index.html';
 
 export function ActionsToolbarViewModel(params) {
@@ -13,6 +14,7 @@ export function ActionsToolbarViewModel(params) {
 
     self.wellOpen = params.wellState;
     self.meditation = meditation;
+    self.sunrise = sunrise;
     self.campingTent = campingTent;
 
     self.load = function() {
@@ -34,6 +36,12 @@ export function ActionsToolbarViewModel(params) {
     self.longRestButton = function() {
         Notifications.events.longRest.dispatch();
         Notifications.userNotification.infoNotification.dispatch(Fixtures.resting.longRestMessage, 'Long Rest');
+        self.toggleWellOpen();
+    };
+
+    self.dawnButton = function() {
+        Notifications.events.dawn.dispatch();
+        Notifications.userNotification.infoNotification.dispatch(Fixtures.resting.dawnMessage, 'Dawn has Come');
         self.toggleWellOpen();
     };
 
