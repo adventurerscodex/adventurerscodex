@@ -45,7 +45,7 @@ export function DMRootViewModel() {
     self.partyTabImage = partyTabImage;
     self.chatTabImage = chatTabImage;
 
-   //UI Methods
+    //UI Methods
 
     self.playerSummary = ko.pureComputed(() => {
         var key = CoreManager.activeCore().uuid();

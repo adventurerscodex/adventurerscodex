@@ -44,13 +44,13 @@ export class SkillsViewModel extends AbstractGridViewModel {
     async updateAbilityScoreValues (abilityScore) {
         if (abilityScore) {
             const skillUpdates = filter(
-          this.entities(),
-          (skill) => {
-              return skill.abilityScore().uuid() === abilityScore.uuid();
-          } ).map(async (skill) => {
-              const updatedSkill = await skill.updateAbilityScoreValues(abilityScore);
-              this.replaceInList(skill);
-          });
+                this.entities(),
+                (skill) => {
+                    return skill.abilityScore().uuid() === abilityScore.uuid();
+                } ).map(async (skill) => {
+                const updatedSkill = await skill.updateAbilityScoreValues(abilityScore);
+                this.replaceInList(skill);
+            });
             await Promise.all(skillUpdates);
         }
     }

@@ -1,9 +1,9 @@
 import {
-  Fixtures,
-  Notifications
+    Fixtures,
+    Notifications
 } from 'charactersheet/utilities';
 import {
-  AbstractChildFormModel
+    AbstractChildFormModel
 } from 'charactersheet/viewmodels/abstract';
 import { MagicItem } from 'charactersheet/models';
 import { SELECTDATA } from 'charactersheet/constants';

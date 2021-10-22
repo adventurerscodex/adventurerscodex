@@ -1,6 +1,6 @@
 import {
-  Fixtures,
-  Notifications
+    Fixtures,
+    Notifications
 } from 'charactersheet/utilities';
 
 import { AbstractChildFormModel } from 'charactersheet/viewmodels/abstract';

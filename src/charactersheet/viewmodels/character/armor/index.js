@@ -1,8 +1,8 @@
 import {
-  AbstractTabularViewModel,
-  calculateTotalLoad,
-  calculateTotalValue
- } from 'charactersheet/viewmodels/abstract';
+    AbstractTabularViewModel,
+    calculateTotalLoad,
+    calculateTotalValue
+} from 'charactersheet/viewmodels/abstract';
 import { Armor } from 'charactersheet/models';
 import { ArmorFormViewModel } from './form';
 import { Notifications } from 'charactersheet/utilities';
@@ -45,8 +45,8 @@ export class ArmorViewModel extends AbstractTabularViewModel {
     handleArmorChange = async (selectedItem) => {
         if (selectedItem.equipped()) {
             const allEquipped = filter(this.entities(), (armor) => (
-            armor.equipped() && armor.isShield() === selectedItem.isShield() && armor.uuid() != selectedItem.uuid()
-        ));
+                armor.equipped() && armor.isShield() === selectedItem.isShield() && armor.uuid() != selectedItem.uuid()
+            ));
             const unequip = allEquipped.map(async (armor)=> {
                 armor.equipped(false);
                 await armor.save();

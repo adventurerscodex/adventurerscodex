@@ -22,7 +22,7 @@ export function PartyStatusViewModel() {
         if (!success) { return; }
         if (node) {
             var chat = ChatServiceManager.sharedService();
-            self.partyStatus('<i>You\'re connected to <span class=\"text-info\">' + Strophe.getNodeFromJid(chat.currentPartyNode) + '</span></i>.');
+            self.partyStatus('<i>You\'re connected to <span class="text-info">' + Strophe.getNodeFromJid(chat.currentPartyNode) + '</span></i>.');
         } else {
             self.partyStatus('<i>You\'re not connected to a party.</i>');
         }
