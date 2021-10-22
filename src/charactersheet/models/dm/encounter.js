@@ -72,7 +72,7 @@ export class Encounter extends KOModel {
         this.children(children);
     };
 
-    toSchemaValues = function(values) {
+    toSchemaValues = (values) => {
         let newValues = { ...values };
         if (values.sections) {
             // Strip out everything but the visibility.
