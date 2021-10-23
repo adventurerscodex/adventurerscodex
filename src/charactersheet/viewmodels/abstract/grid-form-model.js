@@ -5,6 +5,8 @@ import { DELAY } from 'charactersheet/constants';
 import { filter } from 'lodash';
 import ko from 'knockout';
 
+import { Notifications } from 'charactersheet/utilities/notifications';
+
 /**
  * AbstractGridFormModel, extends AbstractGridViewModel
  *
@@ -40,18 +42,39 @@ export class AbstractGridFormModel extends AbstractGridViewModel {
         this.notify();
     }
 
-    async updateEntity (entity) {
+    async updateEntity(entity) {
         entity.markedForSave = true;
     }
 
-    async save () {
-        const updates = filter(this.entities(), 'markedForSave').map(
-          async (entity) => {
-              delete entity.markedForSave;
-              await entity.save();
-          }
-      );
-        await Promise.all(updates);
+    async save() {
+        let success = true, error = null;
+        try {
+            const updates = filter(this.entities(), 'markedForSave').map(
+              async (entity) => {
+                  delete entity.markedForSave;
+                  await entity.save();
+              }
+            );
+            await Promise.all(updates);
+        } catch(e) {
+            success = false, error = e;
+        }
+        this.didSave(success, error);
+    }
+
+    didSave(success, error) {
+        if (success) {
+            Notifications.userNotification.successNotification.dispatch(
+                'Your changes have been saved.',
+                'Saved'
+            );
+        } else {
+            const message = !!error ? error.message : '';
+            Notifications.userNotification.dangerNotification.dispatch(
+                `Encountered error while attempting to save. ${message}`,
+                'Error'
+            );
+        }
     }
 
     notify() {}

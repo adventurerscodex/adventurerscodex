@@ -4,6 +4,8 @@ import { defer } from 'lodash';
 import { get } from 'lodash';
 import ko from 'knockout';
 
+import { Notifications } from 'charactersheet/utilities/notifications';
+
 const noOp = (entity) => { /* no op */ };
 // noOp will be called for orphan forms that are not part of a card
 
@@ -71,7 +73,28 @@ export class AbstractFormModel {
     }
 
     async save() {
-        await this.entity().save();
+        let success = true, error = null;
+        try {
+            await this.entity().save();
+        } catch(e) {
+            success = false, error = e;
+        }
+        this.didSave(success, error);
+    }
+
+    didSave(success, error) {
+        if (success) {
+            Notifications.userNotification.successNotification.dispatch(
+                'Your changes have been saved.',
+                'Saved'
+            );
+        } else {
+            const message = !!error ? error.message : '';
+            Notifications.userNotification.dangerNotification.dispatch(
+                `Encountered error while attempting to save. ${message}`,
+                'Error'
+            );
+        }
     }
 
     notify() {
