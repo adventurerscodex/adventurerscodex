@@ -26,32 +26,11 @@ export class Wealth extends KOModel {
         platinum: 1000,
     };
 
-    worthInGold = () => {
-        const parsedPlatinum = parseInt(this.platinum()) || 0;
-        const parsedGold = parseInt(this.gold()) || 0;
-        const parsedElectrum = parseInt(this.electrum()) || 0;
-        const parsedSilver = parseInt(this.silver()) || 0;
-        const parsedCopper = parseInt(this.copper()) || 0;
-
-        const copperToSilver = Math.floor(parsedCopper / 10);
-        const adjSilver = parsedSilver + copperToSilver;
-
-        const silverToElectrum = Math.floor(adjSilver / 5);
-        const adjElectrum = parsedElectrum + silverToElectrum;
-
-        const electrumToGold = Math.floor(adjElectrum / 2);
-        const adjGold = parsedGold + electrumToGold;
-
-        const platinumToGold = parsedPlatinum * 10;
-
-        const total = platinumToGold + adjGold;
-
-        return total;
-    };
+    worthInGold = () => ((this.worthInCopper() / this.EXCHANGE_RATES.gold) | 0);
 
     worthInCopper = () => {
-        return Object.keys(this.EXCHANGE_RATES).map(type => (
-            this[type]() * this.EXCHANGE_RATES[type]
+        return Object.keys(this.EXCHANGE_RATES).map(denomination => (
+            this[denomination]() * this.EXCHANGE_RATES[denomination]
         )).reduce((a, b) => a+b, 0);
     };
 
@@ -59,7 +38,7 @@ export class Wealth extends KOModel {
     // https://stackoverflow.com/questions/53695215/coin-change-algorithm-js
     getChange(credit) {
         const denominations = ['copper', 'silver', 'electrum', 'gold', 'platinum'].map(
-            k => ({ type: k, value: this.EXCHANGE_RATES[k] })
+            k => ({ denomination: k, value: this.EXCHANGE_RATES[k] })
         );
         let result = [];
         while (credit > 0) {
@@ -67,21 +46,21 @@ export class Wealth extends KOModel {
             const count = Math.floor(credit / coin.value); // See how many times I need that coin
             credit -= count * coin.value; // Reduce the amount with that number of coins
             if (count) {
-                result.push([coin.type, count]); // Store count & coin
+                result.push([coin.denomination, count]); // Store count & coin
             }
         }
         return result;
     }
 
-    subtract = (amount, type) => {
+    subtract = (amount, denomination) => {
         // If we can just take from the correct category, then just do that...
-        if (amount <= this[type]()) {
-            this[type](
-                this[type]() - amount
+        if (amount <= this[denomination]()) {
+            this[denomination](
+                this[denomination]() - amount
             );
         } else {
             const coins = ['platinum', 'gold', 'electrum', 'silver', 'copper'];
-            let debt = this.EXCHANGE_RATES[type] * amount;
+            let debt = this.EXCHANGE_RATES[denomination] * amount;
 
             // Then we need to convert down to the money we need...
 
