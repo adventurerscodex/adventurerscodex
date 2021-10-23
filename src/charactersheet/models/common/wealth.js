@@ -17,6 +17,15 @@ export class Wealth extends KOModel {
     silver = ko.observable(0);
     copper = ko.observable(0);
 
+    // The amount of copper each coin is worth.
+    EXCHANGE_RATES = {
+        copper: 1,
+        silver: 10,
+        electrum: 50,
+        gold: 100,
+        platinum: 1000,
+    };
+
     worthInGold = () => {
         const parsedPlatinum = parseInt(this.platinum()) || 0;
         const parsedGold = parseInt(this.gold()) || 0;
@@ -38,6 +47,67 @@ export class Wealth extends KOModel {
         const total = platinumToGold + adjGold;
 
         return total;
+    };
+
+    worthInCopper = () => {
+        return Object.keys(this.EXCHANGE_RATES).map(type => (
+            this[type]() * this.EXCHANGE_RATES[type]
+        )).reduce((a, b) => a+b, 0);
+    };
+
+    // This came from here. I can't take credit for it.
+    // https://stackoverflow.com/questions/53695215/coin-change-algorithm-js
+    getChange(credit) {
+        const denominations = ['copper', 'silver', 'electrum', 'gold', 'platinum'].map(
+            k => ({ type: k, value: this.EXCHANGE_RATES[k] })
+        );
+        let result = [];
+        while (credit > 0) {
+            const coin = denominations.pop(); // Get next greatest coin
+            const count = Math.floor(credit / coin.value); // See how many times I need that coin
+            credit -= count * coin.value; // Reduce the amount with that number of coins
+            if (count) {
+                result.push([coin.type, count]); // Store count & coin
+            }
+        }
+        return result;
+    }
+
+    subtract = (amount, type) => {
+        // If we can just take from the correct category, then just do that...
+        if (amount <= this[type]()) {
+            this[type](
+                this[type]() - amount
+            );
+        } else {
+            const coins = ['platinum', 'gold', 'electrum', 'silver', 'copper'];
+            let debt = this.EXCHANGE_RATES[type] * amount;
+
+            // Then we need to convert down to the money we need...
+
+            for (let i = 0; i < coins.length; i++) {
+                const coin = coins[i];
+                const coinValue = (this[coin]() * this.EXCHANGE_RATES[coin]) | 0;
+
+                if (debt > 0 && coinValue > 0) {
+                    debt -= coinValue;
+                    this[coin](0);
+                }
+            }
+
+            if (debt < 0) {
+                const credit = -debt;
+
+                // Now make change for the amount we over-spent
+                const change = this.getChange(credit);
+                console.log(`Change ${change}`);
+
+                change.forEach(([coin, count]) => {
+                    console.log(coin, count);
+                    this[coin](this[coin]() + count);
+                });
+            }
+        }
     };
 
     worthInGoldLabel = ko.pureComputed(() => {

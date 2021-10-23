@@ -64,13 +64,54 @@
     <span class="input-group-addon no-top-bottom-padding"> PP </span>
   </div>
   <div class="table-foot-content">
-    <div class="pull-right text-muted">
-      <small>Total:&nbsp;<span id="coinsWorthInGoldLabel"
-                data-bind='text: worthInGoldLabel'></span></small>
-    </div>
-    <div class="pull-left text-muted">
-      <small>Weight:&nbsp;<span id="coinsTotalWeightLabel"
-                data-bind="text: totalWeightLabel"></span></small>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="pull-right text-muted">
+          <small>Total:&nbsp;<span id="coinsWorthInGoldLabel"
+                    data-bind='text: worthInGoldLabel'></span></small>
+        </div>
+        <div class="pull-left text-muted">
+          <small>Weight:&nbsp;<span id="coinsTotalWeightLabel"
+                    data-bind="text: totalWeightLabel"></span></small>
+        </div>
+      </div>
+      <div class="col-xs-12">
+        <form data-bind="submit: $component.quickSpend">
+          <div class="input-group input-group-sm">
+            <input
+              type="number"
+              minvalue="1"
+              required
+              class="form-control"
+              placeholder="Quick spend"
+              data-bind="value: $component.quickSpendAmount"
+            >
+            <span class="input-group-btn" style="width: 33%;">
+              <select
+                required
+                class="form-control"
+                style="padding: 2px;"
+                data-bind="value: $component.quickSpendCoinType"
+              >
+                <option value="copper">CP</option>
+                <option value="silver">SP</option>
+                <option value="electrum">EP</option>
+                <option value="gold" selected>GP</option>
+                <option value="platinum">PP</option>
+              </select>
+            </span>
+            <span class="input-group-btn">
+              <button
+                class="btn btn-default"
+                type="submit"
+              >
+                Spend
+              </button>
+            </span>
+          </div>
+          <b data-bind="text: $component.quickSpendMessage"></b>
+        </form>
+      </div>
     </div>
   </div>
 </div>

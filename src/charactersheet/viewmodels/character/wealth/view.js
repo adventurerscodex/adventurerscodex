@@ -14,6 +14,10 @@ class WealthViewModel extends AbstractViewModel {
     constructor(params) {
         super(params);
         autoBind(this);
+
+        this.quickSpendAmount = ko.observable();
+        this.quickSpendCoinType = ko.observable('gold');
+        this.quickSpendMessage = ko.observable('');
     }
 
     modelClass() {
@@ -32,6 +36,27 @@ class WealthViewModel extends AbstractViewModel {
             return number().toLocaleString('en', {useGrouping:true});
         }
         return number;
+    }
+
+    async quickSpend() {
+        this.quickSpendMessage('');  // Clear any previous message
+
+        const quickSpendAmount = this.quickSpendAmount() | 0;
+        const type = this.quickSpendCoinType();
+        const totalAmountInCopper = quickSpendAmount * this.entity().EXCHANGE_RATES[type];
+
+        if (!!quickSpendAmount && this.entity().worthInCopper() >= totalAmountInCopper) {
+            try {
+                this.entity().subtract(quickSpendAmount, type);
+                await this.entity().ps.save();
+            } catch(e) {
+                this.quickSpendMessage(`Error: ${e.message}`);
+            }
+        } else {
+            this.quickSpendMessage('You don\'t have that much money.')
+        }
+
+        this.quickSpendAmount('');
     }
 }
 
