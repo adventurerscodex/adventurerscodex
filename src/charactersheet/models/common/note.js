@@ -25,7 +25,7 @@ export class Note extends KOModel {
             try {
                 text = this.contents();
             } catch (e) {
-              // Ignore
+                // Ignore
             }
             let firstLine = text.split('\n')[0];
             if (firstLine.length > 35) {

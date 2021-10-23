@@ -131,8 +131,8 @@ class StatsHealthViewModel {
     // Configure the knockout-circular-progress display for tempHp
     tempHpChart =  ko.pureComputed(()=> {
         const tempHP = this.health().tempHitPointsRemaining() <= this.health().maxHitPoints() ?
-                      this.health().tempHitPointsRemaining() :
-                      this.health().maxHitPoints();
+            this.health().tempHitPointsRemaining() :
+            this.health().maxHitPoints();
         return {
             data: {
                 text: null,
@@ -225,7 +225,7 @@ class StatsHealthViewModel {
                     this.health().tempHitPoints(remainingTempHP);
                     newDamage = currentDamage;
                 } else { // remainingTempHP is negative. Damage continues on
-                        // to hit points
+                    // to hit points
                     this.health().tempHitPoints(0);
                     newDamage = currentDamage - remainingTempHP;
                 }

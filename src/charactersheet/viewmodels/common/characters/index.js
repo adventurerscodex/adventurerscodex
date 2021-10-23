@@ -64,8 +64,8 @@ export function CharactersViewModel(params) {
             // switch to the same index position bounded by list length.
             const index = (
                 deletedCharacterIndex < self.cores().length ?
-                deletedCharacterIndex :
-                self.cores().length - 1
+                    deletedCharacterIndex :
+                    self.cores().length - 1
             );
             CoreManager.changeCore(self.cores()[index].uuid());
         }

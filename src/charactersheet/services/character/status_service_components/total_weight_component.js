@@ -1,10 +1,10 @@
 import {
-   AbilityScore,
-   Armor,
-   Item,
-   MagicItem,
-   Wealth,
-   Weapon } from 'charactersheet/models';
+    AbilityScore,
+    Armor,
+    Item,
+    MagicItem,
+    Wealth,
+    Weapon } from 'charactersheet/models';
 import {
     CoreManager,
     Fixtures,
@@ -132,9 +132,9 @@ export function TotalWeightStatusServiceComponent() {
     self.massDeleted = function (item) {
         if (item) {
             self.allMass.remove(
-              (entry) => {
-                  return ko.utils.unwrapObservable(entry.uuid) === ko.utils.unwrapObservable(item.uuid);
-              });
+                (entry) => {
+                    return ko.utils.unwrapObservable(entry.uuid) === ko.utils.unwrapObservable(item.uuid);
+                });
             self._updateStatus(item.coreUuid());
         }
     };
@@ -176,7 +176,7 @@ export function TotalWeightStatusServiceComponent() {
     self._updateStatus = async (coreKey) => {
         var status = PersistenceService.findByPredicates(Status,
             [new KeyValuePredicate('characterId', coreKey),
-            new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
+                new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
         if (!status) {
             status = new Status();
             status.characterId(coreKey);
@@ -198,7 +198,7 @@ export function TotalWeightStatusServiceComponent() {
         var key = CoreManager.activeCore().uuid();
         var status = PersistenceService.findByPredicates(Status,
             [new KeyValuePredicate('characterId', key),
-            new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
+                new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
         if (status) {
             status.delete();
             Notifications.status.changed.dispatch();

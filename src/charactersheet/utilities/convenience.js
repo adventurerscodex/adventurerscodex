@@ -169,5 +169,5 @@ Utility.oauth.putData = function(url, data, onsuccess, onerror, accessToken) {
  * Remove characters from string that are not usable in an JID username.
  */
 Utility.jid.sanitize = function(text) {
-    return (text || '').replace(/[@"&'\/:<> ]/gm, '_');
+    return (text || '').replace(/[@"&'\/:<> ]/gm, '_');  // eslint-disable-line no-useless-escape
 };

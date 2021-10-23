@@ -2,10 +2,10 @@ import { isNumeric } from 'jquery';
 import ko from 'knockout';
 
 export function calculateLoad (
-   entity,
-   weightProperty = 'weight',
-   quantityProperty = 'quantity'
- ) {
+    entity,
+    weightProperty = 'weight',
+    quantityProperty = 'quantity'
+) {
     const mass = ko.utils.unwrapObservable(entity);
     let weight = 0;
     if (weightProperty in mass) {
@@ -25,18 +25,18 @@ export function calculateLoad (
 }
 
 export function calculateTotalLoad (
-  entityList,
-  weightProperty = 'weight',
-  quantityProperty = 'quantity'
+    entityList,
+    weightProperty = 'weight',
+    quantityProperty = 'quantity'
 ) {
     if (entityList.length === 0) {
         return '0(lbs)';
     }
     const total = entityList.map(
-      entity => calculateLoad(
-        entity,
-        weightProperty,
-        quantityProperty)).reduce((a, b) => a + b);
+        entity => calculateLoad(
+            entity,
+            weightProperty,
+            quantityProperty)).reduce((a, b) => a + b);
     return `~${Math.round(total)}(lbs)`;
 }
 
@@ -61,11 +61,11 @@ const calculateCoinValue = (coin) => {
 };
 
 export function calculateValue (
-   entity,
-   valueProperty = 'price',
-   quantityProperty = 'quantity',
-   coinProperty = 'currencyDenomination'
- ) {
+    entity,
+    valueProperty = 'price',
+    quantityProperty = 'quantity',
+    coinProperty = 'currencyDenomination'
+) {
     const commodity = ko.utils.unwrapObservable(entity);
 
     let coinValue = 1;
@@ -91,20 +91,20 @@ export function calculateValue (
 
 
 export function calculateTotalValue (
-  entityList,
-  valueProperty = 'price',
-  quantityProperty = 'quantity',
-  coinProperty = 'currencyDenomination'
+    entityList,
+    valueProperty = 'price',
+    quantityProperty = 'quantity',
+    coinProperty = 'currencyDenomination'
 ) {
     if (entityList.length === 0) {
         return '0 (gp)';
     }
     const total = entityList.map(
-      entity => calculateValue(
-        entity,
-        valueProperty,
-        quantityProperty,
-        coinProperty)
-      ).reduce((a, b) => a + b);
+        entity => calculateValue(
+            entity,
+            valueProperty,
+            quantityProperty,
+            coinProperty)
+    ).reduce((a, b) => a + b);
     return `~${Math.round(total)}(gp)`;
 }

@@ -1,5 +1,5 @@
 import {
-  AbstractGridViewModel
+    AbstractGridViewModel
 } from './grid-view-model';
 import { DELAY } from 'charactersheet/constants';
 import { filter } from 'lodash';
@@ -46,11 +46,11 @@ export class AbstractGridFormModel extends AbstractGridViewModel {
 
     async save () {
         const updates = filter(this.entities(), 'markedForSave').map(
-          async (entity) => {
-              delete entity.markedForSave;
-              await entity.save();
-          }
-      );
+            async (entity) => {
+                delete entity.markedForSave;
+                await entity.save();
+            }
+        );
         await Promise.all(updates);
     }
 

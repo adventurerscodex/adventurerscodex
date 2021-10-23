@@ -137,7 +137,7 @@ Armor.validationConstraints = {
             maxlength: 64
         },
         weight: {
-          // cannot have number filter, because it can be a decimal
+            // cannot have number filter, because it can be a decimal
             required: true,
             type: 'number',
             step: '0.25',

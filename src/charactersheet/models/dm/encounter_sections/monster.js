@@ -7,10 +7,10 @@ export class Monster extends KOModel {
 
     static mapping = {
         include: ['coreUuid', 'encounterUuid', 'uuid', 'name', 'size', 'type',
-        'alignment', 'armorClass', 'hitPoints', 'speed', 'savingThrows',
-        'skills', 'senses', 'damageVulnerabilities', 'damageImmunities', 'damageResistances',
-        'conditionImmunities', 'languages', 'challenge', 'experience', 'description',
-        'sourceUrl', 'playerText', 'isExhibited']
+            'alignment', 'armorClass', 'hitPoints', 'speed', 'savingThrows',
+            'skills', 'senses', 'damageVulnerabilities', 'damageImmunities', 'damageResistances',
+            'conditionImmunities', 'languages', 'challenge', 'experience', 'description',
+            'sourceUrl', 'playerText', 'isExhibited']
     };
 
     coreUuid = ko.observable();
