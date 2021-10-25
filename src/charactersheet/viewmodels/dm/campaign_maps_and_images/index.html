@@ -36,12 +36,12 @@
                   class="col-md-6 hidden-sm hidden-xs"
                   href="#"
               >
-                <!--ko if: !!shortDescription -->
+                <!-- ko if: shortDescription -->
                 <span data-bind="html: shortDescription"></span>
-                <!-- / -->
-                <!--ko if: !shortDescription -->
+                <!-- /ko -->
+                <!-- ko ifnot: shortDescription -->
                 <i class="text-muted">See Image</i>
-                <!-- / -->
+                <!-- /ko -->
               </td>
               <!-- ko if: $parent.shouldShowPushButton -->
               <td class="text-right col-md-1">
