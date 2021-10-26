@@ -2056,3 +2056,17 @@ tr .panel {
   transform: translateZ(900px);
 }
 
+.navbar li>a.btn-support-us {
+  border: 1px solid #fff;
+  border-radius: 4px;
+  margin: 12px;
+  padding-top: 8.5px;
+  padding-bottom: 8.5px;
+}
+
+.navbar li>a.btn-support-us:hover {
+  border: 1px solid #18bc9c;
+  background-color: #fff;
+}
+
+
