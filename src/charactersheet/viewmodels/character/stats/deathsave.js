@@ -62,10 +62,10 @@ class StatsDeathSaveViewModel {
             this.deathSaveFailure().used(3);
             await this.deathSaveFailure().save();
             Notifications.userNotification.dangerNotification.dispatch(
-              'Massive damage is not to be trifled with...',
-              'You have died.', {
-                  timeOut: 0
-              });
+                'Massive damage is not to be trifled with...',
+                'You have died.', {
+                    timeOut: 0
+                });
             this.massiveDamageTaken(false);
         }
     }
@@ -159,10 +159,10 @@ class StatsDeathSaveViewModel {
         this.health().isDying(false);
         await this.health().save();
         Notifications.userNotification.successNotification.dispatch(
-          'You have been spared...for now.',
-          'You are now stable.', {
-              timeOut: 0
-          });
+            'You have been spared...for now.',
+            'You are now stable.', {
+                timeOut: 0
+            });
     }
 
     die = async () => {

@@ -32,9 +32,17 @@
               <td data-bind="text: name, click: $parent.editMapOrImage"
                   class="col-md-3 col-xs-12"
                   href="#"></td>
-              <td data-bind="html: shortDescription, click: $parent.editMapOrImage"
+              <td data-bind="click: $parent.editMapOrImage"
                   class="col-md-6 hidden-sm hidden-xs"
-                  href="#"></td>
+                  href="#"
+              >
+                <!-- ko if: shortDescription -->
+                <span data-bind="html: shortDescription"></span>
+                <!-- /ko -->
+                <!-- ko ifnot: shortDescription -->
+                <i class="text-muted">See Image</i>
+                <!-- /ko -->
+              </td>
               <!-- ko if: $parent.shouldShowPushButton -->
               <td class="text-right col-md-1">
                 <a data-bind="click: $parent.pushModalToPlayerButtonWasPressed" href="#" title="Send image to Player's Chat">

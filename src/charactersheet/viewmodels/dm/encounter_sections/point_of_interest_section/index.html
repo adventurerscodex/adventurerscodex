@@ -28,12 +28,28 @@
     <tr class="clickable">
       <td data-bind="text: name, click: $parent.editPointOfInterest"
           href="#" class="col-xs-3"></td>
-      <td data-bind="html: shortDescription, click: $parent.editPointOfInterest"
+      <td data-bind="click: $parent.editPointOfInterest"
           class="col-xs-7 hidden-md hidden-lg"
-          href="#"></td>
-      <td data-bind="html: longDescription, click: $parent.editPointOfInterest"
+          href="#"
+      >
+        <!-- ko if: shortDescription -->
+        <span data-bind="html: shortDescription"></span>
+        <!-- /ko -->
+        <!-- ko ifnot: shortDescription -->
+        <i class="text-muted">See Image</i>
+        <!-- /ko -->
+      </td>
+      <td data-bind="click: $parent.editPointOfInterest"
           class="col-md-7 hidden-sm hidden-xs"
-          href="#"></td>
+          href="#"
+      >
+        <!-- ko if: longDescription -->
+        <span data-bind="html: longDescription"></span>
+        <!-- /ko -->
+        <!-- ko ifnot: longDescription -->
+        <i class="text-muted">See Image</i>
+        <!-- /ko -->
+      </td>
       <!-- ko if: $parent.shouldShowPushButton -->
       <td class="text-right col-xs-1">
         <a data-bind="click: $parent.pushModalToPlayerButtonWasPressed" href="#">

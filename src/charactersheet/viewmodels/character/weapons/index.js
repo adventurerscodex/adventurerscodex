@@ -1,8 +1,8 @@
 import { AbilityScore, Weapon } from 'charactersheet/models';
 import { AbstractTabularViewModel,
-  calculateTotalLoad,
-  calculateTotalValue
- } from 'charactersheet/viewmodels/abstract';
+    calculateTotalLoad,
+    calculateTotalValue
+} from 'charactersheet/viewmodels/abstract';
 import { Notifications, Utility } from 'charactersheet/utilities';
 import { filter, maxBy } from 'lodash';
 import { ProficiencyService } from 'charactersheet/services/character/proficiency_service';
@@ -57,12 +57,12 @@ export class WeaponsViewModel extends AbstractTabularViewModel {
             const weaponBonus = weapon.totalBonus() || 0;
             const abilityModOptions = weapon.abilityModOptions();
             const abilityScoreOptions = filter(
-              this.abilityScores(),
-              (score)=>(abilityModOptions.includes(score.name()))
+                this.abilityScores(),
+                (score)=>(abilityModOptions.includes(score.name()))
             );
             const weaponAbility = maxBy(
-              abilityScoreOptions,
-              (abilityScore) => abilityScore.value());
+                abilityScoreOptions,
+                (abilityScore) => abilityScore.value());
             const abilityBonus = weaponAbility.modifier() || 0;
             const toHit = parseInt(profBonus) + parseInt(weaponBonus) + parseInt(abilityBonus);
             if (toHit) {

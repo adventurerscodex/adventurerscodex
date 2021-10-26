@@ -427,7 +427,7 @@ function PersistenceServiceToken(model, inst) {
     self.model = model;
     self.inst = inst;
 
-   /**
+    /**
     * Return all of the stored instances of the configured class.
     *
     * Returns

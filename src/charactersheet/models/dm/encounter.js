@@ -40,17 +40,17 @@ export class Encounter extends KOModel {
     });
 
     removeChild = function(childId) {
-//         this.children(this.children().filter(function(id, idx, _) {
-//             return id !== childId;
-//         }));
+        //         this.children(this.children().filter(function(id, idx, _) {
+        //             return id !== childId;
+        //         }));
     };
 
     getParent = function() {
-//         var key = CoreManager.activeCore().uuid();
-//         return PersistenceService.findByPredicates(Encounter, [
-//             new KeyValuePredicate('encounterId', self.parent()),
-//             new KeyValuePredicate('characterId', key)
-//         ])[0];
+        //         var key = CoreManager.activeCore().uuid();
+        //         return PersistenceService.findByPredicates(Encounter, [
+        //             new KeyValuePredicate('encounterId', self.parent()),
+        //             new KeyValuePredicate('characterId', key)
+        //         ])[0];
     };
 
 

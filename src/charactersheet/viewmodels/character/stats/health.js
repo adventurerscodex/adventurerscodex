@@ -276,7 +276,7 @@ class StatsHealthViewModel {
                     this.health().tempHitPoints(remainingTempHP);
                     newDamage = currentDamage;
                 } else { // remainingTempHP is negative. Damage continues on
-                        // to hit points
+                    // to hit points
                     this.health().tempHitPoints(0);
                     newDamage = currentDamage - remainingTempHP;
                 }

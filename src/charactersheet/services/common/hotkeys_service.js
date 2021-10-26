@@ -56,7 +56,7 @@ export var HotkeysService = {
         else if(event.shiftKey){
             return 'shift';
         }
-            else{
+        else{
             return '';
         }
     }

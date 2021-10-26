@@ -9,7 +9,7 @@ export function Status() {
     self.ps = PersistenceService.register(Status, self);
     self.mapping = {
         ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save',
-                'mapping']
+            'mapping']
     };
 
     self.characterId = ko.observable(null);

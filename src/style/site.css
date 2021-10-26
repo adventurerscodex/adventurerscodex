@@ -646,7 +646,7 @@ ul.footer-icons li {
 }
 
 .embedded-image {
-  margin-left: auto;
+  margin-left: 1rem;
   margin-right: auto;
   max-height: 225px;
 }
@@ -2051,3 +2051,8 @@ tr .panel {
 .modal .preview-modal-image {
   width: 100%;
 }
+
+.overlay {
+  transform: translateZ(900px);
+}
+
