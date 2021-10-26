@@ -52,7 +52,7 @@
     "hypnos": "git+https://github.com/adventurerscodex/hypnos.git#v0.1.1",
     "image-webpack-loader": "^4.5.0",
     "jquery": "^3.4.0",
-    "jquery-ui": "^1.12.1",
+    "jquery-ui": "^1.13.0",
     "jquery-validation": "^1.17.0",
     "knockout": "~3.5.0",
     "knockout-mapping": "^2.6.0",
