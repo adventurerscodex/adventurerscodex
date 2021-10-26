@@ -21,7 +21,7 @@ class StatsHealthViewModel {
         this.loaded = ko.observable(false);
         this.forceCardResize = params.forceCardResize;
         this.massiveDamageTaken = params.massiveDamageTaken;
-        this.noMaxHPLeft = params.noMaxHPLeft;
+        this.noMaxHpLeft = params.noMaxHpLeft;
         this.outerShow = ko.observable(false);//params.outerShow;
         this.profile = ko.observable(new Profile());
         this.hitDice = ko.observable(new HitDice());
@@ -31,7 +31,7 @@ class StatsHealthViewModel {
 
         this.healInput = ko.observable(null);
         this.tempInput = ko.observable(null);
-        this.maxHPReductionInput = ko.observable(null);
+        this.maxHpReductionInput = ko.observable(null);
         this.dmgInput = ko.observable(null);
         this.subscriptions = [];
         autoBind(this);
@@ -191,8 +191,8 @@ class StatsHealthViewModel {
         // So we follow that same rule. Apply damage, then reduce HP.
 
         let reduction = 1;  // Simply clicking the button reduces by 1
-        if (this.maxHPReductionInput()) {
-            reduction = parseInt(this.maxHPReductionInput());
+        if (this.maxHpReductionInput()) {
+            reduction = parseInt(this.maxHpReductionInput());
         }
 
         const currentHitPoints = (
@@ -218,7 +218,7 @@ class StatsHealthViewModel {
 
         if (this.health().maxAvailableHitPoints() === 0) {
             this.health().damage(this.health().maxAvailableHitPoints());
-            this.noMaxHPLeft(true);
+            this.noMaxHpLeft(true);
         }
 
         if (this.health().damage() >= this.health().maxAvailableHitPoints()) {
@@ -228,7 +228,7 @@ class StatsHealthViewModel {
 
         await this.health().save();
 
-        this.maxHPReductionInput(null);
+        this.maxHpReductionInput(null);
         $('#health-hp-reduction-input').blur();
     };
 

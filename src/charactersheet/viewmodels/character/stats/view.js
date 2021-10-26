@@ -27,7 +27,7 @@ export class StatsCardViewModel {
 
         this.health = ko.observable(new Health());
         this.massiveDamageTaken = ko.observable(false);
-        this.noMaxHPLeft = ko.observable(false);
+        this.noMaxHpLeft = ko.observable(false);
         this.deathSavesVisible = ko.observable(false);
         this.subscriptions = [];
         autoBind(this);

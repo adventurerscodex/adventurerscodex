@@ -15,7 +15,7 @@ class StatsDeathSaveViewModel {
         this.show = params.show;
         this.forceCardResize = params.forceCardResize;
         this.massiveDamageTaken = params.massiveDamageTaken;
-        this.noMaxHPLeft = params.noMaxHPLeft;
+        this.noMaxHpLeft = params.noMaxHpLeft;
         this.deathSaveFailure = ko.observable(new DeathSave());
         this.deathSaveSuccess = ko.observable(new DeathSave());
         this.health = ko.observable(new Health());
@@ -37,7 +37,7 @@ class StatsDeathSaveViewModel {
 
     setUpSubscriptions() {
         this.show.subscribe(this.massiveDamageDeath);
-        this.show.subscribe(this.noMaxHPDeath);
+        this.show.subscribe(this.noMaxHpDeath);
         this.subscriptions.push(Notifications.health.changed.add(this.updateHealth));
     }
     disposeOfSubscriptions() {
@@ -70,8 +70,8 @@ class StatsDeathSaveViewModel {
         }
     }
 
-    async noMaxHPDeath() {
-        if (this.show() && this.noMaxHPLeft()) {
+    async noMaxHpDeath() {
+        if (this.show() && this.noMaxHpLeft()) {
             this.deathSaveFailure().used(3);
             await this.deathSaveFailure().save();
             Notifications.userNotification.dangerNotification.dispatch(
@@ -79,7 +79,7 @@ class StatsDeathSaveViewModel {
               'You have died.', {
                   timeOut: 0
               });
-            this.noMaxHPLeft(false);
+            this.noMaxHpLeft(false);
         }
     }
 
