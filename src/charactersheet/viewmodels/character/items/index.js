@@ -1,8 +1,8 @@
 import {
-  AbstractTabularViewModel,
-  calculateTotalLoad,
-  calculateTotalValue
- } from 'charactersheet/viewmodels/abstract';
+    AbstractTabularViewModel,
+    calculateTotalLoad,
+    calculateTotalValue
+} from 'charactersheet/viewmodels/abstract';
 import { Item } from 'charactersheet/models/common';
 import { ItemFormViewModel } from './form';
 import { Notifications } from 'charactersheet/utilities';

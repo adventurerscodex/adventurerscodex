@@ -144,8 +144,8 @@ export function PlayerImageViewModel() {
         self._isConnectedToXMPP(
             xmpp.connection ?
             // Ensure we're both connected and authenticated.
-            (xmpp.connection.connected && xmpp.connection.authenticated) :
-            false
+                (xmpp.connection.connected && xmpp.connection.authenticated) :
+                false
         );
     };
 

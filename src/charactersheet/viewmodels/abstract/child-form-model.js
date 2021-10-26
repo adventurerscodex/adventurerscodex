@@ -5,10 +5,10 @@ import {
 } from 'charactersheet/utilities';
 import { filter, find } from 'lodash';
 import {
-  AbstractFormModel
+    AbstractFormModel
 } from './form-model';
 import {
-  FormSubmitActionComponent
+    FormSubmitActionComponent
 } from 'charactersheet/components/form-submit-actions';
 import { SELECTDATA } from 'charactersheet/constants';
 import ko from 'knockout';
@@ -51,10 +51,31 @@ export class AbstractChildFormModel extends AbstractFormModel {
     }
 
     async save() {
-        if (this.addForm()) {
-            await this.entity().create();
+        let success = true, error = null;
+        try {
+            if (this.addForm()) {
+                await this.entity().create();
+            } else {
+                await this.entity().save();
+            }
+        } catch(e) {
+            success = false, error = e;
+        }
+        this.didSave(success, error);
+    }
+
+    didSave(success, error) {
+        if (success) {
+            Notifications.userNotification.successNotification.dispatch(
+                'Your changes have been saved.',
+                'Saved'
+            );
         } else {
-            await this.entity().save();
+            const message = !!error ? error.message : '';
+            Notifications.userNotification.dangerNotification.dispatch(
+                `Encountered error while attempting to save. ${message}`,
+                'Error'
+            );
         }
     }
 

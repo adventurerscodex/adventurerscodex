@@ -113,7 +113,7 @@ class SpellbookViewModel extends AbstractTabularViewModel {
         switch(spell.type()) {
             case 'Savings Throw': {
                 return (
-                `Save vs <strong>${spell.spellSaveAttribute()}</strong>` +
+                    `Save vs <strong>${spell.spellSaveAttribute()}</strong>` +
                 ` <span class="small">DC:<strong>${this.spellStats().spellSaveDc()}</strong></span>`);
             }
             case 'Melee Spell Attack': {

@@ -1,8 +1,8 @@
 import {
-  AbstractChildFormModel
+    AbstractChildFormModel
 } from 'charactersheet/viewmodels/abstract';
 import {
-  Fixtures
+    Fixtures
 } from 'charactersheet/utilities';
 import { SELECTDATA } from 'charactersheet/constants';
 import { Spell } from 'charactersheet/models';

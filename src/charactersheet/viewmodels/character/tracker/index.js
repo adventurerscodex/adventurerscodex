@@ -7,7 +7,7 @@ import {
 import {
     Fixtures,
     Notifications
-   } from 'charactersheet/utilities';
+} from 'charactersheet/utilities';
 import { find, findIndex, flatMap } from 'lodash';
 import { AbstractTabularViewModel } from 'charactersheet/viewmodels/abstract';
 import { TrackedDetailForm } from './form';
@@ -26,7 +26,7 @@ class TrackerViewModel extends AbstractTabularViewModel {
 
     async refresh () {
         const fetchTrackedEntities = this.trackedModelTypes.map(
-          (type) => type.ps.list({ coreUuid: this.coreKey }));
+            (type) => type.ps.list({ coreUuid: this.coreKey }));
         const responseList = await Promise.all(fetchTrackedEntities);
         const tracked = flatMap(responseList, (response) => response.objects).filter(this.showTracked);
         this.entities(tracked);

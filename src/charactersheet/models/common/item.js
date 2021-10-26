@@ -21,7 +21,7 @@ export class Item extends KOModel {
     static mapping = {
         include: ['coreUuid', 'quantity']
     }; // Not sure why quantity is required here, but without it
-       // we cannot create a large 'quantity' of items
+    // we cannot create a large 'quantity' of items
     static SHORT_DESCRIPTION_MAX_LENGTH = 100;
     static DESCRIPTION_MAX_LENGTH = 200;
 
@@ -170,7 +170,7 @@ Item.validationConstraints = {
             max: 1000000
         },
         weight: {
-                // cannot have number filter, because it can be a decimal
+            // cannot have number filter, because it can be a decimal
             type:'number',
             step: '0.25',
             min: 0,

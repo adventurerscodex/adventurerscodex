@@ -52,7 +52,7 @@ export class Profile extends KOModel {
         let desc = ((this.race() && this.race() !== '') &&
                         (this.characterClass() && this.characterClass() !== '') &&
                         (this.level() && this.level() !== '')) ?
-                    'A level ' + this.level() + ' ' + this.race() + ' ' + this.characterClass() + ' by '
+            'A level ' + this.level() + ' ' + this.race() + ' ' + this.characterClass() + ' by '
                         + core.playerName() : false;
         desc = desc || 'A unique character, handcrafted from the finest bits the '
             + 'internet can provide.';
