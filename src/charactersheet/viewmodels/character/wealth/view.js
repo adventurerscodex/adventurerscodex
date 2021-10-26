@@ -45,13 +45,17 @@ class WealthViewModel extends AbstractViewModel {
         const type = this.quickSpendCoinType();
         const totalAmountInCopper = quickSpendAmount * this.entity().EXCHANGE_RATES[type];
 
-        if (!!quickSpendAmount && this.entity().worthInCopper() >= totalAmountInCopper) {
+        if (!!quickSpendAmount
+            && quickSpendAmount >=0
+            && this.entity().worthInCopper() >= totalAmountInCopper) {
             try {
                 this.entity().subtract(quickSpendAmount, type);
                 await this.entity().ps.save();
             } catch(e) {
                 this.quickSpendMessage(`Error: ${e.message}`);
             }
+        } else if (quickSpendAmount < 0) {
+            this.quickSpendMessage('Please enter a positive value.');
         } else {
             this.quickSpendMessage('You don\'t have that much money.')
         }
