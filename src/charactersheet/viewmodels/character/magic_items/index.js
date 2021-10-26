@@ -1,7 +1,7 @@
 import {
-  AbstractTabularViewModel,
-  calculateTotalLoad
- } from 'charactersheet/viewmodels/abstract';
+    AbstractTabularViewModel,
+    calculateTotalLoad
+} from 'charactersheet/viewmodels/abstract';
 import { MagicItem } from 'charactersheet/models';
 import { MagicItemFormViewModel } from './form';
 import { Notifications } from 'charactersheet/utilities';

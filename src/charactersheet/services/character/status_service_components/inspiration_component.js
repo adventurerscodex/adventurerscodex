@@ -69,7 +69,7 @@ export function InspirationStatusServiceComponent() {
     self._updateStatus = function(coreKey) {
         var status = PersistenceService.findByPredicates(Status,
             [new KeyValuePredicate('characterId', coreKey),
-            new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
+                new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
 
         if (!status) {
             status = new Status();
@@ -88,7 +88,7 @@ export function InspirationStatusServiceComponent() {
     self._removeStatus = function(coreKey) {
         var status = PersistenceService.findByPredicates(Status,
             [new KeyValuePredicate('characterId', coreKey),
-            new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
+                new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
         if (status) {
             status.delete();
             Notifications.status.changed.dispatch();

@@ -55,7 +55,7 @@ export function HealthinessStatusServiceComponent() {
         self.profile(new Profile());
         var status = PersistenceService.findByPredicates(Status,
             [new KeyValuePredicate('characterId', coreKey),
-            new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
+                new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
         if (!status) {
             status = new Status();
             status.characterId(coreKey);
@@ -103,7 +103,7 @@ export function HealthinessStatusServiceComponent() {
     self._updateStatus = async function(coreKey) {
         var status = PersistenceService.findByPredicates(Status,
             [new KeyValuePredicate('characterId', coreKey),
-            new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
+                new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
         if (!status) {
             status = new Status();
             status.characterId(coreKey);

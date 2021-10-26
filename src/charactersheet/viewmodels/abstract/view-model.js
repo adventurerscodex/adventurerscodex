@@ -96,8 +96,8 @@ export class AbstractViewModel {
 
     shortText = (string) => {
         return Utility.string.truncateStringAtLength(
-          ko.utils.unwrapObservable(string),
-          25
+            ko.utils.unwrapObservable(string),
+            25
         );
     };
 }

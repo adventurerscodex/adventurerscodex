@@ -2,7 +2,7 @@
 # Build Step
 #
 
-FROM node:8 as builder
+FROM node:14 as builder
 MAINTAINER Brian Schrader
 WORKDIR /app
 

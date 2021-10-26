@@ -98,7 +98,7 @@ export class AbstractFormModel {
     }
 
     notify() {
-      /* Implement via child classes */
+        /* Implement via child classes */
     }
 
     reset() {

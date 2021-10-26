@@ -79,9 +79,9 @@ export function MagicalStatusServiceComponent() {
     self.spellSlotDeleted = function (spellSlot) {
         if (spellSlot) {
             self.spellSlots.remove(
-              (entry) => {
-                  return ko.utils.unwrapObservable(entry.uuid) === ko.utils.unwrapObservable(spellSlot.uuid);
-              });
+                (entry) => {
+                    return ko.utils.unwrapObservable(entry.uuid) === ko.utils.unwrapObservable(spellSlot.uuid);
+                });
             self.dataHasChanged(spellSlot.coreUuid());
         }
     };
@@ -112,7 +112,7 @@ export function MagicalStatusServiceComponent() {
 
         var status = PersistenceService.findByPredicates(Status,
             [new KeyValuePredicate('characterId', coreKey),
-            new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
+                new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
 
         if (!status) {
             status = new Status();
@@ -135,7 +135,7 @@ export function MagicalStatusServiceComponent() {
     self._removeStatus = function(coreKey) {
         var status = PersistenceService.findByPredicates(Status,
             [new KeyValuePredicate('characterId', coreKey),
-            new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
+                new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
         if (status) {
             status.delete();
             Notifications.status.changed.dispatch();

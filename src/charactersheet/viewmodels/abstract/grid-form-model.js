@@ -1,5 +1,5 @@
 import {
-  AbstractGridViewModel
+    AbstractGridViewModel
 } from './grid-view-model';
 import { DELAY } from 'charactersheet/constants';
 import { filter } from 'lodash';

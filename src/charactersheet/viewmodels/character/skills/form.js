@@ -62,13 +62,13 @@ export class SkillsFormViewModel extends AbstractGridFormModel {
     async updateAbilityScoreValues (abilityScore) {
         if (abilityScore) {
             const skillUpdates = filter(
-          this.entities(),
-          (skill) => {
-              return skill.abilityScore().uuid() === abilityScore.uuid();
-          } ).map(async (skill) => {
-              const updatedSkill = await skill.updateAbilityScoreValues(abilityScore);
-              this.replaceInList(skill);
-          });
+                this.entities(),
+                (skill) => {
+                    return skill.abilityScore().uuid() === abilityScore.uuid();
+                } ).map(async (skill) => {
+                const updatedSkill = await skill.updateAbilityScoreValues(abilityScore);
+                this.replaceInList(skill);
+            });
             await Promise.all(skillUpdates);
         }
     }
@@ -112,9 +112,9 @@ export class SkillsFormViewModel extends AbstractGridFormModel {
             try {
                 this.displayAddForm(false);
             } catch (e) {
-              // For some reason, this form, and this form only,
-              // cannot figure out displayAddForm in some cases.
-              // However, catching and trying again works?!?!?
+                // For some reason, this form, and this form only,
+                // cannot figure out displayAddForm in some cases.
+                // However, catching and trying again works?!?!?
                 this.displayAddForm(false);
             }
             $(this.addFormId).collapse('hide');

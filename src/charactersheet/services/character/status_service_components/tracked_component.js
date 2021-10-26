@@ -65,7 +65,7 @@ export function TrackedStatusServiceComponent() {
         var coreKey = activeCore.uuid();
         const trackedModelTypes = [Feature, Feat, Trait];
         const fetchTrackedEntities = trackedModelTypes.map(
-                (type) => type.ps.list({ coreUuid: coreKey }));
+            (type) => type.ps.list({ coreUuid: coreKey }));
         const responseList = await Promise.all(fetchTrackedEntities);
         const tracked = flatMap(responseList, (response) => response.objects).filter(self.showTracked);
         self.trackedItems(tracked);
@@ -102,9 +102,9 @@ export function TrackedStatusServiceComponent() {
     self.itemDeleted = function (item) {
         if (item) {
             self.trackedItems.remove(
-              (entry) => {
-                  return ko.utils.unwrapObservable(entry.uuid) === ko.utils.unwrapObservable(item.uuid);
-              });
+                (entry) => {
+                    return ko.utils.unwrapObservable(entry.uuid) === ko.utils.unwrapObservable(item.uuid);
+                });
             if (!self.trackedItems() || self.trackedItems().length > 0) {
                 self._updateStatus(item.coreUuid());
             } else {
@@ -123,9 +123,9 @@ export function TrackedStatusServiceComponent() {
                 if (!ko.utils.unwrapObservable(item).isTracked()) {
                     // Used to be tracked, is no longer tracked;
                     self.trackedItems.remove(
-                      (entry) => {
-                          return ko.utils.unwrapObservable(entry.uuid) === ko.utils.unwrapObservable(item.uuid);
-                      });
+                        (entry) => {
+                            return ko.utils.unwrapObservable(entry.uuid) === ko.utils.unwrapObservable(item.uuid);
+                        });
                     changed = true;
                 } else {
                     // Used to be tracked, tracked properties changed;
@@ -161,7 +161,7 @@ export function TrackedStatusServiceComponent() {
     self._updateStatus = function(coreKey) {
         var status = PersistenceService.findByPredicates(Status,
             [new KeyValuePredicate('characterId', coreKey),
-            new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
+                new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
 
         if (!status) {
             status = new Status();
@@ -193,7 +193,7 @@ export function TrackedStatusServiceComponent() {
     self._removeStatus = function(coreKey) {
         var status = PersistenceService.findByPredicates(Status,
             [new KeyValuePredicate('characterId', coreKey),
-            new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
+                new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
         if (status) {
             status.delete();
             Notifications.status.changed.dispatch();

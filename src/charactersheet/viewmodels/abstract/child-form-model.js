@@ -5,10 +5,10 @@ import {
 } from 'charactersheet/utilities';
 import { filter, find } from 'lodash';
 import {
-  AbstractFormModel
+    AbstractFormModel
 } from './form-model';
 import {
-  FormSubmitActionComponent
+    FormSubmitActionComponent
 } from 'charactersheet/components/form-submit-actions';
 import { SELECTDATA } from 'charactersheet/constants';
 import ko from 'knockout';
