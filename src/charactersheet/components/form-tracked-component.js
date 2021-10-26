@@ -51,7 +51,7 @@ export class TrackedForm {
         return true; // Continue validating
     }
 
-    largeLayoutCSS = () => {
+    largeLayoutCss = () => {
         return (
             this.layoutDirection === 'horizontal'
             // Horizontal on small devices, vertical on big.
@@ -60,7 +60,7 @@ export class TrackedForm {
         );
     }
 
-    smallLayoutCSS = () => {
+    smallLayoutCss = () => {
         // Vertical layout regardless
         return 'btn-group-vertical d-block btn-group-sm';
     }

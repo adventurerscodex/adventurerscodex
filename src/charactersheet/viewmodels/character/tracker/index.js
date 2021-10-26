@@ -168,10 +168,8 @@ class TrackerViewModel extends AbstractTabularViewModel {
 
     resetLongRestFeatures = async () => {
         const updates = this.entities().map(async (entity) => {
-            if (
-                entity.tracked().resetsOn() === Fixtures.resting.shortRestEnum
-                || entity.tracked().resetsOn() === Fixtures.resting.longRestEnum
-            ) {
+            if (entity.tracked().resetsOn() === Fixtures.resting.shortRestEnum
+                || entity.tracked().resetsOn() === Fixtures.resting.longRestEnum) {
                 if (entity.tracked().used() > 0) {
                     entity.tracked().used(0);
                     await entity.save();
