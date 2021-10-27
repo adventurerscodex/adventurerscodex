@@ -13,23 +13,25 @@
         }">
   <div class="front">
     <stats-health-view params="{
-       containerId: elementId,
-       show: showFront,
-       outerShow: context.show,
-       flip: context.toggleDeathSavesVisible,
-       forceCardResize: forceCardResize,
-       massiveDamageTaken: context.massiveDamageTaken
+      containerId: elementId,
+      show: showFront,
+      outerShow: context.show,
+      flip: context.toggleDeathSavesVisible,
+      forceCardResize: forceCardResize,
+      massiveDamageTaken: context.massiveDamageTaken,
+      noMaxHPLeft: context.noMaxHPLeft,
      }">
     </stats-health-view>
   </div>
   <div class="back">
     <stats-deathsave-view params="{
-     containerId: elementId,
-     show: showBack,
-     flip: context.toggleDeathSavesVisible,
-     forceCardResize: forceCardResize,
-     massiveDamageTaken: context.massiveDamageTaken
-   }">
+      containerId: elementId,
+      show: showBack,
+      flip: context.toggleDeathSavesVisible,
+      forceCardResize: forceCardResize,
+      massiveDamageTaken: context.massiveDamageTaken,
+      noMaxHPLeft: context.noMaxHPLeft,
+    }">
     </stats-deathsave-view>
   </div>
 </flip-card>

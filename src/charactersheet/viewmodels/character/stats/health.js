@@ -21,6 +21,7 @@ class StatsHealthViewModel {
         this.loaded = ko.observable(false);
         this.forceCardResize = params.forceCardResize;
         this.massiveDamageTaken = params.massiveDamageTaken;
+        this.noMaxHpLeft = params.noMaxHpLeft;
         this.outerShow = ko.observable(false);//params.outerShow;
         this.profile = ko.observable(new Profile());
         this.hitDice = ko.observable(new HitDice());
@@ -30,6 +31,7 @@ class StatsHealthViewModel {
 
         this.healInput = ko.observable(null);
         this.tempInput = ko.observable(null);
+        this.maxHpReductionInput = ko.observable(null);
         this.dmgInput = ko.observable(null);
         this.subscriptions = [];
         autoBind(this);
@@ -99,7 +101,7 @@ class StatsHealthViewModel {
         }
         return `${this.health().regularHitPointsRemaining()} ${tempHp}
         <br />
-        of&nbsp;${this.health().maxHitPoints()}&nbsp;HP`;
+        of&nbsp;${this.health().maxAvailableHitPoints()}&nbsp;HP`;
     });
 
     // Configure the knockout-circular-progress display for health
@@ -107,7 +109,7 @@ class StatsHealthViewModel {
         data: {
             text: {value: this.hpText()},
             value: this.health().regularHitPointsRemaining(),
-            maxValue: this.health().maxHitPoints()
+            maxValue: this.health().maxAvailableHitPoints()
         },
         config: {
             strokeWidth: 12,
@@ -129,15 +131,15 @@ class StatsHealthViewModel {
     };
 
     // Configure the knockout-circular-progress display for tempHp
-    tempHpChart =  ko.pureComputed(()=> {
-        const tempHP = this.health().tempHitPointsRemaining() <= this.health().maxHitPoints() ?
-            this.health().tempHitPointsRemaining() :
-            this.health().maxHitPoints();
+    tempHpChart = ko.pureComputed(()=> {
+        const tempHP = this.health().tempHitPointsRemaining() <= this.health().maxAvailableHitPoints() ?
+                      this.health().tempHitPointsRemaining() :
+                      this.health().maxAvailableHitPoints();
         return {
             data: {
                 text: null,
                 value: tempHP,
-                maxValue: this.health().maxHitPoints()
+                maxValue: this.health().maxAvailableHitPoints()
             },
             config: {
                 trailColor: Fixtures.general.healthColor.tempHPBackground,
@@ -159,7 +161,7 @@ class StatsHealthViewModel {
         // damage is calculated a 3rd time is smelling like scope creep.
         // damageHandler updated this.health()
         this.damageHandler(healValue);
-        if (this.health().damage() < this.health().maxHitPoints()) {
+        if (this.health().damage() < this.health().maxAvailableHitPoints()) {
             this.health().isDying(false);
         }
         await this.health().save();
@@ -181,6 +183,55 @@ class StatsHealthViewModel {
         $('#health-temp-input').blur();
     };
 
+    handleMaxHPReduction = async () => {
+        // According to this post: https://rpg.stackexchange.com/a/118875
+        //    Note that the effect says "damage taken" which means the character
+        //    has already taken the damage. This means that damage must be
+        //    taken first.
+        // So we follow that same rule. Apply damage, then reduce HP.
+
+        let reduction = 1;  // Simply clicking the button reduces by 1
+        if (this.maxHpReductionInput()) {
+            reduction = parseInt(this.maxHpReductionInput());
+        }
+
+        const currentHitPoints = (
+            this.health().maxAvailableHitPoints() - this.health().damage()
+        );
+        if (currentHitPoints <= reduction) {
+            // Reset the damage to zero since they've died.
+            // The dead can't have negative HP, only the unconscious.
+            this.damageHandler(
+                this.health().maxAvailableHitPoints() - reduction,
+            );
+        }
+
+        // Apply the reduction...
+        this.health().maxHitPointsReductionDamage(
+            Math.min(
+                this.health().maxHitPointsReductionDamage() + reduction,
+                this.health().maxHitPoints()
+            )
+        );
+
+        // Now let's see if they're dead or merely dying...
+
+        if (this.health().maxAvailableHitPoints() === 0) {
+            this.health().damage(this.health().maxAvailableHitPoints());
+            this.noMaxHpLeft(true);
+        }
+
+        if (this.health().damage() >= this.health().maxAvailableHitPoints()) {
+            this.health().damage(this.health().maxAvailableHitPoints());
+            this.health().isDying(true);
+        }
+
+        await this.health().save();
+
+        this.maxHpReductionInput(null);
+        $('#health-hp-reduction-input').blur();
+    };
+
     handleDmg = async () => {
         let damageValue = 1;
         if (this.dmgInput()) {
@@ -191,7 +242,7 @@ class StatsHealthViewModel {
         // damage is calculated a 3rd time is smelling like scope creep.
         // damageHandler updated this.health()
         this.damageHandler(damageValue);
-        if (this.health().damage() >= this.health().maxHitPoints()) {
+        if (this.health().damage() >= this.health().maxAvailableHitPoints()) {
             this.health().isDying(true);
         }
 
@@ -208,7 +259,7 @@ class StatsHealthViewModel {
             const currentValue = parseInt(value);
             const currentDamage = parseInt(this.health().damage());
             const currentTempHP = parseInt(this.health().tempHitPoints());
-            const maxHitPoints = parseInt(this.health().maxHitPoints());
+            const maxHitPoints = parseInt(this.health().maxAvailableHitPoints());
             let newDamage;
             if (value < 0) {
                 // healing

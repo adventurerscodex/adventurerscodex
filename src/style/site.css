@@ -1502,7 +1502,7 @@ fieldset.fieldset-bordered {
   padding: 0px;
 }
 
-.healthBtn.btn-info {
+.health-btn.btn-info {
   background-color: rgb(113, 212, 232);
   border-color: rgb(113, 212, 232);
 }
@@ -1693,7 +1693,7 @@ hr.ac-table-header {
 }
 
 
-.healthBtn {
+.health-btn {
   width: 35px;
   height: 28px;
   padding: 0px;
