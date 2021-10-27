@@ -7,6 +7,10 @@
           <span class="clickable">Feature</span>
           <span data-bind="css: sortArrow('name')"></span>
         </th>
+        <th class="col-xs-4" data-bind="click: function(){sortBy('level');}">
+          <span class="clickable">Level</span>
+          <span data-bind="css: sortArrow('level')"></span>
+        </th>
         <th class="col-xs-4" data-bind="click: function(){sortBy('characterClass');}">
           <span class="clickable">Class</span>
           <span data-bind="css: sortArrow('characterClass')"></span>
@@ -31,10 +35,10 @@
           <span data-bind="text: $component.shortText(name)"></span>
         </td>
         <td>
-          <span data-bind="text: $component.shortText(characterClass)"></span>
-          <span class="text-muted"
-              data-bind="text:`(Level ${level()})`"></span>
+          <span data-bind="text: level"></span>
         </td>
+        <td>
+          <span data-bind="text: $component.shortText(characterClass)"></span>
         <td class="col-xs-1 text-right">
           <span data-toggle="collapse"
               data-bind="attr:{'data-target': `#feature_list_${uuid()}`}"
