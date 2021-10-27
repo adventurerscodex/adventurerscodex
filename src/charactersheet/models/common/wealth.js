@@ -17,27 +17,76 @@ export class Wealth extends KOModel {
     silver = ko.observable(0);
     copper = ko.observable(0);
 
-    worthInGold = () => {
-        const parsedPlatinum = parseInt(this.platinum()) || 0;
-        const parsedGold = parseInt(this.gold()) || 0;
-        const parsedElectrum = parseInt(this.electrum()) || 0;
-        const parsedSilver = parseInt(this.silver()) || 0;
-        const parsedCopper = parseInt(this.copper()) || 0;
+    // The amount of copper each coin is worth.
+    EXCHANGE_RATES = {
+        copper: 1,
+        silver: 10,
+        electrum: 50,
+        gold: 100,
+        platinum: 1000,
+    };
 
-        const copperToSilver = Math.floor(parsedCopper / 10);
-        const adjSilver = parsedSilver + copperToSilver;
+    worthInGold = () => ((this.worthInCopper() / this.EXCHANGE_RATES.gold) | 0);
 
-        const silverToElectrum = Math.floor(adjSilver / 5);
-        const adjElectrum = parsedElectrum + silverToElectrum;
+    worthInCopper = () => {
+        return Object.keys(this.EXCHANGE_RATES).map(denomination => (
+            this[denomination]() * this.EXCHANGE_RATES[denomination]
+        )).reduce((a, b) => a+b, 0);
+    };
 
-        const electrumToGold = Math.floor(adjElectrum / 2);
-        const adjGold = parsedGold + electrumToGold;
+    // This came from here. I can't take credit for it.
+    // https://stackoverflow.com/questions/53695215/coin-change-algorithm-js
+    getChange(credit) {
+        const denominations = ['copper', 'silver', 'electrum', 'gold', 'platinum'].map(
+            k => ({ denomination: k, value: this.EXCHANGE_RATES[k] })
+        );
+        let result = [];
+        while (credit > 0) {
+            const coin = denominations.pop(); // Get next greatest coin
+            const count = Math.floor(credit / coin.value); // See how many times I need that coin
+            credit -= count * coin.value; // Reduce the amount with that number of coins
+            if (count) {
+                result.push([coin.denomination, count]); // Store count & coin
+            }
+        }
+        return result;
+    }
 
-        const platinumToGold = parsedPlatinum * 10;
+    subtract = (amount, denomination) => {
+        // If we can just take from the correct category, then just do that...
+        if (amount <= this[denomination]()) {
+            this[denomination](
+                this[denomination]() - amount
+            );
+        } else {
+            const coins = ['platinum', 'gold', 'electrum', 'silver', 'copper'];
+            let debt = this.EXCHANGE_RATES[denomination] * amount;
 
-        const total = platinumToGold + adjGold;
+            // Then we need to convert down to the money we need...
 
-        return total;
+            for (let i = 0; i < coins.length; i++) {
+                const coin = coins[i];
+                const coinValue = (this[coin]() * this.EXCHANGE_RATES[coin]) | 0;
+
+                if (debt > 0 && coinValue > 0) {
+                    debt -= coinValue;
+                    this[coin](0);
+                }
+            }
+
+            if (debt < 0) {
+                const credit = -debt;
+
+                // Now make change for the amount we over-spent
+                const change = this.getChange(credit);
+                console.log(`Change ${change}`);
+
+                change.forEach(([coin, count]) => {
+                    console.log(coin, count);
+                    this[coin](this[coin]() + count);
+                });
+            }
+        }
     };
 
     worthInGoldLabel = ko.pureComputed(() => {

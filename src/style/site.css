@@ -1502,7 +1502,7 @@ fieldset.fieldset-bordered {
   padding: 0px;
 }
 
-.healthBtn.btn-info {
+.health-btn.btn-info {
   background-color: rgb(113, 212, 232);
   border-color: rgb(113, 212, 232);
 }
@@ -1693,7 +1693,7 @@ hr.ac-table-header {
 }
 
 
-.healthBtn {
+.health-btn {
   width: 35px;
   height: 28px;
   padding: 0px;
@@ -2076,4 +2076,17 @@ tr .panel {
 
 .overlay {
   transform: translateZ(900px);
+}
+
+.navbar li>a.btn-support-us {
+  border: 1px solid #fff;
+  border-radius: 4px;
+  margin: 12px;
+  padding-top: 8.5px;
+  padding-bottom: 8.5px;
+}
+
+.navbar li>a.btn-support-us:hover {
+  border: 1px solid #18bc9c;
+  background-color: #fff;
 }

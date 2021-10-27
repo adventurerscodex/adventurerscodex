@@ -15,6 +15,7 @@ class StatsDeathSaveViewModel {
         this.show = params.show;
         this.forceCardResize = params.forceCardResize;
         this.massiveDamageTaken = params.massiveDamageTaken;
+        this.noMaxHpLeft = params.noMaxHpLeft;
         this.deathSaveFailure = ko.observable(new DeathSave());
         this.deathSaveSuccess = ko.observable(new DeathSave());
         this.health = ko.observable(new Health());
@@ -36,6 +37,7 @@ class StatsDeathSaveViewModel {
 
     setUpSubscriptions() {
         this.show.subscribe(this.massiveDamageDeath);
+        this.show.subscribe(this.noMaxHpDeath);
         this.subscriptions.push(Notifications.health.changed.add(this.updateHealth));
     }
     disposeOfSubscriptions() {
@@ -67,6 +69,20 @@ class StatsDeathSaveViewModel {
             this.massiveDamageTaken(false);
         }
     }
+
+    async noMaxHpDeath() {
+        if (this.show() && this.noMaxHpLeft()) {
+            this.deathSaveFailure().used(3);
+            await this.deathSaveFailure().save();
+            Notifications.userNotification.dangerNotification.dispatch(
+              'You have lost all vitality...',
+              'You have died.', {
+                  timeOut: 0
+              });
+            this.noMaxHpLeft(false);
+        }
+    }
+
     updateHealth = (health) => {
         this.health().importValues(health.exportValues());
         if (!this.health().isDying()) {

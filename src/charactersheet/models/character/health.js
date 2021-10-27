@@ -18,6 +18,8 @@ export class Health extends KOModel {
     uuid = ko.observable(null);
     maxHitPoints = ko.observable(10);
     tempHitPoints = ko.observable(0);
+    tempHitPoints = ko.observable(0);
+    maxHitPointsReductionDamage = ko.observable(0);
     damage = ko.observable(0);
     isDying = ko.observable(false);
 
@@ -25,14 +27,17 @@ export class Health extends KOModel {
         return this.regularHitPointsRemaining();
     });
 
+    // This value includes max hp reduction
+    maxAvailableHitPoints = ko.pureComputed(() => {
+        const reductions = (this.maxHitPointsReductionDamage() | 0) || 0
+        return this.totalHitPoints() - reductions;
+    });
+
     totalHitPoints = ko.pureComputed(() => {
         // temp Hit Points do not allow you to become consious
         // and gaining temp hit points should not make you seem 'more damaged'
         // therefore only use maxHitPoints.
         return this.maxHitPoints() ? parseInt(this.maxHitPoints()) : 0;
-        // var maxHP = this.maxHitPoints() ? parseInt(this.maxHitPoints()) : 0;
-        // var tempHP = this.tempHitPoints() ? parseInt(this.tempHitPoints()) : 0;
-        // return maxHP + tempHP;
     });
 
     tempHitPointsRemaining = ko.pureComputed(() => {
@@ -41,7 +46,7 @@ export class Health extends KOModel {
     });
 
     regularHitPointsRemaining = ko.pureComputed(() => {
-        return this.maxHitPoints() - this.damage();
+        return this.maxAvailableHitPoints() - this.damage();
     });
 
     //Progress bar methods.
