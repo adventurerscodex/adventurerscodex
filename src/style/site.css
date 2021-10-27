@@ -1752,6 +1752,24 @@ hr.ac-table-header {
   background: url('../images/camping-tent.svg');
 }
 
+.trackedRow .dawn-icon,
+.rest-description .dawn-icon {
+  background: url('../images/sunrise-blue.svg');
+}
+
+.trackedRow[aria-expanded="true"] .dawn {
+  background: url('../images/sunrise.svg');
+}
+
+.trackedRow .manually-icon,
+.rest-description .manually-icon {
+  background: url('../images/quill-blue.svg');
+}
+
+.trackedRow[aria-expanded="true"] .manually {
+  background: url('../images/quill.svg');
+}
+
 .weaponRow[aria-expanded="true"] .damage-icon,
 .spellRow[aria-expanded="true"] .damage-icon {
   opacity: 0.8;
@@ -2052,6 +2070,10 @@ tr .panel {
   width: 100%;
 }
 
+.d-block {
+  display: block;
+}
+
 .overlay {
   transform: translateZ(900px);
 }
@@ -2068,5 +2090,3 @@ tr .panel {
   border: 1px solid #18bc9c;
   background-color: #fff;
 }
-
-

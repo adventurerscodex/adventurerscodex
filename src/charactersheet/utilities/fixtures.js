@@ -413,8 +413,11 @@ export var Fixtures = {
               'Feats, and Traits have been restored.',
         longRestMessage : 'Your Hit Dice, Spell Slots, Hit Points, ' +
               'Tracked Features, Feats, and Traits have been restored.',
+        dawnMessage: 'Your relevant Spell Slots, Tracked Features, ' +
+              'Feats, and Traits have been restored.',
         shortRestEnum : 'short',
-        longRestEnum : 'long'
+        longRestEnum : 'long',
+        dawnEnum : 'dawn',
     },
     wizardProfile: {
         classes : ['Barbarian', 'Bard', 'Cleric', 'Druid', 'Fighter', 'Monk',

@@ -88,7 +88,12 @@ export var Notifications = {
         /**
          * Fired whenever a long rest is activated.
          */
-        longRest: new Signal()
+        longRest: new Signal(),
+
+        /**
+         * Fired whenever dawn has come.
+         */
+        dawn: new Signal()
     },
 
     /*****************************

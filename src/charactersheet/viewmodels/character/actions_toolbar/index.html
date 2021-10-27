@@ -9,18 +9,27 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-sm-offset-3 col-sm-6">
-        <button type="button" class="btn btn-sm btn-default" id="actionsShortRestButton" style="width:49%;"
+      <div class="col-sm-4">
+        <button type="button" class="btn btn-sm btn-default btn-block" id="actionsShortRestButton"
          data-bind="click: shortRestButton">
          <img class="action-bar-icon" data-bind="attr: { src: meditation }">
         &nbsp;&nbsp;&nbsp;Short Rest
         </button>
-        <button type="button" class="btn btn-sm btn-primary" id="actionsLongRestButton" style="width:49%;"
+      </div>
+      <div class="col-sm-4">
+        <button type="button" class="btn btn-sm btn-primary btn-block" id="actionsLongRestButton"
          data-bind="click: longRestButton">
          <img class="action-bar-icon" data-bind="attr: { src: campingTent }">
          &nbsp;&nbsp;&nbsp;Long Rest
         </button>
+      </div>
+      <div class="col-sm-4">
+        <button type="button" class="btn btn-sm btn-default btn-block" id="actionsDawnButton"
+         data-bind="click: dawnButton">
+         <img class="action-bar-icon" data-bind="attr: { src: sunrise }">
+        &nbsp;&nbsp;&nbsp;Dawn
+        </button>
+      </div>
     </div>
-   </div>
   </div>
 </div>

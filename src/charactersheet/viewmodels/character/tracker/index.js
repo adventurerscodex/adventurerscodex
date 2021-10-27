@@ -76,7 +76,6 @@ class TrackerViewModel extends AbstractTabularViewModel {
                 to: {
                     color
                 }
-
             }
         };
     };
@@ -86,6 +85,10 @@ class TrackerViewModel extends AbstractTabularViewModel {
             return 'rest-icon long-rest-icon';
         } else if (tracked().resetsOn() === 'short') {
             return 'rest-icon short-rest-icon';
+        } else if (tracked().resetsOn() === 'dawn') {
+            return 'rest-icon dawn-icon';
+        } else if (tracked().resetsOn() === 'none') {
+            return 'rest-icon manually-icon';
         } else {
             throw 'Unexpected feature resets on string.';
         }
@@ -148,6 +151,7 @@ class TrackerViewModel extends AbstractTabularViewModel {
 
         this.subscriptions.push(Notifications.events.shortRest.add(this.resetShortRestFeatures));
         this.subscriptions.push(Notifications.events.longRest.add(this.resetLongRestFeatures));
+        this.subscriptions.push(Notifications.events.dawn.add(this.resetDawnFeatures));
     }
 
     resetShortRestFeatures = async () => {
@@ -164,9 +168,24 @@ class TrackerViewModel extends AbstractTabularViewModel {
 
     resetLongRestFeatures = async () => {
         const updates = this.entities().map(async (entity) => {
-            if (entity.tracked().used() > 0) {
-                entity.tracked().used(0);
-                await entity.save();
+            if (entity.tracked().resetsOn() === Fixtures.resting.shortRestEnum
+                || entity.tracked().resetsOn() === Fixtures.resting.longRestEnum) {
+                if (entity.tracked().used() > 0) {
+                    entity.tracked().used(0);
+                    await entity.save();
+                }
+            }
+        });
+        await Promise.all(updates);
+    };
+
+    resetDawnFeatures = async () => {
+        const updates = this.entities().map(async (entity) => {
+            if (entity.tracked().resetsOn() === Fixtures.resting.dawnEnum) {
+                if (entity.tracked().used() > 0) {
+                    entity.tracked().used(0);
+                    await entity.save();
+                }
             }
         });
         await Promise.all(updates);
