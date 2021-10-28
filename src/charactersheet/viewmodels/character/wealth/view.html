@@ -77,20 +77,19 @@
       </div>
       <div class="col-xs-12">
         <form data-bind="submit: $component.quickSpend">
-          <div class="input-group input-group-sm">
+          <div class="input-group input-group-sm d-flex">
             <input
               type="number"
               minvalue="1"
               required
-              class="form-control"
+              class="form-control d-flex-4"
               placeholder="Quick spend"
               data-bind="value: $component.quickSpendAmount"
             >
-            <span class="input-group-btn" style="width: 33%;">
+            <span class="input-group-btn d-flex-3">
               <select
                 required
                 class="form-control"
-                style="padding: 2px;"
                 data-bind="value: $component.quickSpendCoinType"
               >
                 <option value="copper">CP</option>
@@ -100,7 +99,7 @@
                 <option value="platinum">PP</option>
               </select>
             </span>
-            <span class="input-group-btn">
+            <span class="input-group-btn d-flex-3">
               <button
                 class="btn btn-default"
                 type="submit"

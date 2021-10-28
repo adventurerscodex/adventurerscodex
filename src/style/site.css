@@ -2090,3 +2090,38 @@ tr .panel {
   border: 1px solid #18bc9c;
   background-color: #fff;
 }
+
+/* Fix for BS 3 selects as input-group-btn */
+.input-group-btn>select.form-control {
+  padding: 2px;
+}
+
+/* Bootstrap Flex Addons */
+
+.d-flex {
+  display: flex;
+}
+
+.d-flex-1 {
+  flex: 1;
+}
+
+.d-flex-2 {
+  flex: 2;
+}
+
+.d-flex-3 {
+  flex: 3;
+}
+
+.d-flex-4 {
+  flex: 4;
+}
+
+.d-flex-5 {
+  flex: 5;
+}
+
+.d-flex-6 {
+  flex: 6;
+}
