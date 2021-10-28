@@ -6,7 +6,7 @@ import {
     CoreManager,
     Fixtures,
     Notifications,
-    Utility
+    Utility,
 } from 'charactersheet/utilities';
 import { PointOfInterest } from 'charactersheet/models/dm';
 import ko from 'knockout';
@@ -40,6 +40,7 @@ export function PointOfInterestSectionViewModel(params) {
     self.addFormIsValid = ko.observable(false);
     self.addModalOpen = ko.observable(false);
     self.fullScreen = ko.observable(false);
+    self.showDisclaimer = ko.observable(false);
 
     // Push to Player
     self.selectedPoiToPush = ko.observable();
@@ -201,6 +202,20 @@ export function PointOfInterestSectionViewModel(params) {
         self.editTabStatus('active');
         self.previewTabStatus('');
         self.editFirstModalElementHasFocus(true);
+    };
+
+    self.difficultyCheckSkillPrePopFilter = function(request, response) {
+        const term = request.term.toLowerCase();
+        const results = Fixtures.difficultyCheckOptions.filter(function(name, idx, _) {
+            return name.toLowerCase().indexOf(term) > -1;
+        });
+        console.log(response, term, results);
+        response(results);
+    };
+
+    self.populateDifficutyCheckSkill = function(skill, value) {
+        self.blankPointOfInterest().difficultyCheckSkill(skill);
+        self.showDisclaimer(true);
     };
 
     /* Push to Player Methods */
