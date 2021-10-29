@@ -108,7 +108,7 @@ export function WizardProfileStepViewModel(params) {
             items.forEach(function(element, idx, _) {
                 var item = DataRepository.items[element.name];
                 //Add item quantity from backpacks object
-                item.itemQty = element.count;
+                item.quantity = element.count;
                 populatedItems.push(item);
             });
         }
