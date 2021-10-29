@@ -1094,12 +1094,6 @@ input[type=number] {
     -moz-appearance:textfield;
 }
 
-@-moz-document url-prefix() {
-    .form-control {
-      padding: 0px 15px;
-    }
-}
-
 input[type='checkbox'].pseudo-checkbox + label:before,
 input[type='checkbox'].pseudo-checkbox + label:after{
     position: relative;
