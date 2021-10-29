@@ -1,32 +1,52 @@
-<ul class="nav navbar-nav navbar-right">
-  <!-- ko ifnot: loggedIn -->
-  <li class="secondary-nav">
-    <a data-bind="attr: { href: loginLink }">
-      Login
-    </a>
-  </li>
-  <li class="secondary-nav">
-    <a data-bind="attr: { href: signupLink }">
-      Sign Up
-    </a>
-  </li>
-  <!-- /ko -->
-  <!-- ko if: loggedIn -->
+<!-- ko if: loggedIn -->
+<!-- SM-LG Supplementary Nav -->
+<ul class="nav navbar-nav navbar-right hidden-xs">
   <li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
-      role="button" aria-haspopup="true" aria-expanded="false">
-        <span data-bind="text: username"></span>
-        <span class="caret"></span>
+    <a
+      href="#"
+      class="dropdown-toggle"
+      data-toggle="dropdown"
+      role="button"
+      aria-haspopup="true"
+      aria-expanded="false"
+    >
+      <span data-bind="text: username"></span>
+      <span class="caret"></span>
     </a>
     <ul class="dropdown-menu">
-      <li><a href="/accounts/profile/">Account</a></li>
+      <li>
+        <a href="/accounts/profile/" title="User Profile">
+          <i class="fa fa-user"></i>&nbsp;&nbsp;Account
+        </a>
+      </li>
       <li role="separator" class="divider"></li>
       <li class="secondary-nav">
-        <a data-bind="click: logoutLinkWasClicked, attr: { href: _logoutLink }">
-          <span>Logout</span>
+        <a
+          title="Logout"
+          data-bind="click: logoutLinkWasClicked, attr: { href: _logoutLink }"
+        >
+          <span><i class="fa fa-sign-out"></i>&nbsp;&nbsp;Logout</span>
         </a>
       </li>
     </ul>
   </li>
-  <!-- /ko -->
 </ul>
+
+<!-- XS Supplementary Nav -->
+<ul class="nav navbar-nav navbar-right visible-xs">
+  <li>
+    <a href="/accounts/profile/" title="User Profile">
+      <i class="fa fa-user"></i>&nbsp;&nbsp;Account
+    </a>
+  </li>
+  <li role="separator" class="divider"></li>
+  <li class="secondary-nav">
+    <a
+      title="Logout"
+      data-bind="click: logoutLinkWasClicked, attr: { href: _logoutLink }"
+    >
+      <span><i class="fa fa-sign-out"></i>&nbsp;&nbsp;Logout</span>
+    </a>
+  </li>
+</ul>
+<!-- /ko -->
