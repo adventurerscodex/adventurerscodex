@@ -2084,3 +2084,7 @@ tr .panel {
   border: 1px solid #18bc9c;
   background-color: #fff;
 }
+
+.image-container img {
+  max-width: 100%;
+}
