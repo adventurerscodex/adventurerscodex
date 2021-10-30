@@ -83,7 +83,7 @@ ko.components.register('form-tracked-component', {
         </div>\
         <div class="form-group hidden-xs hidden-sm">\
           <label class="control-label">Resets on...</label>\
-          <div data-bind="class: $component.largeLayoutCSS()" \
+          <div data-bind="class: $component.largeLayoutCss()" \
                role="group">\
             <label class="btn btn-default btn-sm"\
                    data-bind="css: { active: resetsOn() === \'short\'}">\
@@ -133,7 +133,7 @@ ko.components.register('form-tracked-component', {
         </div> \
         <div class="form-group visible-xs visible-sm">\
           <label class="control-label">Resets on...</label>\
-          <div data-bind="class: $component.smallLayoutCSS()" \
+          <div data-bind="class: $component.smallLayoutCss()" \
                role="group">\
             <label class="btn btn-default btn-sm"\
                    data-bind="css: { active: resetsOn() === \'short\'}">\
