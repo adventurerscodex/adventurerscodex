@@ -6,7 +6,7 @@ import {
     CoreManager,
     Fixtures,
     Notifications,
-    Utility,
+    Utility
 } from 'charactersheet/utilities';
 import { PointOfInterest } from 'charactersheet/models/dm';
 import ko from 'knockout';
@@ -209,7 +209,6 @@ export function PointOfInterestSectionViewModel(params) {
         const results = Fixtures.difficultyCheckOptions.filter(function(name, idx, _) {
             return name.toLowerCase().indexOf(term) > -1;
         });
-        console.log(response, term, results);
         response(results);
     };
 
