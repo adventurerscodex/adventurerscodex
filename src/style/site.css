@@ -649,6 +649,8 @@ ul.footer-icons li {
   margin-left: 1rem;
   margin-right: auto;
   max-height: 225px;
+  max-width: 100%;
+  width: auto;
 }
 
 .btn-group-padding {
@@ -1092,12 +1094,6 @@ input[type=number]::-webkit-inner-spin-button {
 
 input[type=number] {
     -moz-appearance:textfield;
-}
-
-@-moz-document url-prefix() {
-    .form-control {
-      padding: 0px 15px;
-    }
 }
 
 input[type='checkbox'].pseudo-checkbox + label:before,
@@ -2124,4 +2120,8 @@ tr .panel {
 
 .d-flex-6 {
   flex: 6;
+}
+
+.image-container img {
+  max-width: 100%;
 }

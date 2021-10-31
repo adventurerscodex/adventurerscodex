@@ -69,14 +69,14 @@
           <label data-bind="attr: {for: `spell_memorize_${uuid()}`}"></label>
           <!-- /ko -->
           <!-- ko if: level() == 0 || alwaysPrepared -->
-          <span class="glyphicon glyphicon-ok-sign"></span>
+          <span class="fa fa-check-circle"></span>
           <!-- /ko -->
         </td>
         <td>
           <span data-bind="text: $component.shortText(name)"></span>
           <!-- ko if: isConcentration -->
           <span style="color: #18bc9c"
-              class="glyphicon glyphicon-copyright-mark"></span>
+              class="fa fa-copyright"></span>
           <!-- /ko -->
         </td>
         <td class="ac-table-data-cell">
@@ -93,7 +93,7 @@
           <span data-bind="text: castingTime"></span>
           <!-- ko if: isRitual -->
           <span style="color: #18bc9c"
-              class="glyphicon glyphicon-registration-mark"></span>
+              class="fa fa-registered"></span>
           <!-- /ko -->
         </td>
         <td class="hidden-xs hidden-sm">
