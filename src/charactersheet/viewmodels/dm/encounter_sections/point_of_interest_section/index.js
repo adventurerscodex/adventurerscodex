@@ -6,7 +6,7 @@ import {
     CoreManager,
     Fixtures,
     Notifications,
-    Utility,
+    Utility
 } from 'charactersheet/utilities';
 import { PointOfInterest } from 'charactersheet/models/dm';
 import ko from 'knockout';
