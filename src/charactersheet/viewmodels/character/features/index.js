@@ -24,7 +24,9 @@ export class FeaturesViewModel extends AbstractTabularViewModel {
         return {
             ...super.sorts(),
             'characterClass asc': { field: 'characterClass', direction: 'asc'},
-            'characterClass desc': { field: 'characterClass', direction: 'desc'}
+            'characterClass desc': { field: 'characterClass', direction: 'desc'},
+            'level asc': { field: 'level', direction: 'asc'},
+            'level desc': { field: 'level', direction: 'desc'},
         };
     }
 }
