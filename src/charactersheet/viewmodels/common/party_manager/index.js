@@ -1,12 +1,9 @@
 /*eslint no-console:0*/
 import {
     AuthenticationToken,
-    ChatRoom
 } from 'charactersheet/models/common';
 import {
-    ChatServiceManager,
     PersistenceService,
-    XMPPService
 } from 'charactersheet/services/common';
 import {
     CoreManager,
@@ -35,16 +32,8 @@ export function PartyManagerViewModel() {
     };
 
     self.load = async function() {
-//         Notifications.xmpp.connected.add(self.rejoinLastParty);
-//         Notifications.xmpp.reconnected.add(self._handleReconnection);
-//         Notifications.xmpp.disconnected.add(self._handleDisconnection);
-//         Notifications.xmpp.error.add(self._handleConnectionError);
-//         Notifications.xmpp.conflict.add(self._handleConflict);
 //         self.parties(await self._getParties());
 //         self.checkIfInAParty();
-
-//         Notifications.party.joined.add(self._handleSubscription);
-//         Notifications.party.left.add(self._handleUnsubscription);
 
 //         self.dataHasChanged();
 //         if (self.loggedIn()) {
@@ -91,12 +80,7 @@ export function PartyManagerViewModel() {
     /* Public Methods */
 
     self.checkIfInAParty = function() {
-        var chatManager = ChatServiceManager.sharedService();
-        var node = chatManager.currentPartyNode;
-        if (node) {
-            self.roomId(Strophe.getNodeFromJid(node));
-            self.inAParty(true);
-        }
+        // TODO
     };
 
     /**
@@ -104,38 +88,28 @@ export function PartyManagerViewModel() {
      * complete subscribe to that node.
      */
     self.createParty = async function() {
-        var chatManager = ChatServiceManager.sharedService();
-        var node = chatManager.getUniqueNodeId();
-        await self.joinParty(node);
+        // TODO
     };
 
     /**
      * Join an existing node or create a new node.
      */
     self.joinParty = async function(node) {
-        var xmpp = XMPPService.sharedService();
-        var chatManager = ChatServiceManager.sharedService();
-        await chatManager.join(node + '@' + MUC_SERVICE,
-            Strophe.getNodeFromJid(xmpp.connection.jid), true);
+        // TODO
     };
 
     /**
      * Unsubscrive to an existing node subscription.
      */
     self.leaveParty = function(node, notify) {
-        var xmpp = XMPPService.sharedService();
-        var chatManager = ChatServiceManager.sharedService();
-        chatManager.leave(node, Strophe.getNodeFromJid(xmpp.connection.jid));
+        // TODO
     };
 
     /**
      * Deletes a given party from the user's previously joined parties list.
      */
     self.deleteParty = async function(party) {
-        await party.ps.delete();
-
-        // Reload parties.
-        self.parties(await self._getParties());
+        // TODO
     };
 
     /**
@@ -143,21 +117,11 @@ export function PartyManagerViewModel() {
      * or when the character or campaign is selected.
     */
     self.rejoinLastParty = () => {
-        self.dataHasChanged();
-        // Early return if, for some reason, we are not actually logged in
-        if (!self.loggedIn()) {
-            return;
-        }
-
-        if (self.parties().length == 1) {
-            self.joinParty(Strophe.getNodeFromJid(self.parties()[0].jid()));
-        }
+        // TODO
     };
 
     self.dataHasChanged = function() {
-//         var token = PersistenceService.findAll(AuthenticationToken)[0];
-//         var xmpp = XMPPService.sharedService();
-//         self.loggedIn(token && token.isValid() && xmpp.connection.authenticated);
+        // TODO
     };
 
     /* Private Methods */

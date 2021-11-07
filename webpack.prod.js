@@ -83,18 +83,6 @@ let config = merge(common, {
              * The URL to the login page.
              */
             'LOGIN_URL': process.env.LOGIN_URL,
-            /**
-             * The HOST URL of the pubsub services.
-             */
-            'PUBSUB_HOST_JID': process.env.PUBSUB_HOST_JID,
-            /**
-             * The MUC Service URL.
-             */
-            'MUC_SERVICE': process.env.MUC_SERVICE,
-            /**
-             * The connection URL for the XMPP service.
-             */
-            'XMPP_WS_URL': process.env.XMPP_WS_URL
         })
     ]
 });

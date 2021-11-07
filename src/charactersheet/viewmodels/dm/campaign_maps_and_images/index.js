@@ -1,7 +1,5 @@
 import 'bin/knockout-custom-loader';
 import {
-    ChatServiceManager,
-    ImageServiceManager,
     SortService
 } from 'charactersheet/services';
 import {
@@ -52,31 +50,11 @@ export function CampaignMapsAndImagesViewModel() {
     /* Public Methods */
 
     self.toggleExhibit = async(image) => {
-        var imageService = ImageServiceManager.sharedService();
-        if (image.isExhibited()) {
-            image.isExhibited(false);
-            await image.ps.save();
-            imageService.clearImage();
-        } else {
-            image.isExhibited(true);
-            await image.ps.save();
-            imageService.publishImage(image.toJSON());
-            self._dataHasChanged();
-        }
+        // TODO
     };
 
     self.load = async function() {
-        Notifications.party.joined.add(self._connectionHasChanged);
-        Notifications.party.left.add(self._connectionHasChanged);
-        Notifications.exhibit.changed.add(self._dataHasChanged);
 
-        var key = CoreManager.activeCore().uuid();
-        const imagesResponse = await Image.ps.list({coreUuid: key});
-        if (imagesResponse.objects) {
-            self.mapsOrImages(imagesResponse.objects);
-        }
-
-        self._connectionHasChanged();
     };
 
     self.toggleAddModal = () => {
@@ -227,8 +205,7 @@ export function CampaignMapsAndImagesViewModel() {
     /* Private Methods */
 
     self._connectionHasChanged = function() {
-        var chat = ChatServiceManager.sharedService();
-        self._isConnectedToParty(chat.currentPartyNode != null);
+        // TODO
     };
 
     self._dataHasChanged = async function() {

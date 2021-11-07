@@ -1,8 +1,4 @@
 import {
-    ChatServiceManager,
-    ImageServiceManager
-} from 'charactersheet/services/common';
-import {
     CoreManager,
     Fixtures,
     Notifications,
@@ -46,9 +42,6 @@ export function EnvironmentSectionViewModel(params) {
     self.load = async function() {
         self.loaded(false);
         Notifications.encounters.changed.add(self._dataHasChanged);
-        Notifications.party.joined.add(self._connectionHasChanged);
-        Notifications.party.left.add(self._connectionHasChanged);
-        Notifications.exhibit.changed.add(self.getEnvironment);
 
         self._connectionHasChanged();
 
@@ -63,17 +56,7 @@ export function EnvironmentSectionViewModel(params) {
     // Push to Player
 
     self.toggleExhibit = async () => {
-        var imageService = ImageServiceManager.sharedService();
-        if (self.environment().isExhibited()) {
-            self.environment().isExhibited(false);
-            await self.save();
-            imageService.clearImage();
-        } else {
-            self.environment().isExhibited(true);
-            await self.save();
-            imageService.publishImage(self.toJSON());
-            await self._dataHasChanged();
-        }
+        // TODO
     };
 
     self.toJSON = function() {
@@ -224,8 +207,7 @@ export function EnvironmentSectionViewModel(params) {
     };
 
     self._connectionHasChanged = function() {
-        var chat = ChatServiceManager.sharedService();
-        self._isConnectedToParty(chat.currentPartyNode != null);
+        // TODO
     };
 }
 

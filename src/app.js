@@ -12,7 +12,6 @@ import Spinner from 'spin';
 import 'bin/knockout-jquery-autocomplete';
 import 'bin/knockout-element-binding';
 import 'bin/knockout-bottomsup';
-import 'bin/xmpp/muc.strophe';
 import 'bin/knockout-bootstrap-modal';
 import 'bin/knockout-find';
 

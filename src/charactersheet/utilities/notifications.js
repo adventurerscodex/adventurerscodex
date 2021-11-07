@@ -127,19 +127,10 @@ export var Notifications = {
         allRemoved: new Signal()
     },
 
-    chat: {
-        message: new Signal(),
-        iq: new Signal(),
-        presence: new Signal(),
-        room: new Signal(),
-        member: {
-            joined: new Signal(),
-            left: new Signal()
-        }
-    },
     deathsave: {
         changed: new Signal()
     },
+
     exhibit: {
         changed: new Signal()
     },
@@ -195,22 +186,7 @@ export var Notifications = {
     },
 
     party: {
-        /**
-         * The first parameter is the node you have joined and the second parameter is a boolean
-         * that determines if you successfully connected to the party.
-         */
-        joined: new Signal(),
-        left: new Signal(),
-        roster: {
-            changed: new Signal()
-        },
-        /**
-         * A new player update is available.
-         * NOTE: The first parameter is the list of pCards.
-         */
-        players: {
-            changed: new Signal()
-        }
+        changed: new Signal(),
     },
 
     playerimage: {
@@ -306,40 +282,4 @@ export var Notifications = {
          */
         completed: new Signal()
     },
-
-    /**
-     * Messaging Notifications
-     */
-
-    xmpp: {
-        /**
-         * Dispatched when a new connection object has been created, but before
-         * it is connected to the service.
-         */
-        initialized: new Signal(),
-        /**
-         * Dispatched when the XMPP connection is successfully established,
-         * the given user is authenticated, and the connection is now usable.
-         */
-        connected: new Signal(),
-        /**
-         * Dispatched when the XMPP connection has been successfully terminated.
-         * @param shouldNotify {bool} whether the event deserves to notify the user.
-         */
-        disconnected: new Signal(),
-        reconnected: new Signal(),
-        error: new Signal(),
-        conflict: new Signal(),
-
-        routes: {
-            chat: new Signal(),
-            pcard: new Signal()
-        },
-
-        pubsub: {
-            created: new Signal(),
-            subscribed: new Signal(),
-            unsubscribed: new Signal()
-        }
-    }
 };

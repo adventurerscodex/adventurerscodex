@@ -1,6 +1,4 @@
 import {
-    ChatServiceManager,
-    ImageServiceManager,
     SortService
 } from 'charactersheet/services/common';
 import {
@@ -66,9 +64,6 @@ export function MapsAndImagesSectionViewModel(params) {
 
     self.load = function() {
         Notifications.encounters.changed.add(self._dataHasChanged);
-        Notifications.party.joined.add(self._connectionHasChanged);
-        Notifications.party.left.add(self._connectionHasChanged);
-        Notifications.exhibit.changed.add(self._dataHasChanged);
 
         self.encounter.subscribe(function() {
             self._dataHasChanged();
@@ -162,17 +157,7 @@ export function MapsAndImagesSectionViewModel(params) {
     };
 
     self.toggleMapOrImageExhibit = async (image) => {
-        const imageService = ImageServiceManager.sharedService();
-        if (image.isExhibited()) {
-            image.isExhibited(false);
-            await image.ps.save();
-            imageService.clearImage();
-        } else {
-            image.isExhibited(true);
-            await image.ps.save();
-            await self._dataHasChanged();
-            imageService.publishImage(image.toJSON());
-        }
+        // TODO
     };
 
     self.toggleModal = function() {
@@ -258,8 +243,7 @@ export function MapsAndImagesSectionViewModel(params) {
     };
 
     self._connectionHasChanged = function() {
-        var chat = ChatServiceManager.sharedService();
-        self._isConnectedToParty(chat.currentPartyNode != null);
+        // TODO
     };
 }
 

@@ -5,14 +5,11 @@ import {
     TabFragmentManager
 } from 'charactersheet/utilities';
 import {
-    DMCardPublishingService,
     HotkeysService,
-    ImageServiceManager,
     PersistenceService
 } from 'charactersheet/services';
 import { Campaign } from 'charactersheet/models/dm';
 import { PlayerTypes } from 'charactersheet/models/common/player_types';
-import chatTabImage from 'images/tab_icons/conversation.svg';
 import dmScreenTabImage from 'images/tab_icons/gift-of-knowledge.svg';
 import encounterTabImage from 'images/tab_icons/treasure-map.svg';
 import ko from 'knockout';
@@ -35,15 +32,11 @@ export function DMRootViewModel() {
     self.currentPartyNode = ko.observable(null);
     self.TEMPLATE_FILE = 'dm/index.tmpl';
 
-    self.dmCardService = DMCardPublishingService.sharedService();
-    self.imageService = ImageServiceManager.sharedService();
-
     self.overviewTabImage = overviewTabImage;
     self.encounterTabImage = encounterTabImage;
     self.dmScreenTabImage = dmScreenTabImage;
     self.notesTabImage = notesTabImage;
     self.partyTabImage = partyTabImage;
-    self.chatTabImage = chatTabImage;
 
     //UI Methods
 
@@ -86,9 +79,6 @@ export function DMRootViewModel() {
     self.dmscreenTabStatus = ko.pureComputed(() => {
         return self._tabIsVisible('dmscreen');
     });
-    self.chatTabStatus = ko.pureComputed(() => {
-        return self._tabIsVisible('chat');
-    });
 
     self.partyTabStatus = ko.pureComputed(() => {
         return self._tabIsVisible('party');
@@ -114,10 +104,6 @@ export function DMRootViewModel() {
         self._setActiveTab('party');
     };
 
-    self.activateChatTab = () => {
-        self._setActiveTab('chat');
-    };
-
     self.activateNotesTab = () => {
         self._setActiveTab('notes');
     };
@@ -130,29 +116,15 @@ export function DMRootViewModel() {
     self.load = () => {
         self.activeTab(TabFragmentManager.activeTab());
 
-        Notifications.party.joined.add(self._updateCurrentNode);
-        Notifications.party.left.add(self._removeCurrentNode);
-        Notifications.xmpp.disconnected.add(self._removeCurrentNode);
-
         HotkeysService.registerHotkey('1', self.activateOverviewTab);
         HotkeysService.registerHotkey('2', self.activateEncounterTab);
         HotkeysService.registerHotkey('3', self.activateDmScreenTab);
         HotkeysService.registerHotkey('4', self.activateNotesTab);
         HotkeysService.registerHotkey('5', self.activatePartyTab);
-        HotkeysService.registerHotkey('6', self.activateChatTab);
-
-        self.dmCardService.init();
-        self.imageService.init();
     };
 
     self.unload = () => {
         HotkeysService.flushHotkeys();
-
-        Notifications.xmpp.pubsub.subscribed.remove(self._updateCurrentNode);
-        Notifications.xmpp.pubsub.unsubscribed.remove(self._removeCurrentNode);
-        Notifications.xmpp.disconnected.remove(self._removeCurrentNode);
-
-        self.dmCardService.deinit();
     };
 
     //Private Methods

@@ -98,9 +98,24 @@ class _PartyService {
     // Private
 
     _setParty(party) {
-        this.party = party;
+        let didChange = false;
+        try {
+            didChange = (
+                this.party.uuid !== party.uuid
+                    || this.party.updatedAt !== party.updatedAt
+            );
+        } catch(error) {
+            // We got here because one of the two is null,
+            // so we just need to check if one isn't null.
+            didChange = (!!party !== !!this.party);
+        }
 
-        // TODO: Notify
+        if (didChange) {
+            this.party = party;
+
+            console.log('Notifications.party.changed.dispatch')
+            Notifications.party.changed.dispatch(this.party);
+        }
     }
 }
 

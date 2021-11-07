@@ -1,5 +1,4 @@
 import {
-    ChatServiceManager,
     SortService
 } from 'charactersheet/services';
 import {
@@ -73,8 +72,6 @@ export function NPCSectionViewModel(params) {
     self.load = async function() {
         Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
-        Notifications.party.joined.add(self._connectionHasChanged);
-        Notifications.party.left.add(self._connectionHasChanged);
 
         self.encounter.subscribe(function() {
             self._dataHasChanged();
@@ -267,8 +264,7 @@ export function NPCSectionViewModel(params) {
     };
 
     self._connectionHasChanged = function() {
-        var chat = ChatServiceManager.sharedService();
-        self._isConnectedToParty(chat.currentPartyNode != null);
+        // TODO
     };
 }
 

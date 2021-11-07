@@ -10,7 +10,6 @@ import {
     ProfileImage
 } from 'charactersheet/models/common';
 import { OtherStats } from 'charactersheet/models/character';
-import { XMPPService } from 'charactersheet/services/common';
 import ko from 'knockout';
 import md5 from 'blueimp-md5';
 import template from './index.html';
@@ -41,8 +40,6 @@ export function PlayerImageViewModel() {
     self.load = async () => {
         //Subscriptions
         Notifications.otherstats.changed.add(self.inspirationHasChanged);
-        Notifications.xmpp.connected.add(self._handleConnectionStatusChanged);
-        Notifications.xmpp.disconnected.add(self._handleConnectionStatusChanged);
         Notifications.coreManager.changed.add(self.dataHasChanged);
 
         // Prime the pump.
@@ -130,23 +127,13 @@ export function PlayerImageViewModel() {
 
     // Status Indicator Methods
 
-    self._isConnectedToXMPP = ko.observable();
-
     self.statusIndicatorClass = ko.pureComputed(function() {
-        if (self._isConnectedToXMPP()) {
-            return 'success';
-        }
+        // TODO
         return 'failure';
     });
 
     self._handleConnectionStatusChanged = function() {
-        var xmpp = XMPPService.sharedService();
-        self._isConnectedToXMPP(
-            xmpp.connection ?
-            // Ensure we're both connected and authenticated.
-                (xmpp.connection.connected && xmpp.connection.authenticated) :
-                false
-        );
+        // TODO
     };
 
     //Player Image Handlers

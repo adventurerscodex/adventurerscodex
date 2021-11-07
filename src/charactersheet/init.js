@@ -4,19 +4,16 @@ import 'bootstrap';
 import 'bin/knockout-validation';
 import {
     AuthenticationServiceManager,
-    ChatServiceManager,
     HealthinessStatusServiceComponent,
     HotkeysService,
     InspirationStatusServiceComponent,
     MagicalStatusServiceComponent,
-    NodeServiceManager,
     NotificationsServiceManager,
     PersistenceService,
     StatusService,
     TotalWeightStatusServiceComponent,
     TrackedStatusServiceComponent,
     UserServiceManager,
-    XMPPService,
     PartyService,
 } from 'charactersheet/services';
 import {
@@ -108,9 +105,6 @@ export var init = function(viewModel) {
     ];
 
     // Prime the services.
-//     XMPPService.sharedService().init();
-//     NodeServiceManager.sharedService().init();
-//     ChatServiceManager.sharedService().init();
     NotificationsServiceManager.sharedService().init();
     UserServiceManager.sharedService().init();
     AuthenticationServiceManager.sharedService().init();
@@ -119,7 +113,6 @@ export var init = function(viewModel) {
     window.hotkeyHandler = HotkeysService.hotkeyHandler;
     window.PersistenceService = PersistenceService;
     window.Hypnos = Hypnos;
-    window.XMPPService = XMPPService;
 
     // Import static data
     $(() => {
