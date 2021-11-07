@@ -8,6 +8,7 @@ export { Item } from './item';
 export { MagicItem } from './magic_item';
 export { Message } from './message';
 export { Note } from './note';
+export { Party } from './party';
 export { pCard } from './pCard';
 export { PlayerCard } from './player_card';
 export { ProfileImage } from './player_image';

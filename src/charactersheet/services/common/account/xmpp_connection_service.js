@@ -89,13 +89,13 @@ function _XMPPService(config) {
      */
     self.init = function() {
         // Namespace config
-        for (const [name, link] of self.NAMESPACES) {
-            Strophe.addNamespace(name, link);
-        }
-
-        self._initializeConnection();
-
-        Notifications.user.exists.addOnce(self._handleConnect);
+//         for (const [name, link] of self.NAMESPACES) {
+//             Strophe.addNamespace(name, link);
+//         }
+//
+//         self._initializeConnection();
+//
+//         Notifications.user.exists.addOnce(self._handleConnect);
     };
 
     self.deinit = function() {

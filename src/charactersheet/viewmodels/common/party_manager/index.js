@@ -35,21 +35,21 @@ export function PartyManagerViewModel() {
     };
 
     self.load = async function() {
-        Notifications.xmpp.connected.add(self.rejoinLastParty);
-        Notifications.xmpp.reconnected.add(self._handleReconnection);
-        Notifications.xmpp.disconnected.add(self._handleDisconnection);
-        Notifications.xmpp.error.add(self._handleConnectionError);
-        Notifications.xmpp.conflict.add(self._handleConflict);
-        self.parties(await self._getParties());
-        self.checkIfInAParty();
+//         Notifications.xmpp.connected.add(self.rejoinLastParty);
+//         Notifications.xmpp.reconnected.add(self._handleReconnection);
+//         Notifications.xmpp.disconnected.add(self._handleDisconnection);
+//         Notifications.xmpp.error.add(self._handleConnectionError);
+//         Notifications.xmpp.conflict.add(self._handleConflict);
+//         self.parties(await self._getParties());
+//         self.checkIfInAParty();
 
-        Notifications.party.joined.add(self._handleSubscription);
-        Notifications.party.left.add(self._handleUnsubscription);
+//         Notifications.party.joined.add(self._handleSubscription);
+//         Notifications.party.left.add(self._handleUnsubscription);
 
-        self.dataHasChanged();
-        if (self.loggedIn()) {
-            self.rejoinLastParty();
-        }
+//         self.dataHasChanged();
+//         if (self.loggedIn()) {
+//             self.rejoinLastParty();
+//         }
     };
 
     /* UI Methods */
@@ -155,9 +155,9 @@ export function PartyManagerViewModel() {
     };
 
     self.dataHasChanged = function() {
-        var token = PersistenceService.findAll(AuthenticationToken)[0];
-        var xmpp = XMPPService.sharedService();
-        self.loggedIn(token && token.isValid() && xmpp.connection.authenticated);
+//         var token = PersistenceService.findAll(AuthenticationToken)[0];
+//         var xmpp = XMPPService.sharedService();
+//         self.loggedIn(token && token.isValid() && xmpp.connection.authenticated);
     };
 
     /* Private Methods */

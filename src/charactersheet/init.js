@@ -16,7 +16,8 @@ import {
     TotalWeightStatusServiceComponent,
     TrackedStatusServiceComponent,
     UserServiceManager,
-    XMPPService
+    XMPPService,
+    PartyService,
 } from 'charactersheet/services';
 import {
     DataRepository,
@@ -107,9 +108,9 @@ export var init = function(viewModel) {
     ];
 
     // Prime the services.
-    XMPPService.sharedService().init();
-    NodeServiceManager.sharedService().init();
-    ChatServiceManager.sharedService().init();
+//     XMPPService.sharedService().init();
+//     NodeServiceManager.sharedService().init();
+//     ChatServiceManager.sharedService().init();
     NotificationsServiceManager.sharedService().init();
     UserServiceManager.sharedService().init();
     AuthenticationServiceManager.sharedService().init();

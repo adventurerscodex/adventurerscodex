@@ -36,14 +36,14 @@ export function _ChatService(config) {
     self.currentPartyNode = null;
 
     self.init = function() {
-        self._setupConnection();
-
-        Notifications.xmpp.initialized.add(self._setupConnection);
-        Notifications.xmpp.connected.add(self._handleConnect);
-        Notifications.xmpp.disconnected.add(self._teardownConnection);
-        Notifications.coreManager.changing.add(self._leaveAll);
-        Notifications.party.joined.add(self._setupRooms);
-        Notifications.party.left.add(self._teardownRooms);
+//         self._setupConnection();
+//
+//         Notifications.xmpp.initialized.add(self._setupConnection);
+//         Notifications.xmpp.connected.add(self._handleConnect);
+//         Notifications.xmpp.disconnected.add(self._teardownConnection);
+//         Notifications.coreManager.changing.add(self._leaveAll);
+//         Notifications.party.joined.add(self._setupRooms);
+//         Notifications.party.left.add(self._teardownRooms);
     };
 
     self.deinit = function() {

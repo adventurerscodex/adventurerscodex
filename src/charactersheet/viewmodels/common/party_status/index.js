@@ -8,6 +8,7 @@ export function PartyStatusViewModel() {
     var self = this;
 
     self.partyStatus = ko.observable();
+    self.isConnectedToParty = ko.observable();
 
     self.load = function() {
         Notifications.party.joined.add(self._updatePartyStatus);

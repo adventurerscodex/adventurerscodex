@@ -1,1 +1,12 @@
+<!-- ko if: isConnectedToParty -->
 <small data-bind="html: partyStatus"></small>
+<!-- /ko -->
+<!-- ko ifnot: isConnectedToParty -->
+<button
+  class="btn btn-xs btn-link"
+  xdata-bind="click: showPartyModal"
+  style="padding-left:0;"
+>
+Join a party
+</button>
+<!-- /ko -->
