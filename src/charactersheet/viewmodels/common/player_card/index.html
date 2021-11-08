@@ -1,0 +1,139 @@
+<div class="col-sm-4">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <!-- Player Info -->
+      <div class="row">
+        <div class="col-xs-12">
+        <img class="img-circle center-block"
+          data-bind="attr: {
+            src: player.imageUrl || 'https://www.gravatar.com/avatar/{}?d=mm',
+            height: 80,
+            width: 80,
+          }">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 text-center">
+          <div class="h4">
+            <span data-bind="text: player.name"></span><br />
+            <small data-bind="text: player.playerSummary"></small>
+          </div>
+        </div>
+      </div>
+      <!-- Health, Spells, and Features  -->
+      <div class="row">
+        <div class="col-xs-12">
+          Hit Points
+          <div class="progress thin">
+            <div class="progress thin">
+              <div
+                id="regularHitPoints"
+                class="progress-bar"
+                role="progressbar"
+                aria-valuemin="0"
+                data-bind="
+                  style: { width: `${hpPercent() * 100 }%` },
+                  css: hpProgressBarCss(),
+                "
+              >
+                <span class="sr-only"></span>
+              </div>
+              <div
+                id="tempHitPoints"
+                class="progress-bar progress-bar-sky"
+                role="progressbar"
+                aria-valuemin="0"
+                xdata-bind="style: { width: tempProgressWidth }"
+              >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" data-bind="visible: player.totalSpellSlots">
+        <div class="col-xs-12">
+          Spell Slots
+          <div class="progress thin">
+            <div
+              class="progress-bar progress-bar-info"
+              role="progressbar"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              data-bind="style: { width: `${spellSlotPercent() * 100 }%` }"
+            >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" data-bind="visible: player.totalTrackables">
+        <div class="col-xs-12">
+          Features, Feats, and Traits
+          <div class="progress thin">
+            <div
+              class="progress-bar progress-bar-warning"
+              role="progressbar"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              data-bind="style: { width: `${trackedPercent() * 100 }%` }"
+            >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 text-right">
+          <a
+            class="text-right"
+            style="cursor:pointer;"
+            data-toggle="collapse"
+            aria-expanded="false"
+            data-bind="attr: { 'data-target': '#player-more-info-' + index() }"
+          >
+            More <span class="fa fa-caret-down"></span>
+          </div>
+        </a>
+      </div>
+      <br />
+      <div class="collapse" data-bind="attr: { id: 'player-more-info-' + index() }">
+        <div class="row">
+          <div class="col-xs-12 col-padded">
+            <ul class="list-group" style="margin-bottom:0;">
+              <li class="list-group-item">
+                Level
+                <span class="pull-right" data-bind="text: player.level"></span>
+              </li>
+              <li class="list-group-item">
+                Armor Class
+                <span class="pull-right" data-bind="text: player.armorClass"></span>
+              </li>
+              <li class="list-group-item">
+                Hit Dice
+                <span class="pull-right" data-bind="text: player.hitDice"></span>
+              </li>
+              <li class="list-group-item">
+                Spell Save DC
+                <span class="pull-right" data-bind="text: player.spellSaveDc"></span>
+              </li>
+              <li class="list-group-item" data-bind="visible: player.experience">
+                Experience
+                <span class="pull-right" data-bind="text: player.experience"></span>
+              </li>
+              <li class="list-group-item" data-bind="visible: player.passivePerception">
+                Passive Perception
+                <span class="pull-right" data-bind="text: '+' + player.passivePerception"></span>
+              </li>
+              <li class="list-group-item" data-bind="visible: player.passiveInvestigation">
+                Passive Investigation
+                <span class="pull-right" data-bind="text: '+' + player.passiveInvestigation"></span>
+              </li>
+              <li class="list-group-item">
+                Gold
+                <span class="pull-right" data-bind="text: player.worthInGold"></span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

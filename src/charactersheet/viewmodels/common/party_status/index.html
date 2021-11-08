@@ -1,12 +1,24 @@
-<!-- ko if: isConnectedToParty -->
-<small data-bind="html: partyStatus"></small>
-<!-- /ko -->
-<!-- ko ifnot: isConnectedToParty -->
-<button
-  class="btn btn-xs btn-link"
-  xdata-bind="click: showPartyModal"
-  style="padding-left:0;"
->
-Join a party
-</button>
-<!-- /ko -->
+<!-- Party Status -->
+<div>
+  <!-- ko if: isConnectedToParty -->
+  <button
+    class="btn btn-xs btn-link"
+    style="padding-left:0;"
+    data-target="#party-manager-form"
+    data-toggle="collapse"
+  >
+  You are in a party.
+  </button>
+  <!-- /ko -->
+
+  <!-- ko ifnot: isConnectedToParty -->
+  <button
+    class="btn btn-xs btn-link"
+    style="padding-left:0;"
+    data-target="#party-manager-form"
+    data-toggle="collapse"
+  >
+  Create/Join a party
+  </button>
+  <!-- /ko -->
+</div>

@@ -1,37 +1,51 @@
+import autoBind from 'auto-bind';
+import { ViewModel } from 'charactersheet/viewmodels/abstract';
 import { Notifications } from 'charactersheet/utilities';
-import Strophe from 'strophe';
-import ko from 'knockout';
+import { PartyService } from 'charactersheet/services';
+import { observable, components, pureComputed } from 'knockout';
 import template from './index.html';
 
-export function PartyStatusViewModel() {
-    var self = this;
+export class PartyStatusViewModel extends ViewModel {
 
-    self.partyStatus = ko.observable();
-    self.isConnectedToParty = ko.observable();
+    constructor() {
+        super();
+        autoBind(this);
+        this.party = observable(PartyService.party);
+        this.partyStatus = observable();
+        this.showModal = observable(false);
+    }
 
-    self.load = function() {
-        Notifications.coreManager.changed.add(self._clearPartyStatus);
-        // Make sure the first message is set
-        self._updatePartyStatus(null, true);
-    };
+    setUpSubscriptions() {
+        this.subscriptions.push(Notifications.coreManager.changed.add(this.coreDidChange));
+        this.subscriptions.push(Notifications.party.changed.add(this.partyDidChange));
+    }
 
-    self._updatePartyStatus = function(node, success) {
-        // TODO
-//         if (!success) { return; }
-//         if (node) {
-//             var chat = ChatServiceManager.sharedService();
-//             self.partyStatus('<i>You\'re connected to <span class="text-info">' + Strophe.getNodeFromJid(chat.currentPartyNode) + '</span></i>.');
-//         } else {
-//             self.partyStatus('<i>You\'re not connected to a party.</i>');
-//         }
-    };
+    // UI
 
-    self._clearPartyStatus = function() {
-        self.partyStatus('<i>You\'re not connected to a party.</i>');
-    };
+    isConnectedToParty = pureComputed(() => (!!this.party()));
+
+    // Events
+
+    partyDidChange(party) {
+        this.party(party);
+    }
+
+    coreDidChange() {
+        this._clearPartyStatus();
+    }
+
+    onClose() {
+        this.showModal(false);
+    }
+
+    // Private
+
+    _clearPartyStatus() {
+        this.partyStatus('<i>You\'re not connected to a party.</i>');
+    }
 }
 
-ko.components.register('party-status', {
+components.register('party-status', {
     viewModel: PartyStatusViewModel,
     template: template
 });

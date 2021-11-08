@@ -63,6 +63,7 @@ class _PartyService {
             );
             this._setParty(party);
         } catch(error) {
+            this._setParty(null);
             console.warn(error);
         }
     };
@@ -76,21 +77,21 @@ class _PartyService {
         return party;
     }
 
-    async leave() {
+    async leave(coreUuid) {
         await Party.leave(coreUuid);
         this._setParty(null);
         this.resetTimers();
     }
 
-    async create() {
-        const { data: party } = await Party.ps.create(coreUuid);
+    async create(coreUuid) {
+        const { data: party } = await Party.ps.create({ uuid: coreUuid });
         this._setParty(party);
         this.configureTimers();
         return party;
     }
 
-    async delete() {
-        await Party.ps.delete(coreUuid);
+    async delete(coreUuid) {
+        await Party.ps.delete({ uuid: coreUuid });
         this._setParty(null);
         this.resetTimers();
     }
@@ -100,9 +101,10 @@ class _PartyService {
     _setParty(party) {
         let didChange = false;
         try {
+            // Do a deep-copy compare of string hashes. This will catch all
+            // changes in the response data.
             didChange = (
-                this.party.uuid !== party.uuid
-                    || this.party.updatedAt !== party.updatedAt
+                btoa(JSON.stringify(this.party)) !== btoa(JSON.stringify(party))
             );
         } catch(error) {
             // We got here because one of the two is null,
@@ -112,8 +114,6 @@ class _PartyService {
 
         if (didChange) {
             this.party = party;
-
-            console.log('Notifications.party.changed.dispatch')
             Notifications.party.changed.dispatch(this.party);
         }
     }

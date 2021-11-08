@@ -1,29 +1,42 @@
 import 'bin/knockout-custom-loader';
-import {
-    PlayerCard,
-    pCard
-} from 'charactersheet/models';
+import autoBind from 'auto-bind';
+import { observable, components, pureComputed } from 'knockout';
+import { ViewModel } from 'charactersheet/viewmodels/abstract';
 import { Notifications } from 'charactersheet/utilities';
-import ko from 'knockout';
+import { PartyService } from 'charactersheet/services';
 import template from './index.html';
 
-export function PartyViewModel() {
-    var self = this;
+export class PartyViewModel extends ViewModel {
 
-    self.players = ko.observableArray();
-    self.isConnectedToParty = ko.observable(false);
+    constructor() {
+        super();
+        autoBind(this);
+        this.party = observable(PartyService.party);
+    }
 
-    self.load = function() {
+    setUpSubscriptions() {
+        this.subscriptions.push(Notifications.coreManager.changed.add(this.coreDidChange));
+        this.subscriptions.push(Notifications.party.changed.add(this.partyDidChange));
+    }
 
-    };
+    // UI
 
-    self.unload = function() {
+    isConnectedToParty = pureComputed(() => (!!this.party()));
 
-    };
+    players = pureComputed(() => (this.party().members));
 
+    // Events
+
+    partyDidChange(party) {
+        this.party(party);
+    }
+
+    coreDidChange() {
+        this.party(null);
+    }
 }
 
-ko.components.register('party', {
+components.register('party', {
     viewModel: PartyViewModel,
     template: template
 });

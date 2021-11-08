@@ -13,7 +13,9 @@ export class Party extends KOModel {
         include: ['coreUuid'],
     };
 
+    uuid = observable(null);
     coreUuid = observable(null);
+    isOwner = observable(false);
     shortCode = observable('');
     createdAt = observable('');
     updatedAt = observable('');
@@ -29,7 +31,7 @@ export class Party extends KOModel {
 
     static async leave(coreUuid) {
         return await Party.ps.client.action({
-            keys: [...Party.__skeys__, 'join', 'leave'],
+            keys: [...Party.__skeys__, 'leave', 'create'],
             params: { uuid: coreUuid }
         });
     }

@@ -89,9 +89,6 @@ export function AdventurersCodexViewModel() {
 
         // Finish the setup once we're sure that we're logged in.
         Notifications.authentication.loggedIn.add(self.doSetup);
-
-        // TODO
-//             setTimeout(hideSplashScreen, 100);
     };
 
     self.doSetup = async () => {

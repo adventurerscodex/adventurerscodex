@@ -112,6 +112,5 @@ module.exports = {
     jquery: 'jQuery',
     dropbox: 'Dropbox',
     marked: 'marked',
-    strophe : "Strophe"
   }
 }
