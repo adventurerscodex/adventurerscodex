@@ -9,6 +9,7 @@ import {
     Utility
 } from 'charactersheet/utilities';
 import { Image } from 'charactersheet/models/dm';
+import { get } from 'lodash';
 import ko from 'knockout';
 import template from './index.html';
 
@@ -44,12 +45,6 @@ export function CampaignMapsAndImagesViewModel() {
     self._editForm = ko.observable();
 
     /* Public Methods */
-
-    self.toggleExhibit = async (image) => {
-        image.isExhibited(!image.isExhibited());
-        await image.ps.save();
-        await self.refresh();
-    };
 
     self.load = async function() {
         Notifications.party.changed.add(self.partyDidChange);
@@ -159,6 +154,12 @@ export function CampaignMapsAndImagesViewModel() {
         self.openModal(!self.openModal());
     };
 
+    self.toggleExhibit = async (image) => {
+        image.isExhibited(!image.isExhibited());
+        await image.ps.save();
+        self.markAsExhibited(image.isExhibited() ? image.uuid() : null);
+    };
+
     /* Modal Methods */
 
     self.addModalFinishedOpening = function() {
@@ -194,15 +195,29 @@ export function CampaignMapsAndImagesViewModel() {
         self.fullScreen(!self.fullScreen());
     };
 
-    self.shouldShowPushButton = ko.pureComputed(function() {
+    self.shouldShowExhibitButton = ko.pureComputed(function() {
         return self._isConnectedToParty();
     });
 
     /* Private Methods */
 
-    self.partyDidChange = function(party) {
-        self._isConnectedToParty(!!party)
+    self.partyDidChange = (party) => {
+        self._isConnectedToParty(!!party);
+
+        // Update everything that isn't on exhibit. This event can
+        // be fired from multiple places.
+        const exhibitUuid = get(party, 'exhibit.uuid', null);
+        self.markAsExhibited(exhibitUuid);
     };
+
+    self.markAsExhibited = (exhibitUuid) => {
+        self.mapsOrImages(
+            self.mapsOrImages().map(moi => {
+                moi.isExhibited(moi.uuid() === exhibitUuid);
+                return moi;
+            })
+        );
+    }
 
     self._dataHasChanged = async function() {
         var key = CoreManager.activeCore().uuid();

@@ -19,6 +19,7 @@ export class PointOfInterest extends KOModel {
     name = ko.observable('');
     playerText = ko.observable();
     sourceUrl = ko.observable();
+    isExhibited = ko.observable(false);
     difficultyCheckValue = ko.observable();
     difficultyCheckSkill = ko.observable();
     description = ko.observable('');

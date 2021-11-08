@@ -19,7 +19,7 @@
         Description
         <span data-bind="css: sortArrow('description')"></span>
       </th>
-      <th class="col-md-1 text-right">Send</th>
+      <th class="col-md-1 text-right">Exhibit</th>
       <th class="col-md-1 text-right">
         <a data-bind="click: toggleAddModal"
             href="#">
@@ -41,17 +41,18 @@
           href="#" class="hidden-md hidden-lg col-md-5"></td>
       <td data-bind="text: longDescription, click: $parent.editNPC"
           href="#" class="hidden-sm hidden-xs col-md-5"></td>
-      <!-- ko if: $parent.shouldShowPushButton -->
-      <td class="text-right col-xs-1">
-        <a data-bind="click: $parent.pushModalToPlayerButtonWasPressed" href="#">
-          <i class="fa fa-paper-plane-o fa-color-hover"></i>
+      <!-- ko if: $parent.shouldShowExhibitButton -->
+      <td class="text-right col-md-1">
+        <a data-bind="click: $parent.toggleExhibit" href="#" title="Send Player's Exhibit">
+          <i data-bind="css: { exhibitActiveIcon: isExhibited }" class="fa fa-desktop fa-color-hover">
+          </i>
         </a>
       </td>
       <!-- /ko -->
-      <!-- ko ifnot: $parent.shouldShowPushButton -->
-      <td class="text-right col-xs-1">
-        <span class="fa fa-paper-plane-o fa-disabled" style="cursor:pointer;"
-          data-bind="popover: { content: 'Join a Party to send image to Player\'s Chat' }">
+      <!-- ko ifnot: $parent.shouldShowExhibitButton -->
+      <td class="text-right col-md-1">
+        <span class="fa fa-desktop fa-disabled" style="cursor:pointer;"
+          data-bind="popover: { content: 'Join a Party send Player\'s Exhibit' }">
         </span>
       </td>
       <!-- /ko -->
@@ -111,7 +112,7 @@
                         hasFocus: firstElementInModalHasFocus">
             </div>
             <div class="col-sm-1 control-label">
-              <span class="fa fa-paper-plane-o" style="cursor:pointer;"
+              <span class="fa fa fa-desktop" style="cursor:pointer;"
                 title="This field will be sent to the players via the chat.">
               </span>
             </div>
@@ -173,7 +174,7 @@
               </small>
             </div>
             <div class="col-sm-1 control-label">
-              <span class="fa fa-paper-plane-o" style="cursor:pointer;"
+              <span class="fa fa fa-desktop" style="cursor:pointer;"
                 title="This field will be sent to the players via the chat.">
               </span>
             </div>
@@ -181,7 +182,7 @@
           <div class="modal-footer">
             <small class="text-center">
               <p>
-                Fields marked with <i class="fa fa-paper-plane-o"></i> will be sent to the players via the chat.
+                Fields marked with <i class="fa fa fa-desktop fa-color-hover"></i> will be shown to the players in the Exhibit.
               </p>
             </small>
             <button type="submit"
@@ -273,7 +274,7 @@
                          data-bind="textInput: name, hasFocus: $parent.editFirstModalElementHasFocus">
                 </div>
                 <div class="col-sm-1 control-label">
-                  <span class="fa fa-paper-plane-o" style="cursor:pointer;"
+                  <span class="fa fa fa-desktop" style="cursor:pointer;"
                     title="This field will be sent to the players via the chat.">
                   </span>
                 </div>
@@ -304,7 +305,7 @@
                           data-bind="textInput: sourceUrl">
                 </div>
                 <div class="col-sm-1 control-label">
-                  <span class="fa fa-paper-plane-o" style="cursor:pointer;"
+                  <span class="fa fa fa-desktop" style="cursor:pointer;"
                     title="This field will be sent to the players via the chat.">
                   </span>
                 </div>
@@ -340,7 +341,7 @@
                   </small>
                 </div>
                 <div class="col-sm-1 control-label">
-                  <span class="fa fa-paper-plane-o" style="cursor:pointer;"
+                  <span class="fa fa fa-desktop" style="cursor:pointer;"
                     title="This field will be sent to the players via the chat.">
                   </span>
                 </div>
@@ -348,7 +349,7 @@
               <div class="modal-footer">
                 <small class="text-center">
                   <p>
-                    Fields marked with <i class="fa fa-paper-plane-o"></i> will be sent to the players via the chat.
+                    Fields marked with <i class="fa fa fa-desktop fa-color-hover"></i> will be shown to the players in the Exhibit.
                   </p>
                 </small>
                 <button type="submit"

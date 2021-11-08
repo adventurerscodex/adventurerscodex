@@ -1,5 +1,6 @@
 import {
-    SortService
+    SortService,
+    PartyService
 } from 'charactersheet/services';
 import {
     CoreManager,
@@ -13,6 +14,7 @@ import {
     MonsterAbilityScore
 } from 'charactersheet/models/dm';
 import ko from 'knockout';
+import { get } from 'lodash';
 import sectionIcon from 'images/encounters/wyvern.svg';
 import template from './index.html';
 
@@ -46,14 +48,9 @@ export function MonsterSectionViewModel(params) {
     self.showDisclaimer = ko.observable(false);
     self.addFormIsValid = ko.observable(false);
     self.fullScreen = ko.observable(false);
-
-    // Push to Player
-    self.selectedMonsterToPush = ko.observable();
-    self.openPushModal = ko.observable(false);
-    self.pushType = ko.observable('point-of-interest');
     self.convertedDisplayUrl = ko.observable();
 
-    self._isConnectedToParty = ko.observable(false);
+    self._isConnectedToParty = ko.observable(!!PartyService.party);
 
     self.sorts = {
         'name asc': { field: 'name', direction: 'asc' },
@@ -75,13 +72,12 @@ export function MonsterSectionViewModel(params) {
     /* Public Methods */
     self.load = async function() {
         Notifications.encounters.changed.add(self._dataHasChanged);
+        Notifications.party.changed.add(self.partyDidChange);
 
         self.encounter.subscribe(function() {
             self._dataHasChanged();
         });
         await self._dataHasChanged();
-
-        self._connectionHasChanged();
     };
 
     /* UI Methods */
@@ -138,7 +134,9 @@ export function MonsterSectionViewModel(params) {
     };
 
     self.toggleMonsterExhibit = async (monster) => {
-        // TODO
+        monster.isExhibited(!monster.isExhibited());
+        await monster.ps.save();
+        self.markAsExhibited(monster.isExhibited() ? monster.uuid() : null);
     };
 
     self.validation = {
@@ -257,7 +255,7 @@ export function MonsterSectionViewModel(params) {
         self.editFirstModalElementHasFocus(true);
     };
 
-    self.shouldShowPushButton = ko.pureComputed(function() {
+    self.shouldShowExhibitButton = ko.pureComputed(function() {
         return self._isConnectedToParty();
     });
 
@@ -287,9 +285,23 @@ export function MonsterSectionViewModel(params) {
         self.tagline(section.tagline());
     };
 
-    self._connectionHasChanged = function() {
-        // TODO
+    self.partyDidChange = (party) => {
+        self._isConnectedToParty(!!party);
+
+        // Update everything that isn't on exhibit. This event can
+        // be fired from multiple places.
+        const exhibitUuid = get(party, 'exhibit.uuid', null);
+        self.markAsExhibited(exhibitUuid);
     };
+
+    self.markAsExhibited = (exhibitUuid) => {
+        self.monsters(
+            self.monsters().map(monster => {
+                monster.isExhibited(monster.uuid() === exhibitUuid);
+                return monster;
+            })
+        );
+    }
 }
 
 ko.components.register('monster-section', {

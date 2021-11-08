@@ -18,7 +18,7 @@
 <!-- ko if: isConnectedToParty -->
 <div class="row">
   <!-- ko if: description -->
-  <div class="col-xs-12 col-sm-6 col-md-7">
+  <div class="col-xs-12 col-sm-6 col-md-8">
     <h4>Description</h4>
     <div class="well">
         <div data-bind="markdownPreview: description"></div>
@@ -26,12 +26,12 @@
   </div>
   <!-- /ko -->
   <!-- ko if: !description() && imageUrl() -->
-  <div class="col-xs-12 col-sm-3 col-md-3">
+  <div class="col-xs-12 col-sm-3 col-md-4">
     <!-- This is just a spacer for when there is no description -->
   </div>
   <!-- /ko -->
   <!-- ko if: imageUrl -->
-  <div class="col-xs-12 col-sm-6 col-md-5 text-center">
+  <div class="col-xs-12 col-sm-6 col-md-4 text-center">
     <!-- ko if: description() && imageUrl() -->
       <!--
         This is just a spacer for when there is description.

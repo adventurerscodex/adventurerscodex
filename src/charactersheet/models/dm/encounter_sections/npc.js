@@ -20,6 +20,7 @@ export class NPC extends KOModel {
     name = ko.observable('');
     race = ko.observable('');
     sourceUrl = ko.observable();
+    isExhibited = ko.observable(false);
     playerText = ko.observable();
     description = ko.observable('');
 

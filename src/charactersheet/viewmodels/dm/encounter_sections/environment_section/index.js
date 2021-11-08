@@ -4,8 +4,10 @@ import {
     Notifications,
     Utility
 } from 'charactersheet/utilities';
+import { PartyService } from 'charactersheet/services';
 import { Environment } from 'charactersheet/models/dm';
 import ko from 'knockout';
+import { get } from 'lodash';
 import sectionIcon from 'images/encounters/night-sky.svg';
 import template from './index.html';
 
@@ -37,13 +39,12 @@ export function EnvironmentSectionViewModel(params) {
     self.openPushModal = ko.observable(false);
     self.pushType = ko.observable('image');
 
-    self._isConnectedToParty = ko.observable(false);
+    self._isConnectedToParty = ko.observable(!!PartyService.party);
 
     self.load = async function() {
         self.loaded(false);
         Notifications.encounters.changed.add(self._dataHasChanged);
-
-        self._connectionHasChanged();
+        Notifications.party.changed.add(self.partyDidChange);
 
         self.encounter.subscribe(function() {
             self._dataHasChanged();
@@ -56,7 +57,13 @@ export function EnvironmentSectionViewModel(params) {
     // Push to Player
 
     self.toggleExhibit = async () => {
-        // TODO
+        self.environment().isExhibited(!self.environment().isExhibited());
+        await self.environment().ps.save();
+        self.markAsExhibited(
+            self.environment().isExhibited()
+                ? self.environment().exhibitUuid()
+                : null
+        );
     };
 
     self.toJSON = function() {
@@ -148,17 +155,9 @@ export function EnvironmentSectionViewModel(params) {
 
     /* Push to Player Methods */
 
-    self.shouldShowPushButton = ko.pureComputed(function() {
+    self.shouldShowExhibitButton = ko.pureComputed(function() {
         return self._isConnectedToParty();
     });
-
-    self.pushModalFinishedClosing = function() {
-        self.openPushModal(false);
-    };
-
-    self.pushModalToPlayerButtonWasPressed = function(mapOrImage) {
-        self.openPushModal(true);
-    };
 
     self.validation = {
         submitHandler: (form, event) => {
@@ -206,9 +205,20 @@ export function EnvironmentSectionViewModel(params) {
         self.environment(environmentResponse.object);
     };
 
-    self._connectionHasChanged = function() {
-        // TODO
+    self.partyDidChange = (party) => {
+        self._isConnectedToParty(!!party);
+
+        // Update everything that isn't on exhibit. This event can
+        // be fired from multiple places.
+        const exhibitUuid = get(party, 'exhibit.uuid', null);
+        self.markAsExhibited(exhibitUuid);
     };
+
+    self.markAsExhibited = (exhibitUuid) => {
+        self.environment().isExhibited(
+            self.environment().exhibitUuid() === exhibitUuid
+        );
+    }
 }
 
 ko.components.register('environment-section', {

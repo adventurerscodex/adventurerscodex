@@ -1,5 +1,6 @@
 import {
-    SortService
+    SortService,
+    PartyService,
 } from 'charactersheet/services/common';
 import {
     CoreManager,
@@ -9,6 +10,7 @@ import {
 } from 'charactersheet/utilities';
 import { EncounterImage } from 'charactersheet/models/common';
 import ko from 'knockout';
+import { get } from 'lodash';
 import sectionIcon from 'images/encounters/globe.svg';
 import template from './index.html';
 
@@ -56,7 +58,7 @@ export function MapsAndImagesSectionViewModel(params) {
     self.pushType = ko.observable('image');
     self.convertedDisplayUrl = ko.observable();
 
-    self._isConnectedToParty = ko.observable(false);
+    self._isConnectedToParty = ko.observable(!!PartyService.party);
     self._addForm = ko.observable();
     self._editForm = ko.observable();
 
@@ -64,6 +66,7 @@ export function MapsAndImagesSectionViewModel(params) {
 
     self.load = function() {
         Notifications.encounters.changed.add(self._dataHasChanged);
+        Notifications.party.changed.add(self.partyDidChange);
 
         self.encounter.subscribe(function() {
             self._dataHasChanged();
@@ -157,7 +160,9 @@ export function MapsAndImagesSectionViewModel(params) {
     };
 
     self.toggleMapOrImageExhibit = async (image) => {
-        // TODO
+        image.isExhibited(!image.isExhibited());
+        await image.ps.save();
+        self.markAsExhibited(image.isExhibited() ? image.uuid() : null);
     };
 
     self.toggleModal = function() {
@@ -206,21 +211,29 @@ export function MapsAndImagesSectionViewModel(params) {
         $(self._editForm()).validate().resetForm();
     };
 
-    /* Push to Player Methods */
+    /* Exhibit Methods */
 
-    self.shouldShowPushButton = ko.pureComputed(function() {
+    self.shouldShowExhibitButton = ko.pureComputed(function() {
         return self._isConnectedToParty();
     });
 
-    self.pushModalFinishedClosing = function() {
-        self.selectedMapOrImageToPush(null);
-        self.openPushModal(false);
+    self.partyDidChange = (party) => {
+        self._isConnectedToParty(!!party);
+
+        // Update everything that isn't on exhibit. This event can
+        // be fired from multiple places.
+        const exhibitUuid = get(party, 'exhibit.uuid', null);
+        self.markAsExhibited(exhibitUuid);
     };
 
-    self.pushModalToPlayerButtonWasPressed = function(mapOrImage) {
-        self.selectedMapOrImageToPush(mapOrImage);
-        self.openPushModal(true);
-    };
+    self.markAsExhibited = (exhibitUuid) => {
+        self.mapsOrImages(
+            self.mapsOrImages().map(moi => {
+                moi.isExhibited(moi.uuid() === exhibitUuid);
+                return moi;
+            })
+        );
+    }
 
     /* Private Methods */
 

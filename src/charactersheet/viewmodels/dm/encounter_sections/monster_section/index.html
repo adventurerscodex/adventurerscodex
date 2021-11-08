@@ -23,7 +23,6 @@
         Speed
         <span data-bind="css: sortArrow('speed')"></span>
       </th>
-      <th class="text-right col-md-1">Send</th>
       <th class="text-right col-md-1">Exhibit</th>
       <th class="col-md-1 text-right">
         <a data-bind="click: toggleModal" href="#">
@@ -47,13 +46,7 @@
       <td data-bind="text: speed, click: $parent.editMonster"
           data-toggle="modal"
           class="col-md-2"></td>
-      <!-- ko if: $parent.shouldShowPushButton -->
-      <td class="text-right col-md-1">
-        <a data-bind="click: $parent.pushModalToPlayerButtonWasPressed" href="#" title="Send image to Player's Chat">
-          <i class="fa fa-paper-plane-o fa-color-hover">
-          </i>
-        </a>
-      </td>
+      <!-- ko if: $parent.shouldShowExhibitButton -->
       <td class="text-right col-md-1">
         <a data-bind="click: $parent.toggleMonsterExhibit" href="#" title="Send Player's Exhibit">
           <i data-bind="css: { exhibitActiveIcon: isExhibited }" class="fa fa-desktop fa-color-hover">
@@ -61,12 +54,7 @@
         </a>
       </td>
       <!-- /ko -->
-      <!-- ko ifnot: $parent.shouldShowPushButton -->
-      <td class="text-right col-md-1">
-        <span class="fa fa-paper-plane-o fa-disabled" style="cursor:pointer;"
-          data-bind="popover: { content: 'Join a Party to send image to Player\'s Chat' }">
-        </span>
-      </td>
+      <!-- ko ifnot: $parent.shouldShowExhibitButton -->
       <td class="text-right col-md-1">
         <span class="fa fa-desktop fa-disabled" style="cursor:pointer;"
           data-bind="popover: { content: 'Join a Party send Player\'s Exhibit' }">
@@ -129,11 +117,7 @@
                         hasFocus: firstElementInModalHasFocus,
                         autocomplete: { source: monstersPrePopFilter, onselect: populateMonster }">
             </div>
-            <div class="col-sm-1 control-label">
-              <span class="fa fa-paper-plane-o" style="cursor:pointer;"
-                title="This field will be sent to the players via the chat.">
-              </span>
-            </div>
+            <div class="col-sm-1 control-label"></div>
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">
@@ -147,7 +131,7 @@
                       data-bind="textInput: blankMonster().sourceUrl">
             </div>
             <div class="col-sm-1 control-label">
-              <span class="fa fa-paper-plane-o" style="cursor:pointer;"
+              <span class="fa fa fa-desktop" style="cursor:pointer;"
                 title="This field will be sent to the players via the chat.">
               </span>
             </div>
@@ -400,7 +384,7 @@
               </small>
             </div>
             <div class="col-sm-1 control-label">
-              <span class="fa fa-paper-plane-o" style="cursor:pointer;"
+              <span class="fa fa fa-desktop" style="cursor:pointer;"
                 title="This field will be sent to the players via the chat.">
               </span>
             </div>
@@ -408,7 +392,7 @@
           <div class="modal-footer">
             <small class="text-center">
               <p>
-                Fields marked with <i class="fa fa-paper-plane-o"></i> will be sent to the players via the chat.
+                Fields marked with <i class="fa fa fa-desktop fa-color-hover"></i> will be shown to the players in the Exhibit.
               </p>
             </small>
             <button type="button"
@@ -594,11 +578,7 @@
                          placeholder="Ancient Black Dragon"
                          data-bind="textInput: name, hasFocus: $parent.editFirstModalElementHasFocus">
                 </div>
-                <div class="col-sm-1 control-label">
-                  <span class="fa fa-paper-plane-o" style="cursor:pointer;"
-                    title="This field will be sent to the players via the chat.">
-                  </span>
-                </div>
+                <div class="col-sm-1 control-label"></div>
               </div>
               <div class="form-group">
                 <label class="col-sm-3 control-label">
@@ -612,7 +592,7 @@
                           data-bind="textInput: sourceUrl">
                 </div>
                 <div class="col-sm-1 control-label">
-                  <span class="fa fa-paper-plane-o" style="cursor:pointer;"
+                  <span class="fa fa fa-desktop" style="cursor:pointer;"
                     title="This field will be sent to the players via the chat.">
                   </span>
                 </div>
@@ -863,7 +843,7 @@
                   </small>
                 </div>
                 <div class="col-sm-1 control-label">
-                  <span class="fa fa-paper-plane-o" style="cursor:pointer;"
+                  <span class="fa fa fa-desktop" style="cursor:pointer;"
                     title="This field will be sent to the players via the chat.">
                   </span>
                 </div>
@@ -871,7 +851,7 @@
               <div class="modal-footer">
                 <small class="text-center">
                   <p>
-                    Fields marked with <i class="fa fa-paper-plane-o"></i> will be sent to the players via the chat.
+                    Fields marked with <i class="fa fa fa-desktop fa-color-hover"></i> will be shown to the players in the Exhibit.
                   </p>
                 </small>
                 <button type="submit"

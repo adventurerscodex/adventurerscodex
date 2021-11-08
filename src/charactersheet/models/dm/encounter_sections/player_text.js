@@ -17,6 +17,7 @@ export class PlayerText extends KOModel {
     uuid = ko.observable();
     coreUuid = ko.observable();
     encounterUuid = ko.observable();
+    isExhibited = ko.observable(false);
     name = ko.observable('');
     description = ko.observable('');
 
