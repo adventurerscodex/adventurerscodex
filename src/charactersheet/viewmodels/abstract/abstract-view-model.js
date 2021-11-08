@@ -11,7 +11,7 @@ import { defer } from 'lodash';
 import ko from 'knockout';
 
 /**
- * AbstractViewModel
+ * ModelBackedViewModel
  *
  * Provides base functionality to view Data instances.
  *
@@ -28,7 +28,7 @@ import ko from 'knockout';
  *
  **/
 
-export class AbstractViewModel extends ViewModel {
+export class ModelBackedViewModel extends ViewModel {
     constructor(params) {
         super(params);
         this.containerId = ko.utils.unwrapObservable(params.containerId);

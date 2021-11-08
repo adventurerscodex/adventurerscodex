@@ -1,4 +1,4 @@
-import { AbstractViewModel } from 'charactersheet/viewmodels/abstract';
+import { ModelBackedViewModel } from 'charactersheet/viewmodels/abstract';
 import { Wealth } from 'charactersheet/models';
 
 import autoBind from 'auto-bind';
@@ -10,7 +10,7 @@ import ppCoins from 'images/pp-coin.svg';
 import spCoins from 'images/sp-coin.svg';
 import template from './view.html';
 
-class WealthViewModel extends AbstractViewModel {
+class WealthViewModel extends ModelBackedViewModel {
     constructor(params) {
         super(params);
         autoBind(this);

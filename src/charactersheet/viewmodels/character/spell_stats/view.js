@@ -1,11 +1,11 @@
-import { AbstractViewModel } from 'charactersheet/viewmodels/abstract';
+import { ModelBackedViewModel } from 'charactersheet/viewmodels/abstract';
 import { SpellStats } from 'charactersheet/models';
 
 import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './view.html';
 
-class SpellStatsViewModel extends AbstractViewModel {
+class SpellStatsViewModel extends ModelBackedViewModel {
     constructor(params) {
         super(params);
         autoBind(this);

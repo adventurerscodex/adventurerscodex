@@ -1,10 +1,10 @@
-import { AbstractViewModel } from 'charactersheet/viewmodels/abstract';
+import { ModelBackedViewModel } from 'charactersheet/viewmodels/abstract';
 import { Background } from 'charactersheet/models/character';
 import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './view.html';
 
-export class BackgroundViewModel extends AbstractViewModel {
+export class BackgroundViewModel extends ModelBackedViewModel {
     constructor(params) {
         super(params);
         this.modelClass.bind(this);
