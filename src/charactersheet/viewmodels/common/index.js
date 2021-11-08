@@ -1,5 +1,6 @@
 export * from './character_picker';
 export * from './characters';
+export * from './exhibit';
 export * from './login';
 export * from './master_detail';
 export * from './notes';

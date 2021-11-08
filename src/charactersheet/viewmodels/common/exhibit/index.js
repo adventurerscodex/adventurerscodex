@@ -1,6 +1,6 @@
 import autoBind from 'auto-bind';
 import { get } from 'lodash';
-import { Notifications } from 'charactersheet/utilities';
+import { CoreManager, Notifications } from 'charactersheet/utilities';
 import { ViewModel } from 'charactersheet/viewmodels/abstract';
 import { PartyService } from 'charactersheet/services';
 import { observable, components, pureComputed } from 'knockout';
@@ -14,6 +14,7 @@ export class ExhibitViewModel extends ViewModel {
         autoBind(this);
 
         this.party = observable(PartyService.party);
+        this.playerType = observable(CoreManager.activeCore().type.name());
         this.fullScreen = observable(false);
     }
 
@@ -31,12 +32,12 @@ export class ExhibitViewModel extends ViewModel {
         get(this.party(), 'exhibit.imageUrl', null)
     ));
 
-    description = pureComputed(() => (
-        get(this.party(), 'exhibit.description', null)
+    playerText = pureComputed(() => (
+        get(this.party(), 'exhibit.playerText', null)
     ));
 
     hasNothing = pureComputed(() => (
-        !this.description() && !this.imageUrl()
+        !this.playerText() && !this.imageUrl()
     ));
 
     // Actions
@@ -49,6 +50,7 @@ export class ExhibitViewModel extends ViewModel {
 
     partyDidChange(party) {
         this.party(party);
+        this.playerType(CoreManager.activeCore().type.name());
     }
 }
 

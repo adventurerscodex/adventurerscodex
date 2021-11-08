@@ -16,6 +16,7 @@ import ko from 'knockout';
 import notesTabImage from 'images/tab_icons/quill-ink.svg';
 import overviewTabImage from 'images/tab_icons/bookmarklet.svg';
 import partyTabImage from 'images/tab_icons/backup.svg';
+import exhibitTabImage from 'images/tab_icons/film-projector.svg';
 import template from './index.html';
 
 
@@ -37,6 +38,7 @@ export function DMRootViewModel() {
     self.dmScreenTabImage = dmScreenTabImage;
     self.notesTabImage = notesTabImage;
     self.partyTabImage = partyTabImage;
+    self.exhibitTabImage = exhibitTabImage;
 
     //UI Methods
 
@@ -80,12 +82,16 @@ export function DMRootViewModel() {
         return self._tabIsVisible('dmscreen');
     });
 
+    self.notesTabStatus = ko.pureComputed(() => {
+        return self._tabIsVisible('notes');
+    });
+
     self.partyTabStatus = ko.pureComputed(() => {
         return self._tabIsVisible('party');
     });
 
-    self.notesTabStatus = ko.pureComputed(() => {
-        return self._tabIsVisible('notes');
+    self.exhibitTabStatus = ko.pureComputed(() => {
+        return self._tabIsVisible('exhibit');
     });
 
     self.activateOverviewTab = () => {
@@ -100,12 +106,16 @@ export function DMRootViewModel() {
         self._setActiveTab('dmscreen');
     };
 
+    self.activateNotesTab = () => {
+        self._setActiveTab('notes');
+    };
+
     self.activatePartyTab = () => {
         self._setActiveTab('party');
     };
 
-    self.activateNotesTab = () => {
-        self._setActiveTab('notes');
+    self.activateExhibitTab = () => {
+        self._setActiveTab('exhibit');
     };
 
     //Public Methods
@@ -121,6 +131,7 @@ export function DMRootViewModel() {
         HotkeysService.registerHotkey('3', self.activateDmScreenTab);
         HotkeysService.registerHotkey('4', self.activateNotesTab);
         HotkeysService.registerHotkey('5', self.activatePartyTab);
+        HotkeysService.registerHotkey('6', self.activateExhibitTab);
     };
 
     self.unload = () => {
