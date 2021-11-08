@@ -81,57 +81,41 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-12 text-right">
-          <a
-            class="text-right"
-            style="cursor:pointer;"
-            data-toggle="collapse"
-            aria-expanded="false"
-            data-bind="attr: { 'data-target': '#player-more-info-' + index() }"
-          >
-            More <span class="fa fa-caret-down"></span>
-          </div>
-        </a>
-      </div>
-      <br />
-      <div class="collapse" data-bind="attr: { id: 'player-more-info-' + index() }">
-        <div class="row">
-          <div class="col-xs-12 col-padded">
-            <ul class="list-group" style="margin-bottom:0;">
-              <li class="list-group-item">
-                Level
-                <span class="pull-right" data-bind="text: player.level"></span>
-              </li>
-              <li class="list-group-item">
-                Armor Class
-                <span class="pull-right" data-bind="text: player.armorClass"></span>
-              </li>
-              <li class="list-group-item">
-                Hit Dice
-                <span class="pull-right" data-bind="text: player.hitDice"></span>
-              </li>
-              <li class="list-group-item">
-                Spell Save DC
-                <span class="pull-right" data-bind="text: player.spellSaveDc"></span>
-              </li>
-              <li class="list-group-item" data-bind="visible: player.experience">
-                Experience
-                <span class="pull-right" data-bind="text: player.experience"></span>
-              </li>
-              <li class="list-group-item" data-bind="visible: player.passivePerception">
-                Passive Perception
-                <span class="pull-right" data-bind="text: '+' + player.passivePerception"></span>
-              </li>
-              <li class="list-group-item" data-bind="visible: player.passiveInvestigation">
-                Passive Investigation
-                <span class="pull-right" data-bind="text: '+' + player.passiveInvestigation"></span>
-              </li>
-              <li class="list-group-item">
-                Gold
-                <span class="pull-right" data-bind="text: player.worthInGold"></span>
-              </li>
-            </ul>
-          </div>
+        <div class="col-xs-12 col-padded">
+          <table class="table table-striped table-condensed">
+            <tr>
+              <th scope="row">Level</th>
+              <td data-bind="text: player.level"></td>
+            </tr>
+            <tr>
+              <th scope="row">Armor Class</th>
+              <td data-bind="text: player.armorClass"></td>
+            </tr>
+            <tr>
+              <th scope="row">Hit Dice</th>
+              <td data-bind="text: player.hitDice"></td>
+            </tr>
+            <tr>
+              <th scope="row">Spell Save DC</th>
+              <td data-bind="text: player.spellSaveDc"></td>
+            </tr>
+            <tr data-bind="visible: player.experience">
+              <th scope="row">Experience</th>
+              <td data-bind="text: player.experience"></td>
+            </tr>
+            <tr data-bind="visible: player.passivePerception">
+              <th scope="row">Passive Perception</th>
+              <td data-bind="text: '+' + player.passivePerception"></td>
+            </tr>
+            <tr data-bind="visible: player.passiveInvestigation">
+              <th scope="row">Passive Investigation</th>
+              <td data-bind="text: player.passiveInvestigation"></td>
+            </tr>
+            <tr>
+              <th scope="row">Gold</th>
+              <td data-bind="text: '~' + player.worthInGold"></td>
+            </tr>
+          </table>
         </div>
       </div>
     </div>

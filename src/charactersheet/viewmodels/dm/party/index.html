@@ -1,25 +1,37 @@
+<div class="card-title h4">
+  Party Members<br />
+  <small>
+    Check on the health, status, and stats of your players. This dashboard updates
+    in real time whenever your players make changes.
+  </small>
+</div>
+<hr class="ac-table-header">
+<!-- ko ifnot: isConnectedToParty -->
 <div class="row">
-  <!-- ko ifnot: isConnectedToParty -->
-  <div class="detail-place-holder well text-center">
-    <p class="lead text-muted heading">You are not connected to a Party.</p>
-    <p class="text-muted">
-      Create or join a Party with friends to see their characters here!<br/>
-    </p>
-  </div>
-  <!--/ko-->
-  <!-- ko if: isConnectedToParty -->
-    <!-- ko if: players().length == 0 -->
-    <div class="detail-place-holder well text-center">
-      <p class="lead text-muted heading">
-        There's no one here.
-      </p>
+  <div class="col-xs-12">
+    <div class="detail-place-holder text-center">
+      <p class="lead text-muted heading">You are not connected to a Party.</p>
       <p class="text-muted">
-        Once your players join the party, they'll show up here.
+        Create or join a Party with friends to see their characters here!<br/>
       </p>
     </div>
-    <!-- /ko -->
-    <!-- ko foreach: players -->
-    <player-card params="player: $data, index: $index"></player-card>
-    <!-- /ko -->
+  </div>
+  </div>
+<!--/ko-->
+<!-- ko if: isConnectedToParty -->
+<!-- ko if: players().length == 0 -->
+<div class="detail-place-holder text-center">
+  <p class="lead text-muted heading">
+    There's no one here.
+  </p>
+  <p class="text-muted">
+    Once your players join the party, they'll show up here.
+  </p>
+</div>
+<!-- /ko -->
+<div class="row">
+  <!-- ko foreach: players -->
+  <player-card params="player: $data, index: $index"></player-card>
   <!-- /ko -->
 </div>
+<!-- /ko -->
