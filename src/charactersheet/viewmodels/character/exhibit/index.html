@@ -1,37 +1,78 @@
+<div class="card-title h4">
+  Exhibit<br />
+  <small>
+    Here is where your DM can show you things.
+  </small>
+</div>
+<hr class="ac-table-header">
 <!-- ko if: !isConnectedToParty() -->
-<div class="detail-place-holder well text-center">
-    <p class="lead text-muted heading">You are not connected to a Party.</p>
+<div class="detail-place-holder text-center">
+    <p class="lead text-muted heading">
+      You are not connected to a Party.
+    </p>
     <p class="text-muted">
-    Create or join a Party with friends to view your DM's Exhibit!<br/>
-    Create a free account <a href="https://app.adventurerscodex.com/accounts/register/">here</a> or learn more about Parties <a href="https://adventurerscodex.com/player-tools.html#exhibit" target="_blank">here</a>.
+      Create or join a Party with friends to view your DM's Exhibit!
     </p>
 </div>
 <!--/ko-->
 <!-- ko if: isConnectedToParty -->
-<div class="panel panel-default bio">
-    <div class="panel-body">
-        <div class="row">
-            <div class="col-sm-12">
-                <!-- ko if: name && url -->
-                    <h1 data-bind="html: name"></h1>
-                    <hr>
-                    <img data-bind="attr: { src: url }, click: toggleFullScreen" width="100%" class="img-responsive img-rounded clickable"/>
-                    <small>
-                        <em class="text-muted text-center col-xs-12">Click on the image to view it in Full Screen.</em>
-                    </small>
-                <!-- /ko -->
-                <!-- ko if: !name() && !url() -->
-                    <div class="detail-place-holder well text-center">
-                        <p class="lead text-muted heading">There's nothing being Exhibited.</p>
-                        <p class="text-muted">Wait for your DM to Exhibit an image.</p>
-                    </div>
-                <!-- /ko -->
-            </div>
-        </div>
+<div class="row">
+  <!-- ko if: description -->
+  <div class="col-xs-12 col-sm-6 col-md-7">
+    <h4>Description</h4>
+    <div class="well">
+        <div data-bind="markdownPreview: description"></div>
     </div>
+  </div>
+  <!-- /ko -->
+  <!-- ko if: !description() && imageUrl() -->
+  <div class="col-xs-12 col-sm-3 col-md-3">
+    <!-- This is just a spacer for when there is no description -->
+  </div>
+  <!-- /ko -->
+  <!-- ko if: imageUrl -->
+  <div class="col-xs-12 col-sm-6 col-md-5 text-center">
+    <!-- ko if: description() && imageUrl() -->
+      <!--
+        This is just a spacer for when there is description.
+        It makes the top of the two panels match.
+       -->
+      <h4>&nbsp;</h4>
+    <!-- /ko -->
+    <img
+      data-bind="
+        attr: { src: imageUrl },
+        click: toggleFullScreen
+      "
+      class="img-responsive img-rounded clickable"
+      style="margin-left:auto; margin-right:auto;"
+    />
+    <small>
+      <em class="text-muted col-xs-12">
+        Click on the image to view it in Full Screen.
+      </em>
+    </small>
+  </div>
+  <!-- /ko -->
+  <!-- ko if: hasNothing -->
+  <div class="col-xs-12">
+    <div class="detail-place-holder text-center">
+      <p class="lead text-muted heading">
+        There's nothing being Exhibited.
+      </p>
+      <p class="text-muted">
+        Wait for your DM to Exhibit an image.
+      </p>
+    </div>
+  </div>
+  <!-- /ko -->
 </div>
 
 <!-- The visibility is managed internally -->
-<full-screen-image params="imageSource: url, fullScreenStatus: fullScreen">
-</full-screen-image>
+<full-screen-image
+  params="
+    imageSource: imageUrl,
+    fullScreenStatus: fullScreen
+  "
+></full-screen-image>
 <!-- /ko -->

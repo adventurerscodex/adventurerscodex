@@ -1,41 +1,59 @@
-import {
-    CoreManager,
-    Notifications,
-    Utility } from 'charactersheet/utilities';
-import { PlayerTypes } from 'charactersheet/models/common';
-import ko from 'knockout';
+import autoBind from 'auto-bind';
+import { get } from 'lodash';
+import { Notifications } from 'charactersheet/utilities';
+import { ViewModel } from 'charactersheet/viewmodels/abstract';
+import { PartyService } from 'charactersheet/services';
+import { observable, components, pureComputed } from 'knockout';
 import template from './index.html';
 
-export function ExhibitViewModel() {
-    var self = this;
 
-    self.name = ko.observable('');
-    self.url = ko.observable('');
-    self.isConnectedToParty = ko.observable(false);
-    self.fullScreen = ko.observable(false);
+export class ExhibitViewModel extends ViewModel {
 
-    self.load = function() {
+    constructor() {
+        super();
+        autoBind(this);
 
-    };
+        this.party = observable(PartyService.party);
+        this.fullScreen = observable(false);
+    }
 
-    self.unload = function() {
+    async setUpSubscriptions() {
+        super.setUpSubscriptions();
 
-    };
+        this.subscriptions.push(Notifications.party.changed.add(this.partyDidChange));
+    }
 
-    self.checkForParty = function() {
-         // TODO
-    };
+    // UI
 
-    self.toggleFullScreen = function() {
-        self.fullScreen(!self.fullScreen());
-    };
+    isConnectedToParty = pureComputed(() => (!!this.party()));
 
-    self.exhibitGivenImage = function(pcards) {
+    imageUrl = pureComputed(() => (
+        get(this.party(), 'exhibit.imageUrl', null)
+    ));
 
-    };
+    description = pureComputed(() => (
+        get(this.party(), 'exhibit.description', null)
+    ));
+
+    hasNothing = pureComputed(() => (
+        !this.description() && !this.imageUrl()
+    ));
+
+    // Actions
+
+    toggleFullScreen() {
+        this.fullScreen(!this.fullScreen());
+    }
+
+    // Events
+
+    partyDidChange(party) {
+        this.party(party);
+    }
 }
 
-ko.components.register('exhibit', {
+
+components.register('exhibit', {
     viewModel: ExhibitViewModel,
     template: template
 });

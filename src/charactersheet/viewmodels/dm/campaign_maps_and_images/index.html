@@ -17,7 +17,6 @@
                 Description
                 <span data-bind="css: sortArrow('description')"></span>
               </th>
-              <th class="text-right col-md-1">Send</th>
               <th class="text-right col-md-1">Exhibit</th>
               <th class="text-right col-md-1">
                 <a data-bind="click: toggleAddModal" href="#">
@@ -45,12 +44,6 @@
               </td>
               <!-- ko if: $parent.shouldShowPushButton -->
               <td class="text-right col-md-1">
-                <a data-bind="click: $parent.pushModalToPlayerButtonWasPressed" href="#" title="Send image to Player's Chat">
-                  <i class="fa fa-paper-plane-o fa-color-hover">
-                  </i>
-                </a>
-              </td>
-              <td class="text-right col-md-1">
                 <a data-bind="click: $parent.toggleExhibit" href="#" title="Send Player's Exhibit">
                   <i data-bind="css: { exhibitActiveIcon: isExhibited }" class="fa fa-desktop fa-color-hover">
                   </i>
@@ -58,11 +51,6 @@
               </td>
               <!-- /ko -->
               <!-- ko ifnot: $parent.shouldShowPushButton -->
-              <td class="text-right col-md-1">
-                <span class="fa fa-paper-plane-o fa-disabled" style="cursor:pointer;"
-                  data-bind="popover: { content: 'Join a Party to send image to Player\'s Chat' }">
-                </span>
-              </td>
               <td class="text-right col-md-1">
                 <span class="fa fa-desktop fa-disabled" style="cursor:pointer;"
                   data-bind="popover: { content: 'Join a Party send Player\'s Exhibit' }">

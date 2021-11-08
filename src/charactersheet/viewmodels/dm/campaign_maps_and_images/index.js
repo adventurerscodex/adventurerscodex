@@ -1,6 +1,7 @@
 import 'bin/knockout-custom-loader';
 import {
-    SortService
+    SortService,
+    PartyService,
 } from 'charactersheet/services';
 import {
     CoreManager,
@@ -38,24 +39,31 @@ export function CampaignMapsAndImagesViewModel() {
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['name asc']);
 
-    // Push to Player
-    self.selectedMapOrImageToPush = ko.observable();
-    self.openPushModal = ko.observable(false);
-    self.pushType = ko.observable('image');
-
-    self._isConnectedToParty = ko.observable(false);
+    self._isConnectedToParty = ko.observable(!!PartyService.party);
     self._addForm = ko.observable();
     self._editForm = ko.observable();
 
     /* Public Methods */
 
-    self.toggleExhibit = async(image) => {
-        // TODO
+    self.toggleExhibit = async (image) => {
+        image.isExhibited(!image.isExhibited());
+        await image.ps.save();
+        await self.refresh();
     };
 
     self.load = async function() {
+        Notifications.party.changed.add(self.partyDidChange);
 
+        await self.refresh();
     };
+
+    self.refresh = async function() {
+        var key = CoreManager.activeCore().uuid();
+        const imagesResponse = await Image.ps.list({coreUuid: key});
+        if (imagesResponse.objects) {
+            self.mapsOrImages(imagesResponse.objects);
+        }
+    }
 
     self.toggleAddModal = () => {
         self.addModalOpen(!self.addModalOpen());
@@ -186,26 +194,14 @@ export function CampaignMapsAndImagesViewModel() {
         self.fullScreen(!self.fullScreen());
     };
 
-    /* Push to Player Methods */
-
     self.shouldShowPushButton = ko.pureComputed(function() {
         return self._isConnectedToParty();
     });
 
-    self.pushModalFinishedClosing = function() {
-        self.selectedMapOrImageToPush(null);
-        self.openPushModal(false);
-    };
-
-    self.pushModalToPlayerButtonWasPressed = function(mapOrImage) {
-        self.selectedMapOrImageToPush(mapOrImage);
-        self.openPushModal(true);
-    };
-
     /* Private Methods */
 
-    self._connectionHasChanged = function() {
-        // TODO
+    self.partyDidChange = function(party) {
+        self._isConnectedToParty(!!party)
     };
 
     self._dataHasChanged = async function() {
