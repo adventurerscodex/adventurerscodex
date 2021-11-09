@@ -3,6 +3,7 @@ import { EncounterSection } from 'charactersheet/models/dm/encounter_section';
 import { Notifications } from 'charactersheet/utilities';
 import ko from 'knockout';
 import template from './index.html';
+import './index.css';
 
 
 export function EncounterDetailViewModel({ encounter }) {

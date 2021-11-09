@@ -1,29 +1,88 @@
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <div class="h2">
-      <span data-bind="text: encounter().name"></span>&nbsp;
-      <small data-bind="text: encounter().location"></small>
-      <div class="pull-right">
-        <button class="btn btn-sm btn-primary" data-bind="click: toggleModal">
-          <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;Edit
-        </button>
+<div class="" style="border-left: 1px solid #ecf0f1;">
+  <div class="h4" style="padding: 15px; border-bottom: 1px solid #ecf0f1; margin-bottom:0px;">
+    <span data-bind="text: encounter().name"></span>&nbsp;
+    <small data-bind="text: encounter().location"></small>
+    <div class="pull-right">
+      <button class="btn btn-xs btn-primary" data-bind="click: toggleModal">
+        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;Edit
+      </button>
+    </div>
+  </div>
+  <!-- Encounter Sections -->
+  <!-- ko if: encounter -->
+  <div class="row">
+    <!-- Encounter tabs -->
+    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 tight-right">
+      <ul class="list-group master-list" role="tablist" style="border-right: 1px solid #ecf0f1;">
+        <a
+          class="list-group-item active"
+          href="#environment"
+          aria-controls="environment"
+          role="tab"
+          data-toggle="tab"
+        >
+          Environment
+        </a>
+        <a class="list-group-item" href="#traps" aria-controls="traps" role="tab" data-toggle="tab">
+          Traps
+        </a>
+        <a class="list-group-item" href="#moi" aria-controls="moi" role="tab" data-toggle="tab">
+          Maps &amp; Images
+        </a>
+        <a class="list-group-item" href="#poi" aria-controls="poi" role="tab" data-toggle="tab">
+          Points of Interest
+        </a>
+        <a class="list-group-item" href="#player-text" aria-controls="player-text" role="tab" data-toggle="tab">
+          Read Aloud Text
+        </a>
+        <a class="list-group-item" href="#npc" aria-controls="npc" role="tab" data-toggle="tab">
+          NPCs
+        </a>
+        <a class="list-group-item" href="#monster" aria-controls="monster" role="tab" data-toggle="tab">
+          Monsters
+        </a>
+        <a class="list-group-item" href="#treasure" aria-controls="treasure" role="tab" data-toggle="tab">
+          Treasure
+        </a>
+        <a class="list-group-item" href="#notes" aria-controls="notes" role="tab" data-toggle="tab">
+          Notes
+        </a>
+      </ul>
+    </div>
+    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 tight-left">
+      <!-- Encounter panes -->
+      <div class="tab-content encounter-tabs">
+        <div role="tabpanel" class="tab-pane active" id="environment">
+          <environment-section params="encounter: encounter"></environment-section>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="traps">
+          <traps-section params="encounter: encounter"></traps-section>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="moi">
+          <maps-and-images-section params="encounter: encounter"></maps-and-images-section>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="poi">
+          <point-of-interest-section params="encounter: encounter"></point-of-interest-section>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="player-text">
+          <player-text-section params="encounter: encounter"></player-text-section>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="npc">
+          <npc-section params="encounter: encounter"></npc-section>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="monster">
+          <monster-section params="encounter: encounter"></monster-section>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="treasure">
+          <treasure-section params="encounter: encounter"></treasure-section>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="notes">
+          <notes-section params="encounter: encounter"></notes-section>
+        </div>
       </div>
     </div>
   </div>
-  <div class="panel-body tight-inner">
-    <!-- Encounter Sections -->
-    <!-- ko if: encounter -->
-    <environment-section params="encounter: encounter"></environment-section>
-    <traps-section params="encounter: encounter"></traps-section>
-    <maps-and-images-section params="encounter: encounter"></maps-and-images-section>
-    <point-of-interest-section params="encounter: encounter"></point-of-interest-section>
-    <player-text-section params="encounter: encounter"></player-text-section>
-    <npc-section params="encounter: encounter"></npc-section>
-    <monster-section params="encounter: encounter"></monster-section>
-    <treasure-section params="encounter: encounter"></treasure-section>
-    <notes-section params="encounter: encounter"></notes-section>
-    <!-- /ko -->
-  </div>
+  <!-- /ko -->
 </div>
 
 <encounter-add-edit-modal

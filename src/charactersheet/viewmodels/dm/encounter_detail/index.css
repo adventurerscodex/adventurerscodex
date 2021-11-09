@@ -1,0 +1,15 @@
+.encounter-tabs .tab-pane {
+  padding-top: 0px;
+}
+
+.encounter-tabs .tab-pane {
+  margin-top: 0px;
+}
+
+.encounter-tabs .tab-pane .h4 {
+  margin-top: 0px;
+}
+
+.encounter-tabs .card-title {
+  border-top-left-radius: 0px;
+}

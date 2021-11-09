@@ -907,6 +907,10 @@ li.image-chat-highlight {
   padding-right:0px;
 }
 
+.tight-left {
+  padding-left:0px;
+}
+
 /**
  * Tight panels remove the padding around themselves but add it back for inner
  * table cells and some inner divs. Tables in tight panels stretch across the
@@ -2120,6 +2124,30 @@ tr .panel {
 
 .d-flex-6 {
   flex: 6;
+}
+
+.pl-1 {
+  padding-left: 0.5rem;
+}
+
+.pl-2 {
+  padding-left: 1rem;
+}
+
+.pl-3 {
+  padding-left: 1.5rem;
+}
+
+.pr-1 {
+  padding-right: 0.5rem;
+}
+
+.pr-2 {
+  padding-right: 1rem;
+}
+
+.pr-3 {
+  padding-right: 1.5rem;
 }
 
 .image-container img {
