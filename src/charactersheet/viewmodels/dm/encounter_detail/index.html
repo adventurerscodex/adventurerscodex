@@ -1,19 +1,20 @@
-<div class="" style="border-left: 1px solid #ecf0f1;">
-  <div class="h4" style="padding: 15px; border-bottom: 1px solid #ecf0f1; margin-bottom:0px;">
-    <span data-bind="text: encounter().name"></span>&nbsp;
-    <small data-bind="text: encounter().location"></small>
-    <div class="pull-right">
-      <button class="btn btn-xs btn-primary" data-bind="click: toggleModal">
-        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;Edit
-      </button>
-    </div>
-  </div>
+<div class="encounter-detail" style="border-left: 1px solid #ecf0f1;">
   <!-- Encounter Sections -->
   <!-- ko if: encounter -->
   <div class="row">
-    <!-- Encounter tabs -->
-    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 tight-right">
-      <ul class="list-group master-list" role="tablist" style="border-right: 1px solid #ecf0f1;">
+    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 tight-right"  style="border-right: 1px solid #ecf0f1;">
+      <div class="card-title h4 text-left">
+        <span data-bind="text: encounter().name"></span><br />
+        <small data-bind="text: encounter().location"></small>
+        <div class="pull-right">
+          <button class="btn btn-xs btn-primary" data-bind="click: toggleModal">
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+      <hr class="ac-table-header">
+      <!-- Encounter tabs -->
+      <ul class="list-group master-list" role="tablist">
         <a
           class="list-group-item active"
           href="#environment"
@@ -49,7 +50,7 @@
         </a>
       </ul>
     </div>
-    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 tight-left">
+    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 tight-left">
       <!-- Encounter panes -->
       <div class="tab-content encounter-tabs">
         <div role="tabpanel" class="tab-pane active" id="environment">

@@ -1,3 +1,4 @@
+<!--
 <div class="card-title h4">
   Encounters<br />
   <small>
@@ -6,41 +7,42 @@
   </small>
 </div>
 <hr class="ac-table-header">
-<div class="row">
-  <div class="col-xs-12">
-    <div class="row">
-      <div class="col-xs-12 col-sm-4 col-md-3 tight-right">
-        <div class="h4 pr-2">
-          &nbsp;
-          <div class="pull-right">
-            <span class="fa fa-plus fa-lg" style="cursor:pointer;"
-              data-bind="click: openAddModal"></span>
-          </div>
-        </div>
-        <nested-list params="
-          cells: encounterCells,
-          selectedCell: selectedCell,
-          ondelete: deleteEncounter,
-          onadd: openAddModalWithParent,
-          onselect: selectEncounter"
-        >
-        </nested-list>
-      </div>
-      <div class="col-xs-12 col-sm-8 col-md-9 tight-left">
-        <!-- ko if: selectedEncounter -->
-        <encounter-detail
-          params="encounter: selectedEncounter"
-        >
-        </encounter-detail>
-        <!-- /ko -->
-        <!-- ko ifnot: selectedEncounter -->
-        <div class="encounter-detail-place-holder well text-center"
-          style="cursor:pointer;" data-bind="click: openAddModal">
-          <p class="lead text-muted heading">Add a new encounter to get started.</p>
-        </div>
-        <!-- /ko -->
+ -->
+<div class="row encounters">
+  <div class="col-xs-12 col-sm-4 col-md-3 tight-right">
+    <div class="card-title h4">
+      Encounters<br />
+      <small>
+        Track Events and Places
+      </small>
+      <div class="pull-right">
+        <span class="fa fa-plus fa-lg" style="cursor:pointer;"
+          data-bind="click: openAddModal"></span>
       </div>
     </div>
+    <hr class="ac-table-header">
+    <nested-list params="
+      cells: encounterCells,
+      selectedCell: selectedCell,
+      ondelete: deleteEncounter,
+      onadd: openAddModalWithParent,
+      onselect: selectEncounter"
+    >
+    </nested-list>
+  </div>
+  <div class="col-xs-12 col-sm-8 col-md-9 tight-left">
+    <!-- ko if: selectedEncounter -->
+    <encounter-detail
+      params="encounter: selectedEncounter"
+    >
+    </encounter-detail>
+    <!-- /ko -->
+    <!-- ko ifnot: selectedEncounter -->
+    <div class="encounter-detail-place-holder well text-center"
+      style="cursor:pointer;" data-bind="click: openAddModal">
+      <p class="lead text-muted heading">Add a new encounter to get started.</p>
+    </div>
+    <!-- /ko -->
   </div>
 </div>
 
