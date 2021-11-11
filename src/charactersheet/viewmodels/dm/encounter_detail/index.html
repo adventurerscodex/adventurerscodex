@@ -1,90 +1,108 @@
-<div class="encounter-detail" style="border-left: 1px solid #ecf0f1;">
-  <!-- Encounter Sections -->
-  <!-- ko if: encounter -->
-  <div class="row">
-    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 tight-right"  style="border-right: 1px solid #ecf0f1;">
-      <div class="card-title h4 text-left">
-        <span data-bind="text: encounter().name"></span><br />
-        <small data-bind="text: encounter().location"></small>
-        <div class="pull-right">
-          <button class="btn btn-xs btn-primary" data-bind="click: toggleModal">
-            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-          </button>
-        </div>
-      </div>
-      <hr class="ac-table-header">
-      <!-- Encounter tabs -->
-      <ul class="list-group master-list" role="tablist">
-        <a
-          class="list-group-item active"
-          href="#environment"
-          aria-controls="environment"
-          role="tab"
-          data-toggle="tab"
-        >
-          Environment
-        </a>
-        <a class="list-group-item" href="#traps" aria-controls="traps" role="tab" data-toggle="tab">
-          Traps
-        </a>
-        <a class="list-group-item" href="#moi" aria-controls="moi" role="tab" data-toggle="tab">
-          Maps &amp; Images
-        </a>
-        <a class="list-group-item" href="#poi" aria-controls="poi" role="tab" data-toggle="tab">
-          Points of Interest
-        </a>
-        <a class="list-group-item" href="#player-text" aria-controls="player-text" role="tab" data-toggle="tab">
-          Read Aloud Text
-        </a>
-        <a class="list-group-item" href="#npc" aria-controls="npc" role="tab" data-toggle="tab">
-          NPCs
-        </a>
-        <a class="list-group-item" href="#monster" aria-controls="monster" role="tab" data-toggle="tab">
-          Monsters
-        </a>
-        <a class="list-group-item" href="#treasure" aria-controls="treasure" role="tab" data-toggle="tab">
-          Treasure
-        </a>
-        <a class="list-group-item" href="#notes" aria-controls="notes" role="tab" data-toggle="tab">
-          Notes
-        </a>
-      </ul>
-    </div>
-    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 tight-left">
-      <!-- Encounter panes -->
-      <div class="tab-content encounter-tabs">
-        <div role="tabpanel" class="tab-pane active" id="environment">
-          <environment-section params="encounter: encounter"></environment-section>
-        </div>
-        <div role="tabpanel" class="tab-pane" id="traps">
-          <traps-section params="encounter: encounter"></traps-section>
-        </div>
-        <div role="tabpanel" class="tab-pane" id="moi">
-          <maps-and-images-section params="encounter: encounter"></maps-and-images-section>
-        </div>
-        <div role="tabpanel" class="tab-pane" id="poi">
-          <point-of-interest-section params="encounter: encounter"></point-of-interest-section>
-        </div>
-        <div role="tabpanel" class="tab-pane" id="player-text">
-          <player-text-section params="encounter: encounter"></player-text-section>
-        </div>
-        <div role="tabpanel" class="tab-pane" id="npc">
-          <npc-section params="encounter: encounter"></npc-section>
-        </div>
-        <div role="tabpanel" class="tab-pane" id="monster">
-          <monster-section params="encounter: encounter"></monster-section>
-        </div>
-        <div role="tabpanel" class="tab-pane" id="treasure">
-          <treasure-section params="encounter: encounter"></treasure-section>
-        </div>
-        <div role="tabpanel" class="tab-pane" id="notes">
-          <notes-section params="encounter: encounter"></notes-section>
-        </div>
-      </div>
-    </div>
+<!-- Encounter Sections -->
+<!-- ko if: encounter -->
+<div class="card-title h4 text-left">
+  <back-button params="{ column: $parent }"></back-button>
+  <span data-bind="text: encounter().name"></span><br />
+  <!-- ko if: encounter().location -->
+  <small data-bind="text: encounter().location"></small>
+  <!--/ko -->
+  <!-- ko ifnot: encounter().location -->
+  <small>&nbsp;</small>
+  <!--/ko -->
+  <div class="edit-btn btn-group">
+    <button class="btn btn-link" data-bind="click: toggleModal">
+      <i class="fa fa-pencil-square-o fa-color-hover-success fa-color fa-lg clickable" aria-hidden="true"></i>
+    </button>
   </div>
-  <!-- /ko -->
 </div>
+<hr class="ac-table-header">
+<!-- Encounter tabs -->
+<ul class="list-group master-list" role="tablist">
+  <button
+    class="list-group-item active"
+    href="#environment"
+    data-bind="
+      click: () => $parent.push('environment-section', {encounter}),
+      visible: sectionIsVisible('environment'),
+    "
+  >
+    Environment
+  </button>
+  <button
+    class="list-group-item"
+    href="#traps"
+    data-bind="
+      click: () => $parent.push('traps-section', {encounter}),
+      visible: sectionIsVisible('traps'),
+    "
+  >
+    Traps
+  </button>
+  <button
+    class="list-group-item"
+    href="#moi"
+    data-bind="click: () => $parent.push('maps-and-images-section', {encounter}),
+      visible: sectionIsVisible('mapsAndImages'),
+    "
+  >
+    Maps &amp; Images
+  </button>
+  <button
+    class="list-group-item"
+    href="#poi"
+    data-bind="click: () => $parent.push('point-of-interest-section', {encounter}),
+      visible: sectionIsVisible('pointsOfInterest'),
+    "
+  >
+    Points of Interest
+  </button>
+  <button
+    class="list-group-item"
+    href="#player-text"
+    data-bind="click: () => $parent.push('player-text-section', {encounter}),
+      visible: sectionIsVisible('readAloudText'),
+    "
+  >
+    Read Aloud Text
+  </button>
+  <button
+    class="list-group-item"
+    href="#npcs"
+    data-bind="click: () => $parent.push('npc-section', {encounter}),
+      visible: sectionIsVisible('npcs'),
+    "
+  >
+    NPCs
+  </button>
+  <button
+    class="list-group-item"
+    href="#monsters"
+    data-bind="click: () => $parent.push('monster-section', {encounter}),
+      visible: sectionIsVisible('monsters'),
+    "
+  >
+    Monsters
+  </button>
+  <button
+    class="list-group-item"
+    href="#treasure"
+    data-bind="click: () => $parent.push('treasure-section', {encounter}),
+      visible: sectionIsVisible('treasure'),
+    "
+  >
+    Treasure
+  </button>
+  <button
+    class="list-group-item"
+    href="#notes"
+    data-bind="click: () => $parent.push('notes-section', {encounter}),
+      visible: sectionIsVisible('notes'),
+    "
+  >
+    Notes
+  </button>
+</ul>
+<!-- /ko -->
 
 <encounter-add-edit-modal
   params="

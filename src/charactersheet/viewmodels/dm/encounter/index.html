@@ -1,50 +1,30 @@
-<!--
-<div class="card-title h4">
-  Encounters<br />
-  <small>
-    Check on the health, status, and stats of your players. This dashboard updates
-    in real time whenever your players make changes.
-  </small>
-</div>
-<hr class="ac-table-header">
- -->
-<div class="row encounters">
-  <div class="col-xs-12 col-sm-4 col-md-3 tight-right">
-    <div class="card-title h4">
-      Encounters<br />
-      <small>
-        Track Events and Places
-      </small>
-      <div class="pull-right">
-        <span class="fa fa-plus fa-lg" style="cursor:pointer;"
-          data-bind="click: openAddModal"></span>
-      </div>
+<column-navigation params="context: $data, collapseOn: 'sm'">
+  <!-- ko using: context -->
+  <div class="card-title h4">
+    Encounters<br />
+    <small>
+      Track Events and Places
+    </small>
+    <div class="edit-btn btn-group">
+      <button class="btn btn-link" data-bind="click: openAddModal">
+        <i class="fa fa-plus fa-color-hover-success fa-color fa-lg clickable" aria-hidden="true"></i>
+      </button>
     </div>
-    <hr class="ac-table-header">
-    <nested-list params="
-      cells: encounterCells,
-      selectedCell: selectedCell,
-      ondelete: deleteEncounter,
-      onadd: openAddModalWithParent,
-      onselect: selectEncounter"
-    >
-    </nested-list>
   </div>
-  <div class="col-xs-12 col-sm-8 col-md-9 tight-left">
-    <!-- ko if: selectedEncounter -->
-    <encounter-detail
-      params="encounter: selectedEncounter"
-    >
-    </encounter-detail>
-    <!-- /ko -->
-    <!-- ko ifnot: selectedEncounter -->
-    <div class="encounter-detail-place-holder well text-center"
-      style="cursor:pointer;" data-bind="click: openAddModal">
-      <p class="lead text-muted heading">Add a new encounter to get started.</p>
-    </div>
-    <!-- /ko -->
-  </div>
-</div>
+  <hr class="ac-table-header">
+  <nested-list params="
+    cells: encounterCells,
+    selectedCell: selectedCell,
+    ondelete: deleteEncounter,
+    onadd: openAddModalWithParent,
+    onselect: cell => {
+      selectEncounter(cell);
+      $parent.push('encounter-detail', {encounter: selectedEncounter});
+    }"
+  >
+  </nested-list>
+  <!-- /ko -->
+</column-navigation>
 
 <encounter-add-edit-modal
   params="encounter: modalEncounter, openModal: openModal, onsave: modalSave">

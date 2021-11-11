@@ -1,6 +1,6 @@
 import { CoreManager } from 'charactersheet/utilities';
 import { EncounterSection } from 'charactersheet/models/dm/encounter_section';
-import { Notifications } from 'charactersheet/utilities';
+import { Notifications, Fixtures } from 'charactersheet/utilities';
 import ko from 'knockout';
 import template from './index.html';
 import './index.css';
@@ -35,11 +35,18 @@ export function EncounterDetailViewModel({ encounter }) {
         self.openModal(!self.openModal());
     };
 
+    self.sectionIsVisible = (name) => {
+        const index = Fixtures.encounter.sections[name].index;
+        const section = self.encounter().sections()[index];
+        return section.visible();
+    };
+
     self._dataHasChanged = () => {
-        if (!ko.unwrap(self.encounter)) {
+        const encounter = ko.unwrap(self.encounter);
+        if (!encounter) {
             return;
         }
-        self.sections(self.encounter().sections());
+        self.sections(encounter.sections());
     };
 }
 

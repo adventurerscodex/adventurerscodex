@@ -9,6 +9,7 @@
             }">
     <div class="front">
       <div class="card-title h4">
+        <back-button params="{ column: $parents[2] }"></back-button>
         <span data-bind="text: context.data.name"></span><br />
         <small data-bind="text: context.data.tagline"></small>
         <card-edit-actions params="{ flip: flip }"></card-edit-actions>
@@ -69,7 +70,7 @@
       </div>
       <hr class="ac-table-header">
       <!-- ko with: context.data -->
-      <form class="form-horizontal" data-bind="validate: validation">
+      <form class="form-horizontal" data-bind="validate: validation, submit: $parent.flip">
         <div class="form-group" data-bind="with: environment">
           <label class="col-sm-2 col-padded control-label">Image Link</label>
           <div class="col-sm-10 col-padded">

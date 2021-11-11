@@ -10,3 +10,5 @@ import { NestedListComponentViewModel } from './nested-list';
 import { PlusMinusComponentViewModel } from './plus-minus';
 import { PreviewEditViewModel } from './preview-edit';
 import { ProficiencyTypeComponentViewModel } from './proficiency-marker';
+import './column-navigation';
+import './back-button';

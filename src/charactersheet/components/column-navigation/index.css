@@ -1,0 +1,35 @@
+.column-navigation>.column {
+  padding-left: 0px;
+  padding-right: 0px;
+
+  border-right: 1px solid #ecf0f1;
+}
+
+.column-navigation>.column:last-child {
+  border-right: none;
+}
+
+.column-navigation .column .h4 {
+  margin-top: 0px;
+}
+
+.column-navigation>.column.well {
+  border-top-left-radius: 0px;
+  border-top-right-radius: 4px;
+}
+
+.column-navigation .column .card-title {
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+}
+
+.column-navigation .column:first-child .card-title {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 0px;
+}
+
+.column-navigation .column:last-child .card-title {
+  border-top-left-radius: 0px;
+  border-top-right-radius: 4px;
+}
+
