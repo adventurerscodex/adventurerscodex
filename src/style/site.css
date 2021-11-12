@@ -653,6 +653,14 @@ ul.footer-icons li {
   width: auto;
 }
 
+.embedded-image-right {
+  margin-left: auto;
+  margin-right: 0;
+  max-height: 225px;
+  max-width: 100%;
+  width: auto;
+}
+
 .btn-group-padding {
   padding: 10px 0px;
 }
@@ -2094,6 +2102,14 @@ tr .panel {
 /* Fix for BS 3 selects as input-group-btn */
 .input-group-btn>select.form-control {
   padding: 2px;
+}
+
+.d-block {
+  display: block;
+}
+
+.d-inline-block {
+  display: inline-block;
 }
 
 /* Bootstrap Flex Addons */

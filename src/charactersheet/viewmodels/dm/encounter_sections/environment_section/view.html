@@ -1,0 +1,55 @@
+<div class="card-title h4">
+  <back-button params="{ column: $parents[3] }"></back-button>
+  <span data-bind="text: name"></span><br />
+  <small data-bind="text: tagline"></small>
+  <card-edit-actions params="{ flip: flip }"></card-edit-actions>
+</div>
+<hr class="ac-table-header">
+<div class="row pl-2">
+  <div class="col-xs-8">
+    <b>Weather:</b>&nbsp;<span data-bind="text: weatherLabel"></span><br>
+    <b>Terrain:</b>&nbsp;<span data-bind="text: terrainLabel"></span>
+  </div>
+  <div class="col-xs-4 text-right">
+    <!-- ko if: shouldShowExhibitButton -->
+    <div class="text-center inline-block">
+      <span style="font-weight: bold;">Exhibit</span><br>
+      <a data-bind="click: toggleExhibit" href="#" title="Send Player's Exhibit">
+        <i data-bind="css: { exhibitActiveIcon: entity().isExhibited }"
+            class="fa fa-desktop fa-color-hover">
+        </i>
+      </a>
+    </div>
+    <!-- /ko -->
+    <!-- ko ifnot: shouldShowExhibitButton -->
+    <div class="text-center inline-block">
+      <span style="font-weight: bold;">Exhibit</span><br>
+      <span class="fa fa-desktop fa-disabled" style="cursor:pointer;"
+        data-bind="popover: { content: 'Join a Party send Player\'s Exhibit' }">
+      </span>
+    </div>
+    <!-- /ko -->
+  </div>
+</div>
+<hr data-bind="visible: shouldShowDividingMarker"/>
+
+<div class="d-flex pl-2">
+  <div
+    data-bind="markdownPreview: entity().description"
+    class="preview-modal-overflow-sm d-flex-1 pl-1"
+  ></div>
+  <div class="d-flex-1 text-right d-block">
+    <img
+      class="img-responsive img-rounded clickable embedded-image-right"
+      data-bind="
+        attr: { src: convertedImageLink, width: imageWidth },
+        click: toggleFullScreen,
+      "
+    />
+    <div class="text-muted">
+      <small><i>
+        Click on the image to view it in Full Screen.
+      </i></small>
+    </div>
+  </div>
+</div>

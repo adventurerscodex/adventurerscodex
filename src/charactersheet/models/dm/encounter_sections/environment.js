@@ -19,7 +19,7 @@ export class Environment extends KOModel {
     description = ko.observable('');
     isExhibited = ko.observable(false);
 
-    //Public Methods
+    // Public Methods
 
     toJSON = function() {
         return { name: 'Environment', url: this.imageUrl() };
@@ -37,6 +37,28 @@ export class Environment extends KOModel {
     toHTML = function() {
         return 'New environment';
     };
+
+    load = async (params) => {
+        const response = await this.ps.model.ps.read(params);
+        this.importValues(response.object.exportValues());
+    }
+
+    create = async () => {
+        const response = await this.ps.create();
+        this.importValues(response.object.exportValues());
+//         Notifications.environment.added.dispatch(this);
+    }
+
+    save = async () => {
+        const response = await this.ps.save();
+        this.importValues(response.object.exportValues());
+//         Notifications.environment.changed.dispatch(this);
+    }
+
+    delete = async () => {
+        await this.ps.delete();
+        Notifications.armor.deleted.dispatch(this);
+    }
 }
 
 Environment.validationConstraints = {
