@@ -46,18 +46,15 @@ export class Environment extends KOModel {
     create = async () => {
         const response = await this.ps.create();
         this.importValues(response.object.exportValues());
-//         Notifications.environment.added.dispatch(this);
     }
 
     save = async () => {
         const response = await this.ps.save();
         this.importValues(response.object.exportValues());
-//         Notifications.environment.changed.dispatch(this);
     }
 
     delete = async () => {
         await this.ps.delete();
-        Notifications.armor.deleted.dispatch(this);
     }
 }
 

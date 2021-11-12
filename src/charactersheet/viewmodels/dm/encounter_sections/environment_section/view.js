@@ -25,6 +25,12 @@ class EnvironmentViewModel extends ViewModel {
         this.fullScreen = params.fullScreen;
     }
 
+    setUpSubscriptions() {
+        super.setUpSubscriptions();
+
+        this.subscriptions.push(Notifications.party.changed.add(this.partyDidChange));
+    }
+
     // Actions
 
     async toggleExhibit() {
@@ -84,9 +90,11 @@ class EnvironmentViewModel extends ViewModel {
         return this._isConnectedToParty();
     });
 
-    convertedImageLink = ko.pureComputed(() => (
-        Utility.string.createDirectDropboxLink(this.entity().imageUrl())
-    ));
+    convertedImageLink = ko.pureComputed(() => {
+        if (this.entity().imageUrl()) {
+            return Utility.string.createDirectDropboxLink(this.entity().imageUrl());
+        }
+    });
 
     // Events
 

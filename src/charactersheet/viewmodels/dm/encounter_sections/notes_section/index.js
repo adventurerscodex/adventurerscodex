@@ -1,64 +1,65 @@
+import autoBind from 'auto-bind';
 import {
     CoreManager,
     Fixtures,
     Notifications
 } from 'charactersheet/utilities';
+import { AbstractEncounterFormViewModel } from 'charactersheet/viewmodels/abstract';
 import { EncounterNote } from 'charactersheet/models/dm/encounter_sections';
 import ko from 'knockout';
-import sectionIcon from 'images/encounters/quill-ink.svg';
 import template from './index.html';
+import './form';
 
-export function NotesSectionViewModel(params) {
-    var self = this;
 
-    self.sectionIcon = sectionIcon;
-    self.notes = ko.observable('');
-    self.visible = ko.observable();
+class NotesSectionViewModel extends AbstractEncounterFormViewModel {
 
-    self.encounter = params.encounter;
-    self.encounterId = ko.pureComputed(function() {
-        if (!ko.unwrap(self.encounter)) { return; }
-        return self.encounter().uuid();
+    constructor(params) {
+        super(params);
+        autoBind(this);
+    }
+
+    setUpSubscriptions() {
+        super.setUpSubscriptions();
+
+        this.subscriptions.push(Notifications.party.changed.add(this.partyDidChange));
+    }
+
+    modelClass() {
+        return EncounterNote;
+    }
+
+    // UI
+
+    name = ko.pureComputed(() => {
+        const index = Fixtures.encounter.sections.notes.index;
+        return this.encounter().sections()[index].name();
     });
 
-    self.name = 'Notes';
-    self.tagline = ko.observable();
+    tagline = ko.pureComputed(() => {
+        const index = Fixtures.encounter.sections.notes.index;
+        return this.encounter().sections()[index].tagline();
+    });
 
-    //Public Methods
-    self.load = function() {
-        Notifications.encounters.changed.add(self._dataHasChanged);
+    // Events
 
-        self.encounter.subscribe(function() {
-            self._dataHasChanged();
-        });
-        self._dataHasChanged();
+    partyDidChange = (party) => {
+        this._isConnectedToParty(!!party);
+
+        // Update everything that isn't on exhibit. This event can
+        // be fired from multiple places.
+        const exhibitUuid = get(party, 'exhibit.uuid', null);
+        this.markAsExhibited(exhibitUuid);
     };
 
-    self.saveNote = async () => {
-        const noteResponse = await self.notes().ps.save();
-        self.notes(noteResponse.object);
-    };
+    // Private
 
-    self.reset = async () => {
-        var coreUuid = CoreManager.activeCore().uuid();
-        const noteResponse = await EncounterNote.ps.read({coreUuid, uuid: self.encounterId()});
-        self.notes(noteResponse.object);
-    };
-
-    /* Private Methods */
-
-    self._dataHasChanged = async function() {
-        if (!self.encounterId()) {
-            return;
-        }
-
-        await self.reset();
-
-        var section = self.encounter().sections()[Fixtures.encounter.sections.notes.index];
-        self.visible(section.visible());
-        self.tagline(section.tagline());
-    };
+    markAsExhibited = (exhibitUuid) => {
+        this.entity().isExhibited(
+            this.entity().exhibitUuid() === exhibitUuid
+        );
+    }
 }
+
 
 ko.components.register('notes-section', {
     viewModel: NotesSectionViewModel,

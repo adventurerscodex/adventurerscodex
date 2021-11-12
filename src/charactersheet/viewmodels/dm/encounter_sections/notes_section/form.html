@@ -1,0 +1,24 @@
+<form data-bind="submit: $component.submit">
+  <div class="card-title h4">
+    <back-button params="{ column: $parents[5] }"></back-button>
+    <span data-bind="text: name"></span><br />
+    <small data-bind="text: tagline"></small>
+    <card-submit-actions params="{ reset: $component.reset }"></card-submit-actions>
+  </div>
+  <hr class="ac-table-header">
+  <div class="pl-2 pr-2">
+    <textarea
+      type="text"
+      rows="6"
+      class="form-control"
+      data-bind="
+        value: entity().contents,
+        markdownEditor: true,
+        event: {
+          blur: reviewInput,
+          invalid: invalidate
+        },
+      "
+      ></textarea>
+    </div>
+</form>
