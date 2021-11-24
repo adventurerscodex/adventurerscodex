@@ -156,6 +156,8 @@ class ColumnViewModel {
         context,
     }) {
         autoBind(this);
+        params = { ...params, column: this };
+
         this._push = push;
         this._pop = pop;
         this.popToRoot = popToRoot,

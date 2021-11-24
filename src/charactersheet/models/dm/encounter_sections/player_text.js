@@ -1,5 +1,5 @@
 import { KOModel } from 'hypnos/lib/models/ko';
-import { Utility } from 'charactersheet/utilities/convenience';
+import { Notifications, Utility } from 'charactersheet/utilities';
 import ko from 'knockout';
 import marked from 'bin/textarea-markdown-editor/marked.min';
 
@@ -31,26 +31,38 @@ export class PlayerText extends KOModel {
         return Utility.string.truncateStringAtLength(this.description(), this.SHORT_DESCRIPTION_MAX_LENGTH);
     });
 
-    // Message Serialization Methods
+    // Helpers
 
-    toHTML = function() {
-        var description = this.description() ? this.description() : '';
-        var name = this.name() ? this.name() : '';
-        return '<h3>{name}</h3>&nbsp;<p>{description}</p>'.replace(
-            '{name}', name
-        ).replace(
-            '{description}', marked(description)
-        );
-    };
+    load = async (params) => {
+        const response = await this.ps.model.ps.read(params);
+        this.importValues(response.object.exportValues());
+    }
 
-    toJSON = function() {
-        return {
-            html: this.toHTML()
-        };
-    };
+    create = async () => {
+        const response = await this.ps.create();
+        this.importValues(response.object.exportValues());
+        Notifications.playertext.added.dispatch(this);
+    }
+
+    save = async () => {
+        const response = await this.ps.save();
+        this.importValues(response.object.exportValues());
+        Notifications.playertext.changed.dispatch(this);
+    }
+
+    delete = async () => {
+        await this.ps.delete();
+        Notifications.playertext.deleted.dispatch(this);
+    }
 }
 
 PlayerText.validationConstraints = {
+    fieldParams: {
+        name: {
+            required: true,
+            maxlength: 256
+        }
+    },
     rules: {
         name: {
             required: true,

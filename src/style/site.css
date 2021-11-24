@@ -2142,6 +2142,10 @@ tr .panel {
   flex: 6;
 }
 
+.justify-content-between {
+  justify-content: between;
+}
+
 .pl-1 {
   padding-left: 0.5rem;
 }
@@ -2166,6 +2170,14 @@ tr .panel {
   padding-right: 1.5rem;
 }
 
+.m-auto {
+  margin: auto;
+}
+
+.ml-auto {
+  margin-left: auto;
+}
+
 .ml-1 {
   margin-left: 0.5rem;
 }
@@ -2176,6 +2188,10 @@ tr .panel {
 
 .ml-3 {
   margin-left: 1.5rem;
+}
+
+.mr-auto {
+  margin-right: auto;
 }
 
 .mr-1 {

@@ -1,54 +1,39 @@
 import { CoreManager } from 'charactersheet/utilities';
 import { EncounterSection } from 'charactersheet/models/dm/encounter_section';
 import { Notifications, Fixtures } from 'charactersheet/utilities';
+import { ViewModel } from 'charactersheet/viewmodels/abstract';
 import ko from 'knockout';
 import template from './index.html';
 import './index.css';
 
 
-export function EncounterDetailViewModel({ encounter }) {
-    var self = this;
+class EncounterDetailViewModel extends ViewModel {
 
-    self.encounter = encounter;
-    self.sections = ko.observableArray([]);
-    self.openModal = ko.observable(false);
+    constructor(params) {
+        super(params);
+        this.encounter = params.encounter;
+        this.column = params.column;
 
-    /* Public Methods */
+        this.activeSection = ko.observable();
+    }
 
-    self.load = async () => {
-        self.encounter.subscribe(self._dataHasChanged);
-        self._dataHasChanged();
-    };
+    sectionIsVisible(sectionIdentifier) {
+        const sectionName = Fixtures.encounter.sections[sectionIdentifier].name;
+        return this.encounter().sections().filter(({ name }) => (
+            name() === sectionName
+        ))[0].visible()
+    }
 
-    /**
-     * The modal's done button has been clicked. Save the results and
-     * notify the subscribers.
-     */
-    self.modalDidFinish = async (encounter) => {
-        await encounter.ps.save();
-        Notifications.encounters.changed.dispatch();
-    };
+    sectionIsActive(sectionName) {
+        return this.activeSection() === sectionName;
+    }
 
-    /* UI Methods */
-
-    self.toggleModal = () => {
-        self.openModal(!self.openModal());
-    };
-
-    self.sectionIsVisible = (name) => {
-        const index = Fixtures.encounter.sections[name].index;
-        const section = self.encounter().sections()[index];
-        return section.visible();
-    };
-
-    self._dataHasChanged = () => {
-        const encounter = ko.unwrap(self.encounter);
-        if (!encounter) {
-            return;
-        }
-        self.sections(encounter.sections());
-    };
+    push(component, params) {
+        this.activeSection(component);
+        this.column.push(component, params);
+    }
 }
+
 
 ko.components.register('encounter-detail', {
     viewModel: EncounterDetailViewModel,

@@ -1,4 +1,5 @@
 import { KOModel } from 'hypnos/lib/models/ko';
+import { Notifications } from 'charactersheet/utilities';
 import { Utility } from 'charactersheet/utilities/convenience';
 import ko from 'knockout';
 
@@ -93,9 +94,9 @@ export class Trap extends KOModel {
     nameLabel = ko.pureComputed(() => {
         if (this) {
             if (this.isActive()) {
-                return 'is armed';
+                return 'Armed';
             } else {
-                return 'is not armed';
+                return 'Disarmed';
             }
         }
     });
@@ -110,9 +111,45 @@ export class Trap extends KOModel {
             || this.constantElements()
         );
     });
+
+    // Helpers
+
+    load = async (params) => {
+        const response = await this.ps.model.ps.read(params);
+        this.importValues(response.object.exportValues());
+    }
+
+    create = async () => {
+        const response = await this.ps.create();
+        this.importValues(response.object.exportValues());
+        Notifications.trap.added.dispatch(this);
+    }
+
+    save = async () => {
+        const response = await this.ps.save();
+        this.importValues(response.object.exportValues());
+        Notifications.trap.changed.dispatch(this);
+    }
+
+    delete = async () => {
+        await this.ps.delete();
+        Notifications.trap.deleted.dispatch(this);
+    }
 }
 
 Trap.validationConstraints = {
+    fieldParams: {
+        name: {
+            required: true,
+            maxlength: 256
+        },
+        level: {
+            maxlength: 256
+        },
+        threat: {
+            maxlength: 256
+        }
+    },
     rules: {
         name: {
             required: true,

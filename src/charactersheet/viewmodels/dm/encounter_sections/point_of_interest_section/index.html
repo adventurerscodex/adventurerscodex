@@ -1,345 +1,142 @@
-<!-- ko if: visible -->
-<div class="card-title h4">
-  <back-button params="{ column: $parent }"></back-button>
-  <span data-bind="text: name"></span><br />
-  <small data-bind="text: tagline"></small>
-</div>
-<hr class="ac-table-header">
-<table class="table table-responsive table-ac-bordered table-hover ml-2">
-  <thead>
-    <tr>
-      <th data-bind="click: function(){sortBy('name');}" class="col-md-3">
-        Name
-        <span data-bind="css: sortArrow('name')"></span>
-      </th>
-      <th data-bind="click: function(){sortBy('description');}" class="col-md-7">
-        Description
-        <span data-bind="css: sortArrow('description')"></span>
-      </th>
-      <th class="col-md-1 text-right">Exhibit</th>
-      <th class="text-right col-md-1">
-        <a data-bind="click: toggleAddModal" href="#">
-          <i class="fa fa-plus fa-color"></i>
-        </a>
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-  <!-- ko foreach: filteredAndSortedPointsOfInterest -->
-    <tr class="clickable">
-      <td data-bind="text: name, click: $parent.editPointOfInterest"
-          href="#" class="col-xs-3"></td>
-      <td data-bind="click: $parent.editPointOfInterest"
-          class="col-xs-7 hidden-md hidden-lg"
-          href="#"
-      >
-        <!-- ko if: shortDescription -->
-        <span data-bind="html: shortDescription"></span>
-        <!-- /ko -->
-        <!-- ko ifnot: shortDescription -->
-        <i class="text-muted">See Image</i>
-        <!-- /ko -->
-      </td>
-      <td data-bind="click: $parent.editPointOfInterest"
-          class="col-md-7 hidden-sm hidden-xs"
-          href="#"
-      >
-        <!-- ko if: longDescription -->
-        <span data-bind="html: longDescription"></span>
-        <!-- /ko -->
-        <!-- ko ifnot: longDescription -->
-        <i class="text-muted">See Image</i>
-        <!-- /ko -->
-      </td>
-      <!-- ko if: $parent.shouldShowExhibitButton -->
-      <td class="text-right col-md-1">
-        <a data-bind="click: $parent.toggleExhibit" href="#" title="Send to Player's Exhibit">
-          <i data-bind="css: { exhibitActiveIcon: isExhibited }" class="fa fa-desktop fa-color-hover">
+<div id="poi-pane">
+  <div class="card-title h4">
+    <back-button params="{ column: column }"></back-button>
+    <span data-bind="text: name"></span><br />
+    <small data-bind="text: tagline"></small>
+  </div>
+  <hr class="ac-table-header">
+  <table class="table table-responsive table-ac-bordered table-hover">
+    <thead>
+      <tr>
+        <th data-bind="click: ()=> {sortBy('name');}"
+            class="col-md-2">
+          Name
+          <span data-bind="css: sortArrow('name')"></span>
+        </th>
+        <th data-bind="click: ()=> {sortBy('description');}"
+            class="col-xs-8">
+          Description
+          <span data-bind="css: sortArrow('description')"></span>
+        </th>
+        <th data-bind="click: ()=> {sortBy('isExhibited');}"
+            class="col-xs-1">
+          Exhibit
+          <span data-bind="css: sortArrow('isExhibited')"></span>
+        </th>
+        <th class="col-xs-1 text-right toggle-collapse-col">
+          <a href="#"
+              data-bind="{click: collapseAll}">
+            <span class="fa fa-minus"></span>
+          </a>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- ko foreach: $component.filteredAndSortedEntities -->
+      <tr
+        class="clickable poiRow"
+        data-bind="attr: { id: `#poi_row_${uuid()}` }">
+        <td data-toggle="collapse" data-bind="attr: {
+          'data-target': `#poi_list_${uuid()}`,
+        }">
+          <span data-bind="text: name"></span>
+        </td>
+        <td class="hidden-xs hidden-sm" data-toggle="collapse" data-bind="attr: {
+          'data-target': `#poi_list_${uuid()}`,
+        }">
+          <span data-bind="text: shortDescription, visible: shortDescription"></span>
+          <i class="text-muted" data-bind="visible: !shortDescription()">
+            See Image
           </i>
-        </a>
-      </td>
+        </td>
+        <!-- ko if: $component.shouldShowExhibitButton -->
+        <td class="text-right col-md-1">
+          <a data-bind="click: () => $component.toggleExhibit($data)" href="#" title="Send to Exhibit">
+            <i data-bind="css: { exhibitActiveIcon: isExhibited }" class="fa fa-desktop fa-color-hover clickable">
+            </i>
+          </a>
+        </td>
+        <!-- /ko -->
+        <!-- ko ifnot: $component.shouldShowExhibitButton -->
+        <td class="text-right col-md-1">
+          <span class="fa fa-desktop fa-disabled"
+            data-bind="popover: { content: 'Join a Party send to Exhibit' }">
+          </span>
+        </td>
+        <!-- /ko -->
+        <td class="text-right toggle-collapse-col">
+          <span data-toggle="collapse"
+              data-bind="attr:{'data-target': `#poi_list_${uuid()}`}"
+              class="rotate fa fa-chevron-left"></span>
+        </td>
+      </tr>
+      <tr class="collapseRow safari-card-fix">
+        <td colspan="8">
+          <flip-card params="{
+                  dataId: $data.uuid(),
+                  tabId: $parent.tabId,
+                  collapsable: true,
+                  elementId: 'poi_list',
+                  context: {
+                    data: $data,
+                    encounter: $component.encounter,
+                    fullScreen: $component.fullScreen,
+                  }
+                }">
+            <div class="front">
+              <div>
+                <card-edit-actions params="{ flip: flip }"></card-edit-actions>
+              </div>
+              <point-of-interest-view
+                params="
+                  poi: context.data,
+                  fullScreen: context.fullScreen,
+                "
+              ></point-of-interest-view>
+            </div>
+            <div class="back">
+              <point-of-interest-form params="{
+                containerId: elementId,
+                collapsable: true,
+                encounter: context.encounter,
+                data: context.data,
+                show: showBack,
+                flip: flip,
+                forceCardResize: forceCardResize
+              }"></point-of-interest-form>
+            </div>
+          </flip-card>
+        </td>
+      </tr>
       <!-- /ko -->
-      <!-- ko ifnot: $parent.shouldShowExhibitButton -->
-      <td class="text-right col-md-1">
-        <span class="fa fa-desktop fa-disabled" style="cursor:pointer;"
-          data-bind="popover: { content: 'Join a Party in order to send to Player\'s Exhibit' }">
-        </span>
-      </td>
-      <!-- /ko -->
-      <td class="col-xs-1 text-right">
-        <a data-bind="click: $parent.removePointOfInterest" href="#">
-          <i class="fa fa-trash-o fa-color-hover"></i>
-        </a>
-      </td>
-    </tr>
-  <!-- /ko -->
-  <!-- ko if: filteredAndSortedPointsOfInterest().length == 0 -->
-    <tr class="clickable">
-      <td data-bind="click: toggleAddModal"
-        colspan="12" class="text-center">
-        <i class="fa fa-plus fa-color"></i>
-        Add a new Point of Interest
-      </td>
-    </tr>
-  <!-- /ko -->
-  </tbody>
-</table>
-<!-- /ko -->
-
-<!-- Add Modal -->
-<div class="modal fade"
-     id="addPointOfInterest"
-     tabindex="-1"
-     role="dialog" data-bind="modal: {
-      onopen: modalFinishedOpening,
-      onclose: closeAddModal,
-      open: addModalOpen }">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title"
-            id="addWeaponLabel">Add a new Point of Interest</h4>
-    </div>
-      <div class="modal-body">
-        <form class="form-horizontal" data-bind="element: _addForm, validate: validation">
-          <div class="form-group">
-            <label class="col-sm-2 control-label">
-              Name<i class="required"></i>
-            </label>
-            <div class="col-sm-9">
-              <input type="text"
-                     class="form-control"
-                     name="name"
-                     placeholder="A Statue of a King"
-                     data-bind="textInput: blankPointOfInterest().name,
-                        hasFocus: firstElementInModalHasFocus">
+      <tr id="add-poi" class="collapse add-card">
+        <td colspan="5">
+          <point-of-interest-form params="{
+            containerId:'add-poi',
+            show: $component.displayAddForm,
+            flip: $component.toggleShowAddForm,
+            encounter: $component.encounter,
+          }"></point-of-interest-form>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+          <td colspan="8">
+          <div class="row">
+            <div class="col">
+              <!-- ko ifnot: $component.displayAddForm -->
+              <button type="button"
+                  class="btn btn-link btn-block btn-sm"
+                  id="poiAddButton"
+                  data-toggle="collapse"
+                  data-target="#add-poi"
+                  data-bind="click: $component.toggleShowAddForm"><i class="fa fa-plus"></i> Add Point of Interest</button>
+              <!-- /ko -->
             </div>
           </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label">
-              Image Link
-            </label>
-            <div class="col-sm-9">
-              <input type="text"
-                      class="form-control"
-                      name="sourceUrl"
-                      placeholder="http://myurl.com/image.jpg"
-                      data-bind="textInput: blankPointOfInterest().sourceUrl">
-            </div>
-            <div class="col-sm-1 control-label">
-              <span class="fa fa fa-desktop" style="cursor:pointer;"
-                title="This field will be sent to the players via the chat.">
-              </span>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label">Description</label>
-            <div class="col-sm-9">
-              <textarea type="text"
-                      class="form-control" rows="4"
-                      name="description"
-                      placeholder="It rises up from it's stone pillar..."
-                      data-bind="value: blankPointOfInterest().description"></textarea>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label">
-              Player Text
-            </label>
-            <div class="col-sm-9">
-              <textarea type="text"
-                      class="form-control" rows="4"
-                      name="playerText"
-                      placeholder="This is the description that your players will see when sent via the chat."
-                      data-bind="value: blankPointOfInterest().playerText">
-              </textarea>
-              <small class="text-muted">
-                Text in this panel can be styled using Markdown. Click
-                <a target="_blank"
-                  href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">here</a> to see a guide.
-              </small>
-            </div>
-            <div class="col-sm-1 control-label">
-              <span class="fa fa fa-desktop" style="cursor:pointer;"
-                title="This field will be sent to the players via the chat.">
-              </span>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <small class="text-center">
-              <p>
-                Fields marked with <i class="fa fa-desktop"></i> will be sent to the players via the exhibit.
-              </p>
-            </small>
-            <button type="submit"
-                    class="btn btn-primary">Add</button>
-          </div>
-        </form>
-      </div> <!-- Modal Body -->
-    </div> <!-- Modal Content -->
-  </div> <!-- Modal Dialog -->
-</div> <!-- Modal Fade -->
-
-<!-- ViewEdit Modal -->
-<div class="modal fade"
-     id="viewWeapon"
-     tabindex="-1"
-     role="dialog"
-     data-bind="modal: {
-      open: openModal,
-      onclose: closeModal }">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title">Edit a Point of Interest</h4>
-      </div>
-      <div class="modal-body">
-        <!-- Begin Tabs -->
-        <ul class="nav nav-tabs tabs">
-          <li role="presentation" data-bind="click: selectPreviewTab, css: previewTabStatus">
-            <a href="#" aria-controls="itemsModalPreview" role="tab" data-toggle="tab">
-                <b>Preview</b>
-            </a>
-          </li>
-          <li role="presentation" data-bind="click: selectEditTab, css: editTabStatus">
-            <a href="#" aria-controls="itemsModalEdit" role="tab" data-toggle="tab">
-                <b>Edit</b>
-            </a>
-          </li>
-        </ul>
-        <div class="tab-content" data-bind="with: currentEditItem">
-          <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane">
-            <div class="h3">
-              <span data-bind="text: name"></span>&nbsp;
-            </div>
-            <!-- ko if: sourceUrl -->
-            <div class="row row-padded">
-              <div class="col-xs-12 col-padded text-center">
-                <img data-bind="attr: { src: $parent.convertedDisplayUrl },
-                  click: $parent.toggleFullScreen" class="clickable preview-modal-image" />
-                <small>
-                  <em class="text-muted">Click on the image to view it in Full Screen.</em>
-                </small>
-              </div>
-            </div>
-            <!-- /ko -->
-            <hr />
-            <span class="h4">
-              Description
-            </span>
-            <div class="row row-padded">
-              <div class="col-xs-12 col-padded">
-                <div data-bind="markdownPreview: description"
-                     class="preview-modal-overflow">
-                </div>
-              </div>
-            </div>
-            <span class="h4">
-              Player Text
-            </span>
-            <div class="row row-padded">
-              <div class="col-xs-12 col-padded">
-                <div data-bind="markdownPreview: playerText"
-                     class="preview-modal-overflow light-blue-left-highlight">
-                </div>
-              </div>
-            </div>
-          </div> <!-- End Preview Tab -->
-          <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane">
-            <form class="form-horizontal" data-bind="element: $parent._editForm, validate: $parent.updateValidation">
-              <div class="form-group">
-                <label class="col-sm-2 control-label">
-                  Name<i class="required"></i>
-                </label>
-                <div class="col-sm-9">
-                  <input type="text"
-                         class="form-control"
-                         name="name"
-                         data-bind="textInput: name, hasFocus: $parent.editFirstModalElementHasFocus">
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label">
-                  Image Link
-                </label>
-                <div class="col-sm-9">
-                  <input type="text"
-                          name="sourceUrl"
-                          class="form-control"
-                          data-bind="textInput: sourceUrl">
-                </div>
-                <div class="col-sm-1 control-label">
-                  <span class="fa fa fa-desktop" style="cursor:pointer;"
-                    title="This field will be sent to the players via the chat.">
-                  </span>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label">
-                  Description
-                </label>
-                <div class="col-sm-9">
-                  <textarea type="text" rows="6"
-                          class="form-control"
-                          name="name"
-                          data-bind="value: description, markdownEditor: true"></textarea>
-                </div>
-                <div class="col-sm-1"></div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label">
-                  Player Text
-                </label>
-                <div class="col-sm-9">
-                  <textarea type="text" rows="6"
-                          class="form-control"
-                          name="playerText"
-                          data-bind="value: playerText, markdownEditor: true">
-                  </textarea>
-                  <small class="text-muted">
-                    Text in this panel can be styled using Markdown. Click
-                    <a target="_blank"
-                      href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">here</a> to see a guide.
-                  </small>
-                </div>
-                <div class="col-sm-1 control-label">
-                  <span class="fa fa fa-desktop" style="cursor:pointer;"
-                    title="This field will be sent to the players via the chat.">
-                  </span>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <small class="text-center">
-                  <p>
-                    Fields marked with <i class="fa fa-desktop"></i> will be sent to the players via the exhibit.
-                  </p>
-                </small>
-                <button type="submit"
-                        class="btn btn-primary">Done</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div> <!-- Modal Body -->
-    </div> <!-- Modal Content -->
-  </div> <!-- Modal Dialog -->
-</div> <!-- Modal Fade -->
-
-<!-- Push Modal -->
-<player-push-modal params="isOpen: openPushModal, type: pushType, payload: selectedPoiToPush, onclose: pushModalFinishedClosing"></player-push-modal>
-
-<!-- The visibility is managed internally -->
-<full-screen-image params="imageSource: convertedDisplayUrl, fullScreenStatus: fullScreen">
-</full-screen-image>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>

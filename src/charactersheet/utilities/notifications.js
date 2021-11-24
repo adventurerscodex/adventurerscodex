@@ -131,6 +131,12 @@ export var Notifications = {
         changed: new Signal()
     },
 
+    encounterimage: {
+        added: new Signal(),
+        changed: new Signal(),
+        deleted: new Signal()
+    },
+
     exhibit: {
         changed: new Signal()
     },
@@ -193,6 +199,12 @@ export var Notifications = {
         changed: new Signal()
     },
 
+    pointofinterest: {
+        added: new Signal(),
+        changed: new Signal(),
+        deleted: new Signal()
+    },
+
     profile: {
         changed: new Signal(),
         playerName: {
@@ -214,6 +226,12 @@ export var Notifications = {
 
     proficiencyBonus: {
         changed: new Signal()
+    },
+
+    playertext: {
+        added: new Signal(),
+        changed: new Signal(),
+        deleted: new Signal()
     },
 
     sessionExpired: {
@@ -255,6 +273,12 @@ export var Notifications = {
     },
 
     trait: {
+        added: new Signal(),
+        changed: new Signal(),
+        deleted: new Signal()
+    },
+
+    trap: {
         added: new Signal(),
         changed: new Signal(),
         deleted: new Signal()

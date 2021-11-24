@@ -1,0 +1,58 @@
+<div class="row" data-bind="with: trap">
+  <div class="col-xs-12">
+    <h4 data-bind="text: name"></h4>
+    <small class="text-muted" data-bind="visible: level">
+      Level&nbsp;<span data-bind="text: level"</span>,
+      <span data-bind="text: nameLabel"></span>
+    </small>
+  </div>
+  <div class="col-xs-12">
+    <table class="table table-hover table-condensed table-ac-bordered">
+      <tbody>
+        <tr data-bind="visible: threat">
+          <th scope="row">Threat</th>
+          <td data-bind="text: threat"></td>
+        </tr>
+        <tr data-bind="visible: initiative">
+          <th scope="row">Initiative</th>
+          <td data-bind="text: initiative"></td>
+        </tr>
+        <tr data-bind="visible: trigger">
+          <th scope="row">Trigger</th>
+          <td data-bind="markdownPreview: trigger"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-xs-12" data-bind="visible: effect">
+    <label>Effect</label>
+    <div data-bind="markdownPreview: effect"></div>
+  </div>
+  <div class="col-xs-12" data-bind="visible: countermeasure">
+    <label>Countermeasure</label>
+    <div data-bind="markdownPreview: countermeasure"></div>
+  </div>
+  <div class="col-xs-12" data-bind="visible: description">
+    <label>Description</label>
+    <div data-bind="markdownPreview: description"></div>
+  </div>
+  <div
+    class="col-xs-12"
+    data-bind="visible: (activeElements() || constantElements() || dynamicElements())"
+  >
+    <hr />
+  </div>
+  <div class="col-xs-12 col-lg-6" data-bind="visible: activeElements">
+    <label>Active Elements</label>
+    <div data-bind="markdownPreview: activeElements"></div>
+  </div>
+  <div class="col-xs-12 col-lg-6" data-bind="visible: dynamicElements">
+    <label>Dynamic Elements</label>
+    <div data-bind="markdownPreview: activeElements"></div>
+  </div>
+  <div class="col-xs-12" data-bind="visible: constantElements">
+    <label>Constant Elements</label>
+    <div data-bind="markdownPreview: constantElements"></div>
+  </div>
+
+</div>

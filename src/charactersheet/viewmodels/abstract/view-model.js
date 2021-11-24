@@ -23,7 +23,6 @@ export class ViewModel {
     }
 
     setUpSubscriptions() {
-
     }
 
     disposeOfSubscriptions() {
@@ -40,6 +39,6 @@ export class ViewModel {
     }
 
     dispose() {
-        setTimeout(this.disposeOfSubscriptions, DELAY.DISPOSE);
+        setTimeout(this.disposeOfSubscriptions.bind(this), DELAY.DISPOSE);
     }
 }

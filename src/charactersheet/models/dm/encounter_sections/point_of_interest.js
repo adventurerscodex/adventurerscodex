@@ -1,5 +1,5 @@
 import { KOModel } from 'hypnos/lib/models/ko';
-import { Utility } from 'charactersheet/utilities/convenience';
+import { Notifications, Utility } from 'charactersheet/utilities';
 import ko from 'knockout';
 
 
@@ -34,22 +34,43 @@ export class PointOfInterest extends KOModel {
         return Utility.string.truncateStringAtLength(this.description(), this.SHORT_DESCRIPTION_MAX_LENGTH);
     });
 
-    // Message Serialization Methods
+    // Helpers
 
-    toHTML = function() {
-        return 'New Point of Interest';
-    };
+    load = async (params) => {
+        const response = await this.ps.model.ps.read(params);
+        this.importValues(response.object.exportValues());
+    }
 
-    toJSON = function() {
-        return {
-            name: this.name(),
-            url: this.sourceUrl(),
-            description: this.playerText()
-        };
-    };
+    create = async () => {
+        const response = await this.ps.create();
+        this.importValues(response.object.exportValues());
+        Notifications.pointofinterest.added.dispatch(this);
+    }
+
+    save = async () => {
+        const response = await this.ps.save();
+        this.importValues(response.object.exportValues());
+        Notifications.pointofinterest.changed.dispatch(this);
+    }
+
+    delete = async () => {
+        await this.ps.delete();
+        Notifications.pointofinterest.deleted.dispatch(this);
+    }
 }
 
 PointOfInterest.validationConstraints = {
+    fieldParams: {
+        name: {
+            required: true,
+            maxlength: 256
+        },
+        sourceUrl: {
+            url: true,
+            requred: false,
+            maxlength: 1024
+        }
+    },
     rules: {
         name: {
             required: true,

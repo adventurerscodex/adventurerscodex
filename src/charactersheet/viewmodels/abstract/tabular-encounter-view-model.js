@@ -1,12 +1,12 @@
 import { CoreManager } from 'charactersheet/utilities';
-import { AbstractFormModel } from 'charactersheet/viewmodels/abstract';
+import { AbstractTabularViewModel } from 'charactersheet/viewmodels/abstract';
 import ko from 'knockout';
 
 /**
  * A subclass providing all of the base form functionality needed to deal with
  * objects related to Encounters.
  */
-export class AbstractEncounterFormViewModel extends AbstractFormModel {
+export class AbstractEncounterTabularViewModel extends AbstractTabularViewModel {
 
     constructor(params) {
         super(params);
@@ -23,12 +23,11 @@ export class AbstractEncounterFormViewModel extends AbstractFormModel {
     }
 
     async refresh() {
-        if (this.existingData) {
-            this.entity().importValues(this.existingData.exportValues());
-        } else {
-            const coreKey = CoreManager.activeCore().uuid();
-            const encounterId = this.encounter().uuid();
-            await this.entity().load({coreUuid: coreKey, uuid: encounterId });
-        }
+        const encounterUuid = this.encounter().uuid();
+        const response = await this.modelClass().ps.list({
+            coreUuid: this.coreKey,
+            encounterUuid,
+        });
+        this.entities(response.objects);
     }
 }

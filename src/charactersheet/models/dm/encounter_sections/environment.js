@@ -34,9 +34,7 @@ export class Environment extends KOModel {
         );
     });
 
-    toHTML = function() {
-        return 'New environment';
-    };
+    // Helpers
 
     load = async (params) => {
         const response = await this.ps.model.ps.read(params);
