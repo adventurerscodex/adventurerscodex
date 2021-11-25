@@ -16,6 +16,8 @@ class NotesSectionViewModel extends AbstractEncounterFormViewModel {
     constructor(params) {
         super(params);
         autoBind(this);
+
+        this.column = parent.column;
     }
 
     setUpSubscriptions() {

@@ -68,7 +68,7 @@ class MapsAndImagesSectionViewModel extends AbstractEncounterTabularViewModel {
 
     // Actions
 
-    async toggleMapOrImageExhibit(moi) {
+    async toggleExhibit(moi) {
         moi.isExhibited(!moi.isExhibited());
         await moi.save();
         this.markAsExhibited(moi.uuid());

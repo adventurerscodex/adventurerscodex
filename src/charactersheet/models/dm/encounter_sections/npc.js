@@ -1,5 +1,5 @@
 import { KOModel } from 'hypnos/lib/models/ko';
-import { Utility } from 'charactersheet/utilities/convenience';
+import { Notifications, Utility } from 'charactersheet/utilities';
 import ko from 'knockout';
 
 
@@ -34,20 +34,45 @@ export class NPC extends KOModel {
         return Utility.string.truncateStringAtLength(this.description(), this.SHORT_DESCRIPTION_MAX_LENGTH);
     });
 
-    toJSON = function() {
-        return {
-            name: this.name(),
-            url: this.sourceUrl(),
-            description: this.playerText()
-        };
-    };
+    // Helpers
 
-    toHTML = function() {
-        return 'New NPC in chat';
-    };
+    load = async (params) => {
+        const response = await this.ps.model.ps.read(params);
+        this.importValues(response.object.exportValues());
+    }
+
+    create = async () => {
+        const response = await this.ps.create();
+        this.importValues(response.object.exportValues());
+        Notifications.npc.added.dispatch(this);
+    }
+
+    save = async () => {
+        const response = await this.ps.save();
+        this.importValues(response.object.exportValues());
+        Notifications.npc.changed.dispatch(this);
+    }
+
+    delete = async () => {
+        await this.ps.delete();
+        Notifications.npc.deleted.dispatch(this);
+    }
 }
 
 NPC.validationConstraints = {
+    fieldParams: {
+        name: {
+            required: true,
+            maxlength: 256
+        },
+        race: {
+            maxlength: 64
+        },
+        sourceUrl: {
+            url: true,
+            maxlength: 1024
+        }
+    },
     rules: {
         name: {
             required: true,

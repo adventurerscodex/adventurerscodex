@@ -1,4 +1,4 @@
-import { CoreManager } from 'charactersheet/utilities';
+import { CoreManager, Notifications } from 'charactersheet/utilities';
 import { KOModel } from 'hypnos/lib/models/ko';
 import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
@@ -80,4 +80,51 @@ export class Encounter extends KOModel {
         }
         return newValues;
     }
+
+    // Helpers
+
+    load = async (params) => {
+        const response = await this.ps.model.ps.read(params);
+        this.importValues(response.object.exportValues());
+    }
+
+    create = async () => {
+        const response = await this.ps.create();
+        this.importValues(response.object.exportValues());
+        Notifications.encounter.added.dispatch(this);
+    }
+
+    save = async () => {
+        const response = await this.ps.save();
+        this.importValues(response.object.exportValues());
+        Notifications.encounter.changed.dispatch(this);
+    }
+
+    delete = async () => {
+        await this.ps.delete();
+        Notifications.encounter.deleted.dispatch(this);
+    }
 }
+
+Encounter.validationConstraints = {
+    fieldParams: {
+        name: {
+            required: true,
+            maxlength: 256
+        },
+        location: {
+            required: false,
+            maxlength: 256
+        }
+    },
+    rules: {
+        name: {
+            required: true,
+            maxlength: 256
+        },
+        location: {
+            required: false,
+            maxlength: 256
+        }
+    }
+};

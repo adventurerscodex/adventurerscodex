@@ -38,25 +38,6 @@ class EnvironmentFormViewModel extends AbstractEncounterFormViewModel {
         const index = Fixtures.encounter.sections.environment.index;
         return this.encounter().sections()[index].tagline();
     });
-
-    // Events
-
-    partyDidChange(party) {
-        self._isConnectedToParty(!!party);
-
-        // Update everything that isn't on exhibit. This event can
-        // be fired from multiple places.
-        const exhibitUuid = get(party, 'exhibit.uuid', null);
-        self.markAsExhibited(exhibitUuid);
-    };
-
-    // Private
-
-    markAsExhibited(exhibitUuid) {
-        self.environment().isExhibited(
-            self.environment().exhibitUuid() === exhibitUuid
-        );
-    }
 }
 
 ko.components.register('environment-form', {

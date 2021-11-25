@@ -5,6 +5,8 @@ import { ViewModel } from 'charactersheet/viewmodels/abstract';
 import ko from 'knockout';
 import template from './index.html';
 import './index.css';
+import './form';
+import './view';
 
 
 class EncounterDetailViewModel extends ViewModel {
@@ -13,24 +15,6 @@ class EncounterDetailViewModel extends ViewModel {
         super(params);
         this.encounter = params.encounter;
         this.column = params.column;
-
-        this.activeSection = ko.observable();
-    }
-
-    sectionIsVisible(sectionIdentifier) {
-        const sectionName = Fixtures.encounter.sections[sectionIdentifier].name;
-        return this.encounter().sections().filter(({ name }) => (
-            name() === sectionName
-        ))[0].visible()
-    }
-
-    sectionIsActive(sectionName) {
-        return this.activeSection() === sectionName;
-    }
-
-    push(component, params) {
-        this.activeSection(component);
-        this.column.push(component, params);
     }
 }
 

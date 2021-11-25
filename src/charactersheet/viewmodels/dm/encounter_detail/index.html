@@ -1,131 +1,29 @@
-<!-- Encounter Sections -->
-<!-- ko if: encounter -->
-<div class="card-title h4 text-left">
-  <back-button params="{ column: column }"></back-button>
-  <span data-bind="text: encounter().name"></span><br />
-  <!-- ko if: encounter().location -->
-  <small data-bind="text: encounter().location"></small>
-  <!--/ko -->
-  <!-- ko ifnot: encounter().location -->
-  <small>&nbsp;</small>
-  <!--/ko -->
-  <div class="edit-btn btn-group">
-    <button class="btn btn-link" xdata-bind="click: toggleModal">
-      <i class="fa fa-pencil-square-o fa-color-hover-success fa-color fa-lg clickable" aria-hidden="true"></i>
-    </button>
-  </div>
-</div>
-<hr class="ac-table-header">
-<!-- Encounter tabs -->
-<ul class="list-group master-list" role="tablist">
-  <button
-    class="list-group-item"
-    href="#environment"
-    data-bind="
-      click: () => push('environment-section', {encounter}),
-      visible: sectionIsVisible('environment'),
-      css: { 'active': sectionIsActive('environment-section') }
-    "
-  >
-    Environment
-  </button>
-  <button
-    class="list-group-item"
-    href="#traps"
-    data-bind="
-      click: () => push('traps-section', {encounter}),
-      visible: sectionIsVisible('traps'),
-      css: { 'active': sectionIsActive('traps-section') }
-    "
-  >
-    Traps
-  </button>
-  <button
-    class="list-group-item"
-    href="#moi"
-    data-bind="
-      click: () => push('maps-and-images-section', {encounter}),
-      visible: sectionIsVisible('mapsAndImages'),
-      css: { 'active': sectionIsActive('maps-and-images-section') }
-    "
-  >
-    Maps &amp; Images
-  </button>
-  <button
-    class="list-group-item"
-    href="#poi"
-    data-bind="
-      click: () => push('point-of-interest-section', {encounter}),
-      visible: sectionIsVisible('pointsOfInterest'),
-      css: { 'active': sectionIsActive('point-of-interest-section') }
-    "
-  >
-    Points of Interest
-  </button>
-  <button
-    class="list-group-item"
-    href="#player-text"
-    data-bind="
-      click: () => push('read-aloud-text-section', {encounter}),
-      visible: sectionIsVisible('readAloudText'),
-      css: { 'active': sectionIsActive('read-aloud-text-section') }
-    "
-  >
-    Read Aloud Text
-  </button>
-  <button
-    class="list-group-item"
-    href="#npcs"
-    data-bind="
-      click: () => push('npc-section', {encounter}),
-      visible: sectionIsVisible('npcs'),
-      css: { 'active': sectionIsActive('npc-section') }
-    "
-  >
-    NPCs
-  </button>
-  <button
-    class="list-group-item"
-    href="#monsters"
-    data-bind="
-      click: () => push('monster-section', {encounter}),
-      visible: sectionIsVisible('monsters'),
-      css: { 'active': sectionIsActive('monster-section') }
-    "
-  >
-    Monsters
-  </button>
-  <button
-    class="list-group-item"
-    href="#treasure"
-    data-bind="
-      click: () => push('treasure-section', {encounter}),
-      visible: sectionIsVisible('treasure'),
-      css: { 'active': sectionIsActive('treasure-section') }
-    "
-  >
-    Treasure
-  </button>
-  <button
-    class="list-group-item"
-    href="#notes"
-    data-bind="
-      click: () => push('notes-section', {encounter}),
-      visible: sectionIsVisible('notes'),
-      css: { 'active': sectionIsActive('notes-section') }
-    "
-  >
-    Notes
-  </button>
-</ul>
-<!-- /ko -->
+<div data-bind="if: loaded">
+  <flip-card params="{
+    tabId: 'encounter-detail-tab',
+    elementId: 'encounter-detail-id',
+    context: {
+      data: $data,
 
-<!--
-<encounter-add-edit-modal
-  params="
-    encounter: encounter,
-    openModal: openModal,
-    onsave: modalDidFinish
-  "
-></encounter-add-edit-modal>
- -->
+     }
+  }">
+    <div class="front">
+      <encounter-detail-view params="
+        encounter: context.data.encounter,
+        entity: context.data.entity,
+        flip: flip,
+        fullScreen: context.data.fullScreen,
+        column: context.data.column,
+        push: context.data.push,
+      "></encounter-detail-view>
+    </div>
+    <div class="back">
+      <encounter-detail-form params="
+        encounter: context.data.encounter,
+        entity: context.data.entity,
+        flip: flip,
+        column: context.data.column,
+      "></encounter-detail-form>
+    </div>
+  </flip-card>
+</div>

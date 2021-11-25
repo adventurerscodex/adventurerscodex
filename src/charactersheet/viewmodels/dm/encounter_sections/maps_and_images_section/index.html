@@ -14,7 +14,7 @@
           <span data-bind="css: sortArrow('name')"></span>
         </th>
         <th data-bind="click: ()=> {sortBy('description');}"
-            class="col-xs-8">
+            class="col-xs-8 hidden-xs hidden-sm">
           Description
           <span data-bind="css: sortArrow('description')"></span>
         </th>
@@ -41,7 +41,7 @@
         }">
           <span data-bind="text: name"></span>
         </td>
-        <td data-toggle="collapse" data-bind="attr: {
+        <td class="hidden-xs hidden-sm" data-toggle="collapse" data-bind="attr: {
           'data-target': `#map_list_${uuid()}`,
         }">
           <span data-bind="text: shortDescription, visible: shortDescription"></span>
@@ -51,7 +51,7 @@
         </td>
         <!-- ko if: $component.shouldShowExhibitButton -->
         <td class="text-right">
-          <a data-bind="click: () => $component.toggleMapOrImageExhibit($data)" href="#" title="Send to Exhibit">
+          <a data-bind="click: () => $component.toggleExhibit($data)" href="#" title="Send to Exhibit">
             <i data-bind="css: { exhibitActiveIcon: isExhibited }" class="fa fa-desktop fa-color-hover clickable">
             </i>
           </a>

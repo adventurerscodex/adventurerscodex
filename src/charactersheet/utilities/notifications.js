@@ -131,6 +131,12 @@ export var Notifications = {
         changed: new Signal()
     },
 
+    encounter: {
+        added: new Signal(),
+        changed: new Signal(),
+        deleted: new Signal()
+    },
+
     encounterimage: {
         added: new Signal(),
         changed: new Signal(),
@@ -178,6 +184,12 @@ export var Notifications = {
     },
 
     note: {
+        added: new Signal(),
+        changed: new Signal(),
+        deleted: new Signal()
+    },
+
+    npc: {
         added: new Signal(),
         changed: new Signal(),
         deleted: new Signal()

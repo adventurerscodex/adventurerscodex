@@ -152,6 +152,6 @@ export class AbstractTabularViewModel {
     }
 
     dispose() {
-        setTimeout(this.disposeOfSubscriptions, DELAY.DISPOSE);
+        setTimeout(this.disposeOfSubscriptions.bind(this), DELAY.DISPOSE);
     }
 }
