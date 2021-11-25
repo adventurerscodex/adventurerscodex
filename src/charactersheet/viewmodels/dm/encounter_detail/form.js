@@ -11,7 +11,6 @@ class EncounterDetailFormViewModel extends AbstractEncounterFormViewModel {
     constructor(params) {
         super(params);
         this.column = params.column;
-        this.sections = ko.observableArray();
     }
 
     modelClass() {
