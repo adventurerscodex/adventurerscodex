@@ -183,6 +183,12 @@ export var Notifications = {
         deleted: new Signal()
     },
 
+    monster: {
+        added: new Signal(),
+        changed: new Signal(),
+        deleted: new Signal()
+    },
+
     note: {
         added: new Signal(),
         changed: new Signal(),
