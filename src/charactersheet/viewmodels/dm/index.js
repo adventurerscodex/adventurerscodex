@@ -2,7 +2,6 @@ export { CampaignMapsAndImagesViewModel } from 'charactersheet/viewmodels/dm/cam
 export { EncounterViewModel } from 'charactersheet/viewmodels/dm/encounter';
 export { EncounterCellViewModel } from 'charactersheet/viewmodels/dm/encounter_cell';
 export { EncounterDetailViewModel } from 'charactersheet/viewmodels/dm/encounter_detail';
-export { EncounterSectionVisibilityViewModel } from 'charactersheet/viewmodels/dm/encounter_section_visibility';
 export { CampaignOverviewViewModel } from 'charactersheet/viewmodels/dm/overview';
 export { PartyViewModel } from 'charactersheet/viewmodels/dm/party';
 export { PartyStatusLineViewModel } from 'charactersheet/viewmodels/dm/status_line';
