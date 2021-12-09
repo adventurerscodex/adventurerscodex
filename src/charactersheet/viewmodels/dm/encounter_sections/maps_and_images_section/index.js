@@ -72,8 +72,6 @@ export function MapsAndImagesSectionViewModel(params) {
             self._dataHasChanged();
         });
         self._dataHasChanged();
-
-        self._connectionHasChanged();
     };
 
     self.validation = {
@@ -253,10 +251,6 @@ export function MapsAndImagesSectionViewModel(params) {
         self.name(section.name());
         self.visible(section.visible());
         self.tagline(section.tagline());
-    };
-
-    self._connectionHasChanged = function() {
-        // TODO
     };
 }
 

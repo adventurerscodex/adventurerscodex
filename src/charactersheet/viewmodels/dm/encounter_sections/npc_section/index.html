@@ -43,7 +43,7 @@
           href="#" class="hidden-sm hidden-xs col-md-5"></td>
       <!-- ko if: $parent.shouldShowExhibitButton -->
       <td class="text-right col-md-1">
-        <a data-bind="click: $parent.toggleExhibit" href="#" title="Send Player's Exhibit">
+        <a data-bind="click: $parent.toggleExhibit" href="#" title="Send to Player's Exhibit">
           <i data-bind="css: { exhibitActiveIcon: isExhibited }" class="fa fa-desktop fa-color-hover">
           </i>
         </a>
@@ -52,7 +52,7 @@
       <!-- ko ifnot: $parent.shouldShowExhibitButton -->
       <td class="text-right col-md-1">
         <span class="fa fa-desktop fa-disabled" style="cursor:pointer;"
-          data-bind="popover: { content: 'Join a Party send Player\'s Exhibit' }">
+          data-bind="popover: { content: 'Join a Party in order to send to Player\'s Exhibit' }">
         </span>
       </td>
       <!-- /ko -->

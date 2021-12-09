@@ -10,6 +10,7 @@ import {
     ProfileImage
 } from 'charactersheet/models/common';
 import { OtherStats } from 'charactersheet/models/character';
+import { PartyService } from 'charactersheet/services';
 import ko from 'knockout';
 import md5 from 'blueimp-md5';
 import template from './index.html';
@@ -34,6 +35,7 @@ export function PlayerImageViewModel() {
     self.width = ko.observable(80);
 
     self.hasInspiredGlow = ko.observable(false);
+    self.isConnectedToParty = ko.observable(!!PartyService.party);
 
     self.firstFieldHasFocus = ko.observable(false);
 
@@ -41,6 +43,7 @@ export function PlayerImageViewModel() {
         //Subscriptions
         Notifications.otherstats.changed.add(self.inspirationHasChanged);
         Notifications.coreManager.changed.add(self.dataHasChanged);
+        Notifications.party.changed.add(self._handleConnectionStatusChanged);
 
         // Prime the pump.
         self._handleConnectionStatusChanged();
@@ -128,12 +131,11 @@ export function PlayerImageViewModel() {
     // Status Indicator Methods
 
     self.statusIndicatorClass = ko.pureComputed(function() {
-        // TODO
-        return 'failure';
+        return self.isConnectedToParty() ? 'success' : 'failure';
     });
 
     self._handleConnectionStatusChanged = function() {
-        // TODO
+        self.isConnectedToParty(!!PartyService.party);
     };
 
     //Player Image Handlers
