@@ -1,0 +1,114 @@
+<form class="form-horizontal" xdata-bind="validate: armorValidation">
+  <div class="form-group ui-front">
+    <label for="armorName"
+          class="col-sm-2 control-label">
+          Armor<i class="required"></i>
+        </label>
+    <div class="col-sm-10">
+      <input type="text"
+            class="form-control"
+            name="name"
+            id="armorName"
+            placeholder="Chain Mail"
+            data-bind='textInput: name, hasFocus: armorFirstElementFocus,
+              autocomplete: { source: treasurePrePopFilter, onselect: populateTreasure }'>
+    </div>
+  </div>
+  <div class="form-group ui-front">
+    <label for="armorType"
+          class="col-sm-2 control-label">
+          Type<i class="required"></i>
+        </label>
+      <div class="col-sm-10">
+      <input class="form-control"
+              placeholder="Light"
+              name="type"
+              data-bind="textInput: armorType, autocomplete: { source: armorTypeOptions,
+              onselect: setArmorType }">
+      </div>
+  </div>
+  <div class="form-group">
+    <label for="armorMagicalModifier"
+          class="col-sm-2 control-label">Magical Modifier</label>
+      <div class="col-sm-10">
+      <input type="number"
+            class="form-control"
+            name="magicalModifier"
+            id="armorMagicalModifier"
+            data-bind='textInput: magicalModifier'>
+      </div>
+  </div>
+  <div class="form-group ui-front">
+    <label for="armorPrice"
+          class="col-sm-2 control-label">Price</label>
+    <div class="col-sm-10">
+      <div class="input-group override-tight-inner">
+        <input type="text"
+            class="form-control input-jquery-addon"
+            name="price"
+            id="armorPrice"
+            placeholder="5"
+            data-bind='textInput: price'>
+        <span class="input-group-addon input-group-addon-jquery">
+          <input class="form-control"
+                placeholder="GP"
+                name="currencyDenomination"
+                data-bind="textInput: currencyDenomination, autocomplete: {
+                          source: armorCurrencyDenominationOptions,
+                          onselect: setArmorCurrencyDenomination }">
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="armorWeight"
+          class="col-sm-2 control-label">Weight</label>
+      <div class="col-sm-10">
+        <input type="number"
+              class="form-control"
+              name="weight"
+              id="armorWeight"
+              placeholder="6"
+              data-bind='textInput: weight'>
+      </div>
+  </div>
+  <div class="form-group">
+    <label for="armorClass"
+          class="col-sm-2 control-label">
+          Armor Class<i class="required"></i>
+        </label>
+      <div class="col-sm-10">
+        <input type="number"
+              class="form-control"
+              name="armorClass"
+              id="armorClass"
+              placeholder="3"
+              data-bind='textInput: armorClass'>
+      </div>
+  </div>
+  <div class="form-group ui-front">
+    <label for="armorSize"
+          class="col-sm-2 control-label">Stealth</label>
+      <div class="col-sm-10">
+      <input class="form-control"
+            placeholder="Advantage"
+            name="stealth"
+            data-bind="textInput: stealth, autocomplete: { source: armorStealthOptions,
+            onselect: setArmorStealth }">
+      </div>
+  </div>
+  <div class="form-group">
+    <label for="armorDescription"
+          class="col-sm-2 control-label">Description</label>
+      <div class="col-sm-10">
+        <textarea type="password"
+                  class="form-control"
+                  name="description"
+                  id="armorDescription"
+                  rows="4"
+                  placeholder="Armor of damage blocking"
+                  data-bind='textInput: description'>
+        </textarea>
+      </div>
+  </div>
+</form>

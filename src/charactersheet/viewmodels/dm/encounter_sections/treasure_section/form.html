@@ -1,0 +1,21 @@
+<!-- ko with: entity -->
+<!-- ko if: type() == TYPE.ARMOR -->
+  <treasure-armor-form params="treasure: value"></treasure-armor-form>
+<!-- /ko -->
+
+<!-- ko if: type() == TYPE.COINS -->
+  <treasure-coins-form params="treasure: value"></treasure-coins-form>
+<!-- /ko -->
+
+<!-- ko if: type() == TYPE.ITEM -->
+  <treasure-item-form params="treasure: value"></treasure-item-form>
+<!-- /ko -->
+
+<!-- ko if: type() == TYPE.MAGIC_ITEM -->
+  <treasure-magic-item-form params="treasure: value"></treasure-magic-item-form>
+<!--/ko-->
+
+<!-- ko if: type() == TYPE.WEAPON -->
+  <treasure-weapon-form params="treasure: value"></treasure-weapon-form>
+<!-- /ko -->
+<!-- /ko -->

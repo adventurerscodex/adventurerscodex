@@ -1,0 +1,57 @@
+<form class="form-horizontal" data-bind="validate: $parent.wealthUpdateValidation">
+  <div class="form-group">
+    <label class="control-label col-sm-2">
+      <img data-bind="attr: { src: $parent.ppCoin }" width="30px" title="Platinum Coins" alt="Platinum Coins"/><i class="required"></i>
+    </label>
+    <div class="col-sm-10">
+      <input type="number"
+              class="form-control"
+              name="platinum"
+              data-bind='value: platinum, hasFocus: $parent.editFirstModalElementHasFocus'/>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-2">
+      <img data-bind="attr: { src: $parent.gpCoin }" width="30px" title="Gold Coins" alt="Gold Coins"/><i class="required"></i>
+    </label>
+    <div class="col-sm-10">
+      <input type="number"
+              class="form-control"
+              name="gold"
+              data-bind='value: gold'/>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-2">
+      <img data-bind="attr: { src: $parent.epCoin }" width="30px" title="Electrum Coins" alt="Electrum Coins"/><i class="required"></i>
+    </label>
+    <div class="col-sm-10">
+      <input type="number"
+              class="form-control"
+              name="electrum"
+              data-bind='value: electrum'>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-2">
+      <img data-bind="attr: { src: $parent.spCoin }" width="30px" title="Silver Coins" alt="Silver Coins"/><i class="required"></i>
+    </label>
+    <div class="col-sm-10">
+      <input type="number"
+              class="form-control"
+              name="silver"
+              data-bind='value: silver'>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-2">
+        <img data-bind="attr: { src: $parent.cpCoin }" width="30px" title="Copper Coins" alt="Copper Coins"/><i class="required"></i>
+    </label>
+    <div class="col-sm-10">
+      <input type="number"
+              class="form-control"
+              name="copper"
+              data-bind='value: copper'>
+    </div>
+  </div>
+</form>

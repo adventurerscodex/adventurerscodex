@@ -46,7 +46,7 @@ export class EncounterArmor extends KOModel {
         }
     });
 
-    armorDescriptionHTML = ko.pureComputed(() => {
+    descriptionHTML = ko.pureComputed(() => {
         if (!this.description()) {
             return '<div class="h3"><small>Add a description via the edit tab.</small></div>';
         }
@@ -54,7 +54,7 @@ export class EncounterArmor extends KOModel {
         return this.description();
     });
 
-    armorSummaryLabel = ko.pureComputed(() => {
+    summaryLabel = ko.pureComputed(() => {
         if (this.magicalModifier() != 0) {
             if (this.acLabel()) {
                 return this.magicalModifierLabel() + ', ' + this.acLabel();
@@ -76,7 +76,7 @@ export class EncounterArmor extends KOModel {
         }
     });
 
-    armorWeightLabel = ko.pureComputed(() => {
+    weightLabel = ko.pureComputed(() => {
         return this.weight() !== '' && this.weight() >= 0 ? this.weight() + ' lbs.' : '0 lbs.';
     });
 

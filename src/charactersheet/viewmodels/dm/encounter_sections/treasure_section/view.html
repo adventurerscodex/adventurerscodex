@@ -1,0 +1,21 @@
+<!-- ko with: treasure -->
+<!-- ko if: type() == TYPE.ARMOR -->
+  <treasure-armor-view params="treasure: value"></treasure-armor-view>
+<!-- /ko -->
+
+<!-- ko if: type() == TYPE.COINS -->
+  <treasure-coins-view params="treasure: value"></treasure-coins-view>
+<!-- /ko -->
+
+<!-- ko if: type() == TYPE.ITEM -->
+  <treasure-item-view params="treasure: value"></treasure-item-view>
+<!-- /ko -->
+
+<!-- ko if: type() == TYPE.MAGIC_ITEM -->
+  <treasure-magic-item-view params="treasure: value"></treasure-magic-item-view>
+<!--/ko-->
+
+<!-- ko if: type() == TYPE.WEAPON -->
+  <treasure-weapon-view params="treasure: value"></treasure-weapon-view>
+<!-- /ko -->
+<!-- /ko -->

@@ -308,6 +308,12 @@ export var Notifications = {
         deleted: new Signal()
     },
 
+    treasure: {
+        added: new Signal(),
+        changed: new Signal(),
+        deleted: new Signal()
+    },
+
     weapon: {
         added: new Signal(),
         changed: new Signal(),
