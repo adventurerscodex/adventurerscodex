@@ -1,21 +1,50 @@
-<!-- ko with: entity -->
-<!-- ko if: type() == TYPE.ARMOR -->
-  <treasure-armor-form params="treasure: value"></treasure-armor-form>
+<!-- ko if: !!$data.data -->
+<!-- ko if: data.type() === data.TYPE.ARMOR -->
+  <div data-bind="
+    component: {
+      name: 'treasure-armor-form',
+      params: $data
+    }"
+  ></div>
 <!-- /ko -->
 
-<!-- ko if: type() == TYPE.COINS -->
-  <treasure-coins-form params="treasure: value"></treasure-coins-form>
+<!-- ko if: data.type() === data.TYPE.COINS -->
+  <div data-bind="
+    component: {
+      name: 'treasure-coins-form',
+      params: $data
+    }"
+  ></div>
 <!-- /ko -->
 
-<!-- ko if: type() == TYPE.ITEM -->
-  <treasure-item-form params="treasure: value"></treasure-item-form>
+<!-- ko if: data.type() === data.TYPE.ITEM -->
+  <div data-bind="
+    component: {
+      name: 'treasure-item-form',
+      params: $data
+    }"
+  ></div>
 <!-- /ko -->
 
-<!-- ko if: type() == TYPE.MAGIC_ITEM -->
-  <treasure-magic-item-form params="treasure: value"></treasure-magic-item-form>
+<!-- ko if: data.type() === data.TYPE.MAGIC_ITEM -->
+  <div data-bind="
+    component: {
+      name: 'treasure-magic-item-form',
+      params: $data
+    }"
+  ></div>
 <!--/ko-->
 
-<!-- ko if: type() == TYPE.WEAPON -->
-  <treasure-weapon-form params="treasure: value"></treasure-weapon-form>
+<!-- ko if: data.type() === data.TYPE.WEAPON -->
+  <div data-bind="
+    component: {
+      name: 'treasure-weapon-form',
+      params: $data
+    }"
+  ></div>
 <!-- /ko -->
+<!-- /ko -->
+
+<!-- ko ifnot: !!$data.data -->
+Show picker!!
 <!-- /ko -->

@@ -8,7 +8,7 @@
   <thead>
     <tr>
       <th xdata-bind="click: ()=> {sortBy('name');}"
-          class="col-md-2">
+          class="col-xs-11">
         Name
         <span xdata-bind="css: sortArrow('name')"></span>
       </th>
@@ -28,7 +28,7 @@
       <td data-toggle="collapse" data-bind="attr: {
         'data-target': `#treasure_list_${uuid()}`,
       }">
-        <span data-bind="text: value.name"></span>
+        <span data-bind="text: value().nameLabel"></span>
       </td>
       <td class="text-right toggle-collapse-col">
         <span data-toggle="collapse"
@@ -55,7 +55,7 @@
             </div>
             <treasure-view
               params="
-                treasure: context.data,
+                entity: context.data,
                 fullScreen: context.fullScreen,
               "
             ></treasure-view>

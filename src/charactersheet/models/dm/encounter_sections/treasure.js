@@ -7,6 +7,7 @@ import {
     EncounterMagicItem,
     EncounterWeapon,
 } from 'charactersheet/models';
+import { Notifications } from 'charactersheet/utilities';
 
 export class Treasure extends KOModel {
     static __skeys__ = ['core', 'encounters', 'treasures'];
@@ -37,6 +38,32 @@ export class Treasure extends KOModel {
     encounterUuid = ko.observable();
     type = ko.observable();
     value = ko.observable();
+
+    // Helpers
+
+    load = async (params) => {
+        const response = await this.ps.model.ps.read(params);
+        this.importValues(response.object.exportValues());
+    }
+
+    create = async () => {
+        const response = await this.ps.create();
+        this.importValues(response.object.exportValues());
+        Notifications.treasure.added.dispatch(this);
+    }
+
+    save = async () => {
+        const response = await this.ps.save();
+        this.importValues(response.object.exportValues());
+        Notifications.treasure.changed.dispatch(this);
+    }
+
+    delete = async () => {
+        await this.ps.delete();
+        Notifications.treasure.deleted.dispatch(this);
+    }
+
+    // Overrides
 
     exportValues = () => {
         let value = null;

@@ -1,7 +1,7 @@
 import autoBind from 'auto-bind';
 import { CoreManager } from 'charactersheet/utilities';
 import { AbstractChildEncounterFormModel } from 'charactersheet/viewmodels/abstract';
-import { EncounterArmor } from 'charactersheet/models/dm';
+import { EncounterArmor, Treasure } from 'charactersheet/models/dm';
 import ko from 'knockout';
 import template from './armor.form.html';
 import { SELECTDATA } from 'charactersheet/constants';
@@ -14,9 +14,20 @@ class EncounterArmorFormViewModel extends AbstractChildEncounterFormModel {
         autoBind(this);
     }
 
+    prePopSource = 'armors';
+    prePopLimit = SELECTDATA.LONG;
+
     modelClass() {
-        return EncounterArmor;
+        return Treasure;
     }
+
+    generateBlank() {
+        const newEntity = super.generateBlank();
+        newEntity.uuid(this.encounter().uuid());
+        newEntity.value(new EncounterArmor());
+        return newEntity;
+    }
+
 }
 
 

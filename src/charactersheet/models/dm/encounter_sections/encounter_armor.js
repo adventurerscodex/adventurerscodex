@@ -1,6 +1,5 @@
-import { Fixtures } from 'charactersheet/utilities';
 import { KOModel } from 'hypnos/lib/models/ko';
-import { Utility } from 'charactersheet/utilities/convenience';
+import { Fixtures, Utility } from 'charactersheet/utilities';
 import ko from 'knockout';
 import { pick } from 'lodash';
 
@@ -125,29 +124,44 @@ export class EncounterArmor extends KOModel {
 
         return values;
     };
-
-    /**
-      * Serialize the current item to a plain JSON format. We use these in-leiu of the normal
-      * import/exportValues because those return a format unsuitable for re-importing
-      * (since it caused data corruption).
-     */
-    toJSON = () => {
-        let values = {};
-        EncounterArmor.allFields.forEach((field) => {
-            values[field] = this[field]();
-        });
-
-        return values;
-    };
-
-    /**
-      * De-serialize the current item into the current model. We use these in-leiu of the normal
-      * import/exportValues because those return a format unsuitable for re-importing
-      * (since it caused data corruption).
-     */
-    fromJSON = (values) => {
-        EncounterArmor.allFields.forEach((field) => {
-            this[field](values[field]);
-        });
-    };
 }
+
+EncounterArmor.validationConstraints = {
+    fieldParams: {
+        name: {
+            required: true,
+            maxlength: 256,
+        },
+        type: {
+            required: true,
+            maxlength: 256,
+        },
+        magicalModifier: {
+            required: false,
+            type: 'number',
+            max: 10000,
+            min: -10000,
+            step: 1,
+        },
+        weight: {
+            required: false,
+            type: 'number',
+            max: 10000,
+            min: -10000,
+            step: 1,
+        },
+        armorClass: {
+            required: true,
+            maxlength: 256,
+        },
+        stealth: {
+            required: false,
+            type: 'text',
+            maxlength: 256,
+        },
+        stealth: {
+            required: false,
+            type: 'text',
+        },
+    },
+};
