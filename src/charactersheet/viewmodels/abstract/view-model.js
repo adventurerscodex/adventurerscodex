@@ -23,6 +23,7 @@ export class ViewModel {
     }
 
     setUpSubscriptions() {
+
     }
 
     disposeOfSubscriptions() {
