@@ -24,9 +24,7 @@ export class AbstractChildEncounterFormModel extends AbstractChildFormModel {
 
     async refresh() {
         if (this.existingData) {
-            console.log('BEFORE', this.entity().exportValues())
             this.entity().importValues(this.existingData.exportValues());
-            console.log('AFTER', this.entity().exportValues())
         } else {
             this.entity(this.generateBlank());
             const encounterId = this.encounter().uuid();
