@@ -1,9 +1,5 @@
 import autoBind from 'auto-bind';
 import {
-    SortService,
-    PartyService
-} from 'charactersheet/services';
-import {
     CoreManager,
     Fixtures,
     Notifications,

@@ -33,11 +33,11 @@ class PartyStatusLineViewModel extends ViewModel {
 
     statusLine = ko.pureComputed(() => {
         if (!this.party()) {
-            return '';
+            return '<span class="text-muted">You are not connected to a party.</span>';
         }
         const players = this.party().members;
         if (players.length === 0) {
-            return '';
+            return '<span class="text-muted">There\'s no one in your party.</span>';
         }
 
         const [hitPoints, totalHitPoints] = (
