@@ -1,11 +1,11 @@
-import { AbstractViewModel } from 'charactersheet/viewmodels/abstract';
+import { ModelBackedViewModel } from 'charactersheet/viewmodels/abstract';
 import { Profile } from 'charactersheet/models/character';
 import autoBind from 'auto-bind';
 import { isNumeric } from 'jquery';
 import ko from 'knockout';
 import template from './view.html';
 
-export class ProfileViewModel extends AbstractViewModel {
+export class ProfileViewModel extends ModelBackedViewModel {
     constructor(params) {
         super(params);
         autoBind(this);

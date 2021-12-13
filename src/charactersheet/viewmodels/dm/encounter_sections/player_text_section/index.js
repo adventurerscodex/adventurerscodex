@@ -1,6 +1,6 @@
 import {
-    ChatServiceManager,
-    SortService
+    SortService,
+    PartyService
 } from 'charactersheet/services';
 import {
     CoreManager,
@@ -10,6 +10,7 @@ import {
 } from 'charactersheet/utilities';
 import { PlayerText } from 'charactersheet/models';
 import ko from 'knockout';
+import { get } from 'lodash';
 import sectionIcon from 'images/encounters/read.svg';
 import template from './index.html';
 
@@ -41,12 +42,7 @@ export function PlayerTextSectionViewModel(params) {
     self.addFormIsValid = ko.observable(false);
     self.addModalOpen = ko.observable(false);
 
-    // Push to Player
-    self.selectedItemToPush = ko.observable();
-    self.openPushModal = ko.observable(false);
-    self.pushType = ko.observable('read-aloud');
-
-    self._isConnectedToParty = ko.observable(false);
+    self._isConnectedToParty = ko.observable(!!PartyService.party);
 
     self.sorts = {
         'name asc': { field: 'name', direction: 'asc' },
@@ -65,15 +61,12 @@ export function PlayerTextSectionViewModel(params) {
 
     self.load = async function() {
         Notifications.encounters.changed.add(self._dataHasChanged);
-        Notifications.party.joined.add(self._connectionHasChanged);
-        Notifications.party.left.add(self._connectionHasChanged);
+        Notifications.party.changed.add(self.partyDidChange);
 
         self.encounter.subscribe(function() {
             self._dataHasChanged();
         });
         await self._dataHasChanged();
-
-        self._connectionHasChanged();
     };
 
     /* UI Methods */
@@ -162,18 +155,14 @@ export function PlayerTextSectionViewModel(params) {
 
     /* Push to Player Methods */
 
-    self.shouldShowPushButton = ko.pureComputed(function() {
+    self.shouldShowExhibitButton = ko.pureComputed(function() {
         return self._isConnectedToParty();
     });
 
-    self.pushModalFinishedClosing = function() {
-        self.selectedItemToPush(null);
-        self.openPushModal(false);
-    };
-
-    self.pushModalToPlayerButtonWasPressed = function(playerText) {
-        self.selectedItemToPush(playerText);
-        self.openPushModal(true);
+    self.toggleExhibit = async (playerText) => {
+        playerText.isExhibited(!playerText.isExhibited());
+        await playerText.ps.save();
+        self.markAsExhibited(playerText.isExhibited() ? playerText.uuid() : null);
     };
 
     /* Modal Methods */
@@ -229,10 +218,23 @@ export function PlayerTextSectionViewModel(params) {
         self.tagline(section.tagline());
     };
 
-    self._connectionHasChanged = function() {
-        var chat = ChatServiceManager.sharedService();
-        self._isConnectedToParty(chat.currentPartyNode != null);
+    self.partyDidChange = (party) => {
+        self._isConnectedToParty(!!party);
+
+        // Update everything that isn't on exhibit. This event can
+        // be fired from multiple places.
+        const exhibitUuid = get(party, 'exhibit.uuid', null);
+        self.markAsExhibited(exhibitUuid);
     };
+
+    self.markAsExhibited = (exhibitUuid) => {
+        self.playerTexts(
+            self.playerTexts().map(playerText => {
+                playerText.isExhibited(playerText.uuid() === exhibitUuid);
+                return playerText;
+            })
+        );
+    }
 }
 
 ko.components.register('player-text-section', {

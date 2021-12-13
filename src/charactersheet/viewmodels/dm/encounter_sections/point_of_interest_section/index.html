@@ -15,7 +15,7 @@
         Description
         <span data-bind="css: sortArrow('description')"></span>
       </th>
-      <th class="col-md-1 text-right">Send</th>
+      <th class="col-md-1 text-right">Exhibit</th>
       <th class="text-right col-md-1">
         <a data-bind="click: toggleAddModal" href="#">
           <i class="fa fa-plus fa-color"></i>
@@ -50,17 +50,18 @@
         <i class="text-muted">See Image</i>
         <!-- /ko -->
       </td>
-      <!-- ko if: $parent.shouldShowPushButton -->
-      <td class="text-right col-xs-1">
-        <a data-bind="click: $parent.pushModalToPlayerButtonWasPressed" href="#">
-          <i class="fa fa-paper-plane-o fa-color-hover"></i>
+      <!-- ko if: $parent.shouldShowExhibitButton -->
+      <td class="text-right col-md-1">
+        <a data-bind="click: $parent.toggleExhibit" href="#" title="Send to Player's Exhibit">
+          <i data-bind="css: { exhibitActiveIcon: isExhibited }" class="fa fa-desktop fa-color-hover">
+          </i>
         </a>
       </td>
       <!-- /ko -->
-      <!-- ko ifnot: $parent.shouldShowPushButton -->
-      <td class="text-right col-xs-1">
-        <span class="fa fa-paper-plane-o fa-disabled" style="cursor:pointer;"
-          data-bind="popover: { content: 'Join a Party to send image to Player\'s Chat' }">
+      <!-- ko ifnot: $parent.shouldShowExhibitButton -->
+      <td class="text-right col-md-1">
+        <span class="fa fa-desktop fa-disabled" style="cursor:pointer;"
+          data-bind="popover: { content: 'Join a Party in order to send to Player\'s Exhibit' }">
         </span>
       </td>
       <!-- /ko -->
@@ -118,11 +119,6 @@
                      data-bind="textInput: blankPointOfInterest().name,
                         hasFocus: firstElementInModalHasFocus">
             </div>
-            <div class="col-sm-1 control-label">
-              <span class="fa fa-paper-plane-o" style="cursor:pointer;"
-                title="This field will be sent to the players via the chat.">
-              </span>
-            </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label">
@@ -136,36 +132,9 @@
                       data-bind="textInput: blankPointOfInterest().sourceUrl">
             </div>
             <div class="col-sm-1 control-label">
-              <span class="fa fa-paper-plane-o" style="cursor:pointer;"
+              <span class="fa fa fa-desktop" style="cursor:pointer;"
                 title="This field will be sent to the players via the chat.">
               </span>
-            </div>
-          </div>
-          <div class="form-group ui-front">
-            <label class="col-sm-2 control-label">
-              Required DC
-            </label>
-            <div class="col-sm-4">
-              <input type="number"
-                      name="difficultyCheckValue"
-                      class="form-control d-flex-1"
-                      data-bind="value: blankPointOfInterest().difficultyCheckValue"
-                      placeholder="15"
-              />
-            </div>
-            <div class="col-sm-5">
-              <input
-                type="text"
-                name="difficultyCheckSkill"
-                class="form-control"
-                placeholder="Perception"
-                data-bind="
-                  textInput: blankPointOfInterest().difficultyCheckSkill,
-                  autocomplete: {
-                    source: difficultyCheckSkillPrePopFilter,
-                    onselect: populateDifficutyCheckSkill
-                  }"
-                />
             </div>
           </div>
           <div class="form-group">
@@ -196,7 +165,7 @@
               </small>
             </div>
             <div class="col-sm-1 control-label">
-              <span class="fa fa-paper-plane-o" style="cursor:pointer;"
+              <span class="fa fa fa-desktop" style="cursor:pointer;"
                 title="This field will be sent to the players via the chat.">
               </span>
             </div>
@@ -204,20 +173,11 @@
           <div class="modal-footer">
             <small class="text-center">
               <p>
-                Fields marked with <i class="fa fa-paper-plane-o"></i> will be sent to the players via the chat.
+                Fields marked with <i class="fa fa-desktop"></i> will be sent to the players via the exhibit.
               </p>
             </small>
             <button type="submit"
                     class="btn btn-primary">Add</button>
-            <p class="text-muted text-left" data-bind="visible: showDisclaimer">
-              <sm><i>This data is distributed under the
-                <a href="http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf"
-                  target="_blank">
-                  OGL</a><br/>
-                  Open	Game	License	v	1.0a	Copyright	2000,	Wizards	of	the	Coast,	LLC.
-                </i>
-              </sm>
-            </p>
           </div>
         </form>
       </div> <!-- Modal Body -->
@@ -260,21 +220,12 @@
         </ul>
         <div class="tab-content" data-bind="with: currentEditItem">
           <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane">
-            <div class="d-flex">
-              <div class="h3 d-flex-2">
-                <span data-bind="text: name"></span>&nbsp;
-              </div>
-              <!-- ko if: difficultyCheckValue() || difficultyCheckSkill() -->
-              <div class="h3 d-flex-1 text-muted">
-                <small>
-                  DC:&nbsp;<span data-bind="text: difficultyCheckValue"></span>&nbsp;<span data-bind="text: difficultyCheckSkill"></span>
-                </small>
-              </div>
-              <!-- /ko -->
+            <div class="h3">
+              <span data-bind="text: name"></span>&nbsp;
             </div>
             <!-- ko if: sourceUrl -->
             <div class="row row-padded">
-              <div class="col-xs-12 col-padded text-center image-container">
+              <div class="col-xs-12 col-padded text-center">
                 <img data-bind="attr: { src: $parent.convertedDisplayUrl },
                   click: $parent.toggleFullScreen" class="clickable preview-modal-image" />
                 <small>
@@ -317,11 +268,6 @@
                          name="name"
                          data-bind="textInput: name, hasFocus: $parent.editFirstModalElementHasFocus">
                 </div>
-                <div class="col-sm-1 control-label">
-                  <span class="fa fa-paper-plane-o" style="cursor:pointer;"
-                    title="This field will be sent to the players via the chat.">
-                  </span>
-                </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">
@@ -334,36 +280,9 @@
                           data-bind="textInput: sourceUrl">
                 </div>
                 <div class="col-sm-1 control-label">
-                  <span class="fa fa-paper-plane-o" style="cursor:pointer;"
+                  <span class="fa fa fa-desktop" style="cursor:pointer;"
                     title="This field will be sent to the players via the chat.">
                   </span>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label">
-                  Required DC
-                </label>
-                <div class="col-sm-4">
-                  <input type="number"
-                          name="difficultyCheckValue"
-                          class="form-control"
-                          data-bind="textInput: difficultyCheckValue"
-                          placeholder="15"
-                  >
-                </div>
-                <div class="col-sm-5">
-                  <input
-                    type="text"
-                    name="difficultyCheckSkill"
-                    class="form-control"
-                    placeholder="Perception"
-                    data-bind="
-                      textInput: difficultyCheckSkill,
-                      autocomplete: {
-                        source: $component.difficultyCheckSkillPrePopFilter,
-                        onselect: $component.populateDifficutyCheckSkill
-                      }"
-                  />
                 </div>
               </div>
               <div class="form-group">
@@ -395,7 +314,7 @@
                   </small>
                 </div>
                 <div class="col-sm-1 control-label">
-                  <span class="fa fa-paper-plane-o" style="cursor:pointer;"
+                  <span class="fa fa fa-desktop" style="cursor:pointer;"
                     title="This field will be sent to the players via the chat.">
                   </span>
                 </div>
@@ -403,7 +322,7 @@
               <div class="modal-footer">
                 <small class="text-center">
                   <p>
-                    Fields marked with <i class="fa fa-paper-plane-o"></i> will be sent to the players via the chat.
+                    Fields marked with <i class="fa fa-desktop"></i> will be sent to the players via the exhibit.
                   </p>
                 </small>
                 <button type="submit"

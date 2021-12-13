@@ -1,79 +1,42 @@
 import 'bin/knockout-custom-loader';
-import {
-    ChatServiceManager,
-    XMPPService
-} from 'charactersheet/services';
-import {
-    PlayerCard,
-    pCard
-} from 'charactersheet/models';
+import autoBind from 'auto-bind';
+import { observable, components, pureComputed } from 'knockout';
+import { ViewModel } from 'charactersheet/viewmodels/abstract';
 import { Notifications } from 'charactersheet/utilities';
-import ko from 'knockout';
+import { PartyService } from 'charactersheet/services';
 import template from './index.html';
 
-export function PartyViewModel() {
-    var self = this;
+export class PartyViewModel extends ViewModel {
 
-    self.players = ko.observableArray();
-    self.isConnectedToParty = ko.observable(false);
+    constructor() {
+        super();
+        autoBind(this);
+        this.party = observable(PartyService.party);
+    }
 
-    self.load = function() {
-        Notifications.xmpp.routes.pcard.add(self.handlePCard);
-        Notifications.chat.member.left.add(self.removePlayer);
-        Notifications.party.left.add(self.clearPCards);
-        Notifications.party.joined.add(self.isConnectedToParty);
-        self.checkForParty();
-    };
+    setUpSubscriptions() {
+        this.subscriptions.push(Notifications.coreManager.changed.add(this.coreDidChange));
+        this.subscriptions.push(Notifications.party.changed.add(this.partyDidChange));
+    }
 
-    self.unload = function() {
-        Notifications.xmpp.routes.pcard.remove(self.handlePCard);
-        Notifications.chat.member.left.remove(self.removePlayer);
-        Notifications.party.left.remove(self.clearPCards);
-        Notifications.party.joined.remove(self.checkForParty);
-    };
+    // UI
 
-    self.checkForParty = function() {
-        var chat = ChatServiceManager.sharedService();
-        self.isConnectedToParty(chat.currentPartyNode == null ? false : true);
-    };
+    isConnectedToParty = pureComputed(() => (!!this.party()));
 
-    self.handlePCard = function(inputPCard) {
-        var chat = ChatServiceManager.sharedService();
-        if (chat.currentPartyNode == null) { return; }
-        var isNewPlayer = true;
-        var newPCard = pCard.fromEntries(inputPCard);
-        var publisherJid = newPCard.get('publisherJid')[0];
-        var pCardInParty = chat.isJidInParty(publisherJid);
-        if (!pCardInParty) { return; }
-        self.players().forEach(function(player, idx, _) {
-            if (player.publisherJid() === publisherJid) {
-                player.map(newPCard);
-                isNewPlayer = false;
-            }
-        });
+    players = pureComputed(() => (this.party().members));
 
-        var xmpp = XMPPService.sharedService();
-        var isMe = publisherJid == xmpp.connection.jid;
+    // Events
 
-        if (isNewPlayer && !isMe) {
-            self.players.push(new PlayerCard(newPCard));
-        }
-    };
+    partyDidChange(party) {
+        this.party(party);
+    }
 
-    self.removePlayer = function(room, nick, jid) {
-        var remainingPlayers = self.players().filter(function(player) {
-            return player.publisherJid() !== jid;
-        });
-        self.players(remainingPlayers);
-    };
-
-    self.clearPCards = function() {
-        self.players([]);
-        self.checkForParty();
-    };
+    coreDidChange() {
+        this.party(null);
+    }
 }
 
-ko.components.register('party', {
+components.register('party', {
     viewModel: PartyViewModel,
     template: template
 });

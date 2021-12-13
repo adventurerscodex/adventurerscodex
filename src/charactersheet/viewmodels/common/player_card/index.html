@@ -1,0 +1,123 @@
+<div class="col-sm-4">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <!-- Player Info -->
+      <div class="row">
+        <div class="col-xs-12">
+        <img class="img-circle center-block"
+          data-bind="attr: {
+            src: player.imageUrl || 'https://www.gravatar.com/avatar/{}?d=mm',
+            height: 80,
+            width: 80,
+          }">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 text-center">
+          <div class="h4">
+            <span data-bind="text: player.name"></span><br />
+            <small data-bind="text: player.playerSummary"></small>
+          </div>
+        </div>
+      </div>
+      <!-- Health, Spells, and Features  -->
+      <div class="row">
+        <div class="col-xs-12">
+          Hit Points
+          <div class="progress thin">
+            <div class="progress thin">
+              <div
+                id="regularHitPoints"
+                class="progress-bar"
+                role="progressbar"
+                aria-valuemin="0"
+                data-bind="
+                  style: { width: `${hpPercent() * 100 }%` },
+                  css: hpProgressBarCss(),
+                "
+              >
+                <span class="sr-only"></span>
+              </div>
+              <div
+                id="tempHitPoints"
+                class="progress-bar progress-bar-sky"
+                role="progressbar"
+                aria-valuemin="0"
+                data-bind="style: { width: `${tempHpPercent() * 100 }%` }"
+              >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" data-bind="visible: player.totalSpellSlots">
+        <div class="col-xs-12">
+          Spell Slots
+          <div class="progress thin">
+            <div
+              class="progress-bar progress-bar-info"
+              role="progressbar"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              data-bind="style: { width: `${spellSlotPercent() * 100 }%` }"
+            >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" data-bind="visible: player.totalTrackables">
+        <div class="col-xs-12">
+          Features, Feats, and Traits
+          <div class="progress thin">
+            <div
+              class="progress-bar progress-bar-warning"
+              role="progressbar"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              data-bind="style: { width: `${trackedPercent() * 100 }%` }"
+            >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-padded">
+          <table class="table table-striped table-condensed">
+            <tr>
+              <th scope="row">Level</th>
+              <td data-bind="text: player.level"></td>
+            </tr>
+            <tr>
+              <th scope="row">Armor Class</th>
+              <td data-bind="text: player.armorClass"></td>
+            </tr>
+            <tr>
+              <th scope="row">Hit Dice</th>
+              <td data-bind="text: player.hitDice"></td>
+            </tr>
+            <tr>
+              <th scope="row">Spell Save DC</th>
+              <td data-bind="text: player.spellSaveDc"></td>
+            </tr>
+            <tr data-bind="visible: player.experience">
+              <th scope="row">Experience</th>
+              <td data-bind="text: player.experience"></td>
+            </tr>
+            <tr data-bind="visible: player.passivePerception">
+              <th scope="row">Passive Perception</th>
+              <td data-bind="text: player.passivePerception"></td>
+            </tr>
+            <tr data-bind="visible: player.passiveInvestigation">
+              <th scope="row">Passive Investigation</th>
+              <td data-bind="text: player.passiveInvestigation"></td>
+            </tr>
+            <tr>
+              <th scope="row">Gold</th>
+              <td data-bind="text: '~' + player.worthInGold"></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

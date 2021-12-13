@@ -12,13 +12,13 @@ import {
     Fixtures,
     Notifications
 } from 'charactersheet/utilities';
-import { AbstractViewModel } from 'charactersheet/viewmodels/abstract';
+import { ModelBackedViewModel } from 'charactersheet/viewmodels/abstract';
 import autoBind from 'auto-bind';
 import { getModifier } from 'charactersheet/models/character/ability_score';
 import ko from 'knockout';
 import template from './view.html';
 
-export class OtherStatsViewModel extends AbstractViewModel {
+export class OtherStatsViewModel extends ModelBackedViewModel {
     constructor(params) {
         super(params);
         this.dexterity = ko.observable(new AbilityScore());

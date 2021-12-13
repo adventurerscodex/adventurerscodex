@@ -1,8 +1,7 @@
 import 'bin/knockout-custom-loader';
 import {
-    ChatServiceManager,
-    ImageServiceManager,
-    SortService
+    SortService,
+    PartyService,
 } from 'charactersheet/services';
 import {
     CoreManager,
@@ -10,6 +9,7 @@ import {
     Utility
 } from 'charactersheet/utilities';
 import { Image } from 'charactersheet/models/dm';
+import { get } from 'lodash';
 import ko from 'knockout';
 import template from './index.html';
 
@@ -40,44 +40,25 @@ export function CampaignMapsAndImagesViewModel() {
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['name asc']);
 
-    // Push to Player
-    self.selectedMapOrImageToPush = ko.observable();
-    self.openPushModal = ko.observable(false);
-    self.pushType = ko.observable('image');
-
-    self._isConnectedToParty = ko.observable(false);
+    self._isConnectedToParty = ko.observable(!!PartyService.party);
     self._addForm = ko.observable();
     self._editForm = ko.observable();
 
     /* Public Methods */
 
-    self.toggleExhibit = async(image) => {
-        var imageService = ImageServiceManager.sharedService();
-        if (image.isExhibited()) {
-            image.isExhibited(false);
-            await image.ps.save();
-            imageService.clearImage();
-        } else {
-            image.isExhibited(true);
-            await image.ps.save();
-            imageService.publishImage(image.toJSON());
-            self._dataHasChanged();
-        }
+    self.load = async function() {
+        Notifications.party.changed.add(self.partyDidChange);
+
+        await self.refresh();
     };
 
-    self.load = async function() {
-        Notifications.party.joined.add(self._connectionHasChanged);
-        Notifications.party.left.add(self._connectionHasChanged);
-        Notifications.exhibit.changed.add(self._dataHasChanged);
-
+    self.refresh = async function() {
         var key = CoreManager.activeCore().uuid();
         const imagesResponse = await Image.ps.list({coreUuid: key});
         if (imagesResponse.objects) {
             self.mapsOrImages(imagesResponse.objects);
         }
-
-        self._connectionHasChanged();
-    };
+    }
 
     self.toggleAddModal = () => {
         self.addModalOpen(!self.addModalOpen());
@@ -173,6 +154,12 @@ export function CampaignMapsAndImagesViewModel() {
         self.openModal(!self.openModal());
     };
 
+    self.toggleExhibit = async (image) => {
+        image.isExhibited(!image.isExhibited());
+        await image.ps.save();
+        self.markAsExhibited(image.isExhibited() ? image.uuid() : null);
+    };
+
     /* Modal Methods */
 
     self.addModalFinishedOpening = function() {
@@ -208,28 +195,29 @@ export function CampaignMapsAndImagesViewModel() {
         self.fullScreen(!self.fullScreen());
     };
 
-    /* Push to Player Methods */
-
-    self.shouldShowPushButton = ko.pureComputed(function() {
+    self.shouldShowExhibitButton = ko.pureComputed(function() {
         return self._isConnectedToParty();
     });
 
-    self.pushModalFinishedClosing = function() {
-        self.selectedMapOrImageToPush(null);
-        self.openPushModal(false);
-    };
-
-    self.pushModalToPlayerButtonWasPressed = function(mapOrImage) {
-        self.selectedMapOrImageToPush(mapOrImage);
-        self.openPushModal(true);
-    };
-
     /* Private Methods */
 
-    self._connectionHasChanged = function() {
-        var chat = ChatServiceManager.sharedService();
-        self._isConnectedToParty(chat.currentPartyNode != null);
+    self.partyDidChange = (party) => {
+        self._isConnectedToParty(!!party);
+
+        // Update everything that isn't on exhibit. This event can
+        // be fired from multiple places.
+        const exhibitUuid = get(party, 'exhibit.uuid', null);
+        self.markAsExhibited(exhibitUuid);
     };
+
+    self.markAsExhibited = (exhibitUuid) => {
+        self.mapsOrImages(
+            self.mapsOrImages().map(moi => {
+                moi.isExhibited(moi.uuid() === exhibitUuid);
+                return moi;
+            })
+        );
+    }
 
     self._dataHasChanged = async function() {
         var key = CoreManager.activeCore().uuid();

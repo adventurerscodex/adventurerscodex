@@ -4,7 +4,6 @@ export { ArmorViewModel } from './armor';
 export { CharacterNameViewModel } from './character_name';
 export { CharacterPortraitModel } from './character_portrait';
 export { CharacterStatusLineViewModel } from './character_status_line';
-export { ExhibitViewModel } from './exhibit';
 export { BackgroundViewModel } from './background';
 export { FeatsViewModel } from './feats';
 export { FeaturesViewModel } from './features';

@@ -1,4 +1,3 @@
-
 <ul class="nav nav-tabs tabs">
   <li role="presentation" id="tabOverviewLink" data-bind="click: activateOverviewTab, css: overviewTabStatus">
     <a href="#campaign-header" aria-controls="overview-tab" role="tab" data-toggle="tab" class="tab-subtext">
@@ -24,53 +23,51 @@
       <span class="text-center" id="tabNotesSpan"><small>Notes</small></span>
     </a>
   </li>
-<!--
   <li role="presentation" id="tabPartyLink" data-bind="click: activatePartyTab, css: partyTabStatus">
     <a href="#party-header" aria-controls="party-tab" role="tab" data-toggle="tab" class="tab-subtext">
       <img class="tab-icon" data-bind="attr: { src: partyTabImage }"></img></br>
       <span class="text-center" id="tabPartySpan"><small>Party</small></span>
     </a>
   </li>
- -->
-<!--
-  <li role="presentation" id="tabChatLink" data-bind="click: activateChatTab, css: chatTabStatus">
-    <a href="#chat-header" aria-controls="chat-tab" role="tab" data-toggle="tab" class="tab-subtext">
-      <img class="tab-icon" data-bind="attr: { src: chatTabImage }"></img></br>
-      <span class="text-center" id="tabChatSpan"><small>Chat</small></span>
+  <li role="presentation" id="tabExhibitLink" data-bind="click: activateExhibitTab, css: exhibitTabStatus">
+    <a href="#exhibit-header" aria-controls="exhibit-tab" role="tab" data-toggle="tab" class="tab-subtext">
+      <img class="tab-icon" data-bind="attr: { src: exhibitTabImage }"></img></br>
+      <span class="text-center" id="tabExhibitSpan"><small>Exhibit</small></span>
     </a>
   </li>
- -->
 </ul>
 <div class="tab-content">
   <div role="tabpanel" class="tab-pane" id="overview-tab" data-bind="css: overviewTabStatus">
     <campaign-overview></campaign-overview>
     <campaign-maps-and-images></campaign-maps-and-images>
   </div>
+  <!-- End Overview Tab -->
   <div role="tabpanel" class="tab-pane" id="encounter-tab" data-bind="css: encounterTabStatus">
     <encounter></encounter>
   </div>
+  <!-- End Encounters Tab -->
   <div role="tabpanel" class="tab-pane" id="dmscreen-tab" data-bind="css: dmscreenTabStatus">
     <dm-screen></dm-screen>
   </div>
-<!--
+  <!-- End DM Screen Tab -->
   <div role="tabpanel" class="tab-pane" id="party-tab" data-bind="css: partyTabStatus">
     <party></party>
   </div>
- -->
-<!--
-  <div role="tabpanel" class="tab-pane" id="chat-tab" data-bind="css: chatTabStatus">
-    <chat params="isActive: chatTabStatus"></chat>
+  <!-- End Party Tab -->
+  <div role="tabpanel" class="tab-pane" id="exhibit-tab" data-bind="css: exhibitTabStatus">
+     <exhibit></exhibit>
   </div>
- -->
-<div role="tabpanel" class="tab-pane" id="notes" data-bind="css: notesTabStatus">
-  <div class="row">
-    <div class="col-sm-12 col-padded">
-      <div class="h3">
-        Notes<br />
-        <small>“Armaments, chapter two, verses nine through twenty-one.” -Brother Maynard</small>
+  <!-- End Exhibit Tab -->
+  <div role="tabpanel" class="tab-pane" id="notes" data-bind="css: notesTabStatus">
+    <div class="row">
+      <div class="col-sm-12 col-padded">
+        <div class="h3">
+          Notes<br />
+          <small>“Armaments, chapter two, verses nine through twenty-one.” -Brother Maynard</small>
+        </div>
+        <notes></notes>
       </div>
-      <notes></notes>
     </div>
   </div>
-</div>
+  <!-- End Notes Tab -->
 </div>

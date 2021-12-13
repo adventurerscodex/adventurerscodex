@@ -1,1 +1,25 @@
-<small data-bind="html: partyStatus"></small>
+<!-- Party Status -->
+<div>
+  <!-- ko if: isConnectedToParty -->
+  <button
+    class="btn btn-xs btn-link"
+    style="padding-left:0;"
+    data-target="#party-manager-form"
+    data-toggle="collapse"
+  >
+    <i class="fa fa-pencil"></i>
+    You connected to <span data-bind="text: party().shortCode"></span>.
+  </button>
+  <!-- /ko -->
+
+  <!-- ko ifnot: isConnectedToParty -->
+  <button
+    class="btn btn-xs btn-link"
+    style="padding-left:0;"
+    data-target="#party-manager-form"
+    data-toggle="collapse"
+  >
+  <i class="fa fa-pencil"></i> Create/Join a party
+  </button>
+  <!-- /ko -->
+</div>

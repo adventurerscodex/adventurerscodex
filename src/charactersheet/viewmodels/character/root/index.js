@@ -3,7 +3,6 @@ import {
     ProficiencyService
 } from 'charactersheet/services/character';
 import {
-    CharacterCardPublishingService,
     HotkeysService,
     StatusService
 } from 'charactersheet/services/common';
@@ -16,7 +15,6 @@ import { PlayerTypes } from 'charactersheet/models/common/player_types';
 import { Profile } from 'charactersheet/models/character';
 import armorSection from 'images/checked-shield.svg';
 import battleGear from 'images/tab_icons/battle-gear.svg';
-import chatTab from 'images/tab_icons/conversation.svg';
 import exhibitTab from 'images/tab_icons/film-projector.svg';
 import healthSection from 'images/nested-hearts.svg';
 import inventorySection from 'images/misc_icons/locked-chest.svg';
@@ -44,7 +42,6 @@ export function CharacterRootViewModel(params) {
         inventoryTab: inventoryTab,
         notesTab: notesTab,
         profileTab: profileTab,
-        chatTab: chatTab,
         exhibitTab: exhibitTab,
         healthSection: healthSection,
         skillSection: skillSection,
@@ -71,7 +68,6 @@ export function CharacterRootViewModel(params) {
     self.statusLineService = StatusService.sharedService();
     self.proficiencyService = ProficiencyService.sharedService();
     self.armorClassService = ArmorClassService.sharedService();
-    self.characterCardPublishingService = CharacterCardPublishingService.sharedService();
 
     /* Tooltips */
 
@@ -109,9 +105,6 @@ export function CharacterRootViewModel(params) {
     self.notesTabStatus = ko.pureComputed(() => {
         return self._tabIsVisible('notes');
     });
-    self.chatTabStatus = ko.pureComputed(() => {
-        return self._tabIsVisible('chat');
-    });
     self.partyTabStatus = ko.pureComputed(() => {
         return self._tabIsVisible('party');
     });
@@ -143,9 +136,6 @@ export function CharacterRootViewModel(params) {
     self.activatePartyTab = () => {
         self._setActiveTab('party');
     };
-    self.activateChatTab = () => {
-        self._setActiveTab('chat');
-    };
     self.activateExhibitTab = () => {
         self._setActiveTab('exhibit');
     };
@@ -169,14 +159,9 @@ export function CharacterRootViewModel(params) {
             $(`.nav-tabs a[href="#${self.activeTab()}"]`).tab('show');
         });
 
-        Notifications.party.joined.add(self._updateCurrentNode);
-        Notifications.party.left.add(self._removeCurrentNode);
-        Notifications.xmpp.disconnected.add(self._removeCurrentNode);
-
         self.statusLineService.init();
         self.proficiencyService.init();
         self.armorClassService.init();
-        self.characterCardPublishingService.init();
 
         //Subscriptions
         HotkeysService.registerHotkey('1', self.activateStatsTab);
@@ -185,18 +170,11 @@ export function CharacterRootViewModel(params) {
         HotkeysService.registerHotkey('4', self.activateEquipmentTab);
         HotkeysService.registerHotkey('5', self.activateInventoryTab);
         HotkeysService.registerHotkey('6', self.activateNotesTab);
-        HotkeysService.registerHotkey('7', self.activateChatTab);
-        HotkeysService.registerHotkey('8', self.activateExhibitTab);
+        HotkeysService.registerHotkey('7', self.activateExhibitTab);
     };
 
     self.unload = () => {
         HotkeysService.flushHotkeys();
-
-        Notifications.party.joined.remove(self._updateCurrentNode);
-        Notifications.party.joined.remove(self._removeCurrentNode);
-        Notifications.xmpp.disconnected.remove(self._removeCurrentNode);
-
-        self.characterCardPublishingService.deinit();
     };
 
     //Private Methods

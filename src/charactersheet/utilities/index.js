@@ -1,7 +1,6 @@
 export { CoreManager } from './core_manager';
 export { DataRepository } from './data_repository';
 export { Fixtures } from './fixtures';
-export { JSONPayload } from './json_payload';
 export { Migrations } from './migrations';
 export { Notifications } from './notifications';
 export { TabFragmentManager } from './tab_fragment_manager';

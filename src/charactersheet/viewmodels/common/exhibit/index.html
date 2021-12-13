@@ -1,0 +1,101 @@
+<div class="card-title h4">
+  Exhibit<br />
+  <!-- ko if: playerType() == 'character' -->
+  <small>
+    Here is where your DM can show you things.
+  </small>
+  <!-- /ko -->
+  <!-- ko if: playerType() == 'dm' -->
+  <small>
+    This shows what your players see when you exhibit something.
+  </small>
+  <!-- /ko -->
+</div>
+<hr class="ac-table-header">
+<!-- ko if: !isConnectedToParty() -->
+<div class="detail-place-holder text-center">
+    <p class="lead text-muted heading">
+      You are not connected to a Party.
+    </p>
+    <!-- ko if: playerType == 'character' -->
+    <p class="text-muted">
+      Create or join a Party with friends to view your DM's Exhibit!
+    </p>
+    <!-- /ko -->
+    <!-- ko if: playerType == 'dm' -->
+    <p class="text-muted">
+      Create or join a Party with friends start using the exhibit.
+    </p>
+    <!-- /ko -->
+</div>
+<!--/ko-->
+<!-- ko if: isConnectedToParty -->
+<div class="row">
+  <!-- ko if: playerText -->
+  <div class="col-xs-12 col-sm-6 col-md-8">
+    <h4>Description</h4>
+    <div class="well">
+        <div data-bind="markdownPreview: playerText"></div>
+    </div>
+  </div>
+  <!-- /ko -->
+  <!-- ko if: !playerText() && imageUrl() -->
+  <div class="col-xs-12 col-sm-3 col-md-4">
+    <!-- This is just a spacer for when there is no playerText -->
+  </div>
+  <!-- /ko -->
+  <!-- ko if: imageUrl -->
+  <div class="col-xs-12 col-sm-6 col-md-4 text-center">
+    <!-- ko if: playerText() && imageUrl() -->
+      <!--
+        This is just a spacer for when there is description.
+        It makes the top of the two panels match.
+       -->
+      <h4>&nbsp;</h4>
+    <!-- /ko -->
+    <img
+      data-bind="
+        attr: { src: imageUrl },
+        click: toggleFullScreen
+      "
+      class="img-responsive img-rounded"
+      style="margin-left:auto; margin-right:auto;"
+    />
+    <small>
+      <em class="text-muted col-xs-12">
+        Click on the image to view it in Full Screen.
+      </em>
+    </small>
+  </div>
+  <!-- /ko -->
+  <!-- ko if: hasNothing -->
+  <div class="col-xs-12">
+    <div class="detail-place-holder text-center">
+      <p class="lead text-muted heading">
+        There's nothing being Exhibited.
+      </p>
+      <!-- ko if: playerType() == 'character' -->
+      <p class="text-muted">
+        Wait for an image to be put on exhibit.
+      </p>
+      <!-- /ko -->
+      <!-- ko if: playerType() == 'dm' -->
+      <p class="text-muted">
+        You can show off Maps, Images, Points of Interest, NPCs,
+        Monsters, and more to your players by clicking the
+        <i class="fa fa-desktop"></i> icon for that item.
+      </p>
+      <!-- /ko -->
+    </div>
+  </div>
+  <!-- /ko -->
+</div>
+
+<!-- The visibility is managed internally -->
+<full-screen-image
+  params="
+    imageSource: imageUrl,
+    fullScreenStatus: fullScreen
+  "
+></full-screen-image>
+<!-- /ko -->

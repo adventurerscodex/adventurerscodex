@@ -1,6 +1,6 @@
 import {
-    ChatServiceManager,
-    SortService
+    SortService,
+    PartyService
 } from 'charactersheet/services';
 import {
     CoreManager,
@@ -10,6 +10,7 @@ import {
 } from 'charactersheet/utilities';
 import { PointOfInterest } from 'charactersheet/models/dm';
 import ko from 'knockout';
+import { get } from 'lodash';
 import sectionIcon from 'images/encounters/rune-stone.svg';
 import template from './index.html';
 
@@ -41,14 +42,9 @@ export function PointOfInterestSectionViewModel(params) {
     self.addModalOpen = ko.observable(false);
     self.fullScreen = ko.observable(false);
     self.showDisclaimer = ko.observable(false);
-
-    // Push to Player
-    self.selectedPoiToPush = ko.observable();
-    self.openPushModal = ko.observable(false);
-    self.pushType = ko.observable('point-of-interest');
     self.convertedDisplayUrl = ko.observable();
 
-    self._isConnectedToParty = ko.observable(false);
+    self._isConnectedToParty = ko.observable(!!PartyService.party);
 
     self.sorts = {
         'name asc': { field: 'name', direction: 'asc' },
@@ -64,17 +60,15 @@ export function PointOfInterestSectionViewModel(params) {
     self._editForm = ko.observable();
 
     /* Public Methods */
+
     self.load = async function() {
         Notifications.encounters.changed.add(self._dataHasChanged);
-        Notifications.party.joined.add(self._connectionHasChanged);
-        Notifications.party.left.add(self._connectionHasChanged);
+        Notifications.party.changed.add(self.partyDidChange);
 
         self.encounter.subscribe(function() {
             self._dataHasChanged();
         });
         await self._dataHasChanged();
-
-        self._connectionHasChanged();
     };
 
     /* UI Methods */
@@ -217,20 +211,17 @@ export function PointOfInterestSectionViewModel(params) {
         self.showDisclaimer(true);
     };
 
-    /* Push to Player Methods */
+    /* Exhibit Methods */
 
-    self.shouldShowPushButton = ko.pureComputed(function() {
+    self.shouldShowExhibitButton = ko.pureComputed(function() {
         return self._isConnectedToParty();
     });
 
-    self.pushModalFinishedClosing = function() {
-        self.selectedPoiToPush(null);
-        self.openPushModal(false);
-    };
 
-    self.pushModalToPlayerButtonWasPressed = function(pointOfInterest) {
-        self.selectedPoiToPush(pointOfInterest);
-        self.openPushModal(true);
+    self.toggleExhibit = async (poi) => {
+        poi.isExhibited(!poi.isExhibited());
+        await poi.ps.save();
+        self.markAsExhibited(poi.isExhibited() ? poi.uuid() : null);
     };
 
     /* Private Methods */
@@ -250,10 +241,23 @@ export function PointOfInterestSectionViewModel(params) {
         self.tagline(section.tagline());
     };
 
-    self._connectionHasChanged = function() {
-        var chat = ChatServiceManager.sharedService();
-        self._isConnectedToParty(chat.currentPartyNode != null);
+    self.partyDidChange = (party) => {
+        self._isConnectedToParty(!!party);
+
+        // Update everything that isn't on exhibit. This event can
+        // be fired from multiple places.
+        const exhibitUuid = get(party, 'exhibit.uuid', null);
+        self.markAsExhibited(exhibitUuid);
     };
+
+    self.markAsExhibited = (exhibitUuid) => {
+        self.pointsOfInterest(
+            self.pointsOfInterest().map(poi => {
+                poi.isExhibited(poi.uuid() === exhibitUuid);
+                return poi;
+            })
+        );
+    }
 }
 
 ko.components.register('point-of-interest-section', {

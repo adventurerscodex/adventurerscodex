@@ -8,7 +8,7 @@ import {
 import { Fixtures, Notifications } from 'charactersheet/utilities';
 import { defer, find } from 'lodash';
 
-import { AbstractViewModel } from 'charactersheet/viewmodels/abstract';
+import { ModelBackedViewModel } from 'charactersheet/viewmodels/abstract';
 import { CoreManager } from 'charactersheet/utilities';
 import { DELAY } from 'charactersheet/constants';
 

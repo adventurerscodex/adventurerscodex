@@ -44,14 +44,7 @@
               <b>Terrain:</b>&nbsp;<span data-bind="text: terrainLabel"></span>
               </div>
               <div class="col-xs-4 text-right">
-                <!-- ko if: shouldShowPushButton -->
-                <div class="text-center inline-block">
-                  <span style="font-weight: bold;">Send</span><br>
-                  <a data-bind="click: pushModalToPlayerButtonWasPressed" href="#" title="Send image to Player's Chat">
-                    <i class="fa fa-paper-plane-o fa-color-hover">
-                    </i>
-                  </a>
-                </div>&nbsp;&nbsp;
+                <!-- ko if: shouldShowExhibitButton -->
                 <div class="text-center inline-block">
                   <span style="font-weight: bold;">Exhibit</span><br>
                   <a data-bind="click: toggleExhibit" href="#" title="Send Player's Exhibit">
@@ -61,13 +54,7 @@
                   </a>
                 </div>
                 <!-- /ko -->
-                <!-- ko ifnot: shouldShowPushButton -->
-                <div class="text-center inline-block">
-                  <span style="font-weight: bold;">Send</span><br>
-                    <span class="fa fa-paper-plane-o fa-disabled" style="cursor:pointer;"
-                      data-bind="popover: { content: 'Join a Party to send image to Player\'s Chat' }">
-                    </span>
-                </div>&nbsp;&nbsp;
+                <!-- ko ifnot: shouldShowExhibitButton -->
                 <div class="text-center inline-block">
                   <span style="font-weight: bold;">Exhibit</span><br>
                   <span class="fa fa-desktop fa-disabled" style="cursor:pointer;"
@@ -128,8 +115,6 @@
     </div>
   </div>
 </div>
-
-<player-push-modal params="isOpen: openPushModal, type: pushType, payload: environment, onclose: pushModalFinishedClosing"></player-push-modal>
 
 <!-- The visibility is managed internally -->
 <full-screen-image params="imageSource: convertedImageLink, fullScreenStatus: fullScreen">

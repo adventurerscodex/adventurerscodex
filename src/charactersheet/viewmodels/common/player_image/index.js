@@ -10,7 +10,7 @@ import {
     ProfileImage
 } from 'charactersheet/models/common';
 import { OtherStats } from 'charactersheet/models/character';
-import { XMPPService } from 'charactersheet/services/common';
+import { PartyService } from 'charactersheet/services';
 import ko from 'knockout';
 import md5 from 'blueimp-md5';
 import template from './index.html';
@@ -35,15 +35,15 @@ export function PlayerImageViewModel() {
     self.width = ko.observable(80);
 
     self.hasInspiredGlow = ko.observable(false);
+    self.isConnectedToParty = ko.observable(!!PartyService.party);
 
     self.firstFieldHasFocus = ko.observable(false);
 
     self.load = async () => {
         //Subscriptions
         Notifications.otherstats.changed.add(self.inspirationHasChanged);
-        Notifications.xmpp.connected.add(self._handleConnectionStatusChanged);
-        Notifications.xmpp.disconnected.add(self._handleConnectionStatusChanged);
         Notifications.coreManager.changed.add(self.dataHasChanged);
+        Notifications.party.changed.add(self._handleConnectionStatusChanged);
 
         // Prime the pump.
         self._handleConnectionStatusChanged();
@@ -130,23 +130,12 @@ export function PlayerImageViewModel() {
 
     // Status Indicator Methods
 
-    self._isConnectedToXMPP = ko.observable();
-
     self.statusIndicatorClass = ko.pureComputed(function() {
-        if (self._isConnectedToXMPP()) {
-            return 'success';
-        }
-        return 'failure';
+        return self.isConnectedToParty() ? 'success' : 'failure';
     });
 
     self._handleConnectionStatusChanged = function() {
-        var xmpp = XMPPService.sharedService();
-        self._isConnectedToXMPP(
-            xmpp.connection ?
-            // Ensure we're both connected and authenticated.
-                (xmpp.connection.connected && xmpp.connection.authenticated) :
-                false
-        );
+        self.isConnectedToParty(!!PartyService.party);
     };
 
     //Player Image Handlers

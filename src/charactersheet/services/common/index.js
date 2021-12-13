@@ -1,7 +1,4 @@
-export { CharacterCardPublishingService } from './sync/card_service.js';
-export { DMCardPublishingService } from './sync/card_service.js';
 export { HotkeysService } from './hotkeys_service.js';
-export { ImageServiceManager } from './sync/image_service.js';
 export { KeyValuePredicate, AndPredicate, OrPredicate, NotPredicate } from './persistence_service_components/persistence_service_predicates.js';
 export { PersistenceService } from './persistence_service.js';
 export { SharedServiceManager } from './shared_service_manager.js';
