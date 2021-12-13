@@ -16,7 +16,14 @@ export class PlayerCardViewModel extends ViewModel {
     hpPercent() {
         return (
             (this.player.maxHitPoints - this.player.maxHitPointsReductionDamage - this.player.damage)
-                / (this.player.maxHitPoints - this.player.maxHitPointsReductionDamage)
+                / (this.player.maxHitPoints - this.player.maxHitPointsReductionDamage + this.player.tempHitPoints)
+        );
+    }
+
+    tempHpPercent() {
+        return (
+            this.player.tempHitPoints
+                / (this.player.maxHitPoints - this.player.maxHitPointsReductionDamage + this.player.tempHitPoints)
         );
     }
 

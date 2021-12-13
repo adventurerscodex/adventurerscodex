@@ -111,11 +111,6 @@
                      data-bind="textInput: blankNPC().name,
                         hasFocus: firstElementInModalHasFocus">
             </div>
-            <div class="col-sm-1 control-label">
-              <span class="fa fa fa-desktop" style="cursor:pointer;"
-                title="This field will be sent to the players via the chat.">
-              </span>
-            </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label">
@@ -141,6 +136,11 @@
                       name="sourceUrl"
                       placeholder="http://myurl.com/image.jpg"
                       data-bind="textInput: blankNPC().sourceUrl">
+            </div>
+            <div class="col-sm-1 control-label">
+              <span class="fa fa fa-desktop" style="cursor:pointer;"
+                title="This field will be sent to the players via the chat.">
+              </span>
             </div>
           </div>
           <div class="form-group">
@@ -272,11 +272,6 @@
                          class="form-control"
                          name="name"
                          data-bind="textInput: name, hasFocus: $parent.editFirstModalElementHasFocus">
-                </div>
-                <div class="col-sm-1 control-label">
-                  <span class="fa fa fa-desktop" style="cursor:pointer;"
-                    title="This field will be sent to the players via the chat.">
-                  </span>
                 </div>
               </div>
               <div class="form-group">

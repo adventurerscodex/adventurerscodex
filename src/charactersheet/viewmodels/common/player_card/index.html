@@ -43,7 +43,7 @@
                 class="progress-bar progress-bar-sky"
                 role="progressbar"
                 aria-valuemin="0"
-                xdata-bind="style: { width: tempProgressWidth }"
+                data-bind="style: { width: `${tempHpPercent() * 100 }%` }"
               >
               </div>
             </div>
@@ -105,7 +105,7 @@
             </tr>
             <tr data-bind="visible: player.passivePerception">
               <th scope="row">Passive Perception</th>
-              <td data-bind="text: '+' + player.passivePerception"></td>
+              <td data-bind="text: player.passivePerception"></td>
             </tr>
             <tr data-bind="visible: player.passiveInvestigation">
               <th scope="row">Passive Investigation</th>
