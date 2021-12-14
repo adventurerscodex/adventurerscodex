@@ -1,119 +1,168 @@
-<form class="form-horizontal" data-bind="validate: magicItemValidation">
-  <div class="form-group ui-front">
-    <label for="magicItemName"
-           class="col-sm-2 control-label">
-           Name<i class="required"></i>
-          </label>
-    <div class="col-sm-10">
-      <input type="text"
-             class="form-control"
-             name="name"
-             id="magicItemName"
-             placeholder="Dagger of Venom"
-             data-bind='textInput: blankTreasure().name, hasFocus: magicItemFirstElementFocus,
-                autocomplete: { source: treasurePrePopFilter, onselect: populateTreasure }'>
+<form data-bind="submit: submit, with: entity().value" autocomplete="off">
+  <card-submit-actions params="{reset: $component.reset}"></card-submit-actions>
+  <!-- ko if: $component.addForm -->
+  <div class="h4 collapsable-card-title">New Magic Item</div>
+  <!-- /ko -->
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label>Name</label>
+      <input
+        type="text"
+        class="form-control"
+        name="name"
+        placeholder="Cloak of Elvenkind"
+        data-bind="
+          textInput: name,
+          hasFocus: $component.formElementHasFocus,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.name },
+          autocomplete: {
+            source: $component.prePopFilter,
+            onselect: $component.populate,
+          }
+        "
+      />
     </div>
   </div>
-  <div class="form-group ui-front">
-    <label for="magicItemType"
-           class="col-sm-2 control-label">
-           Type<i class="required"></i>
-          </label>
-      <div class="col-sm-10">
-      <input class="form-control"
-             name="type"
-             placeholder="Wand"
-             data-bind="textInput: blankTreasure().magicItemType,
-                       autocomplete: { source: blankTreasure().magicItemTypeOptions,
-                                       onselect: setMagicItemType }">
-      </div>
-  </div>
-  <div class="form-group ui-front">
-    <label for="magicItemType"
-           class="col-sm-2 control-label">
-           Rarity<i class="required"></i>
-          </label>
-      <div class="col-sm-10">
-      <input class="form-control"
-             placeholder="Legendary"
-             name="rarity"
-             data-bind="textInput: blankTreasure().rarity,
-                       autocomplete: { source: blankTreasure().magicItemRarityOptions,
-                                       onselect: setMagicItemRarity }">
-      </div>
-  </div>
-  <div class="form-group">
-    <label for="magicItemMaxCharges"
-           class="col-sm-2 control-label">Max Charges</label>
-      <div class="col-sm-10">
-        <input type="number"
-               class="form-control"
-               name="maxCharges"
-               id="magicItemMaxCharges"
-               placeholder="1"
-               data-bind='textInput: blankTreasure().maxCharges'>
-      </div>
-  </div>
-  <div data-bind="visible: blankTreasure().maxCharges() != 0">
-    <div class="form-group">
-      <label for="magicItemCharges"
-             class="col-sm-2 control-label">Charges</label>
-        <div class="col-sm-10">
-          <input type="number"
-                 class="form-control"
-                 name="usedCharges"
-                 id="magicItemCharges"
-                 placeholder="1"
-                 data-bind='textInput: blankTreasure().usedCharges'>
-        </div>
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label>Type</label>
+      <input
+        type="text"
+        class="form-control"
+        name="type"
+        placeholder="Wonderous"
+        data-bind="
+          textInput: type,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.type },
+          autocomplete: {
+            source: $component.typeOptions,
+            onselect: $component.setType,
+          }
+        "
+      />
     </div>
   </div>
-  <div class="form-group">
-    <label for="magicItemWeight"
-           class="col-sm-2 control-label">Weight</label>
-      <div class="col-sm-10">
-        <input type="number"
-               class="form-control"
-               name="weight"
-               id="magicItemWeight"
-               placeholder="1"
-               data-bind='textInput: blankTreasure().weight'>
-      </div>
-  </div>
-  <div class="form-group">
-    <label for="magicItemRequiresAttunement"
-           class="col-sm-2 control-label">Requires Attunement</label>
-      <div class="col-sm-10">
-        <input type="checkbox"
-               class="form-control"
-               id="magicItemRequiresAttunement"
-               data-bind='checked: blankTreasure().requiresAttunement'>
-      </div>
-  </div>
-  <div data-bind="visible: blankTreasure().requiresAttunement() == true">
-    <div class="form-group">
-      <label for="magicItemAttuned"
-             class="col-sm-2 control-label">Attuned</label>
-        <div class="col-sm-10">
-          <input type="checkbox"
-                 class="form-control"
-                 id="magicItemAttuned"
-                 data-bind='checked: blankTreasure().attuned'>
-        </div>
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label>Rarity</label>
+      <input
+        type="text"
+        class="form-control"
+        name="rarity"
+        placeholder="Common"
+        data-bind="
+          textInput: rarity,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.rarity },
+          autocomplete: {
+            source: $component.rarityOptions,
+            onselect: $component.setRarity,
+          }
+        "
+      />
     </div>
   </div>
-  <div class="form-group">
-    <label for="magicItemDescription"
-           class="col-sm-2 control-label">Description</label>
-      <div class="col-sm-10">
-        <textarea type="password"
-                  class="form-control"
-                  name="description"
-                  id="magicItemDescription"
-                  rows="4"
-                  placeholder="Awesome stuff goes here"
-                  data-bind='textInput: blankTreasure().description'>
-        </textarea>
-      </div>
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label>Max Charges</label>
+      <input
+        type="text"
+        class="form-control"
+        name="maxCharges"
+        placeholder="1"
+        data-bind="
+          value: maxCharges,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.maxCharges },
+        "
+      />
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label>Charges</label>
+      <input
+        type="text"
+        class="form-control"
+        name="usedCharges"
+        placeholder="1"
+        data-bind="
+          value: usedCharges,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.usedCharges },
+        "
+      />
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label>Weight</label>
+      <input
+        type="text"
+        class="form-control"
+        name="weight"
+        placeholder="1"
+        data-bind="
+          value: weight,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.weight },
+        "
+      />
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-xs-12 col-md-6">
+      <label>Requires Attunement</label>
+      <input
+        type="checkbox"
+        class="form-control"
+        name="requiresAttunement"
+        data-bind="
+          checked: requiresAttunement,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.requiresAttunement },
+        "
+      />
+    </div>
+    <div class="form-group col-xs-12 col-md-6">
+      <label>Attuned</label>
+      <input
+        type="checkbox"
+        class="form-control"
+        name="attuned"
+        data-bind="
+          checked: attuned,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.attuned },
+        "
+      />
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label>Description</label>
+      <textarea
+        type="text"
+        class="form-control"
+        name="description"
+        rows="4"
+        placeholder="It lights things on fire..."
+        data-bind="
+          value: description,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.description },
+        "
+      ></textarea>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <form-submit-actions params="{
+      reset: $component.reset,
+      delete: $component.delete,
+      addForm: $component.addForm,
+      showDisclaimer: $component.showDisclaimer
+    }"></form-submit-actions>
   </div>
 </form>

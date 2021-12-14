@@ -121,3 +121,69 @@ export class EncounterWeapon extends KOModel {
         return treasure;
     };
 }
+
+
+EncounterWeapon.validationConstraints = {
+    fieldParams: {
+        name: {
+            required: true,
+            maxlength: 256,
+        },
+        damage: {
+            required: true,
+            maxlength: 256,
+        },
+        magicalModifier: {
+            required: false,
+            type: 'number',
+            max: 10000,
+            min: -10000,
+            step: 1,
+        },
+        type: {
+            required: true,
+            maxlength: 256,
+        },
+        handedness: {
+            required: true,
+            maxlength: 256,
+        },
+        proficiency: {
+            required: true,
+            maxlength: 256,
+        },
+        price: {
+            required: false,
+            type: 'number',
+            max: 10000,
+            min: -10000,
+            step: 1,
+        },
+        weight: {
+            required: false,
+            type: 'number',
+            max: 10000,
+            min: -10000,
+            step: 1,
+        },
+        range: {
+            required: true,
+            maxlength: 256,
+        },
+        damageType: {
+            required: true,
+            maxlength: 256,
+        },
+        property: {
+            required: true,
+            maxlength: 256,
+        },
+        quantity: {
+            required: false,
+            type: 'number',
+            max: 10000,
+            min: -10000,
+            step: 1,
+        },
+    },
+};

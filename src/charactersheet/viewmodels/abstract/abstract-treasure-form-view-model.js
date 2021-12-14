@@ -1,6 +1,7 @@
 import { DataRepository } from 'charactersheet/utilities';
 import { AbstractChildEncounterFormModel } from 'charactersheet/viewmodels/abstract';
 import ko from 'knockout';
+import { get } from 'lodash';
 
 
 export class AbstractTreasureFormViewModel extends AbstractChildEncounterFormModel {
@@ -31,4 +32,10 @@ export class AbstractTreasureFormViewModel extends AbstractChildEncounterFormMod
         this.showDisclaimer(true);
         this.forceCardResize();
     };
+
+    validation = {
+        // Deep copy of properties in object
+        ...get(this.treasureClass(), 'validationConstraints.fieldParams', {})
+    };
+
 }

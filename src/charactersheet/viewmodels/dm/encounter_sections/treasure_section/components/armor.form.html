@@ -83,7 +83,7 @@
             data-bind="
               value: currencyDenomination,
               event: { blur: $component.reviewInput, invalid: $component.invalidate },
-              attr: { ...$component.validation.price },
+              attr: { ...$component.validation.currencyDenomination },
               autocomplete: {
                 source: $component.currencyDenominationOptions,
                 onselect: $component.setCurrencyDenomination

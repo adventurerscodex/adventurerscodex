@@ -63,7 +63,7 @@
         type="text"
         class="form-control"
         name="damage"
-        placeholder="1D4"
+        placeholder="Acid"
         data-bind="
           textInput: type,
           event: { blur: $component.reviewInput, invalid: $component.invalidate },
@@ -139,7 +139,7 @@
             data-bind="
               value: currencyDenomination,
               event: { blur: $component.reviewInput, invalid: $component.invalidate },
-              attr: { ...$component.validation.price },
+              attr: { ...$component.validation.currencyDenomination },
               autocomplete: {
                 source: $component.currencyDenominationOptions,
                 onselect: $component.setCurrencyDenomination

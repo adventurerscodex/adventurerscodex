@@ -74,3 +74,43 @@ export class EncounterItem extends KOModel {
         return treasure;
     };
 }
+
+
+EncounterItem.validationConstraints = {
+    fieldParams: {
+        name: {
+            required: true,
+            maxlength: 256,
+        },
+        weight: {
+            required: true,
+            type: 'number',
+            max: 10000,
+            min: -10000,
+            step: 1,
+        },
+        quantity: {
+            required: true,
+            type: 'number',
+            max: 10000,
+            min: -10000,
+            step: 1,
+        },
+        cost: {
+            required: true,
+            type: 'number',
+            max: 10000,
+            min: -10000,
+            step: 1,
+        },
+        currencyDenomination: {
+            required: true,
+            type: 'text',
+            maxlength: 256,
+        },
+        description: {
+            required: false,
+            type: 'text',
+        },
+    },
+};
