@@ -7,14 +7,21 @@ import ko from 'knockout';
 
 
 export class EncounterItem extends KOModel {
+
     static __skeys__ = ['core', 'encounters', 'treasures'];
+
     static mapping = {
         include: ['coreUuid', 'encounterUuid', 'type', 'uuid']
     };
 
-    static itemFields = ['name', 'description', 'quantity', 'weight', 'cost', 'currencyDenomination'];
-
-    static allFields = ['name', 'description', 'quantity', 'weight', 'cost', 'currencyDenomination', 'uuid', 'coreUuid', 'encounterUuid', 'type'];
+    static itemFields = [
+        'name',
+        'description',
+        'quantity',
+        'weight',
+        'cost',
+        'currencyDenomination'
+    ];
 
     uuid = ko.observable();
     coreUuid = ko.observable();
@@ -49,7 +56,7 @@ export class EncounterItem extends KOModel {
         return Utility.string.truncateStringAtLength(this.description(), this.SHORT_DESCRIPTION_MAX_LENGTH);
     });
 
-    itemDescriptionHTML = ko.pureComputed(() => {
+    descriptionHTML = ko.pureComputed(() => {
         if (!this.description()) {
             return '<div class="h3"><small>Add a description via the edit tab.</small></div>';
         }
@@ -57,7 +64,7 @@ export class EncounterItem extends KOModel {
         return this.description();
     });
 
-    itemWeightLabel = ko.pureComputed(() => {
+    weightLabel = ko.pureComputed(() => {
         return this.weight() !== '' && this.weight() >= 0 ? this.weight() + ' lbs.' : '0 lbs.';
     });
 
@@ -65,46 +72,5 @@ export class EncounterItem extends KOModel {
         let treasure = pick(params, EncounterItem.mapping.include);
         treasure.value = pick(params, EncounterItem.itemFields);
         return treasure;
-    };
-
-    buildModelFromValues = (values) => {
-        let keys = Object.keys(values);
-        keys.forEach((key) => {
-            this[key] = values[key];
-        });
-    };
-
-    getValues = () => {
-        let values = {};
-        EncounterItem.itemFields.forEach((field) => {
-            values[field] = this[field];
-        });
-
-        return values;
-    };
-
-    /**
-      * Serialize the current item to a plain JSON format. We use these in-leiu of the normal
-      * import/exportValues because those return a format unsuitable for re-importing
-      * (since it caused data corruption).
-     */
-    toJSON = () => {
-        let values = {};
-        EncounterItem.allFields.forEach((field) => {
-            values[field] = this[field]();
-        });
-
-        return values;
-    };
-
-    /**
-      * De-serialize the current item into the current model. We use these in-leiu of the normal
-      * import/exportValues because those return a format unsuitable for re-importing
-      * (since it caused data corruption).
-     */
-    fromJSON = (values) => {
-        EncounterItem.allFields.forEach((field) => {
-            this[field](values[field]);
-        });
     };
 }
