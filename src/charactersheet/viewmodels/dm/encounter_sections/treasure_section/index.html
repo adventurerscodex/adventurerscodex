@@ -1,107 +1,124 @@
-<div class="card-title h4">
-  <back-button params="{ column: $parent }"></back-button>
-  <span data-bind="text: name"></span><br />
-  <small data-bind="text: tagline"></small>
-</div>
-<hr class="ac-table-header">
-<table class="table table-responsive table-ac-bordered table-hover">
-  <thead>
-    <tr>
-      <th xdata-bind="click: ()=> {sortBy('name');}"
-          class="col-xs-11">
-        Name
-        <span xdata-bind="css: sortArrow('name')"></span>
-      </th>
-      <th class="col-xs-1 text-right toggle-collapse-col">
-        <a href="#"
-            data-bind="{click: collapseAll}">
-          <span class="fa fa-minus"></span>
-        </a>
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <!-- ko foreach: $component.filteredAndSortedEntities -->
-    <tr
-      class="clickable treasureRow"
-      data-bind="attr: { id: `#treasure_row_${uuid()}` }">
-      <td data-toggle="collapse" data-bind="attr: {
-        'data-target': `#treasure_list_${uuid()}`,
-      }">
-        <span data-bind="text: value().nameLabel"></span>
-      </td>
-      <td class="text-right toggle-collapse-col">
-        <span data-toggle="collapse"
-            data-bind="attr:{'data-target': `#treasure_list_${uuid()}`}"
-            class="rotate fa fa-chevron-left"></span>
-      </td>
-    </tr>
-    <tr class="collapseRow safari-card-fix">
-      <td colspan="8">
-        <flip-card params="{
-                dataId: $data.uuid(),
-                tabId: $parent.tabId,
-                collapsable: true,
-                elementId: 'treasure_list',
-                context: {
-                  data: $data,
-                  encounter: $component.encounter,
-                  fullScreen: $component.fullScreen,
-                }
-              }">
-          <div class="front">
-            <div>
-              <card-edit-actions params="{ flip: flip }"></card-edit-actions>
-            </div>
-            <treasure-view
-              params="
-                entity: context.data,
-                fullScreen: context.fullScreen,
-              "
-            ></treasure-view>
-          </div>
-          <div class="back">
-            <treasure-form params="{
-              containerId: elementId,
-              collapsable: true,
-              encounter: context.encounter,
-              data: context.data,
-              show: showBack,
-              flip: flip,
-              forceCardResize: forceCardResize
-            }"></treasure-form>
-          </div>
-        </flip-card>
-      </td>
-    </tr>
-    <!-- /ko -->
-    <tr id="add-treasure" class="collapse add-card">
-      <td colspan="5">
-        <treasure-form params="{
-          containerId:'add-treasure',
-          show: $component.displayAddForm,
-          flip: $component.toggleShowAddForm,
-          encounter: $component.encounter,
-        }"></treasure-form>
-      </td>
-    </tr>
-  </tbody>
-  <tfoot>
+<div id="treasure-pane">
+  <div class="card-title h4">
+    <back-button params="{ column: $parent }"></back-button>
+    <span data-bind="text: name"></span><br />
+    <small data-bind="text: tagline"></small>
+  </div>
+  <hr class="ac-table-header">
+  <table class="table table-responsive table-ac-bordered table-hover">
+    <thead>
       <tr>
+        <th
+          data-bind="click: ()=> {sortBy('name');}"
+          class="col-xs-3"
+        >
+          Name
+          <span data-bind="css: sortArrow('name')"></span>
+        </th>
+        <th
+          data-bind="click: ()=> {sortBy('shortDescription');}"
+          class="col-xs-8"
+        >
+          Description
+          <span data-bind="css: sortArrow('shortDescription')"></span>
+        </th>
+        <th class="col-xs-1 text-right toggle-collapse-col">
+          <a href="#"
+              data-bind="{click: collapseAll}">
+            <span class="fa fa-minus"></span>
+          </a>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- ko foreach: $component.filteredAndSortedEntities -->
+      <tr
+        class="clickable treasureRow"
+        data-bind="attr: { id: `#treasure_row_${uuid()}` }"
+      >
+        <td data-toggle="collapse" data-bind="attr: {
+          'data-target': `#treasure_list_${uuid()}`,
+        }">
+          <span data-bind="text: name"></span>
+        </td>
+        <td data-toggle="collapse" data-bind="attr: {
+          'data-target': `#treasure_list_${uuid()}`,
+        }">
+          <span data-bind="text: shortDescription"></span>
+        </td>
+        <td class="text-right toggle-collapse-col">
+          <span data-toggle="collapse"
+              data-bind="attr:{'data-target': `#treasure_list_${uuid()}`}"
+              class="rotate fa fa-chevron-left"></span>
+        </td>
+      </tr>
+      <tr class="collapseRow safari-card-fix">
         <td colspan="8">
-        <div class="row">
-          <div class="col">
-            <!-- ko ifnot: $component.displayAddForm -->
-            <button type="button"
-                class="btn btn-link btn-block btn-sm"
-                id="treasureAddButton"
-                data-toggle="collapse"
-                data-target="#add-treasure"
-                data-bind="click: $component.toggleShowAddForm"><i class="fa fa-plus"></i> Add Treasure</button>
-            <!-- /ko -->
+          <flip-card params="{
+            dataId: $data.uuid(),
+            tabId: $parent.tabId,
+            collapsable: true,
+            elementId: 'treasure_list',
+            context: {
+              data: $data,
+              encounter: $component.encounter,
+              fullScreen: $component.fullScreen,
+            }
+          }">
+            <div class="front">
+              <div>
+                <card-edit-actions params="{ flip: flip }"></card-edit-actions>
+              </div>
+              <treasure-view
+                params="
+                  entity: context.data,
+                  fullScreen: context.fullScreen,
+                "
+              ></treasure-view>
+            </div>
+            <div class="back">
+              <treasure-form params="{
+                containerId: elementId,
+                collapsable: true,
+                encounter: context.encounter,
+                data: context.data,
+                show: showBack,
+                flip: flip,
+                forceCardResize: forceCardResize
+              }"></treasure-form>
+            </div>
+          </flip-card>
+        </td>
+      </tr>
+      <!-- /ko -->
+      <tr id="add-treasure" class="collapse add-card">
+        <td colspan="5">
+          <treasure-form params="{
+            containerId:'add-treasure',
+            show: $component.displayAddForm,
+            flip: $component.toggleShowAddForm,
+            encounter: $component.encounter,
+          }"></treasure-form>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+          <td colspan="8">
+          <div class="row">
+            <div class="col">
+              <!-- ko ifnot: $component.displayAddForm -->
+              <button type="button"
+                  class="btn btn-link btn-block btn-sm"
+                  id="treasureAddButton"
+                  data-toggle="collapse"
+                  data-target="#add-treasure"
+                  data-bind="click: $component.toggleShowAddForm"><i class="fa fa-plus"></i> Add Treasure</button>
+              <!-- /ko -->
+            </div>
           </div>
-        </div>
-      </td>
-    </tr>
-  </tfoot>
-</table>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>

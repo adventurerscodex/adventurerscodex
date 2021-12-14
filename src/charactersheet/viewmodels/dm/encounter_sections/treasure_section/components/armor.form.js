@@ -1,13 +1,13 @@
 import autoBind from 'auto-bind';
-import { CoreManager } from 'charactersheet/utilities';
-import { AbstractChildEncounterFormModel } from 'charactersheet/viewmodels/abstract';
+import { Fixtures } from 'charactersheet/utilities';
+import { AbstractTreasureFormViewModel } from 'charactersheet/viewmodels/abstract';
 import { EncounterArmor, Treasure } from 'charactersheet/models/dm';
 import ko from 'knockout';
 import template from './armor.form.html';
 import { SELECTDATA } from 'charactersheet/constants';
 
 
-class EncounterArmorFormViewModel extends AbstractChildEncounterFormModel {
+class EncounterArmorFormViewModel extends AbstractTreasureFormViewModel {
 
     constructor(params) {
         super(params);
@@ -21,13 +21,30 @@ class EncounterArmorFormViewModel extends AbstractChildEncounterFormModel {
         return Treasure;
     }
 
-    generateBlank() {
-        const newEntity = super.generateBlank();
-        newEntity.uuid(this.encounter().uuid());
-        newEntity.value(new EncounterArmor());
-        return newEntity;
+    treasureClass() {
+        return EncounterArmor;
     }
 
+    treasureType() {
+        return Treasure.TYPE.ARMOR;
+    }
+
+    // Field-Level Pre-population
+
+    typeOptions = Fixtures.armor.armorTypeOptions;
+    setType = (label, value) => {
+        this.entity().value().type(value);
+    }
+
+    currencyDenominationOptions = Fixtures.general.currencyDenominationList;
+    setCurrencyDenomination = (label, value) => {
+        this.entity().value().currencyDenomination(value);
+    }
+
+    stealthOptions = Fixtures.armor.armorStealthOptions;
+    setStealth = (label, value) => {
+        this.entity().value().stealth(value);
+    }
 }
 
 

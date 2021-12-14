@@ -1,50 +1,123 @@
-<!-- ko if: !!$data.data -->
-<!-- ko if: data.type() === data.TYPE.ARMOR -->
+<!-- ko if: type() === TYPE.WEAPON -->
+  <div data-bind="
+    component: {
+      name: 'treasure-weapon-form',
+      params: params
+    }"
+  ></div>
+<!-- /ko -->
+
+<!-- ko if: type() === TYPE.ARMOR -->
   <div data-bind="
     component: {
       name: 'treasure-armor-form',
-      params: $data
+      params: params
     }"
   ></div>
 <!-- /ko -->
 
-<!-- ko if: data.type() === data.TYPE.COINS -->
-  <div data-bind="
-    component: {
-      name: 'treasure-coins-form',
-      params: $data
-    }"
-  ></div>
-<!-- /ko -->
-
-<!-- ko if: data.type() === data.TYPE.ITEM -->
+<!-- ko if: type() === TYPE.ITEM -->
   <div data-bind="
     component: {
       name: 'treasure-item-form',
-      params: $data
+      params: params
     }"
   ></div>
 <!-- /ko -->
 
-<!-- ko if: data.type() === data.TYPE.MAGIC_ITEM -->
+<!-- ko if: type() === TYPE.MAGIC_ITEM -->
   <div data-bind="
     component: {
       name: 'treasure-magic-item-form',
-      params: $data
+      params: params
     }"
   ></div>
 <!--/ko-->
 
-<!-- ko if: data.type() === data.TYPE.WEAPON -->
+<!-- ko if: type() === TYPE.COINS -->
   <div data-bind="
     component: {
-      name: 'treasure-weapon-form',
-      params: $data
+      name: 'treasure-coins-form',
+      params: params
     }"
   ></div>
 <!-- /ko -->
-<!-- /ko -->
 
-<!-- ko ifnot: !!$data.data -->
-Show picker!!
+<!-- ko ifnot: !!type() -->
+<form data-bind="submit: submit">
+  <div class="h4 collapsable-card-title">
+    New Treasure<br />
+    <small>What kind of treasure do you want to add?</small>
+  </div>
+  <div class="radio pl-3">
+    <div class="form-group">
+      <label>
+        <input
+          type="radio"
+          name="treaure-type"
+          value="weapon"
+          data-bind="checked: addTreasureType"
+          required
+        >
+        <b>Weapon</b>
+      </label>
+    </div>
+    <div class="form-group">
+      <label>
+        <input
+          type="radio"
+          name="treaure-type"
+          value="armor"
+          data-bind="checked: addTreasureType"
+        >
+        <b>Armor</b>
+      </label>
+    </div>
+    <div class="form-group">
+      <label>
+        <input
+          type="radio"
+          name="treaure-type"
+          value="item"
+          data-bind="checked: addTreasureType"
+        >
+        <b>Item</b>
+      </label>
+    </div>
+    <div class="form-group">
+      <label>
+        <input
+          type="radio"
+          name="treaure-type"
+          value="magic_item"
+          data-bind="checked: addTreasureType"
+        >
+        <b>Magic Item</b>
+      </label>
+    </div>
+    <div class="form-group">
+      <label>
+        <input
+          type="radio"
+          name="treaure-type"
+          value="coins"
+          data-bind="checked: addTreasureType"
+        >
+        <b>Coins</b>
+      </label>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button
+      class="btn btn-sm btn-default mr-1"
+      type="reset"
+      data-bind="click: params.flip"
+    >
+      Cancel
+    </button>
+    <button class="btn btn-sm btn-primary" type="submit">
+      Next&nbsp;<i class="fa fa-chevron-right"></i>
+    </button>
+  </div>
+</form>
 <!-- /ko -->

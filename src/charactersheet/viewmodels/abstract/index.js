@@ -7,5 +7,6 @@ export { AbstractEncounterTabularViewModel } from './tabular-encounter-view-mode
 export { ModelBackedViewModel } from './model-backed-view-model';
 export { AbstractEncounterFormViewModel } from './abstract-encounter-form-view-model';
 export { AbstractChildEncounterFormModel } from './abstract-encounter-child-form-model';
+export { AbstractTreasureFormViewModel } from './abstract-treasure-form-view-model';
 export { ViewModel } from './view-model';
 export  * from './mixins';

@@ -51,15 +51,13 @@ class TreasureSectionViewModel extends AbstractEncounterTabularViewModel {
         return this.encounter().sections()[index].tagline();
     });
 
-    getDefaultSort() {
-        return this.sorts()['uuid asc'];
-    }
-
     sorts() {
         return {
             ...super.sorts(),
-            'uuid asc': { field: 'uuid', direction: 'asc'},
-            'uuid desc': { field: 'uuid', direction: 'desc'},
+            'name asc': { field: 'name', direction: 'asc'},
+            'name desc': { field: 'name', direction: 'desc'},
+            'shortDescription asc': { field: 'shortDescription', direction: 'asc'},
+            'shortDescription desc': { field: 'shortDescription', direction: 'desc'},
         };
     }
 

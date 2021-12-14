@@ -73,15 +73,15 @@
       <tr class="collapseRow safari-card-fix">
         <td colspan="8">
           <flip-card params="{
-                  dataId: $data.uuid(),
-                  tabId: $parent.tabId,
-                  collapsable: true,
-                  elementId: 'trap_list',
-                  context: {
-                    data: $data,
-                    encounter: $component.encounter,
-                  }
-                }">
+            dataId: $data.uuid(),
+            tabId: $parent.tabId,
+            collapsable: true,
+            elementId: 'trap_list',
+            context: {
+              data: $data,
+              encounter: $component.encounter,
+            }
+          }">
             <div class="front" data-bind="with: context.data">
               <div>
                 <card-edit-actions params="{ flip: $parent.flip }"></card-edit-actions>

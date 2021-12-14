@@ -17,13 +17,7 @@ export class Treasure extends KOModel {
         include: ['coreUuid', 'encounterUuid', 'type', 'uuid']
     };
 
-    TYPE = {
-        MAGIC_ITEM: 'magic_item',
-        ITEM: 'item',
-        WEAPON: 'weapon',
-        COINS: 'coins',
-        ARMOR: 'armor'
-    };
+    TYPE = Treasure.TYPE;
 
     VALUE_TYPES = {
         [this.TYPE.MAGIC_ITEM]: EncounterMagicItem,
@@ -38,6 +32,12 @@ export class Treasure extends KOModel {
     encounterUuid = ko.observable();
     type = ko.observable();
     value = ko.observable();
+
+    // Convenience
+
+    name = ko.pureComputed(() => (this.value().name()));
+
+    shortDescription = ko.pureComputed(() => (this.value().shortDescription()));
 
     // Helpers
 
@@ -84,3 +84,12 @@ export class Treasure extends KOModel {
         this.value(modelInstance);
     }
 }
+
+
+Treasure.TYPE = {
+    MAGIC_ITEM: 'magic_item',
+    ITEM: 'item',
+    WEAPON: 'weapon',
+    COINS: 'coins',
+    ARMOR: 'armor'
+};

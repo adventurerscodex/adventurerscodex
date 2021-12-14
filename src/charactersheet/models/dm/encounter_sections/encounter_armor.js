@@ -22,7 +22,7 @@ export class EncounterArmor extends KOModel {
 
     // Armor fields
     name = ko.observable('');
-    armorType = ko.observable('');
+    type = ko.observable('');
     price = ko.observable('');
     magicalModifier = ko.observable(0);
     currencyDenomination = ko.observable('');
@@ -31,10 +31,6 @@ export class EncounterArmor extends KOModel {
     stealth = ko.observable('');
     description = ko.observable('');
     equipped = ko.observable(false);
-
-    armorTypeOptions = ko.observableArray(Fixtures.armor.armorTypeOptions);
-    armorStealthOptions = ko.observableArray(Fixtures.armor.armorStealthOptions);
-    armorCurrencyDenominationOptions = Fixtures.general.currencyDenominationList;
 
     acLabel = ko.pureComputed(() => {
         if (this.armorClass()) {
@@ -79,6 +75,10 @@ export class EncounterArmor extends KOModel {
         return this.weight() !== '' && this.weight() >= 0 ? this.weight() + ' lbs.' : '0 lbs.';
     });
 
+    priceLabel = ko.pureComputed(() => (
+        `${this.price() || 0} ${this.currencyDenomination() || ''}`
+    ));
+
     nameLabel = ko.pureComputed(() => {
         return this.name();
     });
@@ -99,30 +99,6 @@ export class EncounterArmor extends KOModel {
         let treasure = pick(params, EncounterArmor.mapping.include);
         treasure.value = pick(params, EncounterArmor.armorFields);
         return treasure;
-    };
-
-    buildModelFromValues = (values) => {
-        let keys = Object.keys(values);
-        keys.forEach((key) => {
-            if (key === 'type') {
-                this['armorType'] = values[key];
-            } else {
-                this[key] = values[key];
-            }
-        });
-    };
-
-    getValues = () => {
-        let values = {};
-        EncounterArmor.armorFields.forEach((field) => {
-            if (field === 'armorType') {
-                values['type'] = this[field];
-            } else {
-                values[field] = this[field];
-            }
-        });
-
-        return values;
     };
 }
 

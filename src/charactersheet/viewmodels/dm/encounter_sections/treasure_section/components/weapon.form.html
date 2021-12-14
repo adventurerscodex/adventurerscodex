@@ -1,174 +1,266 @@
-<form class="form-horizontal" data-bind="validate: weaponValidation">
-  <div class="form-group ui-front">
-    <label for="weaponName"
-           class="col-sm-2 control-label">
-           Name<i class="required"></i>
-          </label>
-    <div class="col-sm-10">
-      <input type="text"
-             class="form-control"
-             name="name"
-             id="weaponName"
-             placeholder="Short Sword"
-             data-bind='textInput: blankTreasure().name, hasFocus: weaponFirstElementFocus,
-               autocomplete: { source: treasurePrePopFilter, onselect: populateTreasure }'>
+<form data-bind="submit: submit, with: entity().value" autocomplete="off">
+  <card-submit-actions params="{reset: $component.reset}"></card-submit-actions>
+  <!-- ko if: $component.addForm -->
+  <div class="h4 collapsable-card-title">New Weapon</div>
+  <!-- /ko -->
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label>Name</label>
+      <input
+        type="text"
+        class="form-control"
+        name="name"
+        placeholder="Short Sword"
+        data-bind="
+          textInput: name,
+          hasFocus: $component.formElementHasFocus,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.name },
+          autocomplete: {
+            source: $component.prePopFilter,
+            onselect: $component.populate,
+          }
+        "
+      />
     </div>
   </div>
-  <div class="form-group">
-    <label for="weaponDmg"
-           class="col-sm-2 control-label">
-           Damage<i class="required"></i>
-          </label>
-      <div class="col-sm-10">
-        <input type="text"
-               class="form-control"
-               name="damage"
-               id="weaponDmg"
-               placeholder="1D4"
-               data-bind='textInput: blankTreasure().damage'>
-      </div>
-  </div>
-  <div class="form-group">
-    <label for="weaponHit"
-           class="col-sm-2 control-label">Magical Modifier</label>
-    <div class="col-sm-10">
-      <input type="number" class="form-control"
-             id="weaponHit"
-             name="toHitModifier"
-             placeholder="Place hit bonus here"
-             data-bind='textInput: blankTreasure().toHitModifier'>
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label>Damage</label>
+      <input
+        type="text"
+        class="form-control"
+        name="damage"
+        placeholder="1D4"
+        data-bind="
+          textInput: damage,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.damage },
+        "
+      />
     </div>
   </div>
-  <div class="form-group ui-front">
-    <label for="weaponType"
-           class="col-sm-2 control-label">
-           Type<i class="required"></i>
-          </label>
-      <div class="col-sm-10">
-      <input class="form-control"
-             placeholder="Ranged"
-             name="type"
-             data-bind="textInput: blankTreasure().weaponType, autocomplete: {
-                        source: blankTreasure().weaponTypeOptions,
-                        onselect: setWeaponType }">
-      </div>
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label>Magical Modifier</label>
+      <input
+        type="number"
+        class="form-control"
+        name="toHitModifier"
+        placeholder="0"
+        data-bind="
+          value: magicalModifier,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.toHitModifier },
+        "
+      />
+    </div>
   </div>
-  <div class="form-group ui-front">
-    <label for="weaponHandedness"
-           class="col-sm-2 control-label">Handedness</label>
-      <div class="col-sm-10">
-      <input class="form-control"
-              placeholder="One-Handed"
-              name="handedness"
-              data-bind="textInput: blankTreasure().handedness, autocomplete: {
-                        source: blankTreasure().weaponHandednessOptions,
-                        onselect: setWeaponHandedness }">
-      </div>
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label>Type</label>
+      <input
+        type="text"
+        class="form-control"
+        name="damage"
+        placeholder="1D4"
+        data-bind="
+          textInput: type,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.type },
+          autocomplete: {
+            source: $component.typeOptions,
+            onselect: $component.setType,
+          }
+        "
+      />
+    </div>
   </div>
-  <div class="form-group ui-front">
-    <label for="weaponProficiency"
-           class="col-sm-2 control-label">Proficiency</label>
-      <div class="col-sm-10">
-      <input class="form-control"
-              placeholder="Simple"
-              name="proficiency"
-              data-bind="textInput: blankTreasure().proficiency, autocomplete: {
-                        source: blankTreasure().weaponProficiencyOptions,
-                        onselect: setWeaponProficiency }">
-      </div>
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label>Handedness</label>
+      <input
+        type="text"
+        class="form-control"
+        name="damage"
+        placeholder="One-Handed"
+        data-bind="
+          textInput: handedness,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.handedness },
+          autocomplete: {
+            source: $component.handednessOptions,
+            onselect: $component.setHandedness,
+          }
+        "
+      />
+    </div>
   </div>
-  <div class="form-group ui-front">
-    <label for="weaponPrice"
-           class="col-sm-2 control-label">Price</label>
-    <div class="col-sm-10">
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label>Proficiency</label>
+      <input
+        type="text"
+        class="form-control"
+        name="proficiency"
+        placeholder="Simple"
+        data-bind="
+          textInput: handedness,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.proficiency },
+          autocomplete: {
+            source: $component.proficiencyOptions,
+            onselect: $component.setProficiency,
+          }
+        "
+      />
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label>Price</label>
       <div class="input-group override-tight-inner">
-        <input type="number" class="form-control input-jquery-addon"
-             id="weaponPrice"
-             name="price"
-             placeholder="5"
-             data-bind='textInput: blankTreasure().price'>
-         <span class="input-group-addon input-group-addon-jquery">
-          <input class="form-control"
-                 placeholder="GP"
-                 name="currencyDenomination"
-                 data-bind="textInput: blankTreasure().currencyDenomination, autocomplete: {
-                        source: blankTreasure().weaponCurrencyDenominationOptions,
-                        onselect: setWeaponCurrencyDenomination }">
+        <input
+          type="text"
+          class="form-control input-jquery-addon"
+          name="price"
+          placeholder="5"
+          data-bind="
+            value: price,
+            event: { blur: $component.reviewInput, invalid: $component.invalidate },
+            attr: { ...$component.validation.price },
+          "
+        />
+        <span class="input-group-addon input-group-addon-sm input-group-addon-jquery">
+          <input
+            class="form-control"
+            placeholder="GP"
+            name="currencyDenomination"
+            data-bind="
+              value: currencyDenomination,
+              event: { blur: $component.reviewInput, invalid: $component.invalidate },
+              attr: { ...$component.validation.price },
+              autocomplete: {
+                source: $component.currencyDenominationOptions,
+                onselect: $component.setCurrencyDenomination
+              },
+            "
+          />
         </span>
       </div>
     </div>
   </div>
-  <div class="form-group">
-    <label for="weaponWeight"
-           class="col-sm-2 control-label">Weight</label>
-      <div class="col-sm-10">
-        <input type="number" class="form-control"
-               id="weaponWeight"
-               name="weight"
-               placeholder="6"
-               data-bind='textInput: blankTreasure().weight'>
-      </div>
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label>Weight</label>
+      <input
+        type="text"
+        class="form-control"
+        name="weight"
+        placeholder="10"
+        data-bind="
+          value: weight,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.weight },
+        "
+      />
+    </div>
   </div>
-  <div class="form-group">
-    <label for="weaponRange"
-           class="col-sm-2 control-label">Range</label>
-      <div class="col-sm-10">
-        <input type="text"
-               class="form-control"
-               name="range"
-               id="weaponRange"
-               placeholder="25/100"
-               data-bind='textInput: blankTreasure().range'>
-      </div>
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label>Range</label>
+      <input
+        type="text"
+        class="form-control"
+        name="range"
+        placeholder="10"
+        data-bind="
+          value: range,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.range },
+        "
+      />
+    </div>
   </div>
-  <div class="form-group ui-front">
-    <label for="weaponDamageType"
-           class="col-sm-2 control-label">Damage Type</label>
-      <div class="col-sm-10">
-      <input class="form-control"
-             placeholder="Fire"
-             name="damageType"
-             data-bind="textInput: blankTreasure().damageType, autocomplete: {
-                        source: blankTreasure().weaponDamageTypeOptions,
-                        onselect: setWeaponDamageType }">
-      </div>
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label>Damage Type</label>
+      <input
+        type="text"
+        class="form-control"
+        name="damageType"
+        placeholder="Fire"
+        data-bind="
+          value: damageType,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.damageType },
+          autocomplete: {
+            source: $component.damageTypeOptions,
+            onselect: $component.setDamageType
+          },
+        "
+      />
+    </div>
   </div>
-  <div class="form-group ui-front">
-    <label for="weaponProperty"
-           class="col-sm-2 control-label">Property</label>
-      <div class="col-sm-10">
-      <input class="form-control"
-              placeholder="Finesse"
-              name="property"
-              data-bind="textInput: blankTreasure().property, autocomplete: {
-                        source: blankTreasure().weaponPropertyOptions,
-                        onselect: setWeaponProperty }">
-      </div>
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label>Property</label>
+      <input
+        type="text"
+        class="form-control"
+        name="property"
+        placeholder="Finesse"
+        data-bind="
+          value: property,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.property },
+          autocomplete: {
+            source: $component.propertyOptions,
+            onselect: $component.setProperty
+          },
+        "
+      />
+    </div>
   </div>
-  <div class="form-group">
-    <label for="weaponQuantity"
-           class="col-sm-2 control-label">Quantity</label>
-      <div class="col-sm-10">
-        <input type="number" class="form-control"
-               id="weaponQuantity"
-               name="quantity"
-               placeholder="1"
-               data-bind='textInput: blankTreasure().quantity'>
-      </div>
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label>Quantity</label>
+      <input
+        type="text"
+        class="form-control"
+        name="quantity"
+        placeholder="1"
+        data-bind="
+          value: quantity,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.quantity },
+        "
+      />
+    </div>
   </div>
-
-  <div class="form-group">
-    <label for="weaponDescription"
-           class="col-sm-2 control-label">Description</label>
-      <div class="col-sm-10">
-        <textarea type="password"
-                  class="form-control"
-                  name="description"
-                  id="weaponDescription"
-                  rows="4"
-                  placeholder="A sword...that is short..."
-                  data-bind='textInput: blankTreasure().description'>
-        </textarea>
-      </div>
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label>Description</label>
+      <textarea
+        type="text"
+        class="form-control"
+        name="description"
+        rows="4"
+        placeholder="Armor of damage blocking"
+        data-bind="
+          value: description,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.description },
+        "
+      ></textarea>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <form-submit-actions params="{
+      reset: $component.reset,
+      delete: $component.delete,
+      addForm: $component.addForm,
+      showDisclaimer: $component.showDisclaimer
+    }"></form-submit-actions>
   </div>
 </form>
