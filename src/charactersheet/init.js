@@ -2,6 +2,7 @@
 import 'babel-polyfill';
 import 'bootstrap';
 import 'bin/knockout-validation';
+import 'bin/knockout-bootstrap-collapse';
 import {
     AuthenticationServiceManager,
     HealthinessStatusServiceComponent,

@@ -1,6 +1,5 @@
 export { CampaignMapsAndImagesViewModel } from 'charactersheet/viewmodels/dm/campaign_maps_and_images';
 export { EncounterViewModel } from 'charactersheet/viewmodels/dm/encounter';
-export { EncounterCellViewModel } from 'charactersheet/viewmodels/dm/encounter_cell';
 export { EncounterDetailViewModel } from 'charactersheet/viewmodels/dm/encounter_detail';
 export { CampaignOverviewViewModel } from 'charactersheet/viewmodels/dm/overview';
 export { PartyViewModel } from 'charactersheet/viewmodels/dm/party';

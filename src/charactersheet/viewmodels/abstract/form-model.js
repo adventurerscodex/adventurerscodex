@@ -30,6 +30,7 @@ const noOp = (entity) => { /* no op */ };
  **/
 
 export class AbstractFormModel {
+
     constructor(params) {
         this.flip = params.flip ? params.flip : noOp;
         this.show = params.show ? params.show : ko.observable(true);
@@ -101,7 +102,7 @@ export class AbstractFormModel {
         /* Implement via child classes */
     }
 
-    reset() {
+    reset = () => {
         // By the power of subscriptions, flip calls refresh;
         this.flip();
     }

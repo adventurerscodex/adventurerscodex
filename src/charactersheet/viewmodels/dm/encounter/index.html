@@ -1,31 +1,25 @@
 <column-navigation params="context: $data, collapseOn: 'sm'">
-  <!-- ko using: context -->
-  <div class="card-title h4">
-    Encounters<br />
-    <small>
-      Track Events and Places
-    </small>
-    <div class="edit-btn btn-group">
-      <button class="btn btn-link" data-bind="click: openAddModal">
-        <i class="fa fa-plus fa-color-hover-success fa-color fa-lg clickable" aria-hidden="true"></i>
-      </button>
+  <!-- ko with: context -->
+  <flip-card params="{
+    tabId: 'encounter-tab',
+    elementId: 'encounter-id',
+    context: {
+      data: $data,
+      column: $parent,
+     }
+  }">
+    <div class="front">
+      <encounters-view params="
+        flip: flip,
+        column: context.column,
+      "></encounters-view>
     </div>
-  </div>
-  <hr class="ac-table-header">
-  <nested-list params="
-    cells: encounterCells,
-    selectedCell: selectedCell,
-    ondelete: deleteEncounter,
-    onadd: openAddModalWithParent,
-    onselect: cell => {
-      selectEncounter(cell);
-      $parent.push('encounter-detail', {encounter: selectedEncounter});
-    }"
-  >
-  </nested-list>
+    <div class="back">
+      <encounters-edit params="
+        flip: flip,
+        column: context.column,
+      "></encounters-edit>
+    </div>
+  </flip-card>
   <!-- /ko -->
 </column-navigation>
-
-<encounter-add-edit-modal
-  params="encounter: modalEncounter, openModal: openModal, onsave: modalSave">
-</encounter-add-edit-modal>

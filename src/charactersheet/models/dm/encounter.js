@@ -32,6 +32,8 @@ export class Encounter extends KOModel {
 
     /* Public Methods */
 
+    id = ko.pureComputed(() => (this.uuid()));
+
     displayName = ko.pureComputed(function() {
         if (!ko.unwrap(self.name)) {
             return 'Untitled Encounter';
@@ -39,20 +41,15 @@ export class Encounter extends KOModel {
         return this.name();
     });
 
-    removeChild = function(childId) {
-        //         this.children(this.children().filter(function(id, idx, _) {
-        //             return id !== childId;
-        //         }));
+    toggleIsOpen = async () => {
+        this.isOpen(!this.isOpen());
+        // Using bare ps.save(); don't want notifications for this
+        await this.ps.save();
     };
 
-    getParent = function() {
-        //         var key = CoreManager.activeCore().uuid();
-        //         return PersistenceService.findByPredicates(Encounter, [
-        //             new KeyValuePredicate('encounterId', self.parent()),
-        //             new KeyValuePredicate('characterId', key)
-        //         ])[0];
-    };
-
+    arrowIconClass = ko.pureComputed(() => (
+        this.isOpen() ? 'fa fa-caret-down' : 'fa fa-caret-right'
+    ));
 
     /**
      * Due to the recursive nature of Encounters, they require a custom import.

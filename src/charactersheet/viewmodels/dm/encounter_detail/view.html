@@ -9,11 +9,7 @@
   <!-- ko ifnot: encounter().location -->
   <small>&nbsp;</small>
   <!--/ko -->
-  <div class="edit-btn btn-group">
-    <button class="btn btn-link" data-bind="click: $component.flip">
-      <i class="fa fa-pencil-square-o fa-color-hover-success fa-color fa-lg clickable" aria-hidden="true"></i>
-    </button>
-  </div>
+  <card-edit-actions params="{ flip: flip }"></card-edit-actions>
 </div>
 <hr class="ac-table-header">
 <!-- Encounter tabs -->

@@ -1,0 +1,41 @@
+<div id="encounter-pane">
+  <div class="card-title h4">
+    Encounters<br />
+    <small>
+      Track Events and Places
+    </small>
+    <card-edit-actions params="{ flip: flip }" />
+  </div>
+  <hr class="ac-table-header">
+  <nested-list params="
+    elementId: 'encounter-view-list',
+    cells: entities,
+    onselect: entity => {
+      active(entity);
+      column.push('encounter-detail', {encounter: active});
+    }"
+  ></nested-list>
+  <div class="mt-2 pt-2 border-top">
+    <div id="add-encounter" class="collapse add-card">
+      <encounter-form
+        params="{
+          containerId: 'add-encounter',
+          show: $component.displayAddForm,
+          flip: $component.toggleShowAddForm,
+        }"
+      ></encounter-form>
+    </div>
+    <!-- ko ifnot: $component.displayAddForm -->
+    <button
+      type="button"
+      class="btn btn-link btn-sm btn-block"
+      data-toggle="collapse"
+      data-target="#add-encounter"
+      data-bind="click: $component.toggleShowAddForm"
+    >
+      <i class="fa fa-plus"></i>
+      Add Encounter
+    </button>
+    <!-- /ko -->
+  </div>
+</div>
