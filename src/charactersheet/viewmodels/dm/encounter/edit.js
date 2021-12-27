@@ -13,6 +13,7 @@ class EncountersEditViewModel extends AbstractEncounterListViewModel {
         autoBind(this);
 
         this.column = params.column;
+        this.visible = params.visible;
         this.flip = params.flip;
         this.active = ko.observable();
     }
@@ -30,7 +31,10 @@ class EncountersEditViewModel extends AbstractEncounterListViewModel {
     addToList(item) {
         super.addToList(item);
 
-        this.flip();
+        // Don't flip if the normal list view is visible.
+        if (ko.unwrap(this.visible)) {
+            this.flip();
+        }
     }
 }
 

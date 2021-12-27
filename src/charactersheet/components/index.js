@@ -12,4 +12,4 @@ import { PreviewEditViewModel } from './preview-edit';
 import { ProficiencyTypeComponentViewModel } from './proficiency-marker';
 import './column-navigation';
 import './back-button';
-import './markdown-disclaimer';
+import './markdown-help';

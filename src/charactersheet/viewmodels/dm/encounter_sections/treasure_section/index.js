@@ -65,14 +65,6 @@ class TreasureSectionViewModel extends AbstractEncounterTabularViewModel {
         SortService.sortAndFilter(this.entities(), this.sort(), null)
     ), this);
 
-    // Actions
-
-    async toggleExhibit(treasure) {
-        treasure.isExhibited(!treasure.isExhibited());
-        await treasure.save();
-        this.markAsExhibited(treasure.uuid());
-    }
-
     // Events
 
     partyDidChange(party) {

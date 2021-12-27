@@ -44,7 +44,7 @@
               </td>
               <!-- ko if: $parent.shouldShowExhibitButton -->
               <td class="text-right col-md-1">
-                <a data-bind="click: $parent.toggleExhibit" href="#" title="Send Player's Exhibit">
+                <a data-bind="click: $parent.toggleExhibit" href="#" title="Send to Exhibit">
                   <i data-bind="css: { exhibitActiveIcon: isExhibited }" class="fa fa-desktop fa-color-hover">
                   </i>
                 </a>
@@ -53,7 +53,7 @@
               <!-- ko ifnot: $parent.shouldShowExhibitButton -->
               <td class="text-right col-md-1">
                 <span class="fa fa-desktop fa-disabled" style="cursor:pointer;"
-                  data-bind="popover: { content: 'Join a Party send Player\'s Exhibit' }">
+                  data-bind="popover: { content: 'Join a Party send to Exhibit' }">
                 </span>
               </td>
               <!-- /ko -->
@@ -159,7 +159,7 @@
                       placeholder="This is the description that your players will see when sent via the chat."
                       data-bind="value: blankMapOrImage().playerText, markdownEditor: true">
               </textarea>
-              <markdown-disclaimer />
+              <markdown-help />
             </div>
             <div class="col-sm-1 control-label">
               <span class="fa fa fa-desktop" style="cursor:pointer;"
@@ -168,15 +168,7 @@
             </div>
           </div>
           <div class="modal-footer">
-<<<<<<< HEAD
-            <markdown-disclaimer />
-=======
-            <small class="text-center">
-              <p>
-                Fields marked with <i class="fa fa fa-desktop fa-color-hover"></i> will be shown to the players in the Exhibit.
-              </p>
-            </small>
->>>>>>> master
+            <markdown-help />
             <button type="submit"
                     class="btn btn-primary">
                     Add
@@ -299,7 +291,7 @@
                            name="description"
                            data-bind="value: description, markdownEditor: true">
                     </textarea>
-                    <markdown-disclaimer />
+                    <markdown-help />
                   </div>
               </div>
               <div class="form-group">
@@ -321,7 +313,7 @@
                 </div>
               </div>
               <div class="modal-footer">
-                <markdown-disclaimer />
+                <markdown-help />
                 <button type="submit"
                         class="btn btn-primary">Done</button>
               </div>

@@ -1,6 +1,6 @@
 import ko from 'knockout';
 
-ko.components.register('markdown-disclaimer', {
+ko.components.register('markdown-help', {
     template: '\
     <small class="text-muted"> \
       Text in this panel can be styled using Markdown. Click \

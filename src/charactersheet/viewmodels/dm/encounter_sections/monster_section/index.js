@@ -41,12 +41,12 @@ class MonsterSectionViewModel extends AbstractEncounterTabularViewModel {
     // UI
 
     name = ko.pureComputed(() => {
-        const index = Fixtures.encounter.sections.mapsAndImages.index;
+        const index = Fixtures.encounter.sections.monsters.index;
         return this.encounter().sections()[index].name();
     });
 
     tagline = ko.pureComputed(() => {
-        const index = Fixtures.encounter.sections.mapsAndImages.index;
+        const index = Fixtures.encounter.sections.monsters.index;
         return this.encounter().sections()[index].tagline();
     });
 
