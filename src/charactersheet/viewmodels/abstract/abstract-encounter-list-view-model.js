@@ -1,3 +1,4 @@
+import { Utility } from 'charactersheet/utilities';
 import { AbstractTabularViewModel } from 'charactersheet/viewmodels/abstract';
 import ko from 'knockout';
 

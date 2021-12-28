@@ -12,7 +12,9 @@
             height: $component.imageHeight,
             width: $component.imageWidth,
           },
-          css: imageBorderClass">
+          css: imageBorderClass
+        "
+      >
         <div class="image-upload-preview text-center" data-bind="with: profileImage">
           <!-- ko if: imageUrl -->
           <img class="img-circle"
@@ -29,7 +31,12 @@
           <!-- /ko -->
         </div>
       </div>
-      <!-- <character-image></character-image> -->
+      <div class="connection-status">
+        <div
+          class="circle-indicator"
+          data-bind="css: statusIndicatorClass"
+        ></div>
+      </div>
     </div>
     <div class="col-sm-10 col-xs-12 characters-player-name">
       <div class="row">
