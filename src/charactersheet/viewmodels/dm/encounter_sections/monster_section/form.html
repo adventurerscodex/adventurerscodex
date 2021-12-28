@@ -16,6 +16,10 @@
           hasFocus: $component.formElementHasFocus,
           event: { blur: $component.reviewInput, invalid: $component.invalidate },
           attr: { ...$component.validation.name },
+          autocomplete: {
+            source: $component.prePopFilter,
+            onselect: $component.populate,
+          }
         "
       />
     </div>

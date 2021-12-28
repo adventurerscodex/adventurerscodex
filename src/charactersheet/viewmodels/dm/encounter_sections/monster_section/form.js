@@ -14,6 +14,9 @@ class MonsterFormViewModel extends AbstractChildEncounterFormModel {
         autoBind(this);
     }
 
+    prePopSource = 'monsters';
+    prePopLimit = SELECTDATA.LONG;
+
     modelClass() {
         return Monster;
     }

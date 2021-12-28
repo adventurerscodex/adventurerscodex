@@ -56,7 +56,7 @@ export class Monster extends KOModel {
         Utility.string.createDirectDropboxLink(this.sourceUrl())
     ));
 
-    //Public Methods
+    // Public Methods
 
     findAbilityScoreByName = function(name) {
         var foundScore;
@@ -90,6 +90,24 @@ export class Monster extends KOModel {
     delete = async () => {
         await this.ps.delete();
         Notifications.monster.deleted.dispatch(this);
+    }
+
+    // Overrides
+
+    importValues = (values) => {
+        ko.mapping.fromJS(values, this._mapping, this);
+
+        // Now we just need to ensure that all ability scores are
+        // well formed. The DR has incomplete model data.
+        this.abilityScores().map(score => {
+            if (!ko.unwrap(score.shortName)) {
+                score.shortName = (
+                    score.name()
+                    .toUpperCase()
+                    .substring(0, 3)
+                );
+            }
+        });
     }
 }
 
