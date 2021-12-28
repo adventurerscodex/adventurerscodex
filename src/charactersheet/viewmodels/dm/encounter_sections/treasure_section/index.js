@@ -5,7 +5,7 @@ import {
     Utility
 } from 'charactersheet/utilities';
 import { AbstractEncounterTabularViewModel } from 'charactersheet/viewmodels/abstract';
-import { PartyService, SortService } from 'charactersheet/services/common';
+import { SortService } from 'charactersheet/services/common';
 import { Treasure } from 'charactersheet/models/dm';
 import ko from 'knockout';
 import { get } from 'lodash';
@@ -28,15 +28,9 @@ class TreasureSectionViewModel extends AbstractEncounterTabularViewModel {
     }
 
     fullScreen = ko.observable(false);
-    shouldShowExhibitButton = ko.observable(!!PartyService.party);
 
     modelClass() {
         return Treasure;
-    }
-
-    setUpSubscriptions() {
-        super.setUpSubscriptions();
-        this.subscriptions.push(Notifications.party.changed.add(this.partyDidChange));
     }
 
     // UI
@@ -64,26 +58,6 @@ class TreasureSectionViewModel extends AbstractEncounterTabularViewModel {
     filteredAndSortedEntities = ko.pureComputed(() =>  (
         SortService.sortAndFilter(this.entities(), this.sort(), null)
     ), this);
-
-    // Events
-
-    partyDidChange(party) {
-        this.shouldShowExhibitButton(!!party);
-
-        // Update everything that isn't on exhibit. This event can
-        // be fired from multiple places.
-        const exhibitUuid = get(party, 'exhibit.uuid', null);
-        this.markAsExhibited(exhibitUuid);
-    };
-
-    markAsExhibited(exhibitUuid) {
-        this.entities(
-            this.entities().map(treasure => {
-                treasure.isExhibited(treasure.uuid() === exhibitUuid);
-                return treasure;
-            })
-        );
-    }
 }
 
 

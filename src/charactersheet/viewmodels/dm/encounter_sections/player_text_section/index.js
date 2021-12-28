@@ -70,7 +70,17 @@ class ReadAloudTextSectionViewModel extends AbstractEncounterTabularViewModel {
 
     async toggleExhibit(rat) {
         rat.isExhibited(!rat.isExhibited());
-        await rat.save();
+        try {
+            await rat.save();
+        } catch(error) {
+            const message = !!error ? error.message : '';
+            Notifications.userNotification.dangerNotification.dispatch(
+                `Unable to update exhibit. ${message}`,
+                'Error'
+            );
+            rat.isExhibited(!rat.isExhibited());
+            return;
+        }
         this.markAsExhibited(rat.uuid());
     }
 

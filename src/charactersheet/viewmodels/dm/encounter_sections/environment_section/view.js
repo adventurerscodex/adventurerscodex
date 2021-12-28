@@ -35,7 +35,16 @@ class EnvironmentViewModel extends ViewModel {
 
     async toggleExhibit() {
         this.entity().isExhibited(!this.entity().isExhibited());
-        await this.entity().ps.save();
+        try {
+            await this.entity().ps.save();
+        } catch(error) {
+            const message = !!error ? error.message : '';
+            Notifications.userNotification.dangerNotification.dispatch(
+                `Unable to update exhibit. ${message}`,
+                'Error'
+            );
+            this.entity().isExhibited(!this.entity().isExhibited());
+        }
         this.markAsExhibited(
             this.entity().isExhibited()
                 ? this.entity().exhibitUuid()

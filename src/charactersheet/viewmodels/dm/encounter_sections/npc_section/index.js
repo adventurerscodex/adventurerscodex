@@ -71,7 +71,17 @@ class NPCSectionViewModel extends AbstractEncounterTabularViewModel {
 
     async toggleExhibit(npc) {
         npc.isExhibited(!npc.isExhibited());
-        await npc.save();
+        try {
+            await npc.save();
+        } catch(error) {
+            const message = !!error ? error.message : '';
+            Notifications.userNotification.dangerNotification.dispatch(
+                `Unable to update exhibit. ${message}`,
+                'Error'
+            );
+            npc.isExhibited(!npc.isExhibited());
+            return;
+        }
         this.markAsExhibited(npc.uuid());
     }
 

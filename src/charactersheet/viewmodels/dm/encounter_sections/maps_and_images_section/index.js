@@ -70,7 +70,17 @@ class MapsAndImagesSectionViewModel extends AbstractEncounterTabularViewModel {
 
     async toggleExhibit(moi) {
         moi.isExhibited(!moi.isExhibited());
-        await moi.save();
+        try {
+            await moi.save();
+        } catch(error) {
+            const message = !!error ? error.message : '';
+            Notifications.userNotification.dangerNotification.dispatch(
+                `Unable to update exhibit. ${message}`,
+                'Error'
+            );
+            moi.isExhibited(!moi.isExhibited());
+            return;
+        }
         this.markAsExhibited(moi.uuid());
     }
 

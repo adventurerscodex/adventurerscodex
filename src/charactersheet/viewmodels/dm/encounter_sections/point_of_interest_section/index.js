@@ -70,7 +70,17 @@ class PointOfInterestSectionViewModel extends AbstractEncounterTabularViewModel 
 
     async toggleExhibit(poi) {
         poi.isExhibited(!poi.isExhibited());
-        await poi.save();
+        try {
+            await poi.save();
+        } catch(error) {
+            const message = !!error ? error.message : '';
+            Notifications.userNotification.dangerNotification.dispatch(
+                `Unable to update exhibit. ${message}`,
+                'Error'
+            );
+            poi.isExhibited(!poi.isExhibited());
+            return;
+        }
         this.markAsExhibited(poi.uuid());
     }
 

@@ -70,7 +70,17 @@ class MonsterSectionViewModel extends AbstractEncounterTabularViewModel {
 
     async toggleExhibit(monster) {
         monster.isExhibited(!monster.isExhibited());
-        await monster.save();
+        try {
+            await monster.save();
+        } catch(error) {
+            const message = !!error ? error.message : '';
+            Notifications.userNotification.dangerNotification.dispatch(
+                `Unable to update exhibit. ${message}`,
+                'Error'
+            );
+            monster.isExhibited(!monster.isExhibited());
+            return;
+        }
         this.markAsExhibited(monster.uuid());
     }
 
