@@ -2,7 +2,7 @@ export * from './character_picker';
 export * from './characters';
 export * from './exhibit';
 export * from './login';
-export * from './notes';
+// export * from './../character/notes';
 export * from './party_manager';
 export * from './player_card';
 export * from './player_image';
