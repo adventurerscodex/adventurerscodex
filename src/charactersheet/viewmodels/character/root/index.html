@@ -191,6 +191,32 @@
       </a>
     </li>
     <li role="presentation"
+        id="tabPartyLink">
+      <a href="#party"
+         aria-controls="party"
+         role="tab"
+         data-toggle="tab"
+         id="partyTabTrigger"
+         class="tab-subtext"
+         data-bind="click: activatePartyTab">
+        <div class="visible-xs"
+             data-toggle="collapse"
+             data-target="#partyTab">
+          <img class="tab-icon"
+               data-bind="attr: { src: icons.partyTab }" />
+          <span class="text-center"
+                id="tabPartySpan"><small>Party</small></span>
+        </div>
+        <div class="hidden-xs">
+          <img class="tab-icon"
+               data-bind="attr: { src: icons.partyTab }" />
+          <br />
+          <span class="text-center"
+                id="tabPartySpan"><small>Party</small></span>
+        </div>
+      </a>
+    </li>
+    <li role="presentation"
         id="tabExhibitLink">
       <a href="#exhibit"
          aria-controls="exhibit"
@@ -373,6 +399,13 @@
     </div>
   </div>
   <!-- End Notes Tab -->
+  <div role="tabpanel"
+       class="tab-pane"
+       id="party"
+       data-bind="css: partyTabStatus">
+    <party></party>
+  </div>
+  <!-- End Exhibit Tab -->
   <div role="tabpanel"
        class="tab-pane"
        id="exhibit"

@@ -1,9 +1,17 @@
 <div class="card-title h4">
   Party Members<br />
+  <!-- ko if: isDM -->
   <small>
     Check on the health, status, and stats of your players. This dashboard updates
     in real time whenever your players make changes.
   </small>
+  <!-- /ko -->
+  <!-- ko if: isCharacter -->
+  <small>
+    See who's in your party and how they're doing. This can be useful in combat.
+    This dashboard updates in real time whenever anyone makes changes.
+  </small>
+  <!-- /ko -->
 </div>
 <hr class="ac-table-header">
 <!-- ko ifnot: isConnectedToParty -->
