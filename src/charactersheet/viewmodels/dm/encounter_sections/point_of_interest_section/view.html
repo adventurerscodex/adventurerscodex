@@ -15,7 +15,7 @@
       <img
         data-bind="
           attr: { src: sourceUrl },
-          click: () => $parent.fullScreen(!$parent.fullScreen())
+          click: () => $parent.fullScreen(sourceUrl())
         "
         class="clickable ml-auto mr-auto img-responsive img-rounded"
       />
@@ -35,10 +35,3 @@
     <div data-bind="markdownPreview: playerText"></div>
   </div>
 </div>
-
-<full-screen-image
-  params="
-    imageSource: poi.convertedDisplayUrl,
-    fullScreenStatus: fullScreen
-"
-></full-screen-image>

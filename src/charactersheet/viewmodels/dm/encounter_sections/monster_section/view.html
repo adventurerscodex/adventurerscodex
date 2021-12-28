@@ -4,7 +4,7 @@
       <img
         data-bind="
           attr: { src: convertedDisplayUrl },
-          click: $parent.toggleFullScreen,
+          click: () => $parent.fullScreen(convertedDisplayUrl())
         "
         width="80"
         height="80"
@@ -136,10 +136,3 @@
     <div data-bind="markdownPreview: playerText"></div>
   </div>
 </div>
-
-<full-screen-image
-  params="
-    imageSource: monster.convertedDisplayUrl,
-    fullScreenStatus: fullScreen
-"
-></full-screen-image>
