@@ -8,6 +8,15 @@
   <div class="col-sm-6 col-xs-12">
     <b>Weight:</b>&nbsp;<span data-bind="text: weightLabel"></span>
   </div>
+  <div class="col-sm-6 col-xs-12" data-bind="visible: quantity() > 1">
+    <b>Total Weight:</b>&nbsp;<span data-bind="text: totalWeightLabel"></span>
+  </div>
+  <div class="col-sm-6 col-xs-12">
+    <b>Price:</b>&nbsp;<span data-bind="text: costLabel"></span>
+  </div>
+  <div class="col-sm-6 col-xs-12" data-bind="visible: quantity() > 1">
+    <b>Total Value:</b>&nbsp;<span data-bind="text: totalCostLabel"></span>
+  </div>
   <div class="col-sm-6 col-xs-12">
     <b>Quantity:</b>&nbsp;<span data-bind="text: quantity"></span>
   </div>

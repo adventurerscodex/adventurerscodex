@@ -6,14 +6,23 @@
 
 <hr />
 <div class="row">
-  <div class="col-sm-4 col-xs-12">
+  <div class="col-sm-6 col-xs-12">
     <b>Type:</b>&nbsp;<span data-bind="text: type"></span>
   </div>
-  <div class="col-sm-4 col-xs-12">
+  <div class="col-sm-6 col-xs-12">
     <b>Weight:</b>&nbsp;<span data-bind="text: weightLabel"></span>
   </div>
-  <div class="col-sm-4 col-xs-12">
+  <div class="col-sm-6 col-xs-12" data-bind="visible: maxCharges">
     <b>Max Charges:</b>&nbsp;<span data-bind="text: maxCharges"></span>
+  </div>
+  <div class="col-sm-6 col-xs-12" data-bind="visible: usedCharges">
+    <b>Charges:</b>&nbsp;<span data-bind="text: usedCharges"></span>
+  </div>
+  <div class="col-sm-6 col-xs-12" data-bind="visible: requiresAttunement">
+    <b>Requires Attunement</b>
+    <span data-bind="visible: attuned" class="text-muted">
+      (Attuned)
+    </span>
   </div>
 </div>
 
