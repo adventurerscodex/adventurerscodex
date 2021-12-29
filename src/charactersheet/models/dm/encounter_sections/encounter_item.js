@@ -41,10 +41,9 @@ export class EncounterItem extends KOModel {
     itemCurrencyDenominationOptions = Fixtures.general.currencyDenominationList;
 
     totalCost = ko.pureComputed(() => {
-        if (this.quantity() &&
-            this.quantity() > 0 &&
-            this.cost() &&
-            this.cost() > 0) {
+        if (this.quantity() && this.quantity() > 0
+            && this.cost() && this.cost() > 0
+        ) {
             return parseInt(this.quantity()) * parseInt(this.cost());
         }
         return 0;
