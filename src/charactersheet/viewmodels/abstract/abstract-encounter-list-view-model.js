@@ -12,7 +12,15 @@ export class AbstractEncounterListViewModel extends AbstractTabularViewModel {
     addToList(item) {
         if (item && item.parent()) {
             const parent = this.deepFind(item.parent());
-            parent.children.push(item);
+
+            // There is a case where previously added children
+            // are actually shared objects, so we need a new copy.
+            const modelClass = this.modelClass();
+            const newItem = new modelClass();
+            newItem.importValues(item.exportValues());
+
+            parent.children.push(newItem);
+
             if (!parent.isOpen()) {
                 parent.toggleIsOpen();
             }
