@@ -55,8 +55,10 @@ class MonsterSectionViewModel extends AbstractEncounterTabularViewModel {
             ...super.sorts(),
             'name asc': { field: 'name', direction: 'asc'},
             'name desc': { field: 'name', direction: 'desc'},
-            'description asc': { field: 'description', direction: 'asc'},
-            'description desc': { field: 'description', direction: 'desc'},
+            'armorClass asc': { field: 'armorClass', direction: 'asc'},
+            'armorClass desc': { field: 'armorClass', direction: 'desc'},
+            'hitPoints asc': { field: 'hitPoints', direction: 'asc'},
+            'hitPoints desc': { field: 'hitPoints', direction: 'desc'},
             'isExhibited asc': { field: 'isExhibited', direction: 'asc'},
             'isExhibited desc': { field: 'isExhibited', direction: 'desc'},
         };

@@ -16,10 +16,16 @@ class EncounterViewModel extends AbstractEncounterListViewModel {
         this.column = params.column;
         this.flip = params.flip;
         this.active = ko.observable();
+        this.forceCardResize = params.forceCardResize;
     }
 
     modelClass() {
         return Encounter;
+    }
+
+    toggleAddForm() {
+        super.toggleAddForm();
+        this.forceCardResize();
     }
 }
 

@@ -14,19 +14,14 @@
           <span data-bind="css: sortArrow('name')"></span>
         </th>
         <th data-bind="click: ()=> {sortBy('armorClass');}"
-            class="col-xs-3 hidden-xs hidden-sm">
-          Armor Class
+            class="col-xs-2 hidden-xs hidden-sm">
+          AC
           <span data-bind="css: sortArrow('armorClass')"></span>
         </th>
         <th data-bind="click: ()=> {sortBy('hitPoints');}"
-            class="col-xs-2 hidden-xs hidden-sm">
+            class="col-xs-4 hidden-xs hidden-sm">
           Hit Points
           <span data-bind="css: sortArrow('hitPoints')"></span>
-        </th>
-        <th data-bind="click: ()=> {sortBy('speed');}"
-            class="col-xs-1 hidden-xs hidden-sm">
-          Speed
-          <span data-bind="css: sortArrow('speed')"></span>
         </th>
         <th data-bind="click: ()=> {sortBy('isExhibited');}"
             class="col-xs-1">
@@ -51,20 +46,14 @@
         }">
           <span data-bind="text: name"></span>
         </td>
-        <td class="hidden-xs hidden-sm" data-toggle="collapse" data-bind="attr: {
-          'data-target': `#monster_list_${uuid()}`,
+        <td class="hidden-xs hidden-sm" data-toggle="collapse" data-bind="
           text: armorClass,
-        }"></td>
-        <td class="hidden-xs hidden-sm" data-toggle="collapse" data-bind="attr: {
-          'data-target': `#monster_list_${uuid()}`,
+          attr: { 'data-target': `#monster_list_${uuid()}` }"></td>
+        <td class="hidden-xs hidden-sm" data-toggle="collapse" data-bind="
           text: hitPoints,
-        }"></td>
-        <td class="hidden-xs hidden-sm" data-toggle="collapse" data-bind="attr: {
-          'data-target': `#monster_list_${uuid()}`,
-          text: speed,
-        }"></td>
+          attr: { 'data-target': `#monster_list_${uuid()}` }"></td>
         <!-- ko if: $component.shouldShowExhibitButton -->
-        <td class="text-right">
+        <td class="text-center">
           <a data-bind="click: () => $component.toggleExhibit($data)" href="#" title="Send to Exhibit">
             <i data-bind="css: { exhibitActiveIcon: isExhibited }" class="fa fa-desktop fa-color-hover clickable">
             </i>
@@ -72,7 +61,7 @@
         </td>
         <!-- /ko -->
         <!-- ko ifnot: $component.shouldShowExhibitButton -->
-        <td class="text-right">
+        <td class="text-center">
           <span class="fa fa-desktop fa-disabled"
             data-bind="popover: { content: 'Join a Party in order to send to Exhibit' }">
           </span>
