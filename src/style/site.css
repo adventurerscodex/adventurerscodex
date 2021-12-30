@@ -59,14 +59,6 @@ html, body {
   height: 100vh;
 }
 
-body #content {
-  height: calc(100vh - var(--footer-height));
-}
-
-body #footer {
-  height: var(--footer-height);
-}
-
 nav.navbar {
   /* Bootstrap adds too much top padding below the nav-bar. */
   margin-bottom:15px;
