@@ -27,6 +27,14 @@ class EncounterViewModel extends AbstractEncounterListViewModel {
         super.toggleAddForm();
         this.forceCardResize();
     }
+
+    removeFromList(item) {
+        super.removeFromList(item);
+
+        // Pop off the children components so that there's
+        // no legacy, deleted views displayed.
+        this.column.popToRoot();
+    }
 }
 
 

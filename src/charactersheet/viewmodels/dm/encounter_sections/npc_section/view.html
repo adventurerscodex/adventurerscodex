@@ -5,23 +5,27 @@
       <small data-bind="text: race"></small>
     </h4>
   </div>
-  <div class="col-xs-12 d-flex">
-    <div class="hidden-xs hidden-sm d-flex-1" data-bind="visible: description">
-      <label>Description</label>
-      <div data-bind="markdownPreview: description"></div>
-    </div>
-    <div class="d-flex-1 text-center ml-2" data-bind="visible: sourceUrl">
-      <img
-        data-bind="
-          attr: { src: sourceUrl },
-          click: () => $parent.fullScreen(sourceUrl())
-        "
-        class="clickable ml-auto mr-auto img-responsive img-rounded"
-      />
-      <div>
-        <i class="text-muted">
-          Click on the image to view it in Full Screen.
-        </i>
+  <div class="col-xs-12">
+    <div class="d-flex">
+      <div class="hidden-xs hidden-sm d-flex-1" data-bind="visible: description">
+        <label>Description</label>
+        <div data-bind="markdownPreview: description"></div>
+      </div>
+      <div class="d-flex-1 text-center ml-2" data-bind="visible: sourceUrl">
+        <div class="d-block">
+          <img
+            data-bind="
+              attr: { src: sourceUrl },
+              click: () => $parent.fullScreen(sourceUrl())
+            "
+            class="clickable ml-auto mr-auto img-responsive img-rounded"
+          />
+          <div>
+            <i class="text-muted">
+              Click on the image to view it in Full Screen.
+            </i>
+          </div>
+        </div>
       </div>
     </div>
   </div>
