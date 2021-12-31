@@ -6,12 +6,18 @@ export class EncounterCoins extends KOModel {
     static __skeys__ = ['core', 'encounters', 'treasures'];
 
     static mapping = {
-        include: ['coreUuid', 'encounterUuid', 'type', 'uuid']
+        include: [
+            'coreUuid',
+            'encounterUuid',
+            'type',
+            'uuid',
+            'platinum',
+            'gold',
+            'electrum',
+            'silver',
+            'copper'
+        ]
     };
-
-    static wealthFields = ['platinum', 'gold', 'electrum', 'silver', 'copper'];
-
-    static allFields = ['coreUuid', 'encounterUuid', 'type', 'uuid', 'platinum', 'gold', 'electrum', 'silver', 'copper'];
 
     uuid = ko.observable();
     coreUuid = ko.observable();
@@ -77,12 +83,6 @@ export class EncounterCoins extends KOModel {
     totalWeightLabel = ko.pureComputed(() => {
         return this.totalWeight() + ' (lbs)';
     });
-
-    clean = (keys, params) => {
-        let treasure = pick(params, EncounterCoins.mapping.include);
-        treasure.value = pick(params, EncounterCoins.wealthFields);
-        return treasure;
-    };
 }
 
 

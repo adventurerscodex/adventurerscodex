@@ -9,20 +9,22 @@ export class EncounterMagicItem extends KOModel {
     static __skeys__ = ['core', 'encounters', 'treasures'];
 
     static mapping = {
-        include: ['coreUuid', 'encounterUuid', 'type', 'uuid']
+        include: [
+            'coreUuid',
+            'encounterUuid',
+            'type',
+            'uuid',
+            'name',
+            'magicItemType',
+            'rarity',
+            'requiresAttunement',
+            'attuned',
+            'maxCharges',
+            'usedCharges',
+            'weight',
+            'description'
+        ]
     };
-
-    static magicItemFields = [
-        'name',
-        'magicItemType',
-        'rarity',
-        'requiresAttunement',
-        'attuned',
-        'maxCharges',
-        'usedCharges',
-        'weight',
-        'description'
-    ];
 
     uuid = ko.observable();
     coreUuid = ko.observable();
@@ -30,6 +32,7 @@ export class EncounterMagicItem extends KOModel {
     type = ko.observable();
 
     // Magic Item Fields
+
     name = ko.observable('');
     magicItemType = ko.observable('');
     rarity = ko.observable('');

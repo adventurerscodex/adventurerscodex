@@ -11,17 +11,19 @@ export class EncounterItem extends KOModel {
     static __skeys__ = ['core', 'encounters', 'treasures'];
 
     static mapping = {
-        include: ['coreUuid', 'encounterUuid', 'type', 'uuid']
+        include: [
+            'coreUuid',
+            'encounterUuid',
+            'type',
+            'uuid',
+            'name',
+            'description',
+            'quantity',
+            'weight',
+            'cost',
+            'currencyDenomination'
+        ]
     };
-
-    static itemFields = [
-        'name',
-        'description',
-        'quantity',
-        'weight',
-        'cost',
-        'currencyDenomination'
-    ];
 
     uuid = ko.observable();
     coreUuid = ko.observable();
@@ -95,12 +97,6 @@ export class EncounterItem extends KOModel {
     totalWeightLabel = ko.pureComputed(() => {
         return  this.totalWeight() >= 0 ? this.totalWeight() + ' lbs.' : '0 lbs.';
     }, this);
-
-    clean = (keys, params) => {
-        let treasure = pick(params, EncounterItem.mapping.include);
-        treasure.value = pick(params, EncounterItem.itemFields);
-        return treasure;
-    };
 }
 
 

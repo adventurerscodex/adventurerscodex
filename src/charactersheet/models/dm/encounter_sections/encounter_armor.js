@@ -8,12 +8,22 @@ export class EncounterArmor extends KOModel {
     SHORT_DESCRIPTION_MAX_LENGTH = 100;
 
     static mapping = {
-        include: ['uuid', 'coreUuid', 'encounterUuid', 'type']
+        include: [
+            'uuid',
+            'coreUuid',
+            'encounterUuid',
+            'type',
+            'name',
+            'description',
+            'magicalModifier',
+            'weight',
+            'price',
+            'currencyDenomination',
+            'armorClass',
+            'stealth',
+            'equipped',
+        ]
     };
-
-    static armorFields = ['name', 'armorType', 'description', 'magicalModifier', 'weight', 'price', 'currencyDenomination', 'armorClass', 'stealth', 'equipped'];
-
-    static allFields = ['name', 'armorType', 'description', 'magicalModifier', 'weight', 'price', 'currencyDenomination', 'armorClass', 'stealth', 'equipped', 'uuid', 'coreUuid', 'encounterUuid', 'type'];
 
     uuid = ko.observable();
     coreUuid = ko.observable();

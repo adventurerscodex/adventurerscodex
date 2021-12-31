@@ -11,27 +11,29 @@ export class EncounterWeapon extends KOModel {
     SHORT_DESCRIPTION_MAX_LENGTH = 100;
 
     static mapping = {
-        include: ['coreUuid', 'encounterUuid', 'type', 'uuid']
+        include: [
+            'coreUuid',
+            'encounterUuid',
+            'type',
+            'uuid',
+            'name',
+            'type',
+            'damage',
+            'damageType',
+            'handedness',
+            'proficiency',
+            'price',
+            'currencyDenomination',
+            'magicalModifier',
+            'toHitModifier',
+            'weight',
+            'range',
+            'property',
+            'description',
+            'quantity',
+            'hitBonusLabel'
+        ]
     };
-
-    static weaponFields = [
-        'name',
-        'type',
-        'damage',
-        'damageType',
-        'handedness',
-        'proficiency',
-        'price',
-        'currencyDenomination',
-        'magicalModifier',
-        'toHitModifier',
-        'weight',
-        'range',
-        'property',
-        'description',
-        'quantity',
-        'hitBonusLabel'
-    ];
 
     uuid = ko.observable();
     coreUuid = ko.observable();
@@ -114,12 +116,6 @@ export class EncounterWeapon extends KOModel {
     weightLabel = ko.pureComputed(() => {
         return this.weight() !== '' && this.weight() >= 0 ? this.weight() + ' lbs.' : '0 lbs.';
     });
-
-    clean = (keys, params) => {
-        let treasure = pick(params, EncounterWeapon.mapping.include);
-        treasure.value = pick(params, EncounterWeapon.weaponFields);
-        return treasure;
-    };
 }
 
 
