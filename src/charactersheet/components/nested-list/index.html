@@ -1,6 +1,7 @@
 <div data-bind="foreach: cells" class="list-group no-bottom-margin master-list">
+  <!-- ko if: $component.shouldAllowSelection -->
   <div
-    class="list-group-item "
+    class="list-group-item"
     role="button"
     data-bind="
       click: () => $component.selectCell($data),
@@ -18,6 +19,26 @@
       addChild: () => $component.addCell($data),
     "></nested-list-cell>
   </div>
+  <!-- /ko -->
+  <!-- ko ifnot: $component.shouldAllowSelection -->
+  <div
+    class="list-group-item"
+    data-bind="
+      css: $component.isActiveCSS($data),
+    "
+  >
+    <nested-list-cell params="
+      entity: $data,
+      elementId: $component.elementId,
+      addComponent: $component.addComponent,
+      levels: $component.levels,
+      canAdd: $component.canAdd(),
+      canRemove: $component.canRemove(),
+      remove: () => $component.deleteCell($data),
+      addChild: () => $component.addCell($data),
+    "></nested-list-cell>
+  </div>
+  <!-- /ko -->
   <!-- ko if: $component.hasChildren($data) -->
   <div
     class="row collapse"
