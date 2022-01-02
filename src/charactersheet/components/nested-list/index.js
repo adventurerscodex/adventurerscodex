@@ -37,6 +37,7 @@ export function NestedListComponentViewModel(params) {
     self.onselect = params.onselect;
     self.ondelete = params.ondelete;
     self.onadd = params.onadd;
+    self.onload = params.onload;
 
     self.shouldAllowSelection = ko.observable(!!self.onselect);
 
@@ -48,6 +49,12 @@ export function NestedListComponentViewModel(params) {
     } else {
         self.levels = 4;
     }
+
+    self.load = function() {
+        if (self.onload) {
+            self.onload();
+        }
+    };
 
     self.selectCell = function(cell) {
         if (self.onselect) {

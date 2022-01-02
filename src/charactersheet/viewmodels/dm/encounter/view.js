@@ -1,4 +1,5 @@
 import autoBind from 'auto-bind';
+import { debounce } from 'lodash';
 import { Encounter } from 'charactersheet/models/dm';
 import { AbstractEncounterListViewModel } from 'charactersheet/viewmodels/abstract';
 import ko from 'knockout';
@@ -31,11 +32,6 @@ class EncounterViewModel extends AbstractEncounterListViewModel {
 
     modelClass() {
         return Encounter;
-    }
-
-    toggleAddForm() {
-        super.toggleAddForm();
-        this.forceCardResize();
     }
 
     removeFromList(item) {

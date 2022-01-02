@@ -14,6 +14,7 @@ export class EncounterFormViewModel extends AbstractChildFormModel {
         autoBind(this);
 
         this.parent = params.parent;
+        this.forceCardResize = params.forceCardResize;
     }
 
     async load() {
@@ -36,6 +37,14 @@ export class EncounterFormViewModel extends AbstractChildFormModel {
             blank.parent(this.parent.uuid());
         }
         return blank;
+    }
+
+    didSave(success, error) {
+        super.didSave(success, error);
+
+        if (this.forceCardResize) {
+            this.forceCardResize();
+        }
     }
 }
 

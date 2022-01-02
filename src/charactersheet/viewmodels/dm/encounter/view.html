@@ -10,6 +10,7 @@
   <nested-list params="
     elementId: 'encounter-view-list',
     cells: entities,
+    onload: forceCardResize,
     onselect: entity => {
       active(entity);
       column.push('encounter-detail', {encounter: active});
@@ -22,6 +23,7 @@
           containerId: 'add-encounter',
           show: $component.displayAddForm,
           flip: $component.toggleShowAddForm,
+          forceCardResize: $component.forceCardResize,
         }"
       ></encounter-form>
     </div>
