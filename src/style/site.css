@@ -251,12 +251,6 @@ small {
   box-shadow: 2px 3px 0px 0px #ecf0f1;
 }
 
-div.hr {
-  height:80px;
-  background:url('/images/page-divider.png') no-repeat;
-
-}
-
 .tab-pane {
   padding-top:10px;
 }
