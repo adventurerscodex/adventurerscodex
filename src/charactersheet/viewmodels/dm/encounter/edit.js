@@ -13,8 +13,9 @@ class EncountersEditViewModel extends AbstractEncounterListViewModel {
         autoBind(this);
 
         this.column = params.column;
-        this.visible = params.visible;
+        this.show = params.show;
         this.flip = params.flip;
+        this.forceCardResize = params.forceCardResize;
         this.active = ko.observable();
     }
 

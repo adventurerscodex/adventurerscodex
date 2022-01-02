@@ -106,13 +106,7 @@ small {
 }
 
 .footer {
-  position: relative;
-  height: 178px;
-  clear:both;
-  margin-top:0px;
-  padding-top:30px;
   background-color: #ecf0f1;
-  padding-bottom: 20px;
 }
 
 .close-check {
@@ -2104,6 +2098,10 @@ tr .panel {
 /* Fix for BS 3 selects as input-group-btn */
 .input-group-btn>select.form-control {
   padding: 2px;
+}
+
+.d-none {
+  display: none !important;
 }
 
 .d-block {

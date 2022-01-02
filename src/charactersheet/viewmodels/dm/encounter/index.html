@@ -8,20 +8,25 @@
       column: $parent,
      }
   }">
-    <div class="front">
+    <div class="front" data-bind="css: { 'd-none': showBack() }">
       <encounters-view params="
         flip: flip,
         column: context.column,
+        show: showFront,
         forceCardResize: forceCardResize,
       "></encounters-view>
     </div>
-    <div class="back">
+    <div class="back" data-bind="css: { 'd-none': showFront() }">
       <encounters-edit params="
-        visible: showBack,
+        show: showBack,
         flip: flip,
         column: context.column,
+        forceCardResize: forceCardResize,
       "></encounters-edit>
     </div>
   </flip-card>
   <!-- /ko -->
 </column-navigation>
+
+
+

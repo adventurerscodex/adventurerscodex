@@ -3,11 +3,16 @@
   <small>
     Add or remove encounters.
   </small>
+  <!-- ko ifnot: loaded(), completeOn: 'render' -->
+  <div class="loader-wrapper"><div class="loader"></div></div>
+  <!-- /ko -->
+  <!-- ko if: loaded(), completeOn: 'render' -->
   <div class="edit-btn btn-group">
     <button class="btn btn-link" type="button" data-bind="click: flip">
       Done
     </button>
   </div>
+  <!-- /ko -->
 </div>
 <hr class="ac-table-header">
 <nested-list params="

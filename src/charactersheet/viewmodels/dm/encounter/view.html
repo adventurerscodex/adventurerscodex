@@ -7,6 +7,10 @@
     <card-edit-actions params="{ flip: flip }" />
   </div>
   <hr class="ac-table-header">
+  <!-- ko ifnot: loaded(), completeOn: 'render' -->
+  <div class="loader-wrapper"><div class="loader"></div></div>
+  <!-- /ko -->
+  <!-- ko if: loaded(), completeOn: 'render' -->
   <nested-list params="
     elementId: 'encounter-view-list',
     cells: entities,
@@ -40,4 +44,6 @@
     </button>
     <!-- /ko -->
   </div>
+  <!-- /ko -->
 </div>
+<div class="clearfix position-relative"></div>

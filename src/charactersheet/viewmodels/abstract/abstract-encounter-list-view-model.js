@@ -2,10 +2,32 @@ import { Utility } from 'charactersheet/utilities';
 import { AbstractTabularViewModel } from 'charactersheet/viewmodels/abstract';
 import ko from 'knockout';
 
+const noOp = () => {};
+
 /**
  * An abstract VM that knows how to listen for updates to nested encounters.
  */
 export class AbstractEncounterListViewModel extends AbstractTabularViewModel {
+
+    constructor(params) {
+        super(params);
+
+        this.show = params.show ? params.show : ko.observable(true);
+        this.forceCardResize = params.forceCardResize || noOp;
+    }
+
+    setUpSubscriptions() {
+        super.setUpSubscriptions();
+
+        const onShow = this.show.subscribe(this.subscribeToVisible);
+        this.subscriptions.push(onShow);
+    }
+
+    async subscribeToVisible() {
+        if (this.show()) {
+            this.forceCardResize();
+        }
+    }
 
     // Overrides: to handle nested lists
 
