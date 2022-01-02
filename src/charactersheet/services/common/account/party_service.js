@@ -4,6 +4,9 @@ import {
 } from 'charactersheet/utilities';
 import { Party } from 'charactersheet/models/common';
 import autoBind from 'auto-bind';
+import * as Y from 'yjs'
+import { WebsocketProvider } from 'y-websocket'
+import * as awarenessProtocol from 'y-protocols/awareness.js'
 
 
 class _PartyService {
@@ -28,6 +31,7 @@ class _PartyService {
         if (!!this.party) {
             console.log('Party auto-refresh enabled.')
             this.configureTimers();
+            this.configurePresence();
         }
     }
 
@@ -42,6 +46,25 @@ class _PartyService {
         if (!!this.timer) {
             clearInterval(this.timer);
         }
+    }
+
+    // Presence
+
+    configurePresence() {
+        this.doc = new Y.Doc(this.party.uuid);
+        this.awareness = new awarenessProtocol.Awareness(this.doc);
+        this.provider = new WebsocketProvider(
+            'ws://localhost:1234',
+            this.party.uuid,
+            this.doc,
+            { awareness: this.awareness }
+        );
+
+        this.awareness.on('change', (a, u, r) => {
+            console.log('Added', a, 'Updated', u, 'Removed', r);
+        });
+
+        this.awareness.setLocalState({ id: CoreManager.activeCore().uuid() });
     }
 
     // Poll
