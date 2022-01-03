@@ -3,15 +3,22 @@ import ko from 'knockout';
 
 
 export class EncounterCoins extends KOModel {
+
     static __skeys__ = ['core', 'encounters', 'treasures'];
 
     static mapping = {
-        include: ['coreUuid', 'encounterUuid', 'type', 'uuid']
+        include: [
+            'coreUuid',
+            'encounterUuid',
+            'type',
+            'uuid',
+            'platinum',
+            'gold',
+            'electrum',
+            'silver',
+            'copper'
+        ]
     };
-
-    static wealthFields = ['platinum', 'gold', 'electrum', 'silver', 'copper'];
-
-    static allFields = ['coreUuid', 'encounterUuid', 'type', 'uuid', 'platinum', 'gold', 'electrum', 'silver', 'copper'];
 
     uuid = ko.observable();
     coreUuid = ko.observable();
@@ -25,7 +32,7 @@ export class EncounterCoins extends KOModel {
     silver = ko.observable(0);
     copper = ko.observable(0);
 
-    nameLabel = ko.pureComputed(() => {
+    name = ko.pureComputed(() => {
         return 'Coins';
     });
 
@@ -33,7 +40,7 @@ export class EncounterCoins extends KOModel {
         return 'N/A';
     });
 
-    descriptionLabel = ko.pureComputed(() => {
+    shortDescription = ko.pureComputed(() => {
         return this.worthInGold() ? this.worthInGold() + '(gp)' : '';
     });
 
@@ -77,51 +84,45 @@ export class EncounterCoins extends KOModel {
     totalWeightLabel = ko.pureComputed(() => {
         return this.totalWeight() + ' (lbs)';
     });
-
-    clean = (keys, params) => {
-        let treasure = pick(params, EncounterCoins.mapping.include);
-        treasure.value = pick(params, EncounterCoins.wealthFields);
-        return treasure;
-    };
-
-    buildModelFromValues = (values) => {
-        let keys = Object.keys(values);
-        keys.forEach((key) => {
-            this[key] = values[key];
-        });
-    };
-
-    getValues = () => {
-        let values = {};
-        EncounterCoins.wealthFields.forEach((field) => {
-            values[field] = this[field];
-        });
-
-        return values;
-    };
-
-    /**
-      * Serialize the current item to a plain JSON format. We use these in-leiu of the normal
-      * import/exportValues because those return a format unsuitable for re-importing
-      * (since it caused data corruption).
-     */
-    toJSON = () => {
-        let values = {};
-        EncounterCoins.allFields.forEach((field) => {
-            values[field] = this[field]();
-        });
-
-        return values;
-    };
-
-    /**
-      * De-serialize the current item into the current model. We use these in-leiu of the normal
-      * import/exportValues because those return a format unsuitable for re-importing
-      * (since it caused data corruption).
-     */
-    fromJSON = (values) => {
-        EncounterCoins.allFields.forEach((field) => {
-            this[field](values[field]);
-        });
-    }
 }
+
+
+EncounterCoins.validationConstraints = {
+    fieldParams: {
+        platinum: {
+            required: true,
+            type: 'number',
+            max: 10000,
+            min: -10000,
+            step: 1,
+        },
+        gold: {
+            required: true,
+            type: 'number',
+            max: 10000,
+            min: -10000,
+            step: 1,
+        },
+        electrum: {
+            required: true,
+            type: 'number',
+            max: 10000,
+            min: -10000,
+            step: 1,
+        },
+        silver: {
+            required: true,
+            type: 'number',
+            max: 10000,
+            min: -10000,
+            step: 1,
+        },
+        copper: {
+            required: true,
+            type: 'number',
+            max: 10000,
+            min: -10000,
+            step: 1,
+        },
+    },
+};

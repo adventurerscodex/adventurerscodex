@@ -1,0 +1,7 @@
+<h4 data-bind="text: name"></h4>
+<div class="row" data-bind="with: rat">
+  <div class="col-xs-12" data-bind="visible: description">
+    <label>Read Aloud Text</label>
+    <div data-bind="markdownPreview: description"></div>
+  </div>
+</div>

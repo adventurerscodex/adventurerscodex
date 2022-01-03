@@ -1,20 +1,31 @@
-import { Fixtures } from 'charactersheet/utilities';
 import { KOModel } from 'hypnos/lib/models/ko';
-import { Utility } from 'charactersheet/utilities/convenience';
+import { Fixtures, Utility } from 'charactersheet/utilities';
 import ko from 'knockout';
 import { pick } from 'lodash';
 
 export class EncounterArmor extends KOModel {
+
     static __skeys__ = ['core', 'encounters', 'treasures'];
+
     SHORT_DESCRIPTION_MAX_LENGTH = 100;
 
     static mapping = {
-        include: ['uuid', 'coreUuid', 'encounterUuid', 'type']
+        include: [
+            'uuid',
+            'coreUuid',
+            'encounterUuid',
+            'type',
+            'name',
+            'description',
+            'magicalModifier',
+            'weight',
+            'price',
+            'currencyDenomination',
+            'armorClass',
+            'stealth',
+            'equipped',
+        ]
     };
-
-    static armorFields = ['name', 'armorType', 'description', 'magicalModifier', 'weight', 'price', 'currencyDenomination', 'armorClass', 'stealth', 'equipped'];
-
-    static allFields = ['name', 'armorType', 'description', 'magicalModifier', 'weight', 'price', 'currencyDenomination', 'armorClass', 'stealth', 'equipped', 'uuid', 'coreUuid', 'encounterUuid', 'type'];
 
     uuid = ko.observable();
     coreUuid = ko.observable();
@@ -23,7 +34,7 @@ export class EncounterArmor extends KOModel {
 
     // Armor fields
     name = ko.observable('');
-    armorType = ko.observable('');
+    type = ko.observable('');
     price = ko.observable('');
     magicalModifier = ko.observable(0);
     currencyDenomination = ko.observable('');
@@ -32,10 +43,6 @@ export class EncounterArmor extends KOModel {
     stealth = ko.observable('');
     description = ko.observable('');
     equipped = ko.observable(false);
-
-    armorTypeOptions = ko.observableArray(Fixtures.armor.armorTypeOptions);
-    armorStealthOptions = ko.observableArray(Fixtures.armor.armorStealthOptions);
-    armorCurrencyDenominationOptions = Fixtures.general.currencyDenominationList;
 
     acLabel = ko.pureComputed(() => {
         if (this.armorClass()) {
@@ -46,7 +53,7 @@ export class EncounterArmor extends KOModel {
         }
     });
 
-    armorDescriptionHTML = ko.pureComputed(() => {
+    descriptionHTML = ko.pureComputed(() => {
         if (!this.description()) {
             return '<div class="h3"><small>Add a description via the edit tab.</small></div>';
         }
@@ -54,7 +61,7 @@ export class EncounterArmor extends KOModel {
         return this.description();
     });
 
-    armorSummaryLabel = ko.pureComputed(() => {
+    summaryLabel = ko.pureComputed(() => {
         if (this.magicalModifier() != 0) {
             if (this.acLabel()) {
                 return this.magicalModifierLabel() + ', ' + this.acLabel();
@@ -76,9 +83,13 @@ export class EncounterArmor extends KOModel {
         }
     });
 
-    armorWeightLabel = ko.pureComputed(() => {
+    weightLabel = ko.pureComputed(() => {
         return this.weight() !== '' && this.weight() >= 0 ? this.weight() + ' lbs.' : '0 lbs.';
     });
+
+    priceLabel = ko.pureComputed(() => (
+        `${this.price() || 0} ${this.currencyDenomination() || ''}`
+    ));
 
     nameLabel = ko.pureComputed(() => {
         return this.name();
@@ -101,53 +112,44 @@ export class EncounterArmor extends KOModel {
         treasure.value = pick(params, EncounterArmor.armorFields);
         return treasure;
     };
-
-    buildModelFromValues = (values) => {
-        let keys = Object.keys(values);
-        keys.forEach((key) => {
-            if (key === 'type') {
-                this['armorType'] = values[key];
-            } else {
-                this[key] = values[key];
-            }
-        });
-    };
-
-    getValues = () => {
-        let values = {};
-        EncounterArmor.armorFields.forEach((field) => {
-            if (field === 'armorType') {
-                values['type'] = this[field];
-            } else {
-                values[field] = this[field];
-            }
-        });
-
-        return values;
-    };
-
-    /**
-      * Serialize the current item to a plain JSON format. We use these in-leiu of the normal
-      * import/exportValues because those return a format unsuitable for re-importing
-      * (since it caused data corruption).
-     */
-    toJSON = () => {
-        let values = {};
-        EncounterArmor.allFields.forEach((field) => {
-            values[field] = this[field]();
-        });
-
-        return values;
-    };
-
-    /**
-      * De-serialize the current item into the current model. We use these in-leiu of the normal
-      * import/exportValues because those return a format unsuitable for re-importing
-      * (since it caused data corruption).
-     */
-    fromJSON = (values) => {
-        EncounterArmor.allFields.forEach((field) => {
-            this[field](values[field]);
-        });
-    };
 }
+
+EncounterArmor.validationConstraints = {
+    fieldParams: {
+        name: {
+            required: true,
+            maxlength: 256,
+        },
+        type: {
+            required: true,
+            maxlength: 256,
+        },
+        magicalModifier: {
+            required: false,
+            type: 'number',
+            max: 10000,
+            min: -10000,
+            step: 1,
+        },
+        weight: {
+            required: false,
+            type: 'number',
+            max: 10000,
+            min: -10000,
+            step: 1,
+        },
+        armorClass: {
+            required: true,
+            maxlength: 256,
+        },
+        stealth: {
+            required: false,
+            type: 'text',
+            maxlength: 256,
+        },
+        stealth: {
+            required: false,
+            type: 'text',
+        },
+    },
+};

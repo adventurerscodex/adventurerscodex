@@ -32,6 +32,7 @@ import ko from 'knockout';
  **/
 
 export class AbstractChildFormModel extends AbstractFormModel {
+
     constructor(params) {
         super(params);
         this.containerId = ko.utils.unwrapObservable(params.containerId);

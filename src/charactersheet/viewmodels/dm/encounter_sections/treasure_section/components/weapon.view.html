@@ -1,0 +1,50 @@
+<!-- ko with: entity.value -->
+<div id="weapon-pane">
+  <div class="h3">
+    <span data-bind="text: name"></span>
+    <small data-bind="text: magicalModifierLabel"></small>
+  </div>
+
+  <hr />
+  <div class="row">
+    <div class="col-sm-6 col-xs-12">
+      <b>Damage:</b>&nbsp;<span data-bind="text: damage"></span>
+    </div>
+    <div class="col-sm-6 col-xs-12">
+      <b>Range:</b>&nbsp;<span data-bind="text: rangeLabel"></span>
+    </div>
+    <div class="col-sm-6 col-xs-12">
+      <b>Type:</b>&nbsp;<span data-bind="text: type"></span>
+    </div>
+    <div class="col-sm-6 col-xs-12">
+      <b>Quantity:</b>&nbsp;<span data-bind="text: quantity"></span>
+    </div>
+    <div class="col-sm-6 col-xs-12">
+      <b>Weight:</b>&nbsp;<span data-bind="text: weightLabel"></span>
+    </div>
+    <div class="col-sm-6 col-xs-12">
+      <b>Damage Type:</b>&nbsp;<span data-bind="text: damageType"></span>
+    </div>
+    <div class="col-sm-6 col-xs-12">
+      <b>Proficiency:</b>&nbsp;<span data-bind="text: proficiency"></span>
+    </div>
+    <div class="col-sm-6 col-xs-12">
+      <b>Handedness:</b>&nbsp;<span data-bind="text: handedness"></span>
+    </div>
+    <div class="col-sm-6 col-xs-12">
+      <b>Property:</b>&nbsp;<span data-bind="text: property"></span>
+    </div>
+  </div>
+
+  <hr />
+  <h4>Description</h4>
+  <div class="row row-padded">
+    <div class="col-xs-12 col-padded">
+      <div
+        data-bind="html: descriptionHTML"
+        class="preview-modal-overflow"
+      ></div>
+    </div>
+  </div>
+</div>
+<!-- /ko -->

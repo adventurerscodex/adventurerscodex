@@ -1,0 +1,56 @@
+<form data-bind="submit: submit, with: entity">
+  <card-submit-actions params="{reset: $component.reset}"></card-submit-actions>
+  <!-- ko if: $component.addForm -->
+  <div class="h4 collapsable-card-title">New Read Aloud Text</div>
+  <!-- /ko -->
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label>Name<i class="required"></i></label>
+      <input
+        type="text"
+        class="form-control"
+        name="name"
+        placeholder="World Map"
+        data-bind="
+          textInput: name,
+          hasFocus: $component.formElementHasFocus,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.name },
+        "
+      />
+    </div>
+    <div class="form-group col-xs-12">
+      <div class="d-flex justify-content-between">
+        <label class="d-flex-1">
+          Read Aloud Text
+        </label>
+        <div class="d-flex-1 text-right text-muted">
+          <i
+            class="fa fa-info-circle"
+            title="This field will be sent to the players via the exhibit."
+          ></i>&nbsp; Exhibit
+        </div>
+      </div>
+      <textarea
+        type="text"
+        class="form-control"
+        name="description"
+        rows="4"
+        placeholder="What do you say to the players?"
+        data-bind="
+          value: description,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.description },
+        "></textarea>
+        <markdown-help />
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <form-submit-actions params="{
+      reset: $component.reset,
+      delete: $component.delete,
+      addForm: $component.addForm,
+    }"></form-submit-actions>
+  </div>
+</form>

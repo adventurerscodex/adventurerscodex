@@ -1,4 +1,4 @@
-import { CoreManager } from 'charactersheet/utilities';
+import { CoreManager, Notifications } from 'charactersheet/utilities';
 import { KOModel } from 'hypnos/lib/models/ko';
 import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
@@ -32,6 +32,8 @@ export class Encounter extends KOModel {
 
     /* Public Methods */
 
+    id = ko.pureComputed(() => (this.uuid()));
+
     displayName = ko.pureComputed(function() {
         if (!ko.unwrap(self.name)) {
             return 'Untitled Encounter';
@@ -39,20 +41,15 @@ export class Encounter extends KOModel {
         return this.name();
     });
 
-    removeChild = function(childId) {
-        //         this.children(this.children().filter(function(id, idx, _) {
-        //             return id !== childId;
-        //         }));
+    toggleIsOpen = async () => {
+        this.isOpen(!this.isOpen());
+        // Using bare ps.save(); don't want notifications for this
+        await this.ps.save();
     };
 
-    getParent = function() {
-        //         var key = CoreManager.activeCore().uuid();
-        //         return PersistenceService.findByPredicates(Encounter, [
-        //             new KeyValuePredicate('encounterId', self.parent()),
-        //             new KeyValuePredicate('characterId', key)
-        //         ])[0];
-    };
-
+    arrowIconClass = ko.pureComputed(() => (
+        this.isOpen() ? 'fa fa-caret-down' : 'fa fa-caret-right'
+    ));
 
     /**
      * Due to the recursive nature of Encounters, they require a custom import.
@@ -80,4 +77,51 @@ export class Encounter extends KOModel {
         }
         return newValues;
     }
+
+    // Helpers
+
+    load = async (params) => {
+        const response = await this.ps.model.ps.read(params);
+        this.importValues(response.object.exportValues());
+    }
+
+    create = async () => {
+        const response = await this.ps.create();
+        this.importValues(response.object.exportValues());
+        Notifications.encounter.added.dispatch(this);
+    }
+
+    save = async () => {
+        const response = await this.ps.save();
+        this.importValues(response.object.exportValues());
+        Notifications.encounter.changed.dispatch(this);
+    }
+
+    delete = async () => {
+        await this.ps.delete();
+        Notifications.encounter.deleted.dispatch(this);
+    }
 }
+
+Encounter.validationConstraints = {
+    fieldParams: {
+        name: {
+            required: true,
+            maxlength: 256
+        },
+        location: {
+            required: false,
+            maxlength: 256
+        }
+    },
+    rules: {
+        name: {
+            required: true,
+            maxlength: 256
+        },
+        location: {
+            required: false,
+            maxlength: 256
+        }
+    }
+};

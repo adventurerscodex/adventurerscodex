@@ -45,8 +45,6 @@ export function PlayerImageViewModel() {
         Notifications.coreManager.changed.add(self.dataHasChanged);
         Notifications.party.changed.add(self._handleConnectionStatusChanged);
 
-        // Prime the pump.
-        self._handleConnectionStatusChanged();
         await self.dataHasChanged();
     };
 

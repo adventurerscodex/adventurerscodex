@@ -131,6 +131,18 @@ export var Notifications = {
         changed: new Signal()
     },
 
+    encounter: {
+        added: new Signal(),
+        changed: new Signal(),
+        deleted: new Signal()
+    },
+
+    encounterimage: {
+        added: new Signal(),
+        changed: new Signal(),
+        deleted: new Signal()
+    },
+
     exhibit: {
         changed: new Signal()
     },
@@ -171,7 +183,19 @@ export var Notifications = {
         deleted: new Signal()
     },
 
+    monster: {
+        added: new Signal(),
+        changed: new Signal(),
+        deleted: new Signal()
+    },
+
     note: {
+        added: new Signal(),
+        changed: new Signal(),
+        deleted: new Signal()
+    },
+
+    npc: {
         added: new Signal(),
         changed: new Signal(),
         deleted: new Signal()
@@ -191,6 +215,12 @@ export var Notifications = {
 
     playerimage: {
         changed: new Signal()
+    },
+
+    pointofinterest: {
+        added: new Signal(),
+        changed: new Signal(),
+        deleted: new Signal()
     },
 
     profile: {
@@ -214,6 +244,12 @@ export var Notifications = {
 
     proficiencyBonus: {
         changed: new Signal()
+    },
+
+    playertext: {
+        added: new Signal(),
+        changed: new Signal(),
+        deleted: new Signal()
     },
 
     sessionExpired: {
@@ -260,7 +296,19 @@ export var Notifications = {
         deleted: new Signal()
     },
 
+    trap: {
+        added: new Signal(),
+        changed: new Signal(),
+        deleted: new Signal()
+    },
+
     tracked: {
+        added: new Signal(),
+        changed: new Signal(),
+        deleted: new Signal()
+    },
+
+    treasure: {
         added: new Signal(),
         changed: new Signal(),
         deleted: new Signal()

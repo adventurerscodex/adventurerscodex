@@ -4,7 +4,6 @@ export { EncounterItem } from './encounter_item';
 export { EncounterMagicItem } from './encounter_magic_item';
 export { EncounterWeapon } from './encounter_weapon';
 export { Environment } from './environment';
-export { MonsterAbilityScore } from './monster_ability_score';
 export { Monster } from './monster';
 export { EncounterNote } from './note';
 export { NPC } from './npc';

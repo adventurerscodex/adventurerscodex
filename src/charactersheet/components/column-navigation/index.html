@@ -1,0 +1,31 @@
+<div class="column-navigation d-flex">
+  <!-- ko foreach: columns -->
+
+  <!-- ko if: $index() === 0 -->
+  <div
+    data-bind="
+      attr: { class: $component.columnCss($data) },
+      template: {
+        nodes: $componentTemplateNodes,
+        data: $data
+      }
+    "
+  ></div>
+  <!-- /ko -->
+  <!-- ko if: $index() > 0 -->
+  <div
+    data-bind="
+      attr: { class: $component.columnCss($data) },
+      component: {
+        name: componentName,
+        params: params,
+      },
+    "
+  ></div>
+  <!-- /ko -->
+
+  <!-- /ko -->
+  <!-- ko if: showPlaceholderView -->
+  <div data-bind="attr: { class: placeholderCss }"></div>
+  <!-- /ko -->
+</div>

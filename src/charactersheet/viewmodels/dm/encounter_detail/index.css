@@ -1,0 +1,15 @@
+.encounter-detail .tab-pane {
+  padding-top: 0px;
+}
+
+.encounter-detail .tab-pane {
+  margin-top: 0px;
+}
+
+.encounters .h4 {
+  margin-top: 0px;
+}
+
+.encounter-detail .card-title {
+  border-top-left-radius: 0px;
+}

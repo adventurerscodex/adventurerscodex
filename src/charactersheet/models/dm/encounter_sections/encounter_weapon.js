@@ -5,16 +5,35 @@ import ko from 'knockout';
 
 
 export class EncounterWeapon extends KOModel {
+
     static __skeys__ = ['core', 'encounters', 'treasures'];
+
     SHORT_DESCRIPTION_MAX_LENGTH = 100;
 
     static mapping = {
-        include: ['coreUuid', 'encounterUuid', 'type', 'uuid']
+        include: [
+            'coreUuid',
+            'encounterUuid',
+            'type',
+            'uuid',
+            'name',
+            'type',
+            'damage',
+            'damageType',
+            'handedness',
+            'proficiency',
+            'price',
+            'currencyDenomination',
+            'magicalModifier',
+            'toHitModifier',
+            'weight',
+            'range',
+            'property',
+            'description',
+            'quantity',
+            'hitBonusLabel'
+        ]
     };
-
-    static weaponFields = ['name', 'weaponType', 'damage', 'damageType', 'handedness', 'proficiency', 'price', 'currencyDenomination', 'magicalModifier', 'toHitModifier', 'weight', 'range', 'property', 'description', 'quantity', 'hitBonusLabel'];
-
-    static allFields = ['name', 'weaponType', 'damage', 'damageType', 'handedness', 'proficiency', 'price', 'currencyDenomination', 'magicalModifier', 'toHitModifier', 'weight', 'range', 'property', 'description', 'quantity', 'hitBonusLabel', 'uuid', 'coreUuid', 'encounterUuid', 'type'];
 
     uuid = ko.observable();
     coreUuid = ko.observable();
@@ -22,8 +41,9 @@ export class EncounterWeapon extends KOModel {
     type = ko.observable();
 
     // Weapon Fields
+
     name = ko.observable('');
-    weaponType = ko.observable('');
+    type = ko.observable('');
     damage = ko.observable('');
     damageType = ko.observable('');
     handedness = ko.observable('');
@@ -39,30 +59,22 @@ export class EncounterWeapon extends KOModel {
     quantity = ko.observable(1);
     hitBonusLabel = ko.observable();
 
-    weaponProficiencyOptions = ko.observableArray(Fixtures.weapon.weaponProficiencyOptions);
-    weaponHandednessOptions = ko.observableArray(Fixtures.weapon.weaponHandednessOptions);
-    weaponTypeOptions = ko.observableArray(Fixtures.weapon.weaponTypeOptions);
-    weaponPropertyOptions = ko.observableArray(Fixtures.weapon.weaponPropertyOptions);
-    weaponDamageTypeOptions = ko.observableArray(Fixtures.weapon.weaponDamageTypeOptions);
-    weaponCurrencyDenominationOptions = Fixtures.general.currencyDenominationList;
-
-    nameLabel = ko.pureComputed(() => {
-        return this.name();
-    });
+    proficiencyOptions = ko.observableArray(Fixtures.weapon.weaponProficiencyOptions);
+    handednessOptions = ko.observableArray(Fixtures.weapon.weaponHandednessOptions);
+    typeOptions = ko.observableArray(Fixtures.weapon.weaponTypeOptions);
+    propertyOptions = ko.observableArray(Fixtures.weapon.weaponPropertyOptions);
+    damageTypeOptions = ko.observableArray(Fixtures.weapon.weaponDamageTypeOptions);
+    currencyDenominationOptions = Fixtures.general.currencyDenominationList;
 
     propertyLabel = ko.pureComputed(() => {
         return this.damage() ? this.damage() : '';
-    });
-
-    descriptionLabel = ko.pureComputed(() => {
-        return this.shortDescription();
     });
 
     shortDescription = ko.pureComputed(() => {
         return Utility.string.truncateStringAtLength(this.description(), this.SHORT_DESCRIPTION_MAX_LENGTH);
     });
 
-    weaponRangeLabel = ko.pureComputed(() => {
+    rangeLabel = ko.pureComputed(() => {
         if (this.type().toLowerCase() === 'ranged') {
             if (this.range()) {
                 return this.range() + ' ft.';
@@ -93,7 +105,7 @@ export class EncounterWeapon extends KOModel {
         }
     });
 
-    weaponDescriptionHTML = ko.pureComputed(() => {
+    descriptionHTML = ko.pureComputed(() => {
         if (!this.description()) {
             return '<div class="h3"><small>Add a description via the edit tab.</small></div>';
         }
@@ -101,62 +113,73 @@ export class EncounterWeapon extends KOModel {
         return this.description();
     });
 
-    weaponWeightLabel = ko.pureComputed(() => {
+    weightLabel = ko.pureComputed(() => {
         return this.weight() !== '' && this.weight() >= 0 ? this.weight() + ' lbs.' : '0 lbs.';
     });
-
-    clean = (keys, params) => {
-        let treasure = pick(params, EncounterWeapon.mapping.include);
-        treasure.value = pick(params, EncounterWeapon.weaponFields);
-        return treasure;
-    };
-
-    buildModelFromValues = (values) => {
-        let keys = Object.keys(values);
-        keys.forEach((key) => {
-            if (key === 'type') {
-                this['weaponType'] = values[key];
-            } else {
-                this[key] = values[key];
-            }
-        });
-    };
-
-    getValues = () => {
-        let values = {};
-        EncounterWeapon.weaponFields.forEach((field) => {
-            if (field === 'weaponType') {
-                values['type'] = this[field];
-            } else {
-                values[field] = this[field];
-            }
-        });
-
-        return values;
-    };
-
-    /**
-      * Serialize the current item to a plain JSON format. We use these in-leiu of the normal
-      * import/exportValues because those return a format unsuitable for re-importing
-      * (since it caused data corruption).
-     */
-    toJSON = () => {
-        let values = {};
-        EncounterWeapon.allFields.forEach((field) => {
-            values[field] = this[field]();
-        });
-
-        return values;
-    };
-
-    /**
-      * De-serialize the current item into the current model. We use these in-leiu of the normal
-      * import/exportValues because those return a format unsuitable for re-importing
-      * (since it caused data corruption).
-     */
-    fromJSON = (values) => {
-        EncounterWeapon.allFields.forEach((field) => {
-            this[field](values[field]);
-        });
-    };
 }
+
+
+EncounterWeapon.validationConstraints = {
+    fieldParams: {
+        name: {
+            required: true,
+            maxlength: 256,
+        },
+        damage: {
+            required: true,
+            maxlength: 256,
+        },
+        magicalModifier: {
+            required: false,
+            type: 'number',
+            max: 10000,
+            min: -10000,
+            step: 1,
+        },
+        type: {
+            required: true,
+            maxlength: 256,
+        },
+        handedness: {
+            required: true,
+            maxlength: 256,
+        },
+        proficiency: {
+            required: true,
+            maxlength: 256,
+        },
+        price: {
+            required: false,
+            type: 'number',
+            max: 10000,
+            min: -10000,
+            step: 1,
+        },
+        weight: {
+            required: false,
+            type: 'number',
+            max: 10000,
+            min: -10000,
+            step: 1,
+        },
+        range: {
+            required: true,
+            maxlength: 256,
+        },
+        damageType: {
+            required: true,
+            maxlength: 256,
+        },
+        property: {
+            required: true,
+            maxlength: 256,
+        },
+        quantity: {
+            required: false,
+            type: 'number',
+            max: 10000,
+            min: -10000,
+            step: 1,
+        },
+    },
+};

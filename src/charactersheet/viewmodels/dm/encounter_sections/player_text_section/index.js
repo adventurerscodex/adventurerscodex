@@ -1,243 +1,112 @@
+import autoBind from 'auto-bind';
 import {
-    SortService,
-    PartyService
-} from 'charactersheet/services';
-import {
-    CoreManager,
     Fixtures,
     Notifications,
     Utility
 } from 'charactersheet/utilities';
-import { PlayerText } from 'charactersheet/models';
+import { AbstractEncounterTabularViewModel } from 'charactersheet/viewmodels/abstract';
+import { PartyService, SortService } from 'charactersheet/services/common';
+import { PlayerText } from 'charactersheet/models/dm';
 import ko from 'knockout';
 import { get } from 'lodash';
-import sectionIcon from 'images/encounters/read.svg';
 import template from './index.html';
+import './form';
+import './view';
 
-export function PlayerTextSectionViewModel(params) {
-    var self = this;
 
-    self.sectionIcon = sectionIcon;
-    self.encounter = params.encounter;
-    self.encounterId = ko.pureComputed(function() {
-        if (!ko.unwrap(self.encounter)) { return; }
-        return self.encounter().uuid();
+class ReadAloudTextSectionViewModel extends AbstractEncounterTabularViewModel {
+
+    constructor(params) {
+        super(params);
+        autoBind(this);
+
+        this.column = params.column;
+
+        this.addFormId = '#add-rat';
+        this.collapseAllId = '#rat-pane';
+    }
+
+    fullScreen = ko.observable(false);
+    shouldShowExhibitButton = ko.observable(!!PartyService.party);
+
+    modelClass() {
+        return PlayerText;
+    }
+
+    setUpSubscriptions() {
+        super.setUpSubscriptions();
+        this.subscriptions.push(Notifications.party.changed.add(this.partyDidChange));
+    }
+
+    // UI
+
+    name = ko.pureComputed(() => {
+        const index = Fixtures.encounter.sections.readAloudText.index;
+        return this.encounter().sections()[index].name();
     });
 
-    self.characterId = ko.observable();
-
-    self.visible = ko.observable();
-    self.name = ko.observable();
-    self.tagline = ko.observable();
-
-    self.playerTexts = ko.observableArray();
-    self.blankPlayerText = ko.observable(new PlayerText());
-    self.openModal = ko.observable(false);
-    self.editItemIndex = null;
-    self.currentEditItem = ko.observable();
-    self.firstElementInModalHasFocus = ko.observable(false);
-    self.editFirstModalElementHasFocus = ko.observable(false);
-    self.previewTabStatus = ko.observable('active');
-    self.editTabStatus = ko.observable('');
-    self.addFormIsValid = ko.observable(false);
-    self.addModalOpen = ko.observable(false);
-
-    self._isConnectedToParty = ko.observable(!!PartyService.party);
-
-    self.sorts = {
-        'name asc': { field: 'name', direction: 'asc' },
-        'name desc': { field: 'name', direction: 'desc' },
-        'description asc': { field: 'description', direction: 'asc' },
-        'description desc': { field: 'description', direction: 'desc' }
-    };
-
-    self.filter = ko.observable('');
-    self.sort = ko.observable(self.sorts['description asc']);
-
-    self._addForm = ko.observable();
-    self._editForm = ko.observable();
-
-    /* Public Methods */
-
-    self.load = async function() {
-        Notifications.encounters.changed.add(self._dataHasChanged);
-        Notifications.party.changed.add(self.partyDidChange);
-
-        self.encounter.subscribe(function() {
-            self._dataHasChanged();
-        });
-        await self._dataHasChanged();
-    };
-
-    /* UI Methods */
-
-    /**
-     * Filters and sorts the weapons for presentation in a table.
-     */
-    self.filteredAndSortedPlayerText = ko.computed(function() {
-        return SortService.sortAndFilter(self.playerTexts(), self.sort(), null);
+    tagline = ko.pureComputed(() => {
+        const index = Fixtures.encounter.sections.readAloudText.index;
+        return this.encounter().sections()[index].tagline();
     });
 
-    /**
-     * Determines whether a column should have an up/down/no arrow for sorting.
-     */
-    self.sortArrow = function(columnName) {
-        return SortService.sortArrow(columnName, self.sort());
-    };
+    sorts() {
+        return {
+            ...super.sorts(),
+            'name asc': { field: 'name', direction: 'asc'},
+            'name desc': { field: 'name', direction: 'desc'},
+            'description asc': { field: 'description', direction: 'asc'},
+            'description desc': { field: 'description', direction: 'desc'},
+            'isExhibited asc': { field: 'isExhibited', direction: 'asc'},
+            'isExhibited desc': { field: 'isExhibited', direction: 'desc'},
+        };
+    }
 
-    /**
-     * Given a column name, determine the current sort type & order.
-     */
-    self.sortBy = function(columnName) {
-        self.sort(SortService.sortForName(self.sort(), columnName, self.sorts));
-    };
+    filteredAndSortedEntities = ko.pureComputed(() =>  (
+        SortService.sortAndFilter(this.entities(), this.sort(), null)
+    ), this);
 
-    self.addPlayerText = async function() {
-        var playerText = self.blankPlayerText();
-        playerText.coreUuid(CoreManager.activeCore().uuid());
-        playerText.encounterUuid(self.encounterId());
-        const playerTextResponse = await playerText.ps.create();
-        self.playerTexts.push(playerTextResponse.object);
-        self.toggleAddModal();
-        self.blankPlayerText(new PlayerText());
-    };
+    // Actions
 
-    self.removePlayerText = async function(playerText) {
-        await playerText.ps.delete();
-        self.playerTexts.remove(playerText);
-    };
-
-    self.editPlayerText = function(playerText) {
-        self.editItemIndex = playerText.uuid;
-        self.currentEditItem(new PlayerText());
-        self.currentEditItem().importValues(playerText.exportValues());
-        self.openModal(true);
-    };
-
-    self.toggleModal = function() {
-        self.openModal(!self.openModal());
-    };
-
-    self.closeAddModal = function() {
-        self.addModalOpen(false);
-
-        // Let the validator reset the validation in the form.
-        $(self._addForm()).validate().resetForm();
-    };
-
-    self.validation = {
-        submitHandler: (form, event) => {
-            event.preventDefault();
-            self.addPlayerText();
-        },
-        updateHandler: ($element) => {
-            self.addFormIsValid($element.valid());
-        },
-        // Deep copy of properties in object
-        ...PlayerText.validationConstraints
-    };
-
-    self.updateValidation = {
-        submitHandler: (form, event) => {
-            event.preventDefault();
-            self.modalFinishedClosing();
-        },
-        updateHandler: ($element) => {
-            self.addFormIsValid($element.valid());
-        },
-        // Deep copy of properties in object
-        ...PlayerText.validationConstraints
-    };
-
-    self.toggleAddModal = () => {
-        self.addModalOpen(!self.addModalOpen());
-    };
-
-    /* Push to Player Methods */
-
-    self.shouldShowExhibitButton = ko.pureComputed(function() {
-        return self._isConnectedToParty();
-    });
-
-    self.toggleExhibit = async (playerText) => {
-        playerText.isExhibited(!playerText.isExhibited());
-        await playerText.ps.save();
-        self.markAsExhibited(playerText.isExhibited() ? playerText.uuid() : null);
-    };
-
-    /* Modal Methods */
-
-    self.modalFinishedOpening = function() {
-        self.firstElementInModalHasFocus(true);
-    };
-
-    self.modalFinishedClosing = async function() {
-        self.selectPreviewTab();
-
-        if (self.openModal()) {
-            const response = await self.currentEditItem().ps.save();
-            Utility.array.updateElement(self.playerTexts(), response.object, self.editItemIndex);
-        }
-
-        self.openModal(false);
-    };
-
-    self.selectPreviewTab = function() {
-        self.previewTabStatus('active');
-        self.editTabStatus('');
-    };
-
-    self.selectEditTab = function() {
-        self.editTabStatus('active');
-        self.previewTabStatus('');
-        self.editFirstModalElementHasFocus(true);
-    };
-
-    self.closeModal = () => {
-        self.openModal(false);
-        self.selectPreviewTab();
-
-        // Let the validator reset the validation in the form.
-        $(self._editForm()).validate().resetForm();
-    };
-
-    /* Private Methods */
-
-    self._dataHasChanged = async function() {
-        if (!self.encounterId()) {
+    async toggleExhibit(rat) {
+        rat.isExhibited(!rat.isExhibited());
+        try {
+            await rat.save();
+        } catch(error) {
+            const message = !!error ? error.message : '';
+            Notifications.userNotification.dangerNotification.dispatch(
+                `Unable to update exhibit. ${message}`,
+                'Error'
+            );
+            rat.isExhibited(!rat.isExhibited());
             return;
         }
+        this.markAsExhibited(rat.uuid());
+    }
 
-        var coreUuid = CoreManager.activeCore().uuid();
-        const readAloudResponse = await PlayerText.ps.list({coreUuid, encounterUuid: self.encounterId()});
-        self.playerTexts(readAloudResponse.objects);
+    // Events
 
-        var section = self.encounter().sections()[Fixtures.encounter.sections.readAloudText.index];
-        self.name(section.name());
-        self.visible(section.visible());
-        self.tagline(section.tagline());
-    };
-
-    self.partyDidChange = (party) => {
-        self._isConnectedToParty(!!party);
+    partyDidChange(party) {
+        this.shouldShowExhibitButton(!!party);
 
         // Update everything that isn't on exhibit. This event can
         // be fired from multiple places.
         const exhibitUuid = get(party, 'exhibit.uuid', null);
-        self.markAsExhibited(exhibitUuid);
+        this.markAsExhibited(exhibitUuid);
     };
 
-    self.markAsExhibited = (exhibitUuid) => {
-        self.playerTexts(
-            self.playerTexts().map(playerText => {
-                playerText.isExhibited(playerText.uuid() === exhibitUuid);
-                return playerText;
+    markAsExhibited(exhibitUuid) {
+        this.entities(
+            this.entities().map(rat => {
+                rat.isExhibited(rat.uuid() === exhibitUuid);
+                return rat;
             })
         );
     }
 }
 
-ko.components.register('player-text-section', {
-    viewModel: PlayerTextSectionViewModel,
+
+ko.components.register('read-aloud-text-section', {
+    viewModel: ReadAloudTextSectionViewModel,
     template: template
 });
