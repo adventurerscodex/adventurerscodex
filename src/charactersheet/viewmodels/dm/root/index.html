@@ -18,7 +18,7 @@
         <span class="text-center" id="tabOverviewSpan"><small>Overview</small></span>
       </a>
     </li>
-    <li role="presentation" id="tabEncountersLink" data-bind="click: activateEncounterTab, css: encounterTabStatus">
+    <li role="presentation" id="tabEncountersLink" data-bind="click: activateEncounterTab">
       <a href="#encounter-tab" aria-controls="encounter-tab" role="tab" data-toggle="tab" class="tab-subtext">
         <img class="tab-icon" data-bind="attr: { src: encounterTabImage }"></img></br>
         <span class="text-center" id="tabEncountersSpan"><small>Encounters</small></span>
@@ -57,7 +57,7 @@
   </div>
   <!-- End Overview Tab -->
   <div role="tabpanel" class="tab-pane" id="encounter-tab" data-bind="css: encounterTabStatus">
-    <encounter></encounter>
+    <encounter params="{tabId: 'encounter-tab'}"></encounter>
   </div>
   <!-- End Encounters Tab -->
   <div role="tabpanel" class="tab-pane" id="dmscreen-tab" data-bind="css: dmscreenTabStatus">
