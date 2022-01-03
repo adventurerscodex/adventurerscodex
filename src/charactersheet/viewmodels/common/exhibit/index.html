@@ -30,22 +30,17 @@
 </div>
 <!--/ko-->
 <!-- ko if: isConnectedToParty -->
-<div class="row">
+<div class="d-flex">
   <!-- ko if: playerText -->
-  <div class="col-xs-12 col-sm-6 col-md-8">
+  <div class="d-flex-6 pr-3">
     <h4>Description</h4>
     <div class="well">
         <div data-bind="markdownPreview: playerText"></div>
     </div>
   </div>
   <!-- /ko -->
-  <!-- ko if: !playerText() && imageUrl() -->
-  <div class="col-xs-12 col-sm-3 col-md-4">
-    <!-- This is just a spacer for when there is no playerText -->
-  </div>
-  <!-- /ko -->
   <!-- ko if: imageUrl -->
-  <div class="col-xs-12 col-sm-6 col-md-4 text-center">
+  <div class="d-flex-3 text-center">
     <!-- ko if: playerText() && imageUrl() -->
       <!--
         This is just a spacer for when there is description.
@@ -58,7 +53,7 @@
         attr: { src: imageUrl },
         click: toggleFullScreen
       "
-      class="img-responsive img-rounded"
+      class="img-responsive img-rounded clickable"
       style="margin-left:auto; margin-right:auto;"
     />
     <small>
@@ -69,7 +64,7 @@
   </div>
   <!-- /ko -->
   <!-- ko if: hasNothing -->
-  <div class="col-xs-12">
+  <div class="d-flex-1">
     <div class="detail-place-holder text-center">
       <p class="lead text-muted heading">
         There's nothing being Exhibited.

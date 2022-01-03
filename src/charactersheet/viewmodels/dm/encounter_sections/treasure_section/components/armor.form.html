@@ -1,0 +1,174 @@
+<form data-bind="submit: submit, with: entity().value" autocomplete="off">
+  <card-submit-actions params="{reset: $component.reset}"></card-submit-actions>
+  <!-- ko if: $component.addForm -->
+  <div class="h4 collapsable-card-title">New Armor</div>
+  <!-- /ko -->
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label>Name</label>
+      <input
+        type="text"
+        class="form-control"
+        name="name"
+        placeholder="Chain Mail"
+        data-bind="
+          textInput: name,
+          hasFocus: $component.formElementHasFocus,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.name },
+          autocomplete: {
+            source: $component.prePopFilter,
+            onselect: $component.populate,
+          }
+        "
+      />
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label>Type</label>
+      <input
+        type="text"
+        class="form-control"
+        name="type"
+        placeholder="Light"
+        data-bind="
+          textInput: type,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.type },
+          autocomplete: {
+            source: $component.typeOptions,
+            onselect: $component.setType
+          },
+        "
+      />
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label>Magical Modifier</label>
+      <input
+        type="number"
+        class="form-control"
+        name="magicalModifier"
+        placeholder="0"
+        data-bind="
+          value: magicalModifier,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.magicalModifier },
+        "
+      />
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label>Price</label>
+      <div class="input-group override-tight-inner">
+        <input
+          type="text"
+          class="form-control input-jquery-addon"
+          name="price"
+          placeholder="5"
+          data-bind="
+            value: price,
+            event: { blur: $component.reviewInput, invalid: $component.invalidate },
+            attr: { ...$component.validation.price },
+          "
+        />
+        <span class="input-group-addon input-group-addon-sm input-group-addon-jquery">
+          <input
+            class="form-control"
+            placeholder="GP"
+            name="currencyDenomination"
+            data-bind="
+              value: currencyDenomination,
+              event: { blur: $component.reviewInput, invalid: $component.invalidate },
+              attr: { ...$component.validation.currencyDenomination },
+              autocomplete: {
+                source: $component.currencyDenominationOptions,
+                onselect: $component.setCurrencyDenomination
+              },
+            "
+          />
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label>Weight</label>
+      <input
+        type="text"
+        class="form-control"
+        name="weight"
+        placeholder="10"
+        data-bind="
+          value: weight,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.weight },
+        "
+      />
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label>Armor Class</label>
+      <input
+        type="text"
+        class="form-control"
+        name="armorClass"
+        placeholder="10"
+        data-bind="
+          value: armorClass,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.armorClass },
+        "
+      />
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label>Stealth</label>
+      <input
+        type="text"
+        class="form-control"
+        name="stealth"
+        placeholder="Advantage"
+        data-bind="
+          value: stealth,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.stealth },
+          autocomplete: {
+            source: $component.stealthOptions,
+            onselect: $component.setStealth
+          },
+        "
+      />
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label>Description</label>
+      <textarea
+        type="text"
+        class="form-control"
+        name="description"
+        rows="4"
+        placeholder="Armor of damage blocking"
+        data-bind="
+          value: description,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.description },
+        "
+      ></textarea>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <form-submit-actions params="{
+      reset: $component.reset,
+      delete: $component.delete,
+      addForm: $component.addForm,
+      showDisclaimer: $component.showDisclaimer
+    }"></form-submit-actions>
+  </div>
+</form>

@@ -1,0 +1,10 @@
+import './armor.view';
+import './armor.form';
+import './item.view';
+import './item.form';
+import './magic-item.view';
+import './magic-item.form';
+import './coins.view';
+import './coins.form';
+import './weapon.view';
+import './weapon.form';

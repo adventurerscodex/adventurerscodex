@@ -3,12 +3,28 @@ import ko from 'knockout';
 
 
 export class Environment extends KOModel {
+
     static __skeys__ = ['core', 'encounters', 'environment'];
-    static __dependents__ = ['Image', 'EncounterImage', 'Monster'];
+
+    static __dependents__ = [
+        'Image',
+        'NPC',
+        'PlayerText',
+        'PointOfInterest',
+        'Monster',
+        'EncounterImage',
+    ];
 
     static mapping = {
-        include: ['coreUuid', 'encounterUuid', 'imageUrl', 'weather',
-            'terrain', 'description', 'isExhibited']
+        include: [
+            'coreUuid',
+            'encounterUuid',
+            'imageUrl',
+            'weather',
+            'terrain',
+            'description',
+            'isExhibited',
+        ]
     };
 
     coreUuid = ko.observable();
@@ -19,7 +35,7 @@ export class Environment extends KOModel {
     description = ko.observable('');
     isExhibited = ko.observable(false);
 
-    //Public Methods
+    // Public Methods
 
     toJSON = function() {
         return { name: 'Environment', url: this.imageUrl() };
@@ -34,9 +50,26 @@ export class Environment extends KOModel {
         );
     });
 
-    toHTML = function() {
-        return 'New environment';
-    };
+    // Helpers
+
+    load = async (params) => {
+        const response = await this.ps.model.ps.read(params);
+        this.importValues(response.object.exportValues());
+    }
+
+    create = async () => {
+        const response = await this.ps.create();
+        this.importValues(response.object.exportValues());
+    }
+
+    save = async () => {
+        const response = await this.ps.save();
+        this.importValues(response.object.exportValues());
+    }
+
+    delete = async () => {
+        await this.ps.delete();
+    }
 }
 
 Environment.validationConstraints = {

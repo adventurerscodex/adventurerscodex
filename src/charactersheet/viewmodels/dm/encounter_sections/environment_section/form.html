@@ -1,0 +1,60 @@
+<form data-bind="submit: $component.submit">
+  <div class="card-title h4">
+    <back-button params="{ column: $parents[3] }"></back-button>
+    <span data-bind="text: name"></span><br />
+    <small data-bind="text: tagline"></small>
+    <card-submit-actions params="{ reset: $component.reset }"></card-submit-actions>
+  </div>
+  <hr class="ac-table-header">
+  <div class="row" data-bind="with: entity">
+    <div class="form-group col-xs-12">
+      <div class="d-flex justify-content-between">
+        <label class="d-flex-1">
+          Image Link
+        </label>
+        <div class="d-flex-1 text-right text-muted">
+          <i
+            class="fa fa-info-circle"
+            title="This field will be sent to the players via the exhibit."
+          ></i>&nbsp; Exhibit
+        </div>
+      </div>
+      <input
+        type="url"
+        class="form-control"
+        name="imageUrl"
+        data-bind="value: imageUrl"
+        placeholder="http://myurl.com/image.jpg"
+      />
+    </div>
+    <div class="form-group col-xs-12 col-md-6">
+      <label>Weather</label>
+      <input type="text"
+             class="form-control"
+             name="weather"
+             data-bind="value: weather">
+    </div>
+    <div class="form-group col-xs-12 col-md-6">
+      <label>Terrain</label>
+      <input type="text"
+             class="form-control"
+             name="terrain"
+             data-bind="value: terrain">
+    </div>
+    <div class="form-group col-xs-12">
+      <label>Description</label>
+      <textarea type="text"
+              class="form-control" rows="4"
+              name="description"
+              data-bind="value: description, markdownEditor: true"></textarea>
+      <markdown-help />
+    </div>
+  </div>
+  <div class="modal-footer">
+    <form-submit-actions params="{
+      reset: $component.reset,
+      delete: $component.delete,
+      addForm: $component.addForm,
+    }"></form-submit-actions>
+  </div>
+</form>

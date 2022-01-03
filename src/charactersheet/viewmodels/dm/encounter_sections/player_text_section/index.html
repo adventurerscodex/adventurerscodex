@@ -1,245 +1,139 @@
-<!-- ko if: visible -->
-<div class="h3">
-<img class="encounter-section-img" data-bind="attr: { src: sectionIcon }">
-  Read-Aloud Text<br />
-  <small data-bind="text: tagline"></small>
+<div id="rat-pane">
+  <div class="card-title h4">
+    <back-button params="{ column: column }"></back-button>
+    <span data-bind="text: name"></span><br />
+    <small data-bind="text: tagline"></small>
+  </div>
+  <hr class="ac-table-header">
+  <table class="table table-responsive table-ac-bordered table-hover">
+    <thead>
+      <tr>
+        <th data-bind="click: ()=> {sortBy('name');}"
+            class="col-md-2">
+          Name
+          <span data-bind="css: sortArrow('name')"></span>
+        </th>
+        <th data-bind="click: ()=> {sortBy('description');}"
+            class="col-xs-8 hidden-xs hidden-sm">
+          Description
+          <span data-bind="css: sortArrow('description')"></span>
+        </th>
+        <th data-bind="click: ()=> {sortBy('isExhibited');}"
+            class="col-xs-1">
+          Exhibit
+          <span data-bind="css: sortArrow('isExhibited')"></span>
+        </th>
+        <th class="col-xs-1 text-right toggle-collapse-col">
+          <a href="#"
+              data-bind="{click: collapseAll}">
+            <span class="fa fa-minus"></span>
+          </a>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- ko foreach: $component.filteredAndSortedEntities -->
+      <tr
+        class="clickable ratRow"
+        data-bind="attr: { id: `#rat_row_${uuid()}` }">
+        <td data-toggle="collapse" data-bind="attr: {
+          'data-target': `#rat_list_${uuid()}`,
+        }">
+          <span data-bind="text: name"></span>
+        </td>
+        <td class="hidden-xs hidden-sm" data-toggle="collapse" data-bind="attr: {
+          'data-target': `#rat_list_${uuid()}`,
+        }">
+          <span data-bind="text: shortDescription"></span>
+        </td>
+        <!-- ko if: $component.shouldShowExhibitButton -->
+        <td class="text-right col-md-1">
+          <a data-bind="click: () => $component.toggleExhibit($data)" href="#" title="Send to Exhibit">
+            <i data-bind="css: { exhibitActiveIcon: isExhibited }" class="fa fa-desktop fa-color-hover clickable">
+            </i>
+          </a>
+        </td>
+        <!-- /ko -->
+        <!-- ko ifnot: $component.shouldShowExhibitButton -->
+        <td class="text-right col-md-1">
+          <span class="fa fa-desktop fa-disabled"
+            data-bind="popover: { content: 'Join a Party in order to send to Exhibit' }">
+          </span>
+        </td>
+        <!-- /ko -->
+        <td class="text-right toggle-collapse-col">
+          <span data-toggle="collapse"
+              data-bind="attr:{'data-target': `#rat_list_${uuid()}`}"
+              class="rotate fa fa-chevron-left"></span>
+        </td>
+      </tr>
+      <tr class="collapseRow safari-card-fix">
+        <td colspan="8">
+          <flip-card params="{
+                  dataId: $data.uuid(),
+                  tabId: $parent.tabId,
+                  collapsable: true,
+                  elementId: 'rat_list',
+                  context: {
+                    data: $data,
+                    encounter: $component.encounter,
+                    fullScreen: $component.fullScreen,
+                  }
+                }">
+            <div class="front">
+              <div>
+                <card-edit-actions params="{ flip: flip }"></card-edit-actions>
+              </div>
+              <read-aloud-text-view
+                params="
+                  rat: context.data,
+                  fullScreen: context.fullScreen,
+                "
+              ></read-aloud-text-view>
+            </div>
+            <div class="back">
+              <read-aloud-text-form params="{
+                containerId: elementId,
+                collapsable: true,
+                encounter: context.encounter,
+                data: context.data,
+                show: showBack,
+                flip: flip,
+                forceCardResize: forceCardResize
+              }"></read-aloud-text-form>
+            </div>
+          </flip-card>
+        </td>
+      </tr>
+      <!-- /ko -->
+      <tr id="add-rat" class="collapse add-card">
+        <td colspan="5">
+          <read-aloud-text-form params="{
+            containerId:'add-rat',
+            show: $component.displayAddForm,
+            flip: $component.toggleShowAddForm,
+            encounter: $component.encounter,
+          }"></read-aloud-text-form>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+          <td colspan="8">
+          <div class="row">
+            <div class="col">
+              <!-- ko ifnot: $component.displayAddForm -->
+              <button type="button"
+                  class="btn btn-link btn-block btn-sm"
+                  id="ratAddButton"
+                  data-toggle="collapse"
+                  data-target="#add-rat"
+                  data-bind="click: $component.toggleShowAddForm"><i class="fa fa-plus"></i> Add Read Aloud Text</button>
+              <!-- /ko -->
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
 </div>
-<table class="table table-responsive table-ac-bordered table-hover">
-  <thead>
-    <tr>
-      <th data-bind="click: function(){sortBy('name');}" class="col-xs-3">
-        Name
-        <span data-bind="css: sortArrow('name')"></span>
-      </th>
-      <th data-bind="click: function(){sortBy('description');}" class="col-xs-7">
-        Description
-        <span data-bind="css: sortArrow('description')"></span>
-      </th>
-      <th class="col-xs-1 text-right">Exhibit</th>
-      <th class="col-xs-1 text-right">
-        <a data-bind="click: toggleAddModal" href="#">
-          <i class="fa fa-plus fa-color"></i>
-        </a>
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-  <!-- ko foreach: filteredAndSortedPlayerText -->
-    <tr class="clickable">
-      <td data-bind="text: name, click: $parent.editPlayerText"
-          class="col-xs-3" href="#"></td>
-      <td data-bind="html: shortDescription, click: $parent.editPlayerText"
-          class="col-xs-7 hidden-md hidden-lg" href="#"></td>
-      <td data-bind="html: longDescription, click: $parent.editPlayerText"
-          class="col-md-7 hidden-sm hidden-xs" href="#"></td>
-      <!-- ko if: $parent.shouldShowExhibitButton -->
-      <td class="text-right col-md-1">
-        <a data-bind="click: $parent.toggleExhibit" href="#" title="Send to Player's Exhibit">
-          <i data-bind="css: { exhibitActiveIcon: isExhibited }" class="fa fa-desktop fa-color-hover">
-          </i>
-        </a>
-      </td>
-      <!-- /ko -->
-      <!-- ko ifnot: $parent.shouldShowExhibitButton -->
-      <td class="text-right col-md-1">
-        <span class="fa fa-desktop fa-disabled" style="cursor:pointer;"
-          data-bind="popover: { content: 'Join a Party in order to send to the Player\'s Exhibit' }">
-        </span>
-      </td>
-      <!-- /ko -->
-      <td class="col-xs-1 text-right">
-        <a data-bind="click: $parent.removePlayerText" href="#">
-          <i class="fa fa-trash-o fa-color-hover"></i>
-        </a>
-      </td>
-    </tr>
-    <!-- /ko -->
-    <!-- ko if: filteredAndSortedPlayerText().length == 0 -->
-    <tr class="clickable">
-      <td data-bind="click: toggleAddModal"
-        colspan="12" class="text-center">
-        <i class="fa fa-plus fa-color"></i>
-        Add new text for your players.
-      </td>
-    </tr>
-    <!-- /ko -->
-  </tbody>
-</table>
-<!-- /ko -->
-
-<!-- Add Modal -->
-<div class="modal fade"
-     id="addPlayerText"
-     tabindex="-1"
-     role="dialog" data-bind="modal: {
-      onopen: modalFinishedOpening,
-      onclose: closeAddModal,
-      open: addModalOpen }">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title"
-            id="addWeaponLabel">Add a new snippet of text.</h4>
-    </div>
-      <div class="modal-body">
-        <form class="form-horizontal" data-bind="element: _addForm, validate: validation">
-          <div class="form-group">
-            <label class="col-sm-2 col-padded control-label">
-              Name<i class="required"></i>
-            </label>
-            <div class="col-sm-9 col-padded">
-              <input type="text"
-                     class="form-control"
-                     name="name"
-                     placeholder="A kingly statue"
-                     data-bind="textInput: blankPlayerText().name,
-                        hasFocus: firstElementInModalHasFocus">
-            </div>
-            <div class="col-sm-1 control-label"></div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 col-padded control-label">
-              Description
-            </label>
-            <div class="col-sm-9 col-padded">
-              <textarea type="text"
-                      class="form-control" rows="4"
-                      name="description"
-                      placeholder="It rises up from it's stone pillar..."
-                      data-bind="value: blankPlayerText().description">
-              </textarea>
-              <small class="text-muted">
-                Text in this panel can be styled using Markdown. Click
-                <a target="_blank"
-                  href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">here</a> to see a guide.
-              </small>
-            </div>
-            <div class="col-sm-1 control-label">
-              <span class="fa fa fa-desktop" style="cursor:pointer;"
-                title="This field will be sent to the players via the exhibit.">
-              </span>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <p class="text-muted text-center">
-              Fields marked with <i class="fa fa fa-desktop fa-color-hover"></i> will be shown to the players in the Exhibit.
-            </p>
-            <button type="submit"
-                    class="btn btn-primary">Add</button>
-          </div>
-        </form>
-      </div> <!-- Modal Body -->
-    </div> <!-- Modal Content -->
-  </div> <!-- Modal Dialog -->
-</div> <!-- Modal Fade -->
-
-<!-- ViewEdit Modal -->
-<div class="modal fade"
-     id="viewPlayerTextEdit"
-     tabindex="-1"
-     role="dialog"
-     data-bind="modal: {
-      open: openModal,
-      onopen: modalFinishedOpening,
-      onclose: closeModal
-    }">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title">Edit your text.</h4>
-      </div>
-      <div class="modal-body">
-        <!-- Begin Tabs -->
-        <ul class="nav nav-tabs tabs">
-          <li role="presentation" data-bind="click: selectPreviewTab, css: previewTabStatus">
-            <a href="#" aria-controls="itemsModalPreview" role="tab" data-toggle="tab">
-                <b>Preview</b>
-            </a>
-          </li>
-          <li role="presentation" data-bind="click: selectEditTab, css: editTabStatus">
-            <a href="#" aria-controls="itemsModalEdit" role="tab" data-toggle="tab">
-                <b>Edit</b>
-            </a>
-          </li>
-        </ul>
-        <div class="tab-content" data-bind="with: currentEditItem">
-          <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane">
-            <div class="row">
-              <div class="col-xs-12">
-                <div class="h3" data-bind="text: name"></div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-12">
-                <div data-bind="markdownPreview: description"
-                     class="preview-modal-overflow">
-                </div>
-              </div>
-            </div>
-          </div> <!-- End Preview Tab -->
-          <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane">
-            <form class="form-horizontal" data-bind="element: $parent._editForm, validate: $parent.updateValidation">
-              <div class="form-group">
-                <label class="col-sm-2 col-padded control-label">
-                  Name<i class="required"></i>
-                </label>
-                <div class="col-sm-9 col-padded">
-                  <input type="text"
-                         class="form-control"
-                         name="name"
-                         data-bind="textInput: name, hasFocus: $parent.editFirstModalElementHasFocus">
-                </div>
-                <div class="col-sm-1 control-label"></div>
-              </div>
-              <div class="form-group">
-                <label for="playerTextDescription"
-                       class="col-sm-2 col-padded control-label">
-                       Description
-                </label>
-                <div class="col-sm-9 col-padded">
-                  <textarea type="text" rows="6"
-                          class="form-control"
-                          name="description"
-                          data-bind="value: description, markdownEditor: true">
-                  </textarea>
-                  <small class="text-muted">
-                    Text in this panel can be styled using Markdown. Click
-                    <a target="_blank"
-                      href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">here</a> to see a guide.
-                  </small>
-                </div>
-                <div class="col-sm-1 control-label">
-                  <span class="fa fa fa-desktop" style="cursor:pointer;"
-                    title="This field will be sent to the players via the exhibit.">
-                  </span>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <p class="text-muted text-center">
-                  Fields marked with <i class="fa fa fa-desktop fa-color-hover"></i> will be shown to the players in the Exhibit.
-                </p>
-                <button type="submit"
-                        class="btn btn-primary">Done</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div> <!-- Modal Body -->
-    </div> <!-- Modal Content -->
-  </div> <!-- Modal Dialog -->
-</div> <!-- Modal Fade -->
-
-<!-- Push Modal -->
-<player-push-modal params="isOpen: openPushModal, type: pushType, payload: selectedItemToPush, onclose: pushModalFinishedClosing"></player-push-modal>

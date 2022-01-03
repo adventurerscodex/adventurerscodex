@@ -1,122 +1,33 @@
-<!-- ko if: visible -->
-<div class="h3">
-  <img class="encounter-section-img" data-bind="attr: { src: sectionIcon }">
-  <span data-bind="text: name"></span><br />
-  <small data-bind="text: tagline"></small>
-</div>
-<div class="container-fluid">
-  <!-- Begin Tabs -->
-  <ul class="nav nav-tabs tabs">
-    <li role="presentation"
-        data-bind="click: selectPreviewTab, css: previewTabStatus">
-      <a href="#" aria-controls="itemsModalPreview" role="tab" data-toggle="tab">
-        <b>Preview</b>
-      </a>
-    </li>
-    <li role="presentation" data-bind="click: selectEditTab, css: editTabStatus">
-      <a href="#" aria-controls="itemsModalEdit" role="tab" data-toggle="tab">
-        <b>Edit</b>
-      </a>
-    </li>
-    <!-- ko if: editTabStatusIsActive -->
-    <li role="presentation" class="secondary-nav">
-      <button class="btn btn-sm btn-primary"
-              id="environmentSaveButton"
-              data-bind="click: saveButton">
-        <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;
-        Save
-      </button>
-      <button class="btn btn-sm btn-default"
-              id="environmentCancelButton"
-              data-bind="click: selectPreviewTab">
-        Cancel
-      </button>
-    </li>
-    <!-- /ko -->
-  </ul>
-  <div class="tab-content" data-bind="if: loaded">
-    <div role="tabpanel" data-bind="css: previewTabStatus" class="tab-pane">
-      <div class="row row-padded">
-        <div data-bind="col-xs-12">
-          <div class="row">
-            <div class="col-xs-8">
-              <b>Weather:</b>&nbsp;<span data-bind="text: weatherLabel"></span><br>
-              <b>Terrain:</b>&nbsp;<span data-bind="text: terrainLabel"></span>
-              </div>
-              <div class="col-xs-4 text-right">
-                <!-- ko if: shouldShowExhibitButton -->
-                <div class="text-center inline-block">
-                  <span style="font-weight: bold;">Exhibit</span><br>
-                  <a data-bind="click: toggleExhibit" href="#" title="Send Player's Exhibit">
-                    <i data-bind="css: { exhibitActiveIcon: environment().isExhibited }"
-                        class="fa fa-desktop fa-color-hover">
-                    </i>
-                  </a>
-                </div>
-                <!-- /ko -->
-                <!-- ko ifnot: shouldShowExhibitButton -->
-                <div class="text-center inline-block">
-                  <span style="font-weight: bold;">Exhibit</span><br>
-                  <span class="fa fa-desktop fa-disabled" style="cursor:pointer;"
-                    data-bind="popover: { content: 'Join a Party send Player\'s Exhibit' }">
-                  </span>
-                </div>
-                <!-- /ko -->
-              </div>
-          </div>
-          <hr data-bind="visible: shouldShowDividingMarker"/>
-            <!-- ko if: environment().imageUrl -->
-            <img data-bind="attr: { src: convertedImageLink, width: imageWidth },
-              css: imageClass, click: toggleFullScreen"
-              class="img-responsive img-rounded clickable">
-            <small>
-              <em class="text-muted text-center col-xs-12">Click on the image to view it in Full Screen.</em>
-            </small>
-            <!-- /ko -->
-            <span data-bind="markdownPreview: environment().description"
-               class="preview-modal-overflow-sm">
-            </span>
-        </div>
-      </div>
-    </div> <!-- End Preview Tab -->
-    <div role="tabpanel" data-bind="css: editTabStatus" class="tab-pane">
-      <form class="form-horizontal" data-bind="validate: validation">
-        <div class="form-group" data-bind="with: environment">
-          <label class="col-sm-2 col-padded control-label">Image Link</label>
-          <div class="col-sm-10 col-padded">
-            <input type="text"
-                   class="form-control"
-                   name="imageUrl"
-                   data-bind="value: imageUrl">
-          </div>
-          <label class="col-sm-2 col-padded control-label">Weather</label>
-          <div class="col-sm-10 col-padded">
-            <input type="text"
-                   class="form-control"
-                   name="weather"
-                   data-bind="value: weather">
-          </div>
-          <label class="col-sm-2 col-padded control-label">Terrain</label>
-          <div class="col-sm-10 col-padded">
-            <input type="text"
-                   class="form-control"
-                   name="terrain"
-                   data-bind="value: terrain">
-          </div>
-          <label class="col-sm-2 col-padded control-label">Description</label>
-          <div class="col-sm-10 col-padded">
-            <textarea type="text"
-                    class="form-control" rows="4"
-                    name="description"
-                    data-bind="value: description, markdownEditor: true"></textarea>
-          </div>
-        </div>
-      </form>
+<div data-bind="if: loaded">
+  <flip-card params="{
+    tabId: 'environment-tab',
+    elementId: 'environment-section-id',
+    context: {
+      data: $data,
+     }
+  }">
+    <div class="front">
+      <environment-view params="
+        encounter: context.data.encounter,
+        entity: context.data.entity,
+        flip: flip,
+        fullScreen: context.data.fullScreen,
+      "></environment-view>
     </div>
-  </div>
+    <div class="back">
+      <environment-form params="
+        encounter: context.data.encounter,
+        entity: context.data.entity,
+        flip: flip
+      "></environment-form>
+    </div>
+  </flip-card>
 </div>
 
 <!-- The visibility is managed internally -->
-<full-screen-image params="imageSource: convertedImageLink, fullScreenStatus: fullScreen">
-</full-screen-image>
-<!-- /ko -->
+<full-screen-image
+  params="
+    imageSource: convertedImageLink,
+    fullScreenStatus: fullScreen
+  "
+></full-screen-image>

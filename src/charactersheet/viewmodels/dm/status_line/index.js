@@ -1,105 +1,103 @@
+import autoBind from 'auto-bind';
 import {
-    PlayerCard,
     PlayerTypes,
     StatusWeightPair
 } from 'charactersheet/models';
-import { getHealthTypeEnum,
+import {
+    getHealthTypeEnum,
     getMagicTypeEnum,
     getTrackedTypeEnum
 } from 'charactersheet/models/common/status_weight_pair';
 import { Notifications } from 'charactersheet/utilities';
+import { PartyService } from 'charactersheet/services';
+import { ViewModel } from 'charactersheet/viewmodels/abstract';
 import ko from 'knockout';
 import template from './index.html';
 
-export function PartyStatusLineViewModel(params) {
-    var self = this;
+class PartyStatusLineViewModel extends ViewModel {
 
-    self.statusLine = ko.observable('');
-    self.character = params.character;
+    constructor(params) {
+        super();
+        autoBind(this);
+        this.party = ko.observable(PartyService.party);
+        this.character = params.character;
+    }
 
-    self.load = function() {
+    setUpSubscriptions() {
+        super.setUpSubscriptions();
 
-    };
+        this.subscriptions.push(Notifications.party.changed.add(this.partyDidChange));
+    }
 
-    self.unload = function() {
+    // UI
 
-        self.clear();
-    };
+    statusLine = ko.pureComputed(() => {
+        if (!this.party()) {
+            return '<span class="text-muted">You are not connected to a party.</span>';
+        }
+        const players = this.party().members;
+        if (players.length === 0) {
+            return '<span class="text-muted">There\'s no one in your party.</span>';
+        }
 
-    self.clear = function() {
-        self.statusLine('');
-    };
+        const [hitPoints, totalHitPoints] = (
+            players
+            .map(player => {
+                const maxHp = player.maxHitPoints - player.maxHitPointsReductionDamage;
+                const hp = maxHp - player.damage;
+                return [hp, maxHp];
+            })
+            .reduce(([remaining, total], [hp, maxHp]) => (
+                [remaining + hp, total + maxHp]
+            ))
+        );
 
-    // Private Methods
+        const [spellSlots, totalSpellSlots] = (
+            players
+            .map(({ remainingSpellSlots, totalSpellSlots }) => (
+                [remainingSpellSlots, totalSpellSlots]
+            ))
+            .reduce(([remaining, total], [remainingSpellSlots, totalSpellSlots]) => (
+                [remaining + remainingSpellSlots, total + totalSpellSlots]
+            ))
+        );
 
-    self.dataHasChanged = function(pCards) {
-        var players = pCards.map(function(inputPCard, idx, _) {
-            return new PlayerCard(inputPCard);
-        });
-        self.statusLine(self.getStatusLine(players));
-    };
+        const [trackables, totalTrackables] = (
+            players
+            .map(({ remainingTrackables, totalTrackables }) => (
+                [remainingTrackables, totalTrackables]
+            ))
+            .reduce(([remaining, total], [remainingTrackables, totalTrackables]) => (
+                [remaining + remainingTrackables, total + totalTrackables]
+            ))
+        );
 
-    self.getStatusLine = function(players) {
-//         var chat = ChatServiceManager.sharedService();
-//         if (chat.currentPartyNode == null || players.length < 1) { return ''; }
-//         var totalHealthiness = 0;
-//         var totalMagic = 0;
-//         var totalTrackedAbilities = 0;
-//         var healthinessModified = false;
-//         var magicModified = false;
-//         var trackedAbilitiesModified = false;
-//         var statuses = [];
-//         var numberOfHealthinessStatuses = 0;
-//         var numberOfMagicStatuses = 0;
-//         var numberOfTrackedStatuses = 0;
-//
-//         for (const player of players) {
-//             if (player.playerType() === PlayerTypes.character.key) {
-//                 if (player.healthinessStatus()) {
-//                     totalHealthiness += player.healthinessStatus().value();
-//                     healthinessModified = true;
-//                     numberOfHealthinessStatuses++;
-//                 }
-//                 if (player.magicStatus()) {
-//                     totalMagic += player.magicStatus().value();
-//                     magicModified = true;
-//                     numberOfMagicStatuses++;
-//                 }
-//                 if (player.trackedStatus()) {
-//                     totalTrackedAbilities += player.trackedStatus().value();
-//                     trackedAbilitiesModified = true;
-//                     numberOfTrackedStatuses++;
-//                 }
-//             }
-//         }
-//
-//         if (healthinessModified) {
-//             statuses.push(StatusWeightPair.determinePhraseAndColor(getHealthTypeEnum(), totalHealthiness / numberOfHealthinessStatuses));
-//         }
-//
-//         if (magicModified) {
-//             statuses.push(StatusWeightPair.determinePhraseAndColor(getMagicTypeEnum(), totalMagic / numberOfMagicStatuses));
-//         }
-//
-//         if (trackedAbilitiesModified) {
-//             statuses.push(StatusWeightPair.determinePhraseAndColor(getTrackedTypeEnum(), totalTrackedAbilities / numberOfTrackedStatuses));
-//         }
-//
-//         if (statuses.length < 1) { return ''; }
-//
-//         return 'Your party is ' + statuses.map(function(e, i, _) {
-//             var status = '<span class="text-' + e.color + '">' + e.status + '</span>';
-//             if (statuses.length > 1 && i == statuses.length - 1) {
-//                 return 'and ' + status;
-//             } else if (statuses.length > 2) {
-//                 return status + ',&nbsp;';
-//             } else if (statuses.length > 1) {
-//                 return status + '&nbsp;';
-//             } else {
-//                 return status;
-//             }
-//         }).join('') + '.';
-    };
+        const statuses = [
+            StatusWeightPair.determinePhraseAndColor(getHealthTypeEnum(), hitPoints / totalHitPoints),
+            StatusWeightPair.determinePhraseAndColor(getMagicTypeEnum(), spellSlots / totalSpellSlots),
+            StatusWeightPair.determinePhraseAndColor(getTrackedTypeEnum(), trackables / totalTrackables),
+        ];
+
+        return 'Your party is ' + statuses.map(function(e, i, _) {
+            var status = '<span class="text-' + e.color + '">' + e.status + '</span>';
+            if (statuses.length > 1 && i == statuses.length - 1) {
+                return 'and ' + status;
+            } else if (statuses.length > 2) {
+                return status + ',&nbsp;';
+            } else if (statuses.length > 1) {
+                return status + '&nbsp;';
+            } else {
+                return status;
+            }
+        }).join('') + '.';
+
+    });
+
+    // Private
+
+    partyDidChange(party) {
+        this.party(party);
+    }
 }
 
 ko.components.register('party-status-line', {

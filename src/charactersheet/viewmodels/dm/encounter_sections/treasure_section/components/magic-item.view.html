@@ -1,0 +1,39 @@
+<!-- ko with: entity.value -->
+<div class="h3">
+  <span data-bind="text: name"></span>&nbsp;
+  <small data-bind="text: rarity"></small>
+</div>
+
+<hr />
+<div class="row">
+  <div class="col-sm-6 col-xs-12">
+    <b>Type:</b>&nbsp;<span data-bind="text: type"></span>
+  </div>
+  <div class="col-sm-6 col-xs-12">
+    <b>Weight:</b>&nbsp;<span data-bind="text: weightLabel"></span>
+  </div>
+  <div class="col-sm-6 col-xs-12" data-bind="visible: maxCharges">
+    <b>Max Charges:</b>&nbsp;<span data-bind="text: maxCharges"></span>
+  </div>
+  <div class="col-sm-6 col-xs-12" data-bind="visible: usedCharges">
+    <b>Charges:</b>&nbsp;<span data-bind="text: usedCharges"></span>
+  </div>
+  <div class="col-sm-6 col-xs-12" data-bind="visible: requiresAttunement">
+    <b>Requires Attunement</b>
+    <span data-bind="visible: attuned" class="text-muted">
+      (Attuned)
+    </span>
+  </div>
+</div>
+
+<hr />
+<h4>Description</h4>
+<div class="row row-padded">
+  <div class="col-xs-12 col-padded">
+    <div
+      data-bind="html: descriptionHTML"
+      class="preview-modal-overflow"
+    ></div>
+  </div>
+</div>
+<!-- /ko -->

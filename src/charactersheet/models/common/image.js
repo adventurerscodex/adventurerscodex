@@ -1,7 +1,7 @@
 import 'bin/knockout-mapping-autoignore';
 import 'knockout-mapping';
 import { KOModel } from 'hypnos/lib/models/ko';
-import { Utility } from 'charactersheet/utilities';
+import { Notifications, Utility } from 'charactersheet/utilities';
 import ko from 'knockout';
 
 
@@ -13,6 +13,7 @@ export class EncounterImage extends KOModel {
         include: ['coreUuid', 'encounterUuid', 'name', 'sourceUrl', 'description', 'isExhibited', 'playerText']
     };
 
+    uuid = ko.observable();
     coreUuid = ko.observable();
     encounterUuid = ko.observable();
     name = ko.observable();
@@ -23,28 +24,52 @@ export class EncounterImage extends KOModel {
 
     DESCRIPTION_MAX_LENGTH = 100;
 
-    // Public Methods
-
-    toJSON = function() {
-        return {
-            name: this.name(),
-            url: this.sourceUrl(),
-            description: this.playerText()
-        };
-    };
-
     shortDescription = ko.pureComputed(() => {
         return Utility.string.truncateStringAtLength(this.description(), this.DESCRIPTION_MAX_LENGTH);
     });
 
-    /* Message Methods */
+    convertedDisplayUrl = ko.pureComputed(() => (
+        this.sourceUrl()
+            ? Utility.string.createDirectDropboxLink(this.sourceUrl())
+            : null
+    ));
 
-    toHTML = function() {
-        return 'New image in chat';
-    };
+    load = async (params) => {
+        const response = await this.ps.model.ps.read(params);
+        this.importValues(response.object.exportValues());
+    }
+
+    create = async () => {
+        const response = await this.ps.create();
+        this.importValues(response.object.exportValues());
+        Notifications.encounterimage.added.dispatch(this);
+    }
+
+    save = async () => {
+        const response = await this.ps.save();
+        this.importValues(response.object.exportValues());
+        Notifications.encounterimage.changed.dispatch(this);
+    }
+
+    delete = async () => {
+        await this.ps.delete();
+        Notifications.encounterimage.deleted.dispatch(this);
+    }
 }
 
+
 EncounterImage.validationConstraints = {
+    fieldParams: {
+        name: {
+            required: true,
+            maxlength: 256
+        },
+        sourceUrl: {
+            required: true,
+            url: true,
+            maxlength: 1024
+        }
+    },
     rules: {
         name: {
             required: true,

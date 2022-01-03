@@ -5,15 +5,26 @@ import ko from 'knockout';
 
 
 export class EncounterMagicItem extends KOModel {
+
     static __skeys__ = ['core', 'encounters', 'treasures'];
 
     static mapping = {
-        include: ['coreUuid', 'encounterUuid', 'type', 'uuid']
+        include: [
+            'coreUuid',
+            'encounterUuid',
+            'type',
+            'uuid',
+            'name',
+            'magicItemType',
+            'rarity',
+            'requiresAttunement',
+            'attuned',
+            'maxCharges',
+            'usedCharges',
+            'weight',
+            'description'
+        ]
     };
-
-    static magicItemFields = ['name', 'magicItemType', 'rarity', 'requiresAttunement', 'attuned', 'maxCharges', 'usedCharges', 'weight', 'description'];
-
-    static allFields = ['name', 'magicItemType', 'rarity', 'requiresAttunement', 'attuned', 'maxCharges', 'usedCharges', 'weight', 'description', 'uuid', 'coreUuid', 'encounterUuid', 'type'];
 
     uuid = ko.observable();
     coreUuid = ko.observable();
@@ -21,6 +32,7 @@ export class EncounterMagicItem extends KOModel {
     type = ko.observable();
 
     // Magic Item Fields
+
     name = ko.observable('');
     magicItemType = ko.observable('');
     rarity = ko.observable('');
@@ -33,13 +45,6 @@ export class EncounterMagicItem extends KOModel {
     SHORT_DESCRIPTION_MAX_LENGTH = 100;
     DESCRIPTION_MAX_LENGTH = 200;
 
-    magicItemTypeOptions = ko.observableArray(Fixtures.magicItem.magicItemTypeOptions);
-    magicItemRarityOptions = ko.observableArray(Fixtures.magicItem.magicItemRarityOptions);
-
-    nameLabel = ko.pureComputed(() => {
-        return this.name();
-    });
-
     propertyLabel = ko.pureComputed(() => {
         return this.magicItemType() ? this.magicItemType() : '';
     });
@@ -48,7 +53,7 @@ export class EncounterMagicItem extends KOModel {
         return this.shortDescription();
     });
 
-    magicItemDescriptionHTML = ko.pureComputed(() => {
+    descriptionHTML = ko.pureComputed(() => {
         if (!this.description()) {
             return '<div class="h3"><small>Add a description via the edit tab.</small></div>';
         }
@@ -60,7 +65,7 @@ export class EncounterMagicItem extends KOModel {
         return Utility.string.truncateStringAtLength(this.description(), this.SHORT_DESCRIPTION_MAX_LENGTH);
     });
 
-    magicItemWeightLabel = ko.pureComputed(() => {
+    weightLabel = ko.pureComputed(() => {
         return this.weight() !== '' && this.weight() >= 0 ? this.weight() + ' lbs.' : '0 lbs.';
     });
 
@@ -69,53 +74,47 @@ export class EncounterMagicItem extends KOModel {
         treasure.value = pick(params, EncounterMagicItem.magicItemFields);
         return treasure;
     };
-
-    buildModelFromValues = (values) => {
-        let keys = Object.keys(values);
-        keys.forEach((key) => {
-            if (key === 'type') {
-                this['magicItemType'] = values[key];
-            } else {
-                this[key] = values[key];
-            }
-        });
-    };
-
-    getValues = () => {
-        let values = {};
-        EncounterMagicItem.magicItemFields.forEach((field) => {
-            if (field === 'magicItemType') {
-                values['type'] = this[field];
-            } else {
-                values[field] = this[field];
-            }
-        });
-
-        return values;
-    };
-
-    /**
-      * Serialize the current item to a plain JSON format. We use these in-leiu of the normal
-      * import/exportValues because those return a format unsuitable for re-importing
-      * (since it caused data corruption).
-     */
-    toJSON = () => {
-        let values = {};
-        EncounterMagicItem.allFields.forEach((field) => {
-            values[field] = this[field]();
-        });
-
-        return values;
-    };
-
-    /**
-      * De-serialize the current item into the current model. We use these in-leiu of the normal
-      * import/exportValues because those return a format unsuitable for re-importing
-      * (since it caused data corruption).
-     */
-    fromJSON = (values) => {
-        EncounterMagicItem.allFields.forEach((field) => {
-            this[field](values[field]);
-        });
-    };
 }
+
+
+EncounterMagicItem.validationConstraints = {
+    fieldParams: {
+        name: {
+            required: true,
+            maxlength: 256,
+        },
+        type: {
+            required: true,
+            maxlength: 256,
+        },
+        rarity: {
+            required: true,
+            maxlength: 256,
+        },
+        maxCharges: {
+            required: true,
+            type: 'number',
+            max: 10000,
+            min: -10000,
+            step: 1,
+        },
+        usedCharges: {
+            required: true,
+            type: 'number',
+            max: 10000,
+            min: -10000,
+            step: 1,
+        },
+        weight: {
+            required: true,
+            type: 'number',
+            max: 10000,
+            min: -10000,
+            step: 1,
+        },
+        description: {
+            required: false,
+            type: 'text',
+        },
+    },
+};
