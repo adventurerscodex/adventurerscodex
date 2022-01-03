@@ -11,6 +11,7 @@
     <div class="front" data-bind="css: { 'd-none': showBack() }">
       <encounters-view params="
         flip: flip,
+        containerId: elementId,
         column: context.column,
         show: showFront,
         forceCardResize: forceCardResize,
@@ -19,6 +20,7 @@
     <div class="back" data-bind="css: { 'd-none': showFront() }">
       <encounters-edit params="
         show: showBack,
+        containerId: elementId,
         flip: flip,
         column: context.column,
         forceCardResize: forceCardResize,
@@ -27,6 +29,3 @@
   </flip-card>
   <!-- /ko -->
 </column-navigation>
-
-
-

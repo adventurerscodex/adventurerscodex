@@ -18,14 +18,21 @@
         <span class="text-center" id="tabOverviewSpan"><small>Overview</small></span>
       </a>
     </li>
-    <li role="presentation" id="tabEncountersLink" data-bind="click: activateEncounterTab, css: encounterTabStatus">
-      <a href="#encounter-header" aria-controls="encounter-tab" role="tab" data-toggle="tab" class="tab-subtext">
+    <li 
+      role="presentation" 
+      id="tabEncountersLink" 
+      data-bind="click: activateEncounterTab">
+      <a href="#encounter-tab" 
+        aria-controls="encounter-tab" 
+        role="tab" 
+        data-toggle="tab" 
+        class="tab-subtext">
         <img class="tab-icon" data-bind="attr: { src: encounterTabImage }"></img></br>
         <span class="text-center" id="tabEncountersSpan"><small>Encounters</small></span>
       </a>
     </li>
     <li role="presentation" id="tabScreenLink" data-bind="click: activateDmScreenTab, css: dmscreenTabStatus">
-      <a href="#dmscreen-header" aria-controls="dmscreen-tab" role="tab" data-toggle="tab" class="tab-subtext">
+      <a href="#dmscreen-tab" aria-controls="dmscreen-tab" role="tab" data-toggle="tab" class="tab-subtext">
         <img class="tab-icon" data-bind="attr: { src: dmScreenTabImage }"></img></br>
         <span class="text-center" id="tabScreenSpan"><small>Screen</small></span>
       </a>
@@ -37,13 +44,13 @@
       </a>
     </li>
     <li role="presentation" id="tabPartyLink" data-bind="click: activatePartyTab, css: partyTabStatus">
-      <a href="#party-header" aria-controls="party-tab" role="tab" data-toggle="tab" class="tab-subtext">
+      <a href="#party-tab" aria-controls="party-tab" role="tab" data-toggle="tab" class="tab-subtext">
         <img class="tab-icon" data-bind="attr: { src: partyTabImage }"></img></br>
         <span class="text-center" id="tabPartySpan"><small>Party</small></span>
       </a>
     </li>
     <li role="presentation" id="tabExhibitLink" data-bind="click: activateExhibitTab, css: exhibitTabStatus">
-      <a href="#exhibit-header" aria-controls="exhibit-tab" role="tab" data-toggle="tab" class="tab-subtext">
+      <a href="#exhibit-tab" aria-controls="exhibit-tab" role="tab" data-toggle="tab" class="tab-subtext">
         <img class="tab-icon" data-bind="attr: { src: exhibitTabImage }"></img></br>
         <span class="text-center" id="tabExhibitSpan"><small>Exhibit</small></span>
       </a>
@@ -52,28 +59,28 @@
 </div>
 <div class="tab-content">
   <div role="tabpanel" class="tab-pane" id="overview-tab" data-bind="css: overviewTabStatus">
-    <campaign-overview></campaign-overview>
-    <campaign-maps-and-images></campaign-maps-and-images>
+    <campaign-overview params="{tabId: 'overview-tab'}"></campaign-overview>
+    <campaign-maps-and-images params="{tabId: 'overview-tab'}"></campaign-maps-and-images>
   </div>
   <!-- End Overview Tab -->
   <div role="tabpanel" class="tab-pane" id="encounter-tab" data-bind="css: encounterTabStatus">
-    <encounter></encounter>
+    <encounter params="{tabId: 'encounter-tab'}"></encounter>
   </div>
   <!-- End Encounters Tab -->
   <div role="tabpanel" class="tab-pane" id="dmscreen-tab" data-bind="css: dmscreenTabStatus">
-    <dm-screen></dm-screen>
+    <dm-screen params="{tabId: 'dmscreen-tab'}"></dm-screen>
   </div>
   <!-- End DM Screen Tab -->
   <div role="tabpanel" class="tab-pane" id="party-tab" data-bind="css: partyTabStatus">
-    <party></party>
+    <party params="{tabId: 'party-tab'}"></party>
   </div>
   <!-- End Party Tab -->
   <div role="tabpanel" class="tab-pane" id="exhibit-tab" data-bind="css: exhibitTabStatus">
-     <exhibit></exhibit>
+     <exhibit params="{tabId: 'exhibit-tab'}"></exhibit>
   </div>
   <!-- End Exhibit Tab -->
   <div role="tabpanel" class="tab-pane" id="notes" data-bind="css: notesTabStatus">
-    <notes-list></notes-list>
+    <notes-list params="{tabId: 'notes'}"></notes-list>
   </div>
   <!-- End Notes Tab -->
 </div>
