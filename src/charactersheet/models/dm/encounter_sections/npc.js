@@ -9,6 +9,15 @@ export class NPC extends KOModel {
     SHORT_DESCRIPTION_MAX_LENGTH = 100;
     LONG_DESCRIPTION_MAX_LENGTH = 200;
 
+    static __dependents__ = [
+        'Image',
+        'Environment',
+        'PlayerText',
+        'PointOfInterest',
+        'Monster',
+        'EncounterImage',
+    ];
+
     static mapping = {
         include: ['coreUuid', 'encounterUuid', 'name', 'race', 'sourceUrl', 'playerText', 'description', 'uuid']
     };

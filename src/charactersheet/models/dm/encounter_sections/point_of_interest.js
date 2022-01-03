@@ -4,7 +4,17 @@ import ko from 'knockout';
 
 
 export class PointOfInterest extends KOModel {
+
     static __skeys__ = ['core', 'encounters', 'pointsOfInterest'];
+
+    static __dependents__ = [
+        'Image',
+        'Environment',
+        'NPC',
+        'PlayerText',
+        'Monster',
+        'EncounterImage',
+    ];
 
     SHORT_DESCRIPTION_MAX_LENGTH = 100;
     LONG_DESCRIPTION_MAX_LENGTH = 200;

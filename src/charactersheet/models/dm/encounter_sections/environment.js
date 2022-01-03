@@ -3,12 +3,28 @@ import ko from 'knockout';
 
 
 export class Environment extends KOModel {
+
     static __skeys__ = ['core', 'encounters', 'environment'];
-    static __dependents__ = ['Image', 'EncounterImage', 'Monster'];
+
+    static __dependents__ = [
+        'Image',
+        'NPC',
+        'PlayerText',
+        'PointOfInterest',
+        'Monster',
+        'EncounterImage',
+    ];
 
     static mapping = {
-        include: ['coreUuid', 'encounterUuid', 'imageUrl', 'weather',
-            'terrain', 'description', 'isExhibited']
+        include: [
+            'coreUuid',
+            'encounterUuid',
+            'imageUrl',
+            'weather',
+            'terrain',
+            'description',
+            'isExhibited',
+        ]
     };
 
     coreUuid = ko.observable();

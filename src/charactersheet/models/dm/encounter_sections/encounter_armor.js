@@ -4,7 +4,9 @@ import ko from 'knockout';
 import { pick } from 'lodash';
 
 export class EncounterArmor extends KOModel {
+
     static __skeys__ = ['core', 'encounters', 'treasures'];
+
     SHORT_DESCRIPTION_MAX_LENGTH = 100;
 
     static mapping = {

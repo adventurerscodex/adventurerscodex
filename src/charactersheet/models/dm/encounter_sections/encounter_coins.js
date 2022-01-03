@@ -3,6 +3,7 @@ import ko from 'knockout';
 
 
 export class EncounterCoins extends KOModel {
+
     static __skeys__ = ['core', 'encounters', 'treasures'];
 
     static mapping = {
