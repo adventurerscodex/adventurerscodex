@@ -1,6 +1,8 @@
 import autoBind from 'auto-bind';
-import { components } from 'knockout';
+import { observable, components, pureComputed } from 'knockout';
 import { ViewModel } from 'charactersheet/viewmodels/abstract';
+import { PartyService } from 'charactersheet/services/common';
+import { Notifications } from 'charactersheet/utilities';
 import template from './index.html';
 
 
@@ -11,7 +13,20 @@ export class PlayerCardViewModel extends ViewModel {
         autoBind(this);
         this.player = params.player;
         this.index = params.index;
+
+        this.isOnline = observable(
+            PartyService.playerIsOnline(this.player.uuid)
+        );
     }
+
+    setUpSubscriptions() {
+        super.setUpSubscriptions();
+
+        const partyDidChange = Notifications.party.changed.add(this.partyDidChange);
+        this.subscriptions.push(partyDidChange);
+    }
+
+    // UI
 
     hpPercent() {
         return (
@@ -44,6 +59,16 @@ export class PlayerCardViewModel extends ViewModel {
 
     trackedPercent() {
         return (this.player.remainingTrackables / this.player.totalTrackables);
+    }
+
+    statusIndicatorClass = pureComputed(() => (
+        this.isOnline() ? 'success' : 'failure'
+    ))
+
+    // Events
+
+    partyDidChange() {
+        this.isOnline(PartyService.playerIsOnline(this.player.uuid));
     }
 }
 

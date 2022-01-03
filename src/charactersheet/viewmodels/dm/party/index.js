@@ -12,6 +12,7 @@ export class PartyViewModel extends ViewModel {
         super();
         autoBind(this);
         this.party = observable(PartyService.party);
+        this.filterByOnline = observable(false);
     }
 
     setUpSubscriptions() {
@@ -23,7 +24,17 @@ export class PartyViewModel extends ViewModel {
 
     isConnectedToParty = pureComputed(() => (!!this.party()));
 
-    players = pureComputed(() => (this.party().members));
+    players = pureComputed(() => (
+        this.filterByOnline()
+        ? this.party().members.filter(player => (
+            PartyService.playerIsOnline(player.uuid)
+        ))
+        : this.party().members
+    ));
+
+    toggleFilterByOnline() {
+        this.filterByOnline(!this.filterByOnline());
+    }
 
     // Events
 

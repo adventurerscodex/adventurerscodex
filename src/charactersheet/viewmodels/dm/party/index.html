@@ -1,8 +1,27 @@
 <div class="card-title h4">
-  Party Members<br />
+  <span data-bind="if: filterByOnline">Online</span> Party Members<br />
   <small>
-    Check on the health, status, and stats of your players. This dashboard updates
-    in real time whenever your players make changes.
+    <span data-bind="ifnot: filterByOnline">
+      Check on the health, status, and stats of your players. This dashboard updates
+      in real time whenever your players make changes.<br />
+    </span>
+    <span data-bind="if: filterByOnline">
+      Only <b>online</b> party members are shown below. Only players &amp; DMs with the app currently open will appear in this list.<br />
+    </span>
+    <span
+      style="color: #2c3e50;"
+      class="clickable"
+      data-bind="click: $component.toggleFilterByOnline"
+    >
+      <input
+        type="checkbox"
+        class="filter-checkbox sr-only clickable"
+        data-bind="checked: filterByOnline"
+      />
+      <label for="filterByOnline"></label>
+      <span data-bind="if: filterByOnline">Show All Party Members</span>
+      <span data-bind="ifnot: filterByOnline">Show Online Party Members</span>
+    </span>
   </small>
 </div>
 <hr class="ac-table-header">

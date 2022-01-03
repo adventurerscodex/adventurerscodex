@@ -54,17 +54,40 @@ class _PartyService {
         this.doc = new Y.Doc(this.party.uuid);
         this.awareness = new awarenessProtocol.Awareness(this.doc);
         this.provider = new WebsocketProvider(
-            'ws://localhost:1234',
+            WS_URL,
             this.party.uuid,
             this.doc,
             { awareness: this.awareness }
         );
 
-        this.awareness.on('change', (a, u, r) => {
-            console.log('Added', a, 'Updated', u, 'Removed', r);
+        this.awareness.on('change', () => {
+            Notifications.party.changed.dispatch(this.party);
         });
 
-        this.awareness.setLocalState({ id: CoreManager.activeCore().uuid() });
+        this.updatePresence();
+    }
+
+    updatePresence(additionalData) {
+        this.awareness.setLocalState({
+            id: CoreManager.activeCore().uuid(),
+            ...additionalData
+        });
+    }
+
+    playerIsOnline(coreUuid) {
+        if (!this.awareness) {
+            return false;
+        }
+
+        const states = this.awareness.states;
+        // Do any of the current awareness states contain a value
+        // with the id we were just given? If so, they're online.
+        for (const value of states.values()) {
+            if (value.id === coreUuid) {
+                return true;
+            }
+        }
+        return false;
     }
 
     // Poll

@@ -46,6 +46,10 @@ module.exports = merge(common, {
              */
             'LOGIN_URL': JSON.stringify('/api/o/authorize?client_id={CLIENT_ID}&response_type=token'),
             /**
+             * The URL of the Web-Socket Server
+             */
+            'WS_URL': JSON.stringify('ws://localhost:1234'),
+            /**
              * Date and time the build was created
              */
             'BUILD_DATE': JSON.stringify((new Date()).toLocaleString()),
