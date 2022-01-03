@@ -69,8 +69,12 @@ class _PartyService {
 
     updatePresence(additionalData) {
         this.awareness.setLocalState({
+            // Any old data
+            ...this.awareness.getLocalState(),
+            // ...plus any new data
+            ...additionalData,
+            // ...plus the required stuff
             id: CoreManager.activeCore().uuid(),
-            ...additionalData
         });
     }
 
