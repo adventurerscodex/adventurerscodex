@@ -171,6 +171,12 @@ export var Notifications = {
         changed: new Signal()
     },
 
+    image: {
+        added: new Signal(),
+        changed: new Signal(),
+        deleted: new Signal()
+    },
+
     item: {
         added: new Signal(),
         changed: new Signal(),

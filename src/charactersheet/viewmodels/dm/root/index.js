@@ -11,10 +11,10 @@ import {
 import { Campaign } from 'charactersheet/models/dm';
 import { PlayerTypes } from 'charactersheet/models/common/player_types';
 import dmScreenTabImage from 'images/tab_icons/gift-of-knowledge.svg';
-import encounterTabImage from 'images/tab_icons/treasure-map.svg';
+import mapsTabImage from 'images/tab_icons/treasure-map.svg';
 import ko from 'knockout';
 import notesTabImage from 'images/tab_icons/quill-ink.svg';
-import overviewTabImage from 'images/tab_icons/bookmarklet.svg';
+import encounterTabImage from 'images/tab_icons/bookmarklet.svg';
 import partyTabImage from 'images/tab_icons/backup.svg';
 import exhibitTabImage from 'images/tab_icons/film-projector.svg';
 import template from './index.html';
@@ -33,7 +33,7 @@ export function DMRootViewModel() {
     self.currentPartyNode = ko.observable(null);
     self.TEMPLATE_FILE = 'dm/index.tmpl';
 
-    self.overviewTabImage = overviewTabImage;
+    self.mapsTabImage = mapsTabImage;
     self.encounterTabImage = encounterTabImage;
     self.dmScreenTabImage = dmScreenTabImage;
     self.notesTabImage = notesTabImage;
@@ -70,8 +70,8 @@ export function DMRootViewModel() {
 
     // Tab statuses
 
-    self.overviewTabStatus = ko.pureComputed(() => {
-        return self._tabIsVisible('overview');
+    self.mapsTabStatus = ko.pureComputed(() => {
+        return self._tabIsVisible('maps');
     });
 
     self.encounterTabStatus = ko.pureComputed(() => {
@@ -94,8 +94,8 @@ export function DMRootViewModel() {
         return self._tabIsVisible('exhibit');
     });
 
-    self.activateOverviewTab = () => {
-        self._setActiveTab('overview');
+    self.activateMapsTab = () => {
+        self._setActiveTab('maps');
     };
 
     self.activateEncounterTab = () => {
@@ -132,7 +132,7 @@ export function DMRootViewModel() {
             $(`.nav-tabs a[href="#${self.activeTab()}"]`).tab('show');
         });
 
-        HotkeysService.registerHotkey('1', self.activateOverviewTab);
+        HotkeysService.registerHotkey('1', self.activateMapsTab);
         HotkeysService.registerHotkey('2', self.activateEncounterTab);
         HotkeysService.registerHotkey('3', self.activateDmScreenTab);
         HotkeysService.registerHotkey('4', self.activateNotesTab);
