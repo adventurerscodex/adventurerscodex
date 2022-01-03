@@ -27,7 +27,9 @@ export class PartyViewModel extends ViewModel {
 
     isConnectedToParty = pureComputed(() => (!!this.party()));
 
-    players = pureComputed(() => (this.party().members));
+    players = pureComputed(() => (
+        this.isConnectedToParty() ? this.party().members : []
+    ));
 
     isDM = pureComputed(() => (
         PlayerTypes.dm.key === this.playerType()
