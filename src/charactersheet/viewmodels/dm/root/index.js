@@ -126,6 +126,12 @@ export function DMRootViewModel() {
     self.load = () => {
         self.activeTab(TabFragmentManager.activeTab());
 
+        $(`.nav-tabs a[href="#${self.activeTab()}"]`).tab('show');
+
+        self.activeTab.subscribe(()=>{
+            $(`.nav-tabs a[href="#${self.activeTab()}"]`).tab('show');
+        });
+
         HotkeysService.registerHotkey('1', self.activateOverviewTab);
         HotkeysService.registerHotkey('2', self.activateEncounterTab);
         HotkeysService.registerHotkey('3', self.activateDmScreenTab);

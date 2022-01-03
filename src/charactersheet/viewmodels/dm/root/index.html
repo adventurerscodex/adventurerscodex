@@ -12,38 +12,38 @@
 </div>
 <div class="navbar-collapse collapse" id="dm-tab-list">
   <ul class="nav nav-tabs tabs">
-    <li role="presentation" id="tabOverviewLink" data-bind="click: activateOverviewTab, css: overviewTabStatus">
-      <a href="#campaign-header" aria-controls="overview-tab" role="tab" data-toggle="tab" class="tab-subtext">
+    <li role="presentation" id="tabOverviewLink" data-bind="click: activateOverviewTab">
+      <a href="#overview" aria-controls="overview-tab" role="tab" data-toggle="tab" class="tab-subtext">
         <img class="tab-icon" data-bind="attr: { src: overviewTabImage }"></img></br>
         <span class="text-center" id="tabOverviewSpan"><small>Overview</small></span>
       </a>
     </li>
     <li role="presentation" id="tabEncountersLink" data-bind="click: activateEncounterTab">
-      <a href="#encounter-tab" aria-controls="encounter-tab" role="tab" data-toggle="tab" class="tab-subtext">
+      <a href="#encounter" aria-controls="encounter-tab" role="tab" data-toggle="tab" class="tab-subtext">
         <img class="tab-icon" data-bind="attr: { src: encounterTabImage }"></img></br>
         <span class="text-center" id="tabEncountersSpan"><small>Encounters</small></span>
       </a>
     </li>
-    <li role="presentation" id="tabScreenLink" data-bind="click: activateDmScreenTab, css: dmscreenTabStatus">
-      <a href="#dmscreen-tab" aria-controls="dmscreen-tab" role="tab" data-toggle="tab" class="tab-subtext">
+    <li role="presentation" id="tabScreenLink" data-bind="click: activateDmScreenTab">
+      <a href="#dmscreen" aria-controls="dmscreen-tab" role="tab" data-toggle="tab" class="tab-subtext">
         <img class="tab-icon" data-bind="attr: { src: dmScreenTabImage }"></img></br>
         <span class="text-center" id="tabScreenSpan"><small>Screen</small></span>
       </a>
     </li>
-    <li role="presentation" id="tabNotesLink" data-bind="click: activateNotesTab, css: notesTabStatus">
+    <li role="presentation" id="tabNotesLink" data-bind="click: activateNotesTab">
       <a href="#notes" aria-controls="notes" role="tab" data-toggle="tab" class="tab-subtext">
         <img class="tab-icon" data-bind="attr: { src: notesTabImage }"></img></br>
         <span class="text-center" id="tabNotesSpan"><small>Notes</small></span>
       </a>
     </li>
-    <li role="presentation" id="tabPartyLink" data-bind="click: activatePartyTab, css: partyTabStatus">
-      <a href="#party-tab" aria-controls="party-tab" role="tab" data-toggle="tab" class="tab-subtext">
+    <li role="presentation" id="tabPartyLink" data-bind="click: activatePartyTab">
+      <a href="#party" aria-controls="party-tab" role="tab" data-toggle="tab" class="tab-subtext">
         <img class="tab-icon" data-bind="attr: { src: partyTabImage }"></img></br>
         <span class="text-center" id="tabPartySpan"><small>Party</small></span>
       </a>
     </li>
-    <li role="presentation" id="tabExhibitLink" data-bind="click: activateExhibitTab, css: exhibitTabStatus">
-      <a href="#exhibit-tab" aria-controls="exhibit-tab" role="tab" data-toggle="tab" class="tab-subtext">
+    <li role="presentation" id="tabExhibitLink" data-bind="click: activateExhibitTab">
+      <a href="#exhibit" aria-controls="exhibit-tab" role="tab" data-toggle="tab" class="tab-subtext">
         <img class="tab-icon" data-bind="attr: { src: exhibitTabImage }"></img></br>
         <span class="text-center" id="tabExhibitSpan"><small>Exhibit</small></span>
       </a>
@@ -51,24 +51,24 @@
   </ul>
 </div>
 <div class="tab-content">
-  <div role="tabpanel" class="tab-pane" id="overview-tab" data-bind="css: overviewTabStatus">
+  <div role="tabpanel" class="tab-pane" id="overview" data-bind="css: overviewTabStatus">
     <campaign-overview></campaign-overview>
     <campaign-maps-and-images></campaign-maps-and-images>
   </div>
   <!-- End Overview Tab -->
-  <div role="tabpanel" class="tab-pane" id="encounter-tab" data-bind="css: encounterTabStatus">
+  <div role="tabpanel" class="tab-pane" id="encounter" data-bind="css: encounterTabStatus">
     <encounter params="{tabId: 'encounter-tab'}"></encounter>
   </div>
   <!-- End Encounters Tab -->
-  <div role="tabpanel" class="tab-pane" id="dmscreen-tab" data-bind="css: dmscreenTabStatus">
+  <div role="tabpanel" class="tab-pane" id="dmscreen" data-bind="css: dmscreenTabStatus">
     <dm-screen></dm-screen>
   </div>
   <!-- End DM Screen Tab -->
-  <div role="tabpanel" class="tab-pane" id="party-tab" data-bind="css: partyTabStatus">
+  <div role="tabpanel" class="tab-pane" id="party" data-bind="css: partyTabStatus">
     <party></party>
   </div>
   <!-- End Party Tab -->
-  <div role="tabpanel" class="tab-pane" id="exhibit-tab" data-bind="css: exhibitTabStatus">
+  <div role="tabpanel" class="tab-pane" id="exhibit" data-bind="css: exhibitTabStatus">
      <exhibit></exhibit>
   </div>
   <!-- End Exhibit Tab -->
