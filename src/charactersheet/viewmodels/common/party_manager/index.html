@@ -1,19 +1,27 @@
-<div class="collapse add-card" id="party-manager-form">
-  <div class="text-right">
-    <button
-      type="button"
-      class="btn btn-xs btn-link"
-      type="reset"
-      data-toggle="collapse"
-      data-target="#party-manager-form"
-      aria-label="Close"
-    >
-      <span
-        class="fa fa-color fa-times-circle fa-color-hover"
-        aria-hidden="true"
-      ></span>
-    </button>
+<div class="collapse mb-3" id="party-manager-form">
+  <div class="card-title h4">
+    <div class="pull-right">
+      <button
+        type="button"
+        class="btn btn-xs btn-link"
+        type="reset"
+        data-toggle="collapse"
+        data-target="#party-manager-form"
+        aria-label="Close"
+      >
+        <span
+          class="fa fa-color fa-times-circle fa-color-hover"
+          aria-hidden="true"
+        ></span>
+      </button>
+    </div>
+    Party Settings<br />
+    <small>
+      Connect to or manage your party settings here. Share your party code with
+      other users to let them join your party.
+    </small>
   </div>
+  <hr class="ac-table-header">
   <!-- ko ifnot: inAParty -->
   <div class="row">
     <div class="col-xs-12 col-sm-6">
@@ -110,4 +118,5 @@
     </div>
   </div>
   <!-- /ko -->
+  <hr />
 </div>

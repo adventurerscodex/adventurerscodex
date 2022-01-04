@@ -14,6 +14,10 @@
   <!-- /ko -->
 </div>
 <hr class="ac-table-header">
+<!-- ko ifnot: loaded(), completeOn: 'render' -->
+<div style="hieight: 100px" class="loader-wrapper"><div style="width: 75px; height:75px; margin: 25px auto" class="loader"></div></div>
+<!-- /ko -->
+<!-- ko if: loaded(), completeOn: 'render' -->
 <!-- ko ifnot: isConnectedToParty -->
 <div class="row">
   <div class="col-xs-12">
@@ -43,4 +47,5 @@
   <player-card params="player: $data, index: $index"></player-card>
   <!-- /ko -->
 </div>
+<!-- /ko -->
 <!-- /ko -->

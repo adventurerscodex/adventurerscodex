@@ -4,6 +4,10 @@
     <small>A place for all of the great places and maps in your world.</small>
   </div>
   <hr class="ac-table-header">
+  <!-- ko ifnot: loaded(), completeOn: 'render' -->
+  <div style="hieight: 100px" class="loader-wrapper"><div style="width: 75px; height:75px; margin: 25px auto" class="loader"></div></div>
+  <!-- /ko -->
+  <!-- ko if: loaded(), completeOn: 'render' -->
   <table class="table table-responsive table-ac-bordered table-hover">
     <thead>
       <tr>
@@ -135,6 +139,7 @@
       </tr>
     </tfoot>
   </table>
+  <!-- /ko -->
 </div>
 
 <full-screen-image

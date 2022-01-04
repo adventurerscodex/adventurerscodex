@@ -119,7 +119,18 @@ export var Notifications = {
     },
 
     campaign: {
-        changed: new Signal()
+        added: new Signal(),
+        changed: new Signal(),
+        deleted: new Signal(),
+        playerName: {
+            changed: new Signal()
+        },
+        summary: {
+            changed: new Signal()
+        },
+        playerType: {
+            changed: new Signal()
+        }
     },
 
     characters: {

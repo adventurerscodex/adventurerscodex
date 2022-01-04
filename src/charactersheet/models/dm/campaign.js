@@ -1,3 +1,4 @@
+import { Notifications } from 'charactersheet/utilities';
 import { KOModel } from 'hypnos/lib/models/ko';
 import ko from 'knockout';
 
@@ -5,7 +6,9 @@ import ko from 'knockout';
  * A Root Level DM Object containing overview information about a campaign.
  */
 export class Campaign extends KOModel {
+
     static __skeys__ = ['core', 'dms', 'campaign'];
+
     static __dependents__ = ['Core'];
 
     static mapping = {
@@ -23,10 +26,34 @@ export class Campaign extends KOModel {
         }
         return 'A long long time ago...';
     };
+
+    // Helpers
+
+    load = async (params) => {
+        const response = await this.ps.model.ps.read(params);
+        this.importValues(response.object.exportValues());
+    }
+
+    create = async () => {
+        const response = await this.ps.create();
+        this.importValues(response.object.exportValues());
+        Notifications.campaign.added.dispatch(this);
+    }
+
+    save = async () => {
+        const response = await this.ps.save();
+        this.importValues(response.object.exportValues());
+        Notifications.campaign.changed.dispatch(this);
+    }
+
+    delete = async () => {
+        await this.ps.delete();
+        Notifications.campaign.deleted.dispatch(this);
+    }
 }
 
 Campaign.validationConstraints = {
-    rules: {
+    fieldParams: {
         name: {
             required: true,
             maxlength: 256
