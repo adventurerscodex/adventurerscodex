@@ -30,7 +30,6 @@
   },
   "dependencies": {
     "auto-bind": "^2.1.0",
-    "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
