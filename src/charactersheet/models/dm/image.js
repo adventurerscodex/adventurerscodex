@@ -14,6 +14,7 @@ export class Image extends KOModel {
         'NPC',
         'PlayerText',
         'PointOfInterest',
+        'ReadAloudText',
         'Monster',
         'EncounterImage',
         'Environment',
