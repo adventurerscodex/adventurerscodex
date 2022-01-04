@@ -1,5 +1,5 @@
 import { Core, ProfileImage } from 'charactersheet/models/common';
-import { OtherStats, Profile } from 'charactersheet/models/character';
+import { Campaign } from 'charactersheet/models/dm';
 import { CoreManager, Notifications } from 'charactersheet/utilities';
 import { DELAY } from 'charactersheet/constants';
 import { PartyService } from 'charactersheet/services';
@@ -16,8 +16,7 @@ export class CharacterPortraitViewModel {
         this.flip = params.flip;
         this.subscriptions = [];
         this.core = ko.observable(new Core());
-        this.profile = ko.observable(new Profile());
-        this.otherStats = ko.observable(new OtherStats());
+        this.campaign = ko.observable(new Campaign());
         this.profileImage = ko.observable(new ProfileImage());
         this.isConnectedToParty = ko.observable(!!PartyService.party);
 
@@ -30,8 +29,7 @@ export class CharacterPortraitViewModel {
         this.setUpSubscriptions();
         var key = CoreManager.activeCore().uuid();
         this.core().importValues(CoreManager.activeCore().exportValues());
-        await this.profile().load({uuid: key});
-        await this.otherStats().load({uuid: key});
+        await this.campaign().load({uuid: key});
         await this.profileImage().load({uuid: key});
         this.loaded(true);
         this.forceCardResize();
@@ -40,32 +38,14 @@ export class CharacterPortraitViewModel {
     refresh = async () => {
         var key = CoreManager.activeCore().uuid();
         this.core().importValues(CoreManager.activeCore().exportValues());
-        await this.profile().load({uuid: key});
-        await this.otherStats().load({uuid: key});
+        await this.campaign().load({uuid: key});
         await this.profileImage().load({uuid: key});
     };
 
-    imageDidUpdate = (image) => {
-        this.profileImage().importValues(image.exportValues());
-    };
-
-    coreDidUpdate = (core) => {
-        this.core().importValues(core.exportValues());
-    };
-
-    profileDidUpdate = (profile) => {
-        this.profile().importValues(profile.exportValues());
-    };
-
-    otherStatsDidUpdate = (otherstats) => {
-        this.otherStats().importValues(otherstats.exportValues());
-    };
-
     setUpSubscriptions = () => {
+        this.subscriptions.push(Notifications.campaign.playerName.changed.add(this.coreDidUpdate));
         this.subscriptions.push(Notifications.playerimage.changed.add(this.imageDidUpdate));
-        this.subscriptions.push(Notifications.profile.playerName.changed.add(this.coreDidUpdate));
-        this.subscriptions.push(Notifications.profile.changed.add(this.profileDidUpdate));
-        this.subscriptions.push(Notifications.otherstats.changed.add(this.otherStatsDidUpdate));
+        this.subscriptions.push(Notifications.campaign.changed.add(this.campaignDidUpdate));
         this.subscriptions.push(Notifications.party.changed.add(this.partyDidChange));
     }
 
@@ -87,21 +67,49 @@ export class CharacterPortraitViewModel {
     }
 
     imageBorderClass = ko.pureComputed(() => {
-        const border = this.profileImage().imageUrl().length ? 'no-border' : 'dashed-border';
-        const inspired = this.otherStats().inspiration() ? 'image-border-inspired' : '';
-        return `${border} ${inspired}`;
+        return this.profileImage().imageUrl().length ? 'no-border' : 'dashed-border';
     });
 
     statusIndicatorClass = ko.pureComputed(() => (
         this.isConnectedToParty() ? 'success' : 'failure'
     ));
 
+    timeSinceLabel = ko.pureComputed(() => {
+        const createdAt = new Date(this.campaign().createdAt());
+        const since = this._daysSince(createdAt);
+        const dateCreated = createdAt.toLocaleDateString();
+        let msg = '';
+        if (since > 0) {
+            msg = ` This adventure has been in progress for ${since} days, created on ${dateCreated}.`;
+        }
+        return msg;
+    });
+
+    _daysSince(day) {
+        var now = (new Date()).getTime();
+        return Math.round((now-day.getTime())/(1000*60*60*24));
+    };
+
+    // Events
+
     partyDidChange() {
         this.isConnectedToParty(!!PartyService.party);
     }
+
+    imageDidUpdate = (image) => {
+        this.profileImage().importValues(image.exportValues());
+    };
+
+    coreDidUpdate = (core) => {
+        this.core().importValues(core.exportValues());
+    };
+
+    campaignDidUpdate = (campaign) => {
+        this.campaign().importValues(campaign.exportValues());
+    };
 }
 
-ko.components.register('character-portrait-view', {
+ko.components.register('dm-portrait-view', {
     viewModel: CharacterPortraitViewModel,
     template: template
 });
