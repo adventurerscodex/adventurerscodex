@@ -33,8 +33,8 @@ export function DMRootViewModel() {
     self.currentPartyNode = ko.observable(null);
     self.TEMPLATE_FILE = 'dm/index.tmpl';
 
-    self.mapsTabImage = mapsTabImage;
     self.encounterTabImage = encounterTabImage;
+    self.mapsTabImage = mapsTabImage;
     self.dmScreenTabImage = dmScreenTabImage;
     self.notesTabImage = notesTabImage;
     self.partyTabImage = partyTabImage;
@@ -70,12 +70,12 @@ export function DMRootViewModel() {
 
     // Tab statuses
 
-    self.mapsTabStatus = ko.pureComputed(() => {
-        return self._tabIsVisible('maps');
-    });
-
     self.encounterTabStatus = ko.pureComputed(() => {
         return self._tabIsVisible('encounter');
+    });
+
+    self.mapsTabStatus = ko.pureComputed(() => {
+        return self._tabIsVisible('maps');
     });
 
     self.dmscreenTabStatus = ko.pureComputed(() => {
@@ -94,12 +94,12 @@ export function DMRootViewModel() {
         return self._tabIsVisible('exhibit');
     });
 
-    self.activateMapsTab = () => {
-        self._setActiveTab('maps');
-    };
-
     self.activateEncounterTab = () => {
         self._setActiveTab('encounter');
+    };
+
+    self.activateMapsTab = () => {
+        self._setActiveTab('maps');
     };
 
     self.activateDmScreenTab = () => {
@@ -132,8 +132,8 @@ export function DMRootViewModel() {
             $(`.nav-tabs a[href="#${self.activeTab()}"]`).tab('show');
         });
 
-        HotkeysService.registerHotkey('1', self.activateMapsTab);
-        HotkeysService.registerHotkey('2', self.activateEncounterTab);
+        HotkeysService.registerHotkey('1', self.activateEncounterTab);
+        HotkeysService.registerHotkey('2', self.activateMapsTab);
         HotkeysService.registerHotkey('3', self.activateDmScreenTab);
         HotkeysService.registerHotkey('4', self.activateNotesTab);
         HotkeysService.registerHotkey('5', self.activatePartyTab);
