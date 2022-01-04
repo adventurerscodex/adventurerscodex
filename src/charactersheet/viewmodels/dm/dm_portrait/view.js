@@ -43,6 +43,7 @@ export class CharacterPortraitViewModel {
     };
 
     setUpSubscriptions = () => {
+        this.subscriptions.push(Notifications.campaign.playerName.changed.add(this.coreDidUpdate));
         this.subscriptions.push(Notifications.playerimage.changed.add(this.imageDidUpdate));
         this.subscriptions.push(Notifications.campaign.changed.add(this.campaignDidUpdate));
         this.subscriptions.push(Notifications.party.changed.add(this.partyDidChange));

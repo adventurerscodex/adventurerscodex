@@ -22,101 +22,103 @@
     </small>
   </div>
   <hr class="ac-table-header">
-  <!-- ko ifnot: inAParty -->
-  <div class="row">
-    <div class="col-xs-12 col-sm-6">
-      <h4>Create a Party</h4>
-      <form data-bind="submit: createParty">
+  <div class="pl-3 pr-3">
+    <!-- ko ifnot: inAParty -->
+    <div class="row">
+      <div class="col-xs-12 col-sm-6">
+        <h4>Create a Party</h4>
+        <form data-bind="submit: createParty">
+          <div>
+            <div class="text-danger" data-bind="text: createFormErrorMessage"></div>
+            <button class="btn btn-sm btn-default" type="submit">
+              Create Party
+            </button>
+          </div>
+          <small class="text-muted">
+            Create a new party that others can join.
+          </small>
+        </form>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <h4>Join a Party</h4>
+        <form data-bind="submit: joinParty">
+          <div class="text-danger" data-bind="text: joinFormErrorMessage"></div>
+          <div class="input-group input-group-sm">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Party ID"
+              required
+              minlength="5"
+              data-bind="value: shortCode"
+              pattern="[a-zA-Z0-9]+-[a-zA-Z0-9]+-[a-zA-Z0-9]+"
+            >
+            <span class="input-group-btn">
+              <button class="btn btn-sm btn-default" type="submit">
+                Join Party
+              </button>
+            </span>
+          </div>
+          <small class="text-muted">
+            Party IDs are typically of the form <code>{word}-{word}-{code}</code>.
+          </small>
+        </form>
+      </div>
+    </div>
+    <!-- /ko -->
+    <!-- ko if: inAParty -->
+    <div class="row">
+      <div class="col-xs-12 col-sm-6">
+        <h4>Leave the Party</h4>
+        <!-- ko if: party().isOwner -->
         <div>
-          <div class="text-danger" data-bind="text: createFormErrorMessage"></div>
-          <button class="btn btn-sm btn-default" type="submit">
-            Create Party
+          <div class="text-danger" data-bind="text: deleteFormErrorMessage"></div>
+          <button class="btn btn-sm btn-danger" data-bind="click: deleteParty">
+            Delete for Everyone
           </button>
         </div>
         <small class="text-muted">
-          Create a new party that others can join.
+          <b>You are the owner</b>. If you leave, everyone will be kicked out.
         </small>
-      </form>
-    </div>
-    <div class="col-xs-12 col-sm-6">
-      <h4>Join a Party</h4>
-      <form data-bind="submit: joinParty">
-        <div class="text-danger" data-bind="text: joinFormErrorMessage"></div>
+        <!-- /ko -->
+        <!-- ko ifnot: party().isOwner -->
+        <div>
+          <div class="text-danger" data-bind="text: leaveFormErrorMessage"></div>
+          <button class="btn btn-sm btn-danger" data-bind="click: leaveParty">
+            Leave
+          </button>
+        </div>
+        <small class="text-muted">
+          If you leave the party your DM will not be able to see your stats, and
+          you won't see the exhibit.
+        </small>
+        <!-- /ko -->
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <h4>Invite Others</h4>
         <div class="input-group input-group-sm">
           <input
             type="text"
             class="form-control"
-            placeholder="Party ID"
-            required
-            minlength="5"
-            data-bind="value: shortCode"
-            pattern="[a-zA-Z0-9]+-[a-zA-Z0-9]+-[a-zA-Z0-9]+"
+            readonly
+            id="party-short-code-field"
+            data-bind="value: party().shortCode"
           >
           <span class="input-group-btn">
-            <button class="btn btn-sm btn-default" type="submit">
-              Join Party
+            <button
+              class="btn btn-sm btn-default"
+              data-clipboard-target="#party-short-code-field"
+            >
+              <i class="fa fa-clipboard" aria-hidden="true" title="Copy to clipboard"></i>
             </button>
           </span>
         </div>
         <small class="text-muted">
-          Party IDs are typically of the form <code>{word}-{word}-{code}</code>.
+          Invite people to this party by giving them the code.
         </small>
-      </form>
+      </div>
     </div>
+    <!-- /ko -->
   </div>
-  <!-- /ko -->
-  <!-- ko if: inAParty -->
-  <div class="row">
-    <div class="col-xs-12 col-sm-6">
-      <h4>Leave the Party</h4>
-      <!-- ko if: party().isOwner -->
-      <div>
-        <div class="text-danger" data-bind="text: deleteFormErrorMessage"></div>
-        <button class="btn btn-sm btn-danger" data-bind="click: deleteParty">
-          Delete for Everyone
-        </button>
-      </div>
-      <small class="text-muted">
-        <b>You are the owner</b>. If you leave, everyone will be kicked out.
-      </small>
-      <!-- /ko -->
-      <!-- ko ifnot: party().isOwner -->
-      <div>
-        <div class="text-danger" data-bind="text: leaveFormErrorMessage"></div>
-        <button class="btn btn-sm btn-danger" data-bind="click: leaveParty">
-          Leave
-        </button>
-      </div>
-      <small class="text-muted">
-        If you leave the party your DM will not be able to see your stats, and
-        you won't see the exhibit.
-      </small>
-      <!-- /ko -->
-    </div>
-    <div class="col-xs-12 col-sm-6">
-      <h4>Invite Others</h4>
-      <div class="input-group input-group-sm">
-        <input
-          type="text"
-          class="form-control"
-          readonly
-          id="party-short-code-field"
-          data-bind="value: party().shortCode"
-        >
-        <span class="input-group-btn">
-          <button
-            class="btn btn-sm btn-default"
-            data-clipboard-target="#party-short-code-field"
-          >
-            <i class="fa fa-clipboard" aria-hidden="true" title="Copy to clipboard"></i>
-          </button>
-        </span>
-      </div>
-      <small class="text-muted">
-        Invite people to this party by giving them the code.
-      </small>
-    </div>
-  </div>
-  <!-- /ko -->
   <hr />
 </div>
