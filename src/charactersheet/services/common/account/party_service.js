@@ -2,6 +2,7 @@ import {
     CoreManager,
     Notifications
 } from 'charactersheet/utilities';
+import { PersistenceService } from 'charactersheet/services/common';
 import { Party } from 'charactersheet/models/common';
 import autoBind from 'auto-bind';
 import * as Y from 'yjs'
@@ -51,13 +52,21 @@ class _PartyService {
     // Presence
 
     configurePresence() {
+        const token = PersistenceService.findAllByName('AuthenticationToken')[0];
+        if (!token || !token.accessToken()) {
+            console.log(
+                'Warning: User has no auth token. Cannot set up websocket connection.'
+            );
+            return;
+        }
+
         this.doc = new Y.Doc(this.party.uuid);
         this.awareness = new awarenessProtocol.Awareness(this.doc);
         this.provider = new WebsocketProvider(
             WS_URL,
             this.party.uuid,
             this.doc,
-            { awareness: this.awareness }
+            { awareness: this.awareness, params: { bearer: token.accessToken() } }
         );
 
         this.awareness.on('change', () => {
