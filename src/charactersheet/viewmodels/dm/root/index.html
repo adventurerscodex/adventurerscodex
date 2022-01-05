@@ -1,3 +1,5 @@
+<dm-portrait></dm-portrait>
+<party-manager></party-manager>
 <div class="navbar-header tab-actions"><button type="button"
           class="btn btn-block navbar-toggle collapsed"
           data-toggle="collapse"
@@ -12,16 +14,16 @@
 </div>
 <div class="navbar-collapse collapse" id="dm-tab-list">
   <ul class="nav nav-tabs tabs">
-    <li role="presentation" id="tabOverviewLink" data-bind="click: activateOverviewTab">
-      <a href="#overview" aria-controls="overview-tab" role="tab" data-toggle="tab" class="tab-subtext">
-        <img class="tab-icon" data-bind="attr: { src: overviewTabImage }"></img></br>
-        <span class="text-center" id="tabOverviewSpan"><small>Overview</small></span>
-      </a>
-    </li>
     <li role="presentation" id="tabEncountersLink" data-bind="click: activateEncounterTab">
       <a href="#encounter" aria-controls="encounter-tab" role="tab" data-toggle="tab" class="tab-subtext">
         <img class="tab-icon" data-bind="attr: { src: encounterTabImage }"></img></br>
         <span class="text-center" id="tabEncountersSpan"><small>Encounters</small></span>
+      </a>
+    </li>
+    <li role="presentation" id="tabMapsLink" data-bind="click: activateMapsTab">
+      <a href="#maps" aria-controls="maps" role="tab" data-toggle="tab" class="tab-subtext">
+        <img class="tab-icon" data-bind="attr: { src: mapsTabImage }"></img></br>
+        <span class="text-center" id="tabMapsSpan"><small>Maps &amp; Images</small></span>
       </a>
     </li>
     <li role="presentation" id="tabScreenLink" data-bind="click: activateDmScreenTab">
@@ -51,15 +53,14 @@
   </ul>
 </div>
 <div class="tab-content">
-  <div role="tabpanel" class="tab-pane" id="overview" data-bind="css: overviewTabStatus">
-    <campaign-overview></campaign-overview>
-    <campaign-maps-and-images></campaign-maps-and-images>
-  </div>
-  <!-- End Overview Tab -->
   <div role="tabpanel" class="tab-pane" id="encounter" data-bind="css: encounterTabStatus">
     <encounter params="{tabId: 'encounter-tab'}"></encounter>
   </div>
   <!-- End Encounters Tab -->
+  <div role="tabpanel" class="tab-pane" id="maps" data-bind="css: mapsTabStatus">
+    <campaign-maps-and-images></campaign-maps-and-images>
+  </div>
+  <!-- End Maps Tab -->
   <div role="tabpanel" class="tab-pane" id="dmscreen" data-bind="css: dmscreenTabStatus">
     <dm-screen></dm-screen>
   </div>

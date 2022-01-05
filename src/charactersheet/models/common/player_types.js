@@ -10,8 +10,8 @@ export var PlayerTypes = {
     dm: {
         key: 'dm',
         visibleTabs: [
-            'encounter', 'overview', 'dmscreen', 'party', 'notes', 'exhibit'
+            'encounter', 'maps', 'dmscreen', 'party', 'notes', 'exhibit'
         ],
-        defaultTab: 'overview'
+        defaultTab: 'encounter'
     }
 };

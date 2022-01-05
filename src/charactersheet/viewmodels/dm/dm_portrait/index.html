@@ -1,0 +1,25 @@
+<div id="dm-portrait">
+  <flip-card params="{
+        elementId: 'dm-portrait',
+        defaultHeight: 150,
+        }">
+    <div class="front">
+      <dm-portrait-view params="{
+       containerId: elementId,
+       show: showFront,
+       forceCardResize: forceCardResize,
+       flip: flip
+     }">
+      </dm-portrait-view>
+    </div>
+    <div class="back">
+      <dm-portrait-form params="{
+        containerId: elementId,
+        show: showBack,
+        forceCardResize: forceCardResize,
+        flip: flip
+      }">
+      </dm-portrait-form>
+    </div>
+  </flip-card>
+</div>

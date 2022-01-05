@@ -11,10 +11,10 @@ import {
 import { Campaign } from 'charactersheet/models/dm';
 import { PlayerTypes } from 'charactersheet/models/common/player_types';
 import dmScreenTabImage from 'images/tab_icons/gift-of-knowledge.svg';
-import encounterTabImage from 'images/tab_icons/treasure-map.svg';
+import mapsTabImage from 'images/tab_icons/treasure-map.svg';
 import ko from 'knockout';
 import notesTabImage from 'images/tab_icons/quill-ink.svg';
-import overviewTabImage from 'images/tab_icons/bookmarklet.svg';
+import encounterTabImage from 'images/tab_icons/bookmarklet.svg';
 import partyTabImage from 'images/tab_icons/backup.svg';
 import exhibitTabImage from 'images/tab_icons/film-projector.svg';
 import template from './index.html';
@@ -33,8 +33,8 @@ export function DMRootViewModel() {
     self.currentPartyNode = ko.observable(null);
     self.TEMPLATE_FILE = 'dm/index.tmpl';
 
-    self.overviewTabImage = overviewTabImage;
     self.encounterTabImage = encounterTabImage;
+    self.mapsTabImage = mapsTabImage;
     self.dmScreenTabImage = dmScreenTabImage;
     self.notesTabImage = notesTabImage;
     self.partyTabImage = partyTabImage;
@@ -70,12 +70,12 @@ export function DMRootViewModel() {
 
     // Tab statuses
 
-    self.overviewTabStatus = ko.pureComputed(() => {
-        return self._tabIsVisible('overview');
-    });
-
     self.encounterTabStatus = ko.pureComputed(() => {
         return self._tabIsVisible('encounter');
+    });
+
+    self.mapsTabStatus = ko.pureComputed(() => {
+        return self._tabIsVisible('maps');
     });
 
     self.dmscreenTabStatus = ko.pureComputed(() => {
@@ -94,12 +94,12 @@ export function DMRootViewModel() {
         return self._tabIsVisible('exhibit');
     });
 
-    self.activateOverviewTab = () => {
-        self._setActiveTab('overview');
-    };
-
     self.activateEncounterTab = () => {
         self._setActiveTab('encounter');
+    };
+
+    self.activateMapsTab = () => {
+        self._setActiveTab('maps');
     };
 
     self.activateDmScreenTab = () => {
@@ -132,8 +132,8 @@ export function DMRootViewModel() {
             $(`.nav-tabs a[href="#${self.activeTab()}"]`).tab('show');
         });
 
-        HotkeysService.registerHotkey('1', self.activateOverviewTab);
-        HotkeysService.registerHotkey('2', self.activateEncounterTab);
+        HotkeysService.registerHotkey('1', self.activateEncounterTab);
+        HotkeysService.registerHotkey('2', self.activateMapsTab);
         HotkeysService.registerHotkey('3', self.activateDmScreenTab);
         HotkeysService.registerHotkey('4', self.activateNotesTab);
         HotkeysService.registerHotkey('5', self.activatePartyTab);

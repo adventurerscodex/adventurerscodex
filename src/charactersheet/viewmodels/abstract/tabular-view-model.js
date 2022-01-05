@@ -40,8 +40,8 @@ export class AbstractTabularViewModel {
     }
 
     async load() {
-        await this.refresh();
         this.setUpSubscriptions();
+        await this.refresh();
         this.loaded(true);
     }
 
