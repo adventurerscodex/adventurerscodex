@@ -35,7 +35,6 @@ class CampaignMapsAndImagesViewModel extends AbstractTabularViewModel {
 
     setUpSubscriptions() {
         super.setUpSubscriptions();
-        console.log('setUpSubscriptions')
         this.subscriptions.push(Notifications.party.changed.add(this.partyDidChange));
     }
 
