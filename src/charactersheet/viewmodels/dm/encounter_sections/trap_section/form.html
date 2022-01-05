@@ -1,0 +1,169 @@
+<form data-bind="submit: submit, with: entity">
+  <card-submit-actions params="{reset: $component.reset}"></card-submit-actions>
+  <!-- ko if: $component.addForm -->
+  <div class="h4 collapsable-card-title">New Trap</div>
+  <!-- /ko -->
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label>Name<i class="required"></i></label>
+      <input
+        type="text"
+        class="form-control"
+        name="name"
+        placeholder="Pit Trap"
+        data-bind="
+          textInput: name,
+          hasFocus: $component.formElementHasFocus,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.name },
+          autocomplete: {
+            source: $component.prePopFilter,
+            onselect: $component.populate,
+          }
+        "
+      />
+    </div>
+    <div class="form-group col-xs-12">
+      <div class="checkbox">
+        <label>
+          <input
+            type="checkbox"
+            id="isActive"
+            name="isActive"
+            data-bind="checked: isActive"
+          />
+          Armed
+        </label>
+      </div>
+    </div>
+    <div class="form-group col-xs-12 col-sm-6">
+      <label>Level</label>
+      <input
+        type="text"
+        class="form-control"
+        name="level"
+        placeholder="5-10"
+        data-bind="
+          value: level,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.level },
+        "
+      />
+    </div>
+    <div class="form-group col-xs-12 col-sm-6">
+      <label>Threat</label>
+      <input
+        type="text"
+        class="form-control"
+        name="threat"
+        placeholder="Deadly"
+        data-bind="
+          value: threat,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.threat },
+        "
+      />
+    </div>
+    <div class="form-group col-xs-12">
+      <label>Trigger</label>
+      <textarea
+        type="text"
+        class="form-control"
+        name="trigger"
+        rows="4"
+        placeholder="Stepping on the false floor covering the pit..."
+        data-bind="
+          value: trigger,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.trigger },
+        "></textarea>
+    </div>
+    <div class="form-group col-xs-12">
+      <label>Effect</label>
+      <textarea
+        type="text"
+        class="form-control"
+        rows="4"
+        name="effect"
+        placeholder="The triggering creature must make a DC 10..."
+        data-bind="
+          value: effect,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.effect },
+        "
+      ></textarea>
+    </div>
+    <div class="form-group col-xs-12">
+      <label>Countermeasure</label>
+      <textarea type="text"
+                class="form-control"
+                rows="4"
+                name="countermeasure"
+                placeholder="A successful Perception check..."
+                data-bind="value: countermeasure"></textarea>
+    </div>
+    <div class="form-group col-xs-12">
+      <label>Description</label>
+      <textarea type="text"
+                class="form-control"
+                rows="4"
+                name="description"
+                placeholder="The simplest of pit traps consist of..."
+                data-bind="value: description">
+      </textarea>
+      <markdown-help />
+    </div>
+  </div>
+
+  <hr />
+  <h4>More Info</h4>
+  <small class="text-muted"><p>
+    Use these fields to specify the behavior of more complex traps.
+  </p></small>
+
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label>Initiative</label>
+      <input type="text"
+             class="form-control"
+             name="initiative"
+             placeholder="A complex trap takes its turn as a creature would."
+             data-bind="textInput: initiative">
+    </div>
+    <div class="form-group col-xs-12">
+      <label>Active Elements</label>
+      <textarea type="text"
+                class="form-control"
+                rows="4"
+                name="active-elements"
+                placeholder="On a trap's turn, it produces the specific effect listed here."
+                data-bind="value: activeElements"></textarea>
+    </div>
+    <div class="form-group col-xs-12">
+      <label>Dynamic Elements</label>
+      <textarea type="text"
+                class="form-control"
+                rows="4"
+                name="dynamic-elements"
+                placeholder="A dynamic element is a threat that arises or evolves while the trap functions."
+                data-bind="value: dynamicElements"></textarea>
+    </div>
+    <div class="form-group col-xs-12">
+      <label>Constant Elements</label>
+      <textarea type="text"
+                class="form-control"
+                rows="4"
+                name="constant-elements"
+                placeholder="A complex trap poses a threat even when its not taking its turn."
+                data-bind="value: constantElements"></textarea>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <form-submit-actions params="{
+      reset: $component.reset,
+      delete: $component.delete,
+      addForm: $component.addForm,
+      showDisclaimer: $component.showDisclaimer
+    }"></form-submit-actions>
+  </div>
+</form>

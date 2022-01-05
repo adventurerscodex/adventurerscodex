@@ -1,0 +1,118 @@
+<form data-bind="submit: submit, with: entity().value" autocomplete="off">
+  <card-submit-actions params="{reset: $component.reset}"></card-submit-actions>
+  <!-- ko if: $component.addForm -->
+  <div class="h4 collapsable-card-title">New Item</div>
+  <!-- /ko -->
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label>Name</label>
+      <input
+        type="text"
+        class="form-control"
+        name="name"
+        placeholder="Flask of Oil"
+        data-bind="
+          textInput: name,
+          hasFocus: $component.formElementHasFocus,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.name },
+          autocomplete: {
+            source: $component.prePopFilter,
+            onselect: $component.populate,
+          }
+        "
+      />
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label>Weight</label>
+      <input
+        type="text"
+        class="form-control"
+        name="weight"
+        placeholder="10"
+        data-bind="
+          value: weight,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.weight },
+        "
+      />
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label>Quantity</label>
+      <input
+        type="text"
+        class="form-control"
+        name="quantity"
+        placeholder="1"
+        data-bind="
+          value: quantity,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.quantity },
+        "
+      />
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label>Price</label>
+      <div class="input-group override-tight-inner">
+        <input
+          type="text"
+          class="form-control input-jquery-addon"
+          name="cost"
+          placeholder="5"
+          data-bind="
+            value: cost,
+            event: { blur: $component.reviewInput, invalid: $component.invalidate },
+            attr: { ...$component.validation.cost },
+          "
+        />
+        <span class="input-group-addon input-group-addon-sm input-group-addon-jquery">
+          <input
+            class="form-control"
+            placeholder="GP"
+            name="currencyDenomination"
+            data-bind="
+              value: currencyDenomination,
+              event: { blur: $component.reviewInput, invalid: $component.invalidate },
+              attr: { ...$component.validation.currencyDenomination },
+              autocomplete: {
+                source: $component.currencyDenominationOptions,
+                onselect: $component.setCurrencyDenomination
+              },
+            "
+          />
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label>Description</label>
+      <textarea
+        type="text"
+        class="form-control"
+        name="description"
+        rows="4"
+        placeholder="It lights things on fire..."
+        data-bind="
+          value: description,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.description },
+        "
+      ></textarea>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <form-submit-actions params="{
+      reset: $component.reset,
+      delete: $component.delete,
+      addForm: $component.addForm,
+      showDisclaimer: $component.showDisclaimer
+    }"></form-submit-actions>
+  </div>
+</form>

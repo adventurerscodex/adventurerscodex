@@ -1,873 +1,152 @@
-<!-- ko if: visible -->
-<div class="h3">
-  <img class="encounter-section-img" data-bind="attr: { src: sectionIcon }">
-  <span data-bind="text: name"></span><br />
-  <small data-bind="text: tagline"></small>
-</div>
-<table class="table table-responsive table-ac-bordered table-hover">
-  <thead>
-    <tr>
-      <th data-bind="click: function(){sortBy('name');}" class="col-md-3">
-        Name
-        <span data-bind="css: sortArrow('name')"></span>
-      </th>
-      <th data-bind="click: function(){sortBy('armorClass');}" class="col-md-2">
-        Armor Class
-        <span data-bind="css: sortArrow('armorClass')"></span>
-      </th>
-      <th data-bind="click: function(){sortBy('hitPoints');}" class="col-md-2">
-        Hit Points
-        <span data-bind="css: sortArrow('hitPoints')"></span>
-      </th>
-      <th data-bind="click: function(){sortBy('speed');}" class="col-md-2">
-        Speed
-        <span data-bind="css: sortArrow('speed')"></span>
-      </th>
-      <th class="text-right col-md-1">Exhibit</th>
-      <th class="col-md-1 text-right">
-        <a data-bind="click: toggleModal" href="#">
-          <i class="fa fa-plus fa-color"></i>
-        </a>
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-  <!-- ko foreach: filteredAndSortedMonsters -->
-    <tr class="clickable">
-      <td data-bind="text: name, click: $parent.editMonster"
-          data-toggle="modal"
-          class="col-md-3"></td>
-      <td data-bind="text: armorClass, click: $parent.editMonster"
-          data-toggle="modal"
-          class="col-md-2"></td>
-      <td data-bind="text: hitPoints, click: $parent.editMonster"
-          data-toggle="modal"
-          class="col-md-2"></td>
-      <td data-bind="text: speed, click: $parent.editMonster"
-          data-toggle="modal"
-          class="col-md-2"></td>
-      <!-- ko if: $parent.shouldShowExhibitButton -->
-      <td class="text-right col-md-1">
-        <a data-bind="click: $parent.toggleMonsterExhibit" href="#" title="Send Player's Exhibit">
-          <i data-bind="css: { exhibitActiveIcon: isExhibited }" class="fa fa-desktop fa-color-hover">
-          </i>
-        </a>
-      </td>
+<div id="monster-pane">
+  <div class="card-title h4">
+    <back-button params="{ column: column }"></back-button>
+    <span data-bind="text: name"></span><br />
+    <small data-bind="text: tagline"></small>
+  </div>
+  <hr class="ac-table-header">
+  <table class="table table-responsive table-ac-bordered table-hover">
+    <thead>
+      <tr>
+        <th data-bind="click: ()=> {sortBy('name');}"
+            class="col-md-4">
+          Name
+          <span data-bind="css: sortArrow('name')"></span>
+        </th>
+        <th data-bind="click: ()=> {sortBy('armorClass');}"
+            class="col-xs-2 hidden-xs hidden-sm">
+          AC
+          <span data-bind="css: sortArrow('armorClass')"></span>
+        </th>
+        <th data-bind="click: ()=> {sortBy('hitPoints');}"
+            class="col-xs-4 hidden-xs hidden-sm">
+          Hit Points
+          <span data-bind="css: sortArrow('hitPoints')"></span>
+        </th>
+        <th data-bind="click: ()=> {sortBy('isExhibited');}"
+            class="col-xs-1">
+          Exhibit
+          <span data-bind="css: sortArrow('isExhibited')"></span>
+        </th>
+        <th class="col-xs-1 text-right toggle-collapse-col">
+          <a href="#"
+              data-bind="{click: collapseAll}">
+            <span class="fa fa-minus"></span>
+          </a>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- ko foreach: $component.filteredAndSortedEntities -->
+      <tr
+        class="clickable monsterRow"
+        data-bind="attr: { id: `#monster_row_${uuid()}` }">
+        <td data-toggle="collapse" data-bind="attr: {
+          'data-target': `#monster_list_${uuid()}`,
+        }">
+          <span data-bind="text: name"></span>
+        </td>
+        <td class="hidden-xs hidden-sm" data-toggle="collapse" data-bind="
+          text: armorClass,
+          attr: { 'data-target': `#monster_list_${uuid()}` }"></td>
+        <td class="hidden-xs hidden-sm" data-toggle="collapse" data-bind="
+          text: hitPoints,
+          attr: { 'data-target': `#monster_list_${uuid()}` }"></td>
+        <!-- ko if: $component.shouldShowExhibitButton -->
+        <td class="text-center">
+          <a data-bind="click: () => $component.toggleExhibit($data)" href="#" title="Send to Exhibit">
+            <i data-bind="css: { exhibitActiveIcon: isExhibited }" class="fa fa-desktop fa-color-hover clickable">
+            </i>
+          </a>
+        </td>
+        <!-- /ko -->
+        <!-- ko ifnot: $component.shouldShowExhibitButton -->
+        <td class="text-center">
+          <span class="fa fa-desktop fa-disabled"
+            data-bind="popover: { content: 'Join a Party in order to send to Exhibit' }">
+          </span>
+        </td>
+        <!-- /ko -->
+        <td class="text-right toggle-collapse-col">
+          <span data-toggle="collapse"
+              data-bind="attr:{'data-target': `#monster_list_${uuid()}`}"
+              class="rotate fa fa-chevron-left"></span>
+        </td>
+      </tr>
+      <tr class="collapseRow safari-card-fix">
+        <td colspan="8">
+          <flip-card params="{
+                  dataId: $data.uuid(),
+                  tabId: $parent.tabId,
+                  collapsable: true,
+                  elementId: 'monster_list',
+                  context: {
+                    data: $data,
+                    encounter: $component.encounter,
+                    fullScreen: $component.fullScreen,
+                  }
+                }">
+            <div class="front">
+              <div>
+                <card-edit-actions params="{ flip: flip }"></card-edit-actions>
+              </div>
+              <monster-view
+                params="
+                  monster: context.data,
+                  fullScreen: context.fullScreen,
+                "
+              ></monster-view>
+            </div>
+            <div class="back">
+              <monster-form params="{
+                containerId: elementId,
+                collapsable: true,
+                encounter: context.encounter,
+                data: context.data,
+                show: showBack,
+                flip: flip,
+                forceCardResize: forceCardResize
+              }"></monster-form>
+            </div>
+          </flip-card>
+        </td>
+      </tr>
       <!-- /ko -->
-      <!-- ko ifnot: $parent.shouldShowExhibitButton -->
-      <td class="text-right col-md-1">
-        <span class="fa fa-desktop fa-disabled" style="cursor:pointer;"
-          data-bind="popover: { content: 'Join a Party send Player\'s Exhibit' }">
-        </span>
-      </td>
-      <!-- /ko -->
-      <td class="col-md-1 text-right">
-        <a data-bind="click: $parent.removeMonster" href="#">
-          <i class="fa fa-trash-o fa-color-hover">
-          </i>
-        </a>
-      </td>
-    </tr>
-    <!-- /ko -->
-    <!-- ko if: filteredAndSortedMonsters().length == 0 -->
-    <tr class="clickable">
-      <td data-bind="click: toggleModal"
-        colspan="12" class="text-center">
-        <i class="fa fa-plus fa-color"></i>
-        Add a new Monster
-      </td>
-    </tr>
-    <!-- /ko -->
-  </tbody>
-</table>
-<!-- /ko -->
-
-<!-- Add Modal -->
-<div class="modal fade"
-     id="addMonster"
-     tabindex="-1"
-     role="dialog" data-bind="modal: {
-       open: openModal,
-       onopen: modalFinishedOpening,
-       onclose: closeAddModal}">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title"
-            id="addMonsterLabel">Add a new Monster</h4>
-    </div>
-      <div class="modal-body">
-        <form class="form-horizontal" data-bind="element: _addForm, validate: validation">
-          <div class="form-group ui-front">
-            <label class="col-sm-3 control-label">
-              Name<i class="required"></i>
-            </label>
-            <div class="col-sm-8">
-              <input type="text"
-                     class="form-control"
-                     name="name"
-                     placeholder="Ancient Black Dragon"
-                     data-bind="textInput: blankMonster().name,
-                        hasFocus: firstElementInModalHasFocus,
-                        autocomplete: { source: monstersPrePopFilter, onselect: populateMonster }">
-            </div>
-            <div class="col-sm-1 control-label"></div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-3 control-label">
-              Image Link
-            </label>
-            <div class="col-sm-8">
-              <input type="text"
-                      name="sourceUrl"
-                      class="form-control"
-                      placeholder="http://myurl.com/image.jpg"
-                      data-bind="textInput: blankMonster().sourceUrl">
-            </div>
-            <div class="col-sm-1 control-label">
-              <span class="fa fa fa-desktop" style="cursor:pointer;"
-                title="This field will be sent to the players via the chat.">
-              </span>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-3 control-label">Size</label>
-            <div class="col-sm-8">
-              <input type="text"
-                     class="form-control"
-                     name="size"
-                     placeholder="Gargantuan"
-                     data-bind="textInput: blankMonster().size">
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-3 control-label">Type</label>
-              <div class="col-sm-8">
-                <input type="text"
-                       class="form-control"
-                       name="type"
-                       placeholder="Dragon"
-                       data-bind="value: blankMonster().type">
-              </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-3 control-label">Alignment</label>
-              <div class="col-sm-8">
-                <input type="text"
-                       class="form-control"
-                       name="alignment"
-                       placeholder="Chaotic Evil"
-                       data-bind="value: blankMonster().alignment">
-              </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-3 control-label">
-              Armor Class<i class="required"></i>
-            </label>
-              <div class="col-sm-8">
-                <input type="text"
-                       class="form-control"
-                       name="armorClass"
-                       placeholder="22 (natural armor)"
-                       data-bind="value: blankMonster().armorClass">
-              </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-3 control-label">
-              Hit Points<i class="required"></i>
-            </label>
-              <div class="col-sm-8">
-                <input type="text"
-                       class="form-control"
-                       name="hitPoints"
-                       placeholder="367 (21d20 + 147)"
-                       data-bind="value: blankMonster().hitPoints">
-              </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-3 control-label">Speed</label>
-              <div class="col-sm-8">
-                <input type="text"
-                       class="form-control"
-                       name="speed"
-                       placeholder="40 ft., fly 80 ft., swim 40 ft."
-                       data-bind="value: blankMonster().speed">
-              </div>
-          </div>
-          <hr/>
-          <table class="table">
-            <thead>
-              <tr>
-                <th width="16%" class="text-center">Strength<i class="required"></i></th>
-                <th width="16%" class="text-center">Dexterity<i class="required"></i></th>
-                <th width="16%" class="text-center">Constitution<i class="required"></i></th>
-                <th width="16%" class="text-center">Intelligence<i class="required"></i></th>
-                <th width="16%" class="text-center">Wisdom<i class="required"></i></th>
-                <th width="16%" class="text-center">Charisma<i class="required"></i></th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- ko if: renderAbilityScoresInAddModal() -->
-              <tr>
-                <td class="text-center">
-                  <input type="number"
-                          class="form-control"
-                          name="strength"
-                          data-bind="value: blankMonster().findAbilityScoreByName('Strength').value">
-                </td>
-                <td class="text-center">
-                  <input type="number"
-                          class="form-control"
-                          name="dexterity"
-                          data-bind="value: blankMonster().findAbilityScoreByName('Dexterity').value">
-                </td>
-                <td class="text-center">
-                  <input type="number"
-                          class="form-control"
-                          name="constitution"
-                          data-bind="value: blankMonster().findAbilityScoreByName('Constitution').value">
-                </td>
-                <td class="text-center">
-                  <input type="number"
-                          class="form-control"
-                          name="intelligence"
-                          data-bind="value: blankMonster().findAbilityScoreByName('Intelligence').value">
-                </td>
-                <td class="text-center">
-                  <input type="number"
-                          class="form-control"
-                          name="wisdom"
-                          data-bind="value: blankMonster().findAbilityScoreByName('Wisdom').value">
-                </td>
-                <td class="text-center">
-                  <input type="number"
-                          class="form-control"
-                          name="charisma"
-                          data-bind="value: blankMonster().findAbilityScoreByName('Charisma').value">
-                </td>
-              </tr>
+      <tr id="add-monster" class="collapse add-card">
+        <td colspan="5">
+          <monster-form params="{
+            containerId:'add-monster',
+            show: $component.displayAddForm,
+            flip: $component.toggleShowAddForm,
+            encounter: $component.encounter,
+          }"></monster-form>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+          <td colspan="8">
+          <div class="row">
+            <div class="col">
+              <!-- ko ifnot: $component.displayAddForm -->
+              <button type="button"
+                  class="btn btn-link btn-block btn-sm"
+                  id="monsterAddButton"
+                  data-toggle="collapse"
+                  data-target="#add-monster"
+                  data-bind="click: $component.toggleShowAddForm"><i class="fa fa-plus"></i> Add Monster</button>
               <!-- /ko -->
-            </tbody>
-          </table>
-          <hr/>
-          <div class="form-group">
-            <label class="col-sm-3 control-label">Saving Throws</label>
-              <div class="col-sm-8">
-                <input type="text"
-                       class="form-control"
-                       name="savingThrows"
-                       placeholder="Dex +7, Con +10, Wis +6, Cha +8"
-                       data-bind="value: blankMonster().savingThrows">
-              </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-3 control-label">Skills</label>
-              <div class="col-sm-8">
-                <input type="text"
-                       class="form-control"
-                       name="skills"
-                       placeholder="Perception +11, Stealth +7"
-                       data-bind="value: blankMonster().skills">
-              </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-3 control-label">Damage Immunities</label>
-              <div class="col-sm-8">
-                <input type="text"
-                       class="form-control"
-                       name="damageImmunities"
-                       placeholder="Acid"
-                       data-bind="value: blankMonster().damageImmunities">
-              </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-3 control-label">Damage Vulnerabilities</label>
-              <div class="col-sm-8">
-                <input type="text"
-                       class="form-control"
-                       name="damageVulnerabilities"
-                       placeholder="None"
-                       data-bind="value: blankMonster().damageVulnerabilities">
-              </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-3 control-label">Damage Resistances</label>
-              <div class="col-sm-8">
-                <input type="text"
-                       class="form-control"
-                       name="damageResistances"
-                       placeholder="None"
-                       data-bind="value: blankMonster().damageResistances">
-              </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-3 control-label">Condition Immunities</label>
-              <div class="col-sm-8">
-                <input type="text"
-                       class="form-control"
-                       name="conditionImmunities"
-                       placeholder="None"
-                       data-bind="value: blankMonster().conditionImmunities">
-              </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-3 control-label">Senses</label>
-              <div class="col-sm-8">
-                <input type="text"
-                       class="form-control"
-                       name="senses"
-                       placeholder="Blindsight 60 ft., darkvision 120 ft., passive Perception 21"
-                       data-bind="value: blankMonster().senses">
-              </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-3 control-label">Languages</label>
-              <div class="col-sm-8">
-                <input type="text"
-                       class="form-control"
-                       name="languages"
-                       placeholder="Common, Draconic"
-                       data-bind="value: blankMonster().languages">
-              </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-3 control-label">Challenge</label>
-              <div class="col-sm-8">
-                <input type="text"
-                       class="form-control"
-                       name="challenge"
-                       placeholder="22"
-                       data-bind="value: blankMonster().challenge">
-              </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-3 control-label">Experience</label>
-              <div class="col-sm-8">
-                <input type="number"
-                       class="form-control"
-                       name="experience"
-                       placeholder="11500"
-                       data-bind="value: blankMonster().experience">
-              </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-3 control-label">Description</label>
-              <div class="col-sm-8">
-                <textarea type="text"
-                       class="form-control" rows="4"
-                       name="description"
-                       placeholder="Multiattack. The dragon can use its Frightful Presence. It then makes three attacks..."
-                       data-bind="value: blankMonster().description"></textarea>
-              </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-3 control-label">
-              Player Text
-            </label>
-            <div class="col-sm-8">
-              <textarea type="text" rows="4"
-                      class="form-control"
-                      name="playerText"
-                      placeholder="This is the description that your players will see when sent via the chat."
-                      data-bind="value: blankMonster().playerText, markdownEditor: true">
-              </textarea>
-              <small class="text-muted">
-                Text in this panel can be styled using Markdown. Click
-                <a target="_blank"
-                  href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">here</a> to see a guide.
-              </small>
-            </div>
-            <div class="col-sm-1 control-label">
-              <span class="fa fa fa-desktop" style="cursor:pointer;"
-                title="This field will be sent to the players via the chat.">
-              </span>
             </div>
           </div>
-          <div class="modal-footer">
-            <small class="text-center">
-              <p>
-                Fields marked with <i class="fa fa fa-desktop fa-color-hover"></i> will be shown to the players in the Exhibit.
-              </p>
-            </small>
-            <button type="button"
-                    class="btn btn-default"
-                    data-dismiss="modal">
-                    Cancel</button>
-            <button type="submit"
-                    class="btn btn-primary">
-                    Add</button>
-            <p class="text-muted text-left" data-bind="visible: showDisclaimer">
-              <sm><i>This data is distributed under the
-                <a href="http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf"
-                  target="_blank">
-                  OGL</a><br/>
-                  Open	Game	License	v	1.0a	Copyright	2000,	Wizards	of	the	Coast,	LLC.
-                </i>
-              </sm>
-            </p>
-          </div>
-        </form>
-      </div> <!-- Modal Body -->
-    </div> <!-- Modal Content -->
-  </div> <!-- Modal Dialog -->
-</div> <!-- Modal Fade -->
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
 
-<!-- ViewEdit Modal -->
-<div class="modal fade"
-     id="viewWeapon"
-     tabindex="-1"
-     role="dialog"
-     data-bind="modal: {
-      open: openEditModal,
-      onopen: modalFinishedOpening,
-      onclose: closeModal
-    }">
-  <div class="modal-dialog" role="document">
-    <!-- ko if: openEditModal -->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title">Edit a Monster</h4>
-      </div>
-      <div class="modal-body">
-        <!-- Begin Tabs -->
-        <ul class="nav nav-tabs tabs">
-          <li role="presentation" data-bind="click: selectPreviewTab, css: previewTabStatus">
-            <a href="#" aria-controls="itemsModalPreview" role="tab" data-toggle="tab">
-                <b>Preview</b>
-            </a>
-          </li>
-          <li role="presentation" data-bind="click: selectEditTab, css: editTabStatus">
-            <a href="#" aria-controls="itemsModalEdit" role="tab" data-toggle="tab">
-                <b>Edit</b>
-            </a>
-          </li>
-        </ul>
-        <div class="tab-content" data-bind="with: currentEditItem">
-          <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane">
-            <img data-bind="attr: { src: $parent.convertedDisplayUrl },
-                            click: $parent.toggleFullScreen"
-                  width="80" height="80" class="img img-circle img-padded clickable"
-                  style="display: inline"/>
-            <div class="h3" style="display: inline">
-              <span data-bind="text: name"></span>&nbsp;
-              <small data-bind="text: nameLabel"></small>
-            </div>
-            <div class="row">
-              <div class="col-sm-6 col-xs-12"><b>Armor Class:</b>&nbsp;<span data-bind="text: armorClass"></span></div>
-              <div class="col-sm-6 col-xs-12"><b>Hit Points:</b>&nbsp;<span data-bind="text: hitPoints"></span></div>
-
-              <div class="col-sm-6 col-xs-12"><b>Speed:</b>&nbsp;<span data-bind="text: speed"></span></div>
-              <div class="col-sm-6 col-xs-12"><b>Languages:</b>&nbsp;<span data-bind="text: languages"></span></div>
-
-              <div class="col-sm-6 col-xs-12"><b>Challenge:</b>&nbsp;<span data-bind="text: challenge"></span></div>
-              <div class="col-sm-6 col-xs-12"><b>Experience:</b>&nbsp;<span data-bind="text: experience"></span></div>
-
-              <div class="col-sm-6 col-xs-12"><b>Damage Vulnerabilities:</b>&nbsp;<span data-bind="text: damageVulnerabilities"></span></div>
-              <div class="col-sm-6 col-xs-12"><b>Damage Immunities:</b>&nbsp;<span data-bind="text: damageImmunities"></span></div>
-
-              <div class="col-sm-6 col-xs-12"><b>Damage Resistances:</b>&nbsp;<span data-bind="text: damageResistances"></span></div>
-              <div class="col-sm-6 col-xs-12"><b>Condition Immunities:</b>&nbsp;<span data-bind="text: conditionImmunities"></span></div>
-
-              <div class="col-md-12">
-                <hr/>
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th width="16%" class="text-center">Strength</th>
-                      <th width="16%" class="text-center">Dexterity</th>
-                      <th width="16%" class="text-center">Constitution</th>
-                      <th width="16%" class="text-center">Intelligence</th>
-                      <th width="16%" class="text-center">Wisdom</th>
-                      <th width="16%" class="text-center">Charisma</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td class="text-center">
-                        <span data-bind="text: findAbilityScoreByName('Strength').value"></span>
-                        <sup>
-                          <span class="badge" data-bind="text: findAbilityScoreByName('Strength').modifierLabel"></span>
-                        </sup>
-                      </td>
-                      <td class="text-center">
-                        <span data-bind="text: findAbilityScoreByName('Dexterity').value"></span>
-                        <sup>
-                          <span class="badge" data-bind="text: findAbilityScoreByName('Dexterity').modifierLabel"></span>
-                        </sup>
-                      </td>
-                      <td class="text-center">
-                        <span data-bind="text: findAbilityScoreByName('Constitution').value"></span>
-                        <sup>
-                          <span class="badge" data-bind="text: findAbilityScoreByName('Constitution').modifierLabel"></span>
-                        </sup>
-                      </td>
-                      <td class="text-center">
-                        <span data-bind="text: findAbilityScoreByName('Intelligence').value"></span>
-                        <sup>
-                          <span class="badge" data-bind="text: findAbilityScoreByName('Intelligence').modifierLabel"></span>
-                        </sup>
-                      </td>
-                      <td class="text-center">
-                        <span data-bind="text: findAbilityScoreByName('Wisdom').value"></span>
-                        <sup>
-                          <span class="badge" data-bind="text: findAbilityScoreByName('Wisdom').modifierLabel"></span>
-                        </sup>
-                      </td>
-                      <td class="text-center">
-                        <span data-bind="text: findAbilityScoreByName('Charisma').value"></span>
-                        <sup>
-                          <span class="badge" data-bind="text: findAbilityScoreByName('Charisma').modifierLabel"></span>
-                        </sup>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <hr/>
-              </div>
-
-              <div class="col-md-12"><b>Saving Throws:</b>&nbsp;<span data-bind="text: savingThrows"></span></div>
-
-              <div class="col-md-12"><b>Skills:</b>&nbsp;<span data-bind="text: skills"></span></div>
-
-              <div class="col-md-12"><b>Senses:</b>&nbsp;<span data-bind="text: senses"></span></div>
-            </div>
-            <hr />
-            <span class="h4">
-              Description
-            </span>
-            <div class="row row-padded">
-              <div class="col-xs-12 col-padded">
-                <div data-bind="markdownPreview: description"
-                      class="preview-modal-overflow">
-                </div>
-              </div>
-            </div>
-            <span class="h4">
-              Player Text
-            </span>
-            <div class="row row-padded">
-              <div class="col-xs-12 col-padded">
-                <div data-bind="markdownPreview: playerText"
-                      class="preview-modal-overflow light-blue-left-highlight">
-                </div>
-              </div>
-            </div>
-          </div> <!-- End Preview Tab -->
-          <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane">
-            <form class="form-horizontal" data-bind="element: $parent._editForm, validate: $parent.updateValidation">
-              <div class="form-group">
-                <label class="col-sm-3 control-label">
-                  Name<i class="required"></i>
-                </label>
-                <div class="col-sm-8">
-                  <input type="text"
-                         class="form-control"
-                         name="name"
-                         placeholder="Ancient Black Dragon"
-                         data-bind="textInput: name, hasFocus: $parent.editFirstModalElementHasFocus">
-                </div>
-                <div class="col-sm-1 control-label"></div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-3 control-label">
-                  Image Link
-                </label>
-                <div class="col-sm-8">
-                  <input type="text"
-                          name="sourceUrl"
-                          class="form-control"
-                          placeholder="http://myurl.com/image.jpg"
-                          data-bind="textInput: sourceUrl">
-                </div>
-                <div class="col-sm-1 control-label">
-                  <span class="fa fa fa-desktop" style="cursor:pointer;"
-                    title="This field will be sent to the players via the chat.">
-                  </span>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-3 control-label">Size</label>
-                <div class="col-sm-8">
-                  <input type="text"
-                         class="form-control"
-                         name="size"
-                         placeholder="Gargantuan"
-                         data-bind="textInput: size">
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-3 control-label">Type</label>
-                  <div class="col-sm-8">
-                    <input type="text"
-                           class="form-control"
-                           name="type"
-                           placeholder="Dragon"
-                           data-bind="textInput: type">
-                  </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-3 control-label">Alignment</label>
-                  <div class="col-sm-8">
-                    <input type="text"
-                           class="form-control"
-                           name="alignment"
-                           placeholder="Chaotic Evil"
-                           data-bind="textInput: alignment">
-                  </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-3 control-label">
-                  Armor Class<i class="required"></i>
-                </label>
-                  <div class="col-sm-8">
-                    <input type="text"
-                           class="form-control"
-                           name="armorClass"
-                           placeholder="22 (natural armor)"
-                           data-bind="textInput: armorClass">
-                  </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-3 control-label">
-                  Hit Points<i class="required"></i>
-                </label>
-                  <div class="col-sm-8">
-                    <input type="text"
-                           class="form-control"
-                           name="hitPoints"
-                           placeholder="367 (21d20 + 147)"
-                           data-bind="value: hitPoints">
-                  </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-3 control-label">Speed</label>
-                  <div class="col-sm-8">
-                    <input type="text"
-                           class="form-control"
-                           name="speed"
-                           placeholder="40 ft., fly 80 ft., swim 40 ft."
-                           data-bind="textInput: speed">
-                  </div>
-              </div>
-              <hr/>
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th width="16%" class="text-center">Strength<i class="required"></i></th>
-                    <th width="16%" class="text-center">Dexterity<i class="required"></i></th>
-                    <th width="16%" class="text-center">Constitution<i class="required"></i></th>
-                    <th width="16%" class="text-center">Intelligence<i class="required"></i></th>
-                    <th width="16%" class="text-center">Wisdom<i class="required"></i></th>
-                    <th width="16%" class="text-center">Charisma<i class="required"></i></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="text-center">
-                      <input type="number"
-                              class="form-control"
-                              name="strength"
-                              data-bind="value: findAbilityScoreByName('Strength').value">
-                    </td>
-                    <td class="text-center">
-                      <input type="number"
-                              class="form-control"
-                              name="dexterity"
-                              data-bind="value: findAbilityScoreByName('Dexterity').value">
-                    </td>
-                    <td class="text-center">
-                      <input type="number"
-                              class="form-control"
-                              name="constitution"
-                              data-bind="value: findAbilityScoreByName('Constitution').value">
-                    </td>
-                    <td class="text-center">
-                      <input type="number"
-                              class="form-control"
-                              name="intelligence"
-                              data-bind="value: findAbilityScoreByName('Intelligence').value">
-                    </td>
-                    <td class="text-center">
-                      <input type="number"
-                              class="form-control"
-                              name="wisdom"
-                              data-bind="value: findAbilityScoreByName('Wisdom').value">
-                    </td>
-                    <td class="text-center">
-                      <input type="number"
-                              class="form-control"
-                              name="charisma"
-                              data-bind="value: findAbilityScoreByName('Charisma').value">
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <hr/>
-              <div class="form-group">
-                <label class="col-sm-3 control-label">Saving Throws</label>
-                  <div class="col-sm-8">
-                    <input type="text"
-                           class="form-control"
-                           name="savingThrows"
-                           placeholder="Dex +7, Con +10, Wis +6, Cha +8"
-                           data-bind="textInput: savingThrows">
-                  </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-3 control-label">Skills</label>
-                  <div class="col-sm-8">
-                    <input type="text"
-                           class="form-control"
-                           name="skills"
-                           placeholder="Perception +11, Stealth +7"
-                           data-bind="textInput: skills">
-                  </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-3 control-label">Damage Immunities</label>
-                  <div class="col-sm-8">
-                    <input type="text"
-                           class="form-control"
-                           name="damageImmunities"
-                           placeholder="Acid"
-                           data-bind="textInput: damageImmunities">
-                  </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-3 control-label">Damage Vulnerabilities</label>
-                  <div class="col-sm-8">
-                    <input type="text"
-                           class="form-control"
-                           name="damageVulnerabilities"
-                           placeholder="None"
-                           data-bind="textInput: damageVulnerabilities">
-                  </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-3 control-label">Damage Resistances</label>
-                  <div class="col-sm-8">
-                    <input type="text"
-                           class="form-control"
-                           name="damageResistances"
-                           placeholder="None"
-                           data-bind="textInput: damageResistances">
-                  </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-3 control-label">Condition Immunities</label>
-                  <div class="col-sm-8">
-                    <input type="text"
-                           class="form-control"
-                           name="conditionImmunities"
-                           placeholder="None"
-                           data-bind="textInput: conditionImmunities">
-                  </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-3 control-label">Senses</label>
-                  <div class="col-sm-8">
-                    <input type="text"
-                           class="form-control"
-                           name="senses"
-                           placeholder="Blindsight 60 ft., darkvision 120 ft., passive Perception 21"
-                           data-bind="textInput: senses">
-                  </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-3 control-label">Languages</label>
-                  <div class="col-sm-8">
-                    <input type="text"
-                           class="form-control"
-                           name="languages"
-                           placeholder="Common, Draconic"
-                           data-bind="textInput: languages">
-                  </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-3 control-label">Challenge</label>
-                  <div class="col-sm-8">
-                    <input type="text"
-                           class="form-control"
-                           name="challenge"
-                           placeholder="14"
-                           data-bind="value: challenge">
-                  </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-3 control-label">Experience</label>
-                  <div class="col-sm-8">
-                    <input type="number"
-                           class="form-control"
-                           name="experience"
-                           placeholder="11500"
-                           data-bind="value: experience">
-                  </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-3 control-label">Description</label>
-                  <div class="col-sm-8">
-                    <textarea type="text"
-                           class="form-control" rows="4"
-                           name="description"
-                           placeholder="Multiattack. The dragon can use its Frightful Presence. It then makes three attacks..."
-                           data-bind="value: description"></textarea>
-                  </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-3 control-label">
-                  Player Text
-                </label>
-                <div class="col-sm-8">
-                  <textarea type="text" rows="4"
-                          class="form-control"
-                          name="playerText"
-                          placeholder="This is the description that your players will see when sent via the chat."
-                          data-bind="value: playerText, markdownEditor: true">
-                  </textarea>
-                  <small class="text-muted">
-                    Text in this panel can be styled using Markdown. Click
-                    <a target="_blank"
-                      href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">here</a> to see a guide.
-                  </small>
-                </div>
-                <div class="col-sm-1 control-label">
-                  <span class="fa fa fa-desktop" style="cursor:pointer;"
-                    title="This field will be sent to the players via the chat.">
-                  </span>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <small class="text-center">
-                  <p>
-                    Fields marked with <i class="fa fa fa-desktop fa-color-hover"></i> will be shown to the players in the Exhibit.
-                  </p>
-                </small>
-                <button type="submit"
-                        class="btn btn-primary">Done</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div> <!-- Modal Body -->
-    </div> <!-- Modal Content -->
-    <!-- /ko -->
-  </div> <!-- Modal Dialog -->
-</div> <!-- Modal Fade -->
-
-<!-- The visibility is managed internally -->
-<full-screen-image params="imageSource: convertedDisplayUrl, fullScreenStatus: fullScreen">
-</full-screen-image>
-
-<player-push-modal params="isOpen: openPushModal, type: pushType, payload: selectedMonsterToPush, onclose: pushModalFinishedClosing"></player-push-modal>
+<full-screen-image
+  params="
+    imageSource: $component.fullScreen,
+    fullScreenStatus: $component.fullScreen
+"
+></full-screen-image>

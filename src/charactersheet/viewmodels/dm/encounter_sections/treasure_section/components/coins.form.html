@@ -1,0 +1,143 @@
+<form data-bind="submit: submit, with: entity().value" autocomplete="off">
+  <card-submit-actions params="{reset: $component.reset}"></card-submit-actions>
+  <!-- ko if: $component.addForm -->
+  <div class="h4 collapsable-card-title">New Coins</div>
+  <!-- /ko -->
+  <!-- ko ifnot: $component.addForm -->
+  <div class="h4 collapsable-card-title">Coins</div>
+  <!-- /ko -->
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label class="control-label col-sm-2">
+        <img
+          data-bind="attr: { src: $component.icons.ppCoin }"
+          width="30px"
+          title="Platinum Coins"
+          alt="Platinum Coins"
+        />
+      </label>
+      <div class="col-sm-10">
+        <input
+          type="number"
+          class="form-control"
+          name="platinum"
+          placeholder="Platinum"
+          data-bind="
+            value: platinum,
+            hasFocus: $component.formElementHasFocus,
+            event: { blur: $component.reviewInput, invalid: $component.invalidate },
+            attr: { ...$component.validation.platinum },
+          "
+        />
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label class="control-label col-sm-2">
+        <img
+          data-bind="attr: { src: $component.icons.gpCoin }"
+          width="30px"
+          title="Gold Coins"
+          alt="Gold Coins"
+        />
+      </label>
+      <div class="col-sm-10">
+        <input
+          type="number"
+          class="form-control"
+          name="gold"
+          placeholder="Gold"
+          data-bind="
+            value: gold,
+            event: { blur: $component.reviewInput, invalid: $component.invalidate },
+            attr: { ...$component.validation.gold },
+          "
+        />
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label class="control-label col-sm-2">
+        <img
+          data-bind="attr: { src: $component.icons.epCoin }"
+          width="30px"
+          title="Electrum Coins"
+          alt="Electrum Coins"
+        />
+      </label>
+      <div class="col-sm-10">
+        <input
+          type="number"
+          class="form-control"
+          name="electrum"
+          placeholder="Electrum"
+          data-bind="
+            value: electrum,
+            event: { blur: $component.reviewInput, invalid: $component.invalidate },
+            attr: { ...$component.validation.electrum },
+          "
+        />
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label class="control-label col-sm-2">
+        <img
+          data-bind="attr: { src: $component.icons.spCoin }"
+          width="30px"
+          title="Silver Coins"
+          alt="Silver Coins"
+        />
+      </label>
+      <div class="col-sm-10">
+        <input
+          type="number"
+          class="form-control"
+          name="silver"
+          placeholder="Silver"
+          data-bind="
+            value: silver,
+            event: { blur: $component.reviewInput, invalid: $component.invalidate },
+            attr: { ...$component.validation.silver },
+          "
+        />
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label class="control-label col-sm-2">
+        <img
+          data-bind="attr: { src: $component.icons.cpCoin }"
+          width="30px"
+          title="Copper Coins"
+          alt="Copper Coins"
+        />
+      </label>
+      <div class="col-sm-10">
+        <input
+          type="number"
+          class="form-control"
+          placeholder="Copper"
+          name="copper"
+          data-bind="
+            value: copper,
+            event: { blur: $component.reviewInput, invalid: $component.invalidate },
+            attr: { ...$component.validation.copper },
+          "
+        />
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <form-submit-actions params="{
+      reset: $component.reset,
+      delete: $component.delete,
+      addForm: $component.addForm,
+      showDisclaimer: $component.showDisclaimer
+    }"></form-submit-actions>
+  </div>
+</form>

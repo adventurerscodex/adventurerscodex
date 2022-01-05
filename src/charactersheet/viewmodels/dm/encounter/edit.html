@@ -1,0 +1,26 @@
+<div class="card-title h4">
+  Edit Encounters<br />
+  <small>
+    Add or remove encounters.
+  </small>
+  <!-- ko ifnot: loaded(), completeOn: 'render' -->
+  <div class="loader-wrapper"><div class="loader"></div></div>
+  <!-- /ko -->
+  <!-- ko if: loaded(), completeOn: 'render' -->
+  <div class="edit-btn btn-group">
+    <button class="btn btn-link" type="button" data-bind="click: flip">
+      Done
+    </button>
+  </div>
+  <!-- /ko -->
+</div>
+<hr class="ac-table-header">
+<nested-list params="
+  elementId: 'encounter-edit-list',
+  addComponent: 'encounter-form',
+  cells: entities,
+  onadd: () => {},
+  ondelete: async (encounter) => {
+    await encounter.delete();
+  }
+"></nested-list>

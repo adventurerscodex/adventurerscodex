@@ -12,7 +12,7 @@ import ko from 'knockout';
 import template from './form.html';
 
 
-export class SpellFormViewModel  extends AbstractChildFormModel {
+export class SpellFormViewModel extends AbstractChildFormModel {
     constructor(params) {
         super(params);
         autoBind(this);

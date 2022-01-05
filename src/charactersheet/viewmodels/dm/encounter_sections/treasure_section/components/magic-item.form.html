@@ -1,0 +1,168 @@
+<form data-bind="submit: submit, with: entity().value" autocomplete="off">
+  <card-submit-actions params="{reset: $component.reset}"></card-submit-actions>
+  <!-- ko if: $component.addForm -->
+  <div class="h4 collapsable-card-title">New Magic Item</div>
+  <!-- /ko -->
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label>Name</label>
+      <input
+        type="text"
+        class="form-control"
+        name="name"
+        placeholder="Cloak of Elvenkind"
+        data-bind="
+          textInput: name,
+          hasFocus: $component.formElementHasFocus,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.name },
+          autocomplete: {
+            source: $component.prePopFilter,
+            onselect: $component.populate,
+          }
+        "
+      />
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label>Type</label>
+      <input
+        type="text"
+        class="form-control"
+        name="type"
+        placeholder="Wonderous"
+        data-bind="
+          textInput: type,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.type },
+          autocomplete: {
+            source: $component.typeOptions,
+            onselect: $component.setType,
+          }
+        "
+      />
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label>Rarity</label>
+      <input
+        type="text"
+        class="form-control"
+        name="rarity"
+        placeholder="Common"
+        data-bind="
+          textInput: rarity,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.rarity },
+          autocomplete: {
+            source: $component.rarityOptions,
+            onselect: $component.setRarity,
+          }
+        "
+      />
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label>Max Charges</label>
+      <input
+        type="text"
+        class="form-control"
+        name="maxCharges"
+        placeholder="1"
+        data-bind="
+          value: maxCharges,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.maxCharges },
+        "
+      />
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label>Charges</label>
+      <input
+        type="text"
+        class="form-control"
+        name="usedCharges"
+        placeholder="1"
+        data-bind="
+          value: usedCharges,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.usedCharges },
+        "
+      />
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label>Weight</label>
+      <input
+        type="text"
+        class="form-control"
+        name="weight"
+        placeholder="1"
+        data-bind="
+          value: weight,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.weight },
+        "
+      />
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-xs-12 col-md-6">
+      <label>Requires Attunement</label>
+      <input
+        type="checkbox"
+        class="form-control"
+        name="requiresAttunement"
+        data-bind="
+          checked: requiresAttunement,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.requiresAttunement },
+        "
+      />
+    </div>
+    <div class="form-group col-xs-12 col-md-6" data-bind="visible: requiresAttunement">
+      <label>Attuned</label>
+      <input
+        type="checkbox"
+        class="form-control"
+        name="attuned"
+        data-bind="
+          checked: attuned,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.attuned },
+        "
+      />
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label>Description</label>
+      <textarea
+        type="text"
+        class="form-control"
+        name="description"
+        rows="4"
+        placeholder="It lights things on fire..."
+        data-bind="
+          value: description,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.description },
+        "
+      ></textarea>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <form-submit-actions params="{
+      reset: $component.reset,
+      delete: $component.delete,
+      addForm: $component.addForm,
+      showDisclaimer: $component.showDisclaimer
+    }"></form-submit-actions>
+  </div>
+</form>

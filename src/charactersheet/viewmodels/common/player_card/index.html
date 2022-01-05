@@ -1,5 +1,8 @@
 <div class="col-sm-4">
-  <div class="panel panel-default">
+  <div class="panel" data-bind="css: {
+    'panel-default': !player.isBloodied,
+    'panel-warning': player.isBloodied
+  }">
     <div class="panel-body">
       <!-- Player Info -->
       <div class="row">
@@ -19,13 +22,16 @@
         <div class="col-xs-12 text-center">
           <div class="h4">
             <span data-bind="text: player.name"></span><br />
-            <small data-bind="text: player.playerSummary"></small>
+            <small data-bind="text: player.summary"></small>
           </div>
+          <small class="text-warning" data-bind="visible: player.isBloodied">
+            <span data-bind="text: player.name"></span> is bloodied!
+          </small>&nbsp;
         </div>
       </div>
       <!-- Health, Spells, and Features  -->
       <div class="row">
-        <div class="col-xs-12">
+        <div class="col-xs-12" data-bind="visible: player.maxHitPoints">
           Hit Points
           <div class="progress thin">
             <div class="progress thin">
@@ -86,19 +92,15 @@
       <div class="row">
         <div class="col-xs-12 col-padded">
           <table class="table table-striped table-condensed">
-            <tr>
-              <th scope="row">Level</th>
-              <td data-bind="text: player.level"></td>
-            </tr>
-            <tr>
+            <tr data-bind="visible: player.armorClass">
               <th scope="row">Armor Class</th>
               <td data-bind="text: player.armorClass"></td>
             </tr>
-            <tr>
+            <tr data-bind="visible: player.hitDice">
               <th scope="row">Hit Dice</th>
               <td data-bind="text: player.hitDice"></td>
             </tr>
-            <tr>
+            <tr data-bind="visible: player.spellSaveDc">
               <th scope="row">Spell Save DC</th>
               <td data-bind="text: player.spellSaveDc"></td>
             </tr>
@@ -114,7 +116,7 @@
               <th scope="row">Passive Investigation</th>
               <td data-bind="text: player.passiveInvestigation"></td>
             </tr>
-            <tr>
+            <tr data-bind="visible: player.worthInGold">
               <th scope="row">Gold</th>
               <td data-bind="text: '~' + player.worthInGold"></td>
             </tr>

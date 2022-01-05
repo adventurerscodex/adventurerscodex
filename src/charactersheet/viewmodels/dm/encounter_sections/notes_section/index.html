@@ -1,16 +1,31 @@
-<!-- ko if: visible -->
-<div class="h3">
-  <img class="encounter-section-img" data-bind="attr: { src: sectionIcon }">
-Notes<br />
-<small data-bind="text: tagline"></small>
+<div data-bind="if: loaded">
+  <flip-card params="{
+    tabId: 'notes-tab',
+    elementId: 'notes-section-id',
+    context: {
+      data: $data,
+     }
+  }">
+    <div class="front">
+      <div class="card-title h4">
+        <back-button params="{ column: $parents[2] }"></back-button>
+        <span data-bind="text: context.data.name"></span><br />
+        <small data-bind="text: context.data.tagline"></small>
+        <card-edit-actions params="{ flip: flip }"></card-edit-actions>
+      </div>
+      <hr class="ac-table-header">
+      <div class="pl-2 pr-2">
+        <div
+          data-bind="markdownPreview: context.data.entity().contents"
+        ></div>
+      </div>
+    </div>
+    <div class="back">
+      <encounter-notes-form params="
+        encounter: context.data.encounter,
+        entity: context.data.entity,
+        flip: flip
+      "></encounter-notes-form>
+    </div>
+  </flip-card>
 </div>
-<div class="container-fluid">
-  <div class="form-group">
-    <markdown-edit-preview params="text: notes().contents,
-      rows: 20,
-      placeholder: 'The party enters a dark...',
-      save: saveNote,
-      cancel: reset"></markdown-edit-preview>
-  </div>
-</div>
-<!-- /ko -->

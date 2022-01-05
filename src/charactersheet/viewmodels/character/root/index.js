@@ -21,6 +21,7 @@ import inventorySection from 'images/misc_icons/locked-chest.svg';
 import inventoryTab from 'images/tab_icons/knapsack.svg';
 import ko from 'knockout';
 import notesTab from 'images/tab_icons/quill-ink.svg';
+import partyTab from 'images/tab_icons/backup.svg';
 import profileSection from 'images/standing-man-3.svg';
 import profileTab from 'images/tab_icons/read.svg';
 import skillSection from 'images/sword-spin.svg';
@@ -41,6 +42,7 @@ export function CharacterRootViewModel(params) {
         spellsTab: spellsTab,
         inventoryTab: inventoryTab,
         notesTab: notesTab,
+        partyTab: partyTab,
         profileTab: profileTab,
         exhibitTab: exhibitTab,
         healthSection: healthSection,
@@ -79,7 +81,6 @@ export function CharacterRootViewModel(params) {
     self.backpackTooltip = ko.observable('Backpack');
     self.notesTooltip = ko.observable('Notes');
     self.partyTooltip = ko.observable('Party');
-    self.chatTooltip = ko.observable('Chat');
     self.exhibitTooltip = ko.observable('Exhibit');
 
     /* Tab Properties */
@@ -170,7 +171,8 @@ export function CharacterRootViewModel(params) {
         HotkeysService.registerHotkey('4', self.activateEquipmentTab);
         HotkeysService.registerHotkey('5', self.activateInventoryTab);
         HotkeysService.registerHotkey('6', self.activateNotesTab);
-        HotkeysService.registerHotkey('7', self.activateExhibitTab);
+        HotkeysService.registerHotkey('7', self.activatePartyTab);
+        HotkeysService.registerHotkey('8', self.activateExhibitTab);
     };
 
     self.unload = () => {

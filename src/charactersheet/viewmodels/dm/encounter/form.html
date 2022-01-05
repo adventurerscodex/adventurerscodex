@@ -1,0 +1,48 @@
+<form data-bind="submit: $component.submit">
+  <card-submit-actions params="{reset: $component.reset}"></card-submit-actions>
+  <!-- ko if: $component.addForm -->
+  <div class="h4 collapsable-card-title">
+    New Encounter
+  </div>
+  <!-- /ko -->
+  <div class="row" data-bind="with: entity">
+    <div class="form-group col col-sm-12">
+      <label for="name" class="control-label">
+        Name
+      </label>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Surprise!"
+        name="name"
+        data-bind="
+          value: name,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.name },
+          hasFocus: $component.formElementHasFocus,
+        "
+      />
+    </div>
+    <div class="form-group col col-sm-12">
+      <label for="name" class="control-label">
+        Location
+      </label>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="The Forest of Nym"
+        name="location"
+        data-bind="
+          value: location,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.location }
+        "
+      />
+    </div>
+    <form-submit-actions params="{
+      reset: $component.reset,
+      delete: $component.delete,
+      addForm: $component.addForm,
+    }"></form-submit-actions>
+  </div>
+</form>
