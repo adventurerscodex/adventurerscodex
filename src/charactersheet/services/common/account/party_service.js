@@ -87,7 +87,7 @@ class _PartyService {
         this.provider.disconnect();
     }
 
-    updatePresence(additionalData) {
+    updatePresence(additionalData={}) {
         this._presenceState = {
             // Any old data
             ...this._presenceState,
