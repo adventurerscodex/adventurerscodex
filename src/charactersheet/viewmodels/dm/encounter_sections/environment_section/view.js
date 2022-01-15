@@ -45,11 +45,13 @@ class EnvironmentViewModel extends ViewModel {
             );
             this.entity().isExhibited(!this.entity().isExhibited());
         }
-        this.markAsExhibited(
+
+        const uuid = (
             this.entity().isExhibited()
-                ? this.entity().exhibitUuid()
-                : null
+            ? this.entity().exhibitUuid()
+            : null
         );
+        PartyService.updatePresence({ exhibit: uuid });
     }
 
     toggleFullScreen() {

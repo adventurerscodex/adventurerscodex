@@ -81,7 +81,14 @@ class ReadAloudTextSectionViewModel extends AbstractEncounterTabularViewModel {
             rat.isExhibited(!rat.isExhibited());
             return;
         }
-        this.markAsExhibited(rat.uuid());
+
+        if (rat.isExhibited()) {
+            this.markAsExhibited(rat.uuid());
+            PartyService.updatePresence({ exhibit: rat.uuid() });
+        } else {
+            this.markAsExhibited(null);
+            PartyService.updatePresence({ exhibit: null });
+        }
     }
 
     // Events
