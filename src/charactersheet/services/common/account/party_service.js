@@ -115,6 +115,10 @@ class _PartyService {
         () => {
             this.awareness.setLocalState({
                 ...this._presenceState,
+                // Append a random number to ensure the
+                // state actually changes even if we are
+                // setting the same value as before.
+                _r: (Math.random() * 1000000) | 0,
             })
         },
         250,
