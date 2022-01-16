@@ -336,6 +336,8 @@ class StatsHealthViewModel {
     saveHitDice = async () => {
         await this.hitDice().save();
         this.calculateHitDice();
+
+        PartyService.updatePresence();
     }
 
     /**
