@@ -17,8 +17,10 @@
         <span data-bind="css: sortArrow('armorClass')"></span>
       </th>
        <th 
+          data-bind="click: ()=> {sortBy('maxHitPoints');}"
           class="col-xs-4 col-sm-8 text-center">
           Hit Points
+          <span data-bind="css: sortArrow('maxHitPoints')"></span>
         </th>
         <th class="col-xs-2 col-sm-1 text-right toggle-collapse-col">
           <a href="#"

@@ -66,7 +66,11 @@ export class CompanionsListViewModel extends AbstractTabularViewModel {
     sorts() {
         return {
             'name asc': { field: 'name', direction: 'asc'},
-            'name desc': { field: 'name', direction: 'desc'}
+            'name desc': { field: 'name', direction: 'desc'},
+            'armorClass asc': { field: 'armorClass', direction: 'asc'},
+            'armorClass desc': { field: 'armorClass', direction: 'desc'},
+            'maxHitPoints asc': { field: 'maxHitPoints', direction: 'asc'},
+            'maxHitPoints desc': { field: 'maxHitPoints', direction: 'desc'},
         };
     }
     setUpSubscriptions() {

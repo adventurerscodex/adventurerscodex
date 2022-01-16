@@ -89,7 +89,7 @@ export class Companion extends KOModel {
                 foundScore = score;
             }
         });
-        foundScore.modifierLabel = modifierLabel(foundScore.value());
+        foundScore.modifierLabel = modifierLabel(foundScore.value);
         return foundScore;
     };
 
