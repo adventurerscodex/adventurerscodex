@@ -2,12 +2,26 @@ import { KOModel } from 'hypnos/lib/models/ko';
 import { Notifications, Utility } from 'charactersheet/utilities';
 import ko from 'knockout';
 
+
+const modifierLabel = (bonus) => {
+    let bonusNumber = 0;
+    if (bonus && !isNaN(bonus)) {
+        bonusNumber = Math.floor((parseInt(bonus) - 10) / 2);
+    }
+    if (bonusNumber < 0) {
+        return `- ${Math.abs(bonusNumber)}`;
+    }
+    return `+ ${bonusNumber}`;
+};
 export class Pet extends KOModel {
     static __skeys__ = ['core', 'pets'];
 
     static mapping = {
         include: ['coreUuid']
     };
+
+    DANGER_THRESHOLD = 0.30;
+    WARNING_THRESHOLD = 0.50;
 
     coreUuid = ko.observable(null);
     uuid = ko.observable();
@@ -33,6 +47,26 @@ export class Pet extends KOModel {
     description = ko.observable();
     // // UI Stuff
 
+    hpPercent = ko.pureComputed(() => {
+        return (
+            (this.maxHitPoints() - this.damage())
+                / (this.maxHitPoints())
+        );
+    });
+
+    usesDisplay = ko.pureComputed(() => {
+        return this.hitPoints() + ' / ' + this.maxHitPoints();
+    });
+
+    isDangerous = ko.pureComputed(() => {
+        return this.hpPercent() < this.DANGER_THRESHOLD ? true : false;
+    });
+
+    isWarning = ko.pureComputed(() => {
+        return this.hpPercent() < this.WARNING_THRESHOLD ? true : false;
+    });
+
+
     nameLabel = ko.pureComputed(() => {
         if (this) {
             var label = this.size() ? this.size() : '';
@@ -46,8 +80,7 @@ export class Pet extends KOModel {
     convertedDisplayUrl = ko.pureComputed(() => (
         Utility.string.createDirectDropboxLink(this.sourceUrl())
     ));
-
-    // Public Methods
+    
 
     findAbilityScoreByName = function(name) {
         var foundScore;
@@ -56,6 +89,7 @@ export class Pet extends KOModel {
                 foundScore = score;
             }
         });
+        foundScore.modifierLabel = modifierLabel(foundScore.value());
         return foundScore;
     };
 

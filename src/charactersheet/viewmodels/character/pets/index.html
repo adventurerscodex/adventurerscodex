@@ -1,23 +1,26 @@
 
 <div id="pets-pane">
-  <hr class="ac-table-header">
+  <div class="h4 card-title"> Companions <br />
+    <small>A companion could be a follower, a Ranger&apos;s beast companion, or a familiar. You could also track your Druid's wildshape, or a polymorph shapes.</small>
+  </div>
   <table class="table table-responsive table-ac-bordered table-hover">
     <thead>
       <tr>
         <th data-bind="click: ()=> {sortBy('name');}"
-            class="col-md-4">
+            class="col-xs-4 col-sm-4 col-md-5 col-lg-4">
           Name
           <span data-bind="css: sortArrow('name')"></span>
         </th>
-        <th
-            class="col-xs-2 hidden-xs hidden-sm">
-          AC
-        </th>
-        <th 
-            class="col-xs-4 hidden-xs hidden-sm">
+        <th data-bind="click: ()=> {sortBy('armorClass');}"
+          class="col-xs-2 col-md-1">
+        AC
+        <span data-bind="css: sortArrow('armorClass')"></span>
+      </th>
+       <th 
+          class="col-xs-4 col-sm-8 text-center">
           Hit Points
         </th>
-        <th class="col-xs-1 text-right toggle-collapse-col">
+        <th class="col-xs-2 col-sm-1 text-right toggle-collapse-col">
           <a href="#"
               data-bind="{click: collapseAll}">
             <span class="fa fa-minus"></span>
@@ -30,26 +33,79 @@
       <tr
         class="clickable petRow"
         data-bind="attr: { id: `#pet_row_${uuid()}` }">
-        <td data-toggle="collapse" data-bind="attr: {
+        <td 
+          data-toggle="collapse" 
+          data-bind="attr: {
           'data-target': `#pet_list_${uuid()}`,
         }">
-          <span data-bind="text: name"></span>
-        </td>
-        <td class="hidden-xs hidden-sm" data-toggle="collapse" data-bind="
-          text: armorClass,
-          attr: { 'data-target': `#pet_list_${uuid()}` }"></td>
-        <td class="hidden-xs hidden-sm" data-toggle="collapse" data-bind="
-          text: hitPoints,
-          attr: { 'data-target': `#pet_list_${uuid()}` }"></td>
-     
+        <div class="row d-flex">
+          <div class="hidden-xs hidden-sm col-md-4 d-flex">
+            <img
+              data-bind="
+                attr: { src: convertedDisplayUrl },
+              "
+              width="80"
+              height="80"
+              class="img img-circle"
+            />
+          </div>
+          <div class="col-xs-8 d-flex">
+            <div class="h4">
+              <span data-bind="text: name"></span><br />
+              <small class="hidden-xs hidden-sm" data-bind="text: nameLabel"></small>
+            </div>
+          </div>
+        </div>
+      </td>
+      <td 
+      data-toggle="collapse" 
+      data-bind="
+      attr: { 'data-target': `#pet_list_${uuid()}` }">
+        <div 
+          id="ArmorClassShield"
+          class="defenseShield"
+          style="
+          text-align: inherit;
+          height: auto;
+          background-size: auto;
+          margin-top: auto;
+          margin-bottom: auto;">
+          <span data-bind="text: armorClass" />
+        </div>
+      </td>
+      <td >
+        <div class="row d-flex">
+          <div class="col-xs-2 col-md-1" style="padding: 6px;">
+            <mini-plus-minus params="value: damage,
+                      max: maxHitPoints, hideUp: true, onChange: ()=>{$component.onUsedChange($data)}">
+            </mini-plus-minus>
+          </div>
+          <div class="hidden-xs col-sm-6 col-md-8" style="padding: 6px;">
+            <div style="padding: 10px"
+            data-bind="barProgress: $component.mapToChart($data)"> </div>
+          </div>
+          <div class="col-xs-8 visible-xs hidden-md hidden-lg text-center">
+            <span data-bind="text: usesDisplay()"></span>
+          </div>
+          <div class="col-xs-2 col-md-1" style="padding: 6px;">
+            <mini-plus-minus params="value: damage,
+                      max: maxHitPoints, hideDown: true, onChange: ()=>{$component.onUsedChange($data)}">
+            </mini-plus-minus>
+          </div>
+          <div class="hidden-xs col-sm-3 col-md-2 text-center">
+            <span data-bind="text: usesDisplay()"></span>
+          </div>
+        </div>
+      </td>
         <td class="text-right toggle-collapse-col">
           <span data-toggle="collapse"
               data-bind="attr:{'data-target': `#pet_list_${uuid()}`}"
               class="rotate fa fa-chevron-left"></span>
         </td>
+      </td>
       </tr>
       <tr class="collapseRow safari-card-fix">
-        <td colspan="8">
+        <td colspan="4">
           <flip-card params="{
                   dataId: $data.uuid(),
                   tabId: $parent.tabId,
@@ -63,29 +119,8 @@
               <div>
                 <card-edit-actions params="{ flip: flip }"></card-edit-actions>
               </div>
-
               <div class="row" data-bind="with: context.data">
-                <div class="col-xs-12 d-flex">
-                  <div class="d-flex-1 pr-2" data-bind="visible: convertedDisplayUrl">
-                    <img
-                      data-bind="
-                        attr: { src: convertedDisplayUrl },
-                        click: () => $parent.fullScreen(convertedDisplayUrl())
-                      "
-                      width="80"
-                      height="80"
-                      class="img img-circle clickable"
-                    />
-                  </div>
-                  <div class="d-flex-5 d-flex align-items-center">
-                    <div class="h4">
-                      <span data-bind="text: name"></span><br />
-                      <small data-bind="text: nameLabel"></small>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-xs-12">
+                <div class="hidden-xs col-xs-12">
                   <table class="table">
                     <thead>
                       <tr>
@@ -101,37 +136,37 @@
                       <tr>
                         <td class="text-center">
                           <span data-bind="text: findAbilityScoreByName('Strength').value"></span>
-                          <sup>
+                          <sup style="padding-left: 1rem">
                             <span class="badge" data-bind="text: findAbilityScoreByName('Strength').modifierLabel"></span>
                           </sup>
                         </td>
                         <td class="text-center">
                           <span data-bind="text: findAbilityScoreByName('Dexterity').value"></span>
-                          <sup>
+                          <sup style="padding-left: 1rem">
                             <span class="badge" data-bind="text: findAbilityScoreByName('Dexterity').modifierLabel"></span>
                           </sup>
                         </td>
                         <td class="text-center">
                           <span data-bind="text: findAbilityScoreByName('Constitution').value"></span>
-                          <sup>
+                          <sup style="padding-left: 1rem">
                             <span class="badge" data-bind="text: findAbilityScoreByName('Constitution').modifierLabel"></span>
                           </sup>
                         </td>
                         <td class="text-center">
                           <span data-bind="text: findAbilityScoreByName('Intelligence').value"></span>
-                          <sup>
+                          <sup style="padding-left: 1rem">
                             <span class="badge" data-bind="text: findAbilityScoreByName('Intelligence').modifierLabel"></span>
                           </sup>
                         </td>
                         <td class="text-center">
                           <span data-bind="text: findAbilityScoreByName('Wisdom').value"></span>
-                          <sup>
+                          <sup style="padding-left: 1rem">
                             <span class="badge" data-bind="text: findAbilityScoreByName('Wisdom').modifierLabel"></span>
                           </sup>
                         </td>
                         <td class="text-center">
                           <span data-bind="text: findAbilityScoreByName('Charisma').value"></span>
-                          <sup>
+                          <sup style="padding-left: 1rem">
                             <span class="badge" data-bind="text: findAbilityScoreByName('Charisma').modifierLabel"></span>
                           </sup>
                         </td>
@@ -139,24 +174,85 @@
                     </tbody>
                   </table>
                 </div>
-                <div class="col-xs-12">
+                <div class="hidden-sm hidden-md hidden-lg col-xs-12">
                   <table class="table table-hover table-condensed table-ac-bordered">
                     <tbody>
-                      <tr data-bind="visible: armorClass">
-                        <th scope="row">Armor Class</th>
-                        <td data-bind="text: armorClass"></td>
+                      <tr>
+                        <th width="40%">Strength</th>
+                        <td>
+                          <span data-bind="text: findAbilityScoreByName('Strength').value"></span>
+                          <sup style="padding-left: 1rem">
+                            <span class="badge" data-bind="text: findAbilityScoreByName('Strength').modifierLabel"></span>
+                          </sup>
+                        </td>
                       </tr>
-                      <tr data-bind="visible: hitPoints">
-                        <th scope="row">Hit Points</th>
-                        <td data-bind="text: hitPoints"></td>
+                      <tr>
+                        <th width="40%">Dexterity</th>
+                        <td>
+                          <span data-bind="text: findAbilityScoreByName('Dexterity').value"></span>
+                          <sup style="padding-left: 1rem">
+                            <span class="badge" data-bind="text: findAbilityScoreByName('Dexterity').modifierLabel"></span>
+                          </sup>
+                        </td>
                       </tr>
+                      <tr>
+                        <th width="40%">Constitution</th>
+                        <td>
+                          <span data-bind="text: findAbilityScoreByName('Constitution').value"></span>
+                          <sup style="padding-left: 1rem">
+                            <span class="badge" data-bind="text: findAbilityScoreByName('Constitution').modifierLabel"></span>
+                          </sup>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th width="40%">Intelligence</th>
+                        <td>
+                          <span data-bind="text: findAbilityScoreByName('Intelligence').value"></span>
+                          <sup style="padding-left: 1rem">
+                            <span class="badge" data-bind="text: findAbilityScoreByName('Intelligence').modifierLabel"></span>
+                          </sup>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th width="40%">Wisdom</th>
+                        <td>
+                          <span data-bind="text: findAbilityScoreByName('Wisdom').value"></span>
+                          <sup style="padding-left: 1rem">
+                            <span class="badge" data-bind="text: findAbilityScoreByName('Wisdom').modifierLabel"></span>
+                          </sup>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th width="40%">Charisma</th>
+                        <td>
+                          <span data-bind="text: findAbilityScoreByName('Charisma').value"></span>
+                          <sup style="padding-left: 1rem">
+                            <span class="badge" data-bind="text: findAbilityScoreByName('Charisma').modifierLabel"></span>
+                          </sup>
+                        </td>
+                      </tr>
+                    </tbody>
+                    
+                  </table>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                  <table class="table table-hover table-condensed table-ac-bordered">
+                    <tbody>
                       <tr data-bind="visible: speed">
                         <th scope="row">Speed</th>
                         <td data-bind="markdownPreview: speed"></td>
                       </tr>
-                      <tr data-bind="visible: languages">
-                        <th scope="row">Languages</th>
-                        <td data-bind="markdownPreview: languages"></td>
+                      <tr data-bind="visible: skills">
+                        <th scope="row">Senses</th>
+                        <td data-bind="markdownPreview: skills"></td>
+                      </tr>
+                      <tr data-bind="visible: savingThrows">
+                        <th scope="row">Saving Throws</th>
+                        <td data-bind="markdownPreview: savingThrows"></td>
+                      </tr>
+                      <tr data-bind="visible: skills">
+                        <th scope="row">Skills</th>
+                        <td data-bind="markdownPreview: skills"></td>
                       </tr>
                       <tr data-bind="visible: damageVulnerabilities">
                         <th scope="row">Damage Vulnerabilities</th>
@@ -174,23 +270,14 @@
                         <th scope="row">Condition Immunities</th>
                         <td data-bind="markdownPreview: conditionImmunities"></td>
                       </tr>
-              
-                      <tr data-bind="visible: savingThrows">
-                        <th scope="row">Saving Throws</th>
-                        <td data-bind="markdownPreview: savingThrows"></td>
-                      </tr>
-                      <tr data-bind="visible: skills">
-                        <th scope="row">Skills</th>
-                        <td data-bind="markdownPreview: skills"></td>
-                      </tr>
-                      <tr data-bind="visible: skills">
-                        <th scope="row">Senses</th>
-                        <td data-bind="markdownPreview: skills"></td>
+                      <tr data-bind="visible: languages">
+                        <th scope="row">Languages</th>
+                        <td data-bind="markdownPreview: languages"></td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
-                <div class="col-xs-12" data-bind="description">
+                <div class="col-xs-12 col-md-6" data-bind="description">
                   <label>Description</label>
                   <div data-bind="markdownPreview: description"></div>
                 </div>              
