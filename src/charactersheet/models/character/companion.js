@@ -30,7 +30,7 @@ export class Companion extends KOModel {
     type = ko.observable();
     alignment = ko.observable();
     armorClass = ko.observable();
-    // hitPoints = ko.observable();
+    hitPoints = ko.observable();
     maxHitPoints = ko.observable();
     damage = ko.observable();
     speed = ko.observable();
@@ -89,7 +89,7 @@ export class Companion extends KOModel {
                 foundScore = score;
             }
         });
-        foundScore.modifierLabel = modifierLabel(foundScore.value);
+        foundScore.modifierLabel = modifierLabel(ko.unwrap(foundScore.value));
         return foundScore;
     };
 
