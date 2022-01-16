@@ -1,5 +1,6 @@
 import { Core, ProfileImage } from 'charactersheet/models/common';
 import { CoreManager, Fixtures, Notifications } from 'charactersheet/utilities';
+import { PartyService } from 'charactersheet/services';
 import { AbstractFormModel } from 'charactersheet/viewmodels/abstract';
 import { Profile } from 'charactersheet/models/character';
 import autoBind from 'auto-bind';
@@ -110,6 +111,8 @@ export class CharacterPortraitFormModel extends AbstractFormModel {
         CoreManager.activeCore().playerName(this.core().playerName());
         this.selectedStockImage([]);
         Notifications.profile.playerName.changed.dispatch(this.core());
+
+        PartyService.updatePresence();
     }
 
     validation = {

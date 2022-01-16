@@ -1,16 +1,10 @@
 import 'bin/knockout-bar-progress';
-import {
-    Feat,
-    Feature,
-    Trait
-} from 'charactersheet/models/character';
-import {
-    Fixtures,
-    Notifications
-} from 'charactersheet/utilities';
+import { Feat, Feature, Trait } from 'charactersheet/models/character';
+import { Fixtures, Notifications } from 'charactersheet/utilities';
 import { find, findIndex, flatMap } from 'lodash';
 import { AbstractTabularViewModel } from 'charactersheet/viewmodels/abstract';
 import { TrackedDetailForm } from './form';
+import { PartyService } from 'charactersheet/services';
 import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './index.html';
@@ -24,7 +18,7 @@ class TrackerViewModel extends AbstractTabularViewModel {
 
     trackedModelTypes = [ Feature, Trait, Feat ];
 
-    async refresh () {
+    async refresh() {
         const fetchTrackedEntities = this.trackedModelTypes.map(
             (type) => type.ps.list({ coreUuid: this.coreKey }));
         const responseList = await Promise.all(fetchTrackedEntities);
@@ -94,7 +88,7 @@ class TrackerViewModel extends AbstractTabularViewModel {
         }
     };
 
-    onTrackedAdded (trackedItem) {
+    onTrackedAdded(trackedItem) {
         if (trackedItem && trackedItem.isTracked()) {
             const tracked = find(this.entities(), (trackable)=> {
                 return ko.utils.unwrapObservable(trackedItem).uuid() === ko.utils.unwrapObservable(trackable).uuid();
@@ -105,7 +99,7 @@ class TrackerViewModel extends AbstractTabularViewModel {
         }
     }
 
-    onTrackedChanged (trackedItem) {
+    onTrackedChanged(trackedItem) {
         if (trackedItem) {
             const tracked = find(this.entities(), (trackable)=> {
                 return ko.utils.unwrapObservable(trackedItem).uuid() === ko.utils.unwrapObservable(trackable).uuid();
@@ -125,7 +119,7 @@ class TrackerViewModel extends AbstractTabularViewModel {
         }
     }
 
-    onTrackedDeleted (trackedItem) {
+    onTrackedDeleted(trackedItem) {
         if (trackedItem) {
             const tracked = find(this.entities(), (trackable)=> {
                 return ko.utils.unwrapObservable(trackedItem).uuid() === ko.utils.unwrapObservable(trackable).uuid();
@@ -164,6 +158,7 @@ class TrackerViewModel extends AbstractTabularViewModel {
             }
         });
         await Promise.all(updates);
+        PartyService.updatePresence();
     };
 
     resetLongRestFeatures = async () => {
@@ -177,6 +172,7 @@ class TrackerViewModel extends AbstractTabularViewModel {
             }
         });
         await Promise.all(updates);
+        PartyService.updatePresence();
     };
 
     resetDawnFeatures = async () => {
@@ -189,10 +185,12 @@ class TrackerViewModel extends AbstractTabularViewModel {
             }
         });
         await Promise.all(updates);
+        PartyService.updatePresence();
     };
 
     onUsedChange = async (trackedItem) => {
         await trackedItem.save();
+        PartyService.updatePresence();
     }
 }
 

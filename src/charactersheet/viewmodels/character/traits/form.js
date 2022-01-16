@@ -4,6 +4,7 @@ import { Notifications } from 'charactersheet/utilities';
 import { SELECTDATA } from 'charactersheet/constants';
 import { TrackedForm } from 'charactersheet/components/form-tracked-component';
 import { Trait } from 'charactersheet/models';
+import { PartyService } from 'charactersheet/services';
 
 import autoBind from 'auto-bind';
 import ko from 'knockout';
@@ -32,6 +33,17 @@ export class TraitFormViewModel extends AbstractChildFormModel {
         super.setUpSubscriptions();
         const onTrackFormDisplay = this.entity().isTracked.subscribe(this.forceResize);
         this.subscriptions.push(onTrackFormDisplay);
+    }
+
+
+    didSave(success, error) {
+        super.didSave(success, error);
+        PartyService.updatePresence();
+    }
+
+    didDelete(success, error) {
+        super.didDelete(success, error);
+        PartyService.updatePresence();
     }
 }
 

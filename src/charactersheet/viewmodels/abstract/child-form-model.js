@@ -84,7 +84,17 @@ export class AbstractChildFormModel extends AbstractFormModel {
         if (this.containerId) {
             $(`#${this.containerId}`).collapse('hide');
         }
-        await this.entity().delete();
+        let success = true, error = null;
+        try {
+            await this.entity().delete();
+        } catch(e) {
+            success = false, error = e;
+        }
+        this.didDelete(success, error);
+    }
+
+    didDelete(success, error) {
+
     }
 
     prePopFilter = (request, response) => {

@@ -9,6 +9,7 @@ import { Notifications } from 'charactersheet/utilities';
 import { ProficiencyTypeComponentViewModel } from 'charactersheet/components/proficiency-marker';
 import { Skill } from 'charactersheet/models/character';
 import { SkillsAddFormViewModel } from './addForm';
+import { PartyService } from 'charactersheet/services';
 
 import autoBind from 'auto-bind';
 import ko from 'knockout';
@@ -131,6 +132,12 @@ export class SkillsFormViewModel extends AbstractGridFormModel {
             $(this.addFormId).collapse('show');
             this.forceResize();
         }
+    }
+
+
+    didSave(success, error) {
+        super.didSave(success, error);
+        PartyService.updatePresence();
     }
 
     validation = {

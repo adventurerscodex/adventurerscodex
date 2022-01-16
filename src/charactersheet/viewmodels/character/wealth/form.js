@@ -1,6 +1,7 @@
 import { AbstractFormModel } from 'charactersheet/viewmodels/abstract';
 import { Notifications } from 'charactersheet/utilities';
 import { Wealth } from 'charactersheet/models';
+import { PartyService } from 'charactersheet/services';
 
 import autoBind from 'auto-bind';
 import cpCoins from 'images/cp-coin.svg';
@@ -27,6 +28,12 @@ export class WealthFormViewModel extends AbstractFormModel {
     gpCoins = gpCoins;
     ppCoins = ppCoins;
     spCoins = spCoins;
+
+
+    didSave(success, error) {
+        super.didSave(success, error);
+        PartyService.updatePresence();
+    }
 }
 
 ko.components.register('wealth-form', {

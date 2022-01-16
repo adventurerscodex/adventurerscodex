@@ -11,6 +11,7 @@ import { defer, find } from 'lodash';
 import { ModelBackedViewModel } from 'charactersheet/viewmodels/abstract';
 import { CoreManager } from 'charactersheet/utilities';
 import { DELAY } from 'charactersheet/constants';
+import { PartyService } from 'charactersheet/services';
 
 import autoBind from 'auto-bind';
 import ko from 'knockout';
@@ -90,6 +91,7 @@ class StatsHealthViewModel {
             await this.refresh();
         }
     }
+
     // Hit Point Display ******************************************************
     hpText = ko.pureComputed(() => {
         let tempHp = '';
@@ -167,6 +169,8 @@ class StatsHealthViewModel {
         await this.health().save();
         this.healInput(null);
         $('#health-heal-input').blur();
+
+        PartyService.updatePresence();
     };
 
     handleTemp = async () => {
@@ -181,6 +185,8 @@ class StatsHealthViewModel {
         await this.health().save();
         this.tempInput(null);
         $('#health-temp-input').blur();
+
+        PartyService.updatePresence();
     };
 
     handleMaxHPReduction = async () => {
@@ -230,6 +236,8 @@ class StatsHealthViewModel {
 
         this.maxHpReductionInput(null);
         $('#health-hp-reduction-input').blur();
+
+        PartyService.updatePresence();
     };
 
     handleDmg = async () => {
@@ -249,6 +257,8 @@ class StatsHealthViewModel {
         await this.health().save();
         this.dmgInput(null);
         $('#health-dmg-input').blur();
+
+        PartyService.updatePresence();
     };
 
     damageHandler = ko.computed({
@@ -355,6 +365,8 @@ class StatsHealthViewModel {
         this.health().tempHitPoints(0);
         await this.health().save();
         await this.resetHitDice();
+
+        PartyService.updatePresence();
     };
 
     validation = {

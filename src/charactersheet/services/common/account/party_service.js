@@ -121,8 +121,8 @@ class _PartyService {
                 _r: (Math.random() * 1000000) | 0,
             })
         },
-        250,
-        { maxWait: 500 }
+        350,
+        { maxWait: 1000 }
     );
 
     Status = {
@@ -144,6 +144,7 @@ class _PartyService {
         }
 
         const states = this.awareness.states;
+        console.log(states, coreUuid)
         // Do any of the current awareness states contain a value
         // with the id we were just given? If so, they're online.
         for (const value of states.values()) {
@@ -167,8 +168,8 @@ class _PartyService {
         async () => {
             await this.refresh(true);
         },
-        250,
-        { maxWait: 500 }
+        500,
+        { maxWait: 1000 }
     )
 
     // Actions

@@ -4,6 +4,7 @@ import { flatMap, maxBy } from 'lodash';
 import { AbstractTabularViewModel } from 'charactersheet/viewmodels/abstract';
 import { SpellSlot } from 'charactersheet/models/character';
 import { SpellSlotFormComponentViewModel } from './form';
+import { PartyService } from 'charactersheet/services';
 import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './index.html';
@@ -49,6 +50,7 @@ class SpellSlotsViewModel extends AbstractTabularViewModel {
 
     async onUsedChange(spellslot) {
         await spellslot.save();
+        PartyService.updatePresence();
     }
 
     nextSlotLevel = ko.pureComputed(() => {
@@ -122,6 +124,7 @@ class SpellSlotsViewModel extends AbstractTabularViewModel {
             }
         });
         await Promise.all(updates);
+        PartyService.updatePresence();
     }
 
     async resetLongRestFeatures() {
@@ -132,6 +135,7 @@ class SpellSlotsViewModel extends AbstractTabularViewModel {
             }
         });
         await Promise.all(updates);
+        PartyService.updatePresence();
     }
 }
 
