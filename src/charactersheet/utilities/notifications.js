@@ -230,7 +230,7 @@ export var Notifications = {
         changed: new Signal(),
     },
 
-    pet: {
+    companion: {
         added: new Signal(),
         changed: new Signal(),
         deleted: new Signal()

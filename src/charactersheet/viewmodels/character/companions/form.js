@@ -3,12 +3,12 @@ import autoBind from 'auto-bind';
 import { copy, first, get, split, trim } from 'lodash';
 import { DataRepository } from 'charactersheet/utilities';
 import { AbstractChildFormModel } from 'charactersheet/viewmodels/abstract';
-import { Pet } from 'charactersheet/models/character';
+import { Companion } from 'charactersheet/models/character';
 import { SELECTDATA } from 'charactersheet/constants';
 import ko from 'knockout';
 import template from './form.html';
 
-class PetFormViewModel extends AbstractChildFormModel {
+class CompanionFormViewModel extends AbstractChildFormModel {
 
     constructor(params) {
         super(params);
@@ -19,7 +19,7 @@ class PetFormViewModel extends AbstractChildFormModel {
     prePopLimit = SELECTDATA.LONG;
 
     modelClass() {
-        return Pet;
+        return Companion;
     }
 
     generateBlank() {
@@ -54,7 +54,7 @@ class PetFormViewModel extends AbstractChildFormModel {
 }
 
 
-ko.components.register('pet-form', {
-    viewModel: PetFormViewModel,
+ko.components.register('companion-form', {
+    viewModel: CompanionFormViewModel,
     template: template
 });

@@ -3,7 +3,7 @@ import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './view.html';
 
-export class PetViewModel extends ModelBackedViewModel {
+export class CompanionViewModel extends ModelBackedViewModel {
     constructor(params) {
         super(params);
         this.modelClass.bind(this);
@@ -11,11 +11,11 @@ export class PetViewModel extends ModelBackedViewModel {
     }
 
     modelClass() {
-        return Pet;
+        return Companion;
     }
 }
 
-ko.components.register('pet-view', {
-    viewModel: PetViewModel,
+ko.components.register('companion-view', {
+    viewModel: CompanionViewModel,
     template: template
 });

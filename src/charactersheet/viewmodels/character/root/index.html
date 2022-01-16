@@ -164,25 +164,25 @@
       </a>
     </li>
     <li role="presentation"
-        id="tabPetsLink">
-      <a href="#pets"
-        aria-controls="pets"
+        id="tabCompanionsLink">
+      <a href="#companions"
+        aria-controls="companions"
         role="tab"
         data-toggle="tab"
-        id="petsTabTrigger"
+        id="companionsTabTrigger"
         class="tab-subtext"
-        data-bind="click: activatePetsTab">
+        data-bind="click: activateCompanionsTab">
         <div class="visible-xs"
             data-toggle="collapse"
             data-target="#descriptionTab">
           <img class="tab-icon"
-              data-bind="attr: { src: icons.petsTab }" />
+              data-bind="attr: { src: icons.companionsTab }" />
           <span class="text-center"
                 id="tabNotesSpan"><small>Companions</small></span>
         </div>
         <div class="hidden-xs">
           <img class="tab-icon"
-              data-bind="attr: { src: icons.petsTab }" />
+              data-bind="attr: { src: icons.companionsTab }" />
           <br />
           <span class="text-center"
                 id="tabNotesSpan"><small>Companions</small></span>
@@ -415,16 +415,16 @@
   <!-- End Inventory Tab -->
   <div role="tabpanel"
        class="tab-pane"
-       id="pets"
-       data-bind="css: petsTabStatus">
+       id="companions"
+       data-bind="css: companionsTabStatus">
     <div class="row">
       <div class="col col-xs-12"
            style="z-index: 4">
-        <pets-list params="{tabId: 'pets'}"></pets-list>
+        <companions-list params="{tabId: 'companions'}"></companions-list>
       </div>
     </div>
   </div>
- <!-- End pets Tab -->
+ <!-- End companions Tab -->
  <div role="tabpanel"
       class="tab-pane"
       id="notes"

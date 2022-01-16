@@ -6,7 +6,7 @@ export { Feat } from './feat';
 export { Health } from './health';
 export { HitDice } from './hit_dice';
 export { OtherStats } from './other_stats';
-export { Pet } from './pet';
+export { Companion } from './companion';
 export { Proficiency } from './proficiency';
 export { Profile } from './profile';
 export { SavingThrow } from './saving_throw';

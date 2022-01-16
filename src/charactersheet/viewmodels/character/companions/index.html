@@ -1,5 +1,5 @@
 
-<div id="pets-pane">
+<div id="companions-pane">
   <div class="h4 card-title"> Companions <br />
     <small>A companion could be a follower, a Ranger&apos;s beast companion, or a familiar. You could also track your Druid's wildshape, or a polymorph shapes.</small>
   </div>
@@ -31,12 +31,12 @@
     <tbody>
       <!-- ko foreach: $component.filteredAndSortedEntities -->
       <tr
-        class="clickable petRow"
-        data-bind="attr: { id: `#pet_row_${uuid()}` }">
+        class="clickable companionRow"
+        data-bind="attr: { id: `#companion_row_${uuid()}` }">
         <td 
           data-toggle="collapse" 
           data-bind="attr: {
-          'data-target': `#pet_list_${uuid()}`,
+          'data-target': `#companion_list_${uuid()}`,
         }">
         <div class="row d-flex">
           <div class="hidden-xs hidden-sm col-md-4 d-flex">
@@ -60,7 +60,7 @@
       <td 
       data-toggle="collapse" 
       data-bind="
-      attr: { 'data-target': `#pet_list_${uuid()}` }">
+      attr: { 'data-target': `#companion_list_${uuid()}` }">
         <div 
           id="ArmorClassShield"
           class="defenseShield"
@@ -99,7 +99,7 @@
       </td>
         <td class="text-right toggle-collapse-col">
           <span data-toggle="collapse"
-              data-bind="attr:{'data-target': `#pet_list_${uuid()}`}"
+              data-bind="attr:{'data-target': `#companion_list_${uuid()}`}"
               class="rotate fa fa-chevron-left"></span>
         </td>
       </td>
@@ -110,7 +110,7 @@
                   dataId: $data.uuid(),
                   tabId: $parent.tabId,
                   collapsable: true,
-                  elementId: 'pet_list',
+                  elementId: 'companion_list',
                   context: {
                     data: $data,
                   }
@@ -285,26 +285,26 @@
             </div>
             <div class="back">
               back
-              <pet-form params="{
+              <companion-form params="{
                 containerId: elementId,
                 collapsable: true,
                 data: context.data,
                 show: showBack,
                 flip: flip,
                 forceCardResize: forceCardResize
-              }"></pet-form>
+              }"></companion-form>
             </div>
           </flip-card>
         </td>
       </tr>
       <!-- /ko -->
-      <tr id="add-pet" class="collapse add-card">
+      <tr id="add-companion" class="collapse add-card">
         <td colspan="5">
-        <pet-form params="{
-            containerId:'add-pet',
+        <companion-form params="{
+            containerId:'add-companion',
             show: $component.displayAddForm,
             flip: $component.toggleShowAddForm,
-          }"></pet-form>
+          }"></companion-form>
         </td>
       </tr>
     </tbody>
@@ -316,10 +316,10 @@
               <!-- ko ifnot: $component.displayAddForm -->
               <button type="button"
                   class="btn btn-link btn-block btn-sm"
-                  id="petAddButton"
+                  id="companionAddButton"
                   data-toggle="collapse"
-                  data-target="#add-pet"
-                  data-bind="click: $component.toggleShowAddForm"><i class="fa fa-plus"></i> Add Pet</button>
+                  data-target="#add-companion"
+                  data-bind="click: $component.toggleShowAddForm"><i class="fa fa-plus"></i> Add Companion</button>
               <!-- /ko -->
             </div>
           </div>

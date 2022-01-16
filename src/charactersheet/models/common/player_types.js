@@ -3,7 +3,7 @@ export var PlayerTypes = {
         key: 'character',
         visibleTabs: [
             'profile', 'stats', 'skills', 'spells', 'equipment',
-            'inventory', 'pets', 'notes', 'settings', 'party', 'exhibit'
+            'inventory', 'companions', 'notes', 'settings', 'party', 'exhibit'
         ],
         defaultTab: 'stats'
     },

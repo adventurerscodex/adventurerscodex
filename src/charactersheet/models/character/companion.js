@@ -13,8 +13,8 @@ const modifierLabel = (bonus) => {
     }
     return `+ ${bonusNumber}`;
 };
-export class Pet extends KOModel {
-    static __skeys__ = ['core', 'pets'];
+export class Companion extends KOModel {
+    static __skeys__ = ['core', 'companions'];
 
     static mapping = {
         include: ['coreUuid']
@@ -103,18 +103,18 @@ export class Pet extends KOModel {
     create = async () => {
         const response = await this.ps.create();
         this.importValues(response.object.exportValues());
-        Notifications.pet.added.dispatch(this);
+        Notifications.companion.added.dispatch(this);
     }
 
     save = async () => {
         const response = await this.ps.save();
         this.importValues(response.object.exportValues());
-        Notifications.pet.changed.dispatch(this);
+        Notifications.companion.changed.dispatch(this);
     }
 
     delete = async () => {
         await this.ps.delete();
-        Notifications.pet.deleted.dispatch(this);
+        Notifications.companion.deleted.dispatch(this);
     }
 
     // Overrides
@@ -136,7 +136,7 @@ export class Pet extends KOModel {
     }
 }
 
-Pet.validationConstraints = {
+Companion.validationConstraints = {
     fieldParams: {
         name: {
             required: true,
