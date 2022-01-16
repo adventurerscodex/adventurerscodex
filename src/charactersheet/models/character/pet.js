@@ -2,35 +2,21 @@ import { KOModel } from 'hypnos/lib/models/ko';
 import { Notifications, Utility } from 'charactersheet/utilities';
 import ko from 'knockout';
 
-export class Monster extends KOModel {
-    static __skeys__ = ['core', 'encounters', 'monsters'];
-
-    static __dependents__ = [
-        'Image',
-        'Environment',
-        'NPC',
-        'PlayerText',
-        'PointOfInterest',
-        'EncounterImage',
-    ];
+export class Pet extends KOModel {
+    static __skeys__ = ['core', 'pets'];
 
     static mapping = {
-        include: ['coreUuid', 'encounterUuid', 'uuid', 'name', 'size', 'type', 'maxHitPoints',
-            'damage', 'alignment', 'armorClass', 'hitPoints', 'speed', 'savingThrows',
-            'skills', 'senses', 'damageVulnerabilities', 'damageImmunities', 'damageResistances',
-            'conditionImmunities', 'languages', 'challenge', 'experience', 'description',
-            'sourceUrl', 'playerText', 'isExhibited']
+        include: ['coreUuid']
     };
 
-    coreUuid = ko.observable();
-    encounterUuid = ko.observable();
+    coreUuid = ko.observable(null);
     uuid = ko.observable();
     name = ko.observable();
     size = ko.observable();
     type = ko.observable();
     alignment = ko.observable();
     armorClass = ko.observable();
-    hitPoints = ko.observable();
+    // hitPoints = ko.observable();
     maxHitPoints = ko.observable();
     damage = ko.observable();
     speed = ko.observable();
@@ -43,14 +29,9 @@ export class Monster extends KOModel {
     damageResistances = ko.observable();
     conditionImmunities = ko.observable();
     languages = ko.observable();
-    challenge = ko.observable();
-    experience = ko.observable();
     sourceUrl = ko.observable();
-    playerText = ko.observable();
-    isExhibited = ko.observable(false);
     description = ko.observable();
-
-    // UI Stuff
+    // // UI Stuff
 
     nameLabel = ko.pureComputed(() => {
         if (this) {
@@ -81,25 +62,25 @@ export class Monster extends KOModel {
     // Helpers
 
     load = async (params) => {
-        const response = await this.ps.model.ps.read(params);
+        const response = await this.ps.read(params);
         this.importValues(response.object.exportValues());
     }
 
     create = async () => {
         const response = await this.ps.create();
         this.importValues(response.object.exportValues());
-        Notifications.monster.added.dispatch(this);
+        Notifications.pet.added.dispatch(this);
     }
 
     save = async () => {
         const response = await this.ps.save();
         this.importValues(response.object.exportValues());
-        Notifications.monster.changed.dispatch(this);
+        Notifications.pet.changed.dispatch(this);
     }
 
     delete = async () => {
         await this.ps.delete();
-        Notifications.monster.deleted.dispatch(this);
+        Notifications.pet.deleted.dispatch(this);
     }
 
     // Overrides
@@ -121,7 +102,7 @@ export class Monster extends KOModel {
     }
 }
 
-Monster.validationConstraints = {
+Pet.validationConstraints = {
     fieldParams: {
         name: {
             required: true,
@@ -182,14 +163,6 @@ Monster.validationConstraints = {
         },
         languages: {
             maxlength: 256
-        },
-        challenge: {
-            maxlength: 32
-        },
-        experience: {
-            number: true,
-            min: -10000,
-            max: 100000000
         },
         strength: {
             required: true,
@@ -286,14 +259,6 @@ Monster.validationConstraints = {
         },
         languages: {
             maxlength: 256
-        },
-        challenge: {
-            maxlength: 32
-        },
-        experience: {
-            number: true,
-            min: -10000,
-            max: 100000000
         },
         strength: {
             required: true,

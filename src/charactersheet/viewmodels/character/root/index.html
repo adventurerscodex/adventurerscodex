@@ -164,6 +164,32 @@
       </a>
     </li>
     <li role="presentation"
+        id="tabPetsLink">
+      <a href="#pets"
+        aria-controls="pets"
+        role="tab"
+        data-toggle="tab"
+        id="petsTabTrigger"
+        class="tab-subtext"
+        data-bind="click: activatePetsTab">
+        <div class="visible-xs"
+            data-toggle="collapse"
+            data-target="#descriptionTab">
+          <img class="tab-icon"
+              data-bind="attr: { src: icons.petsTab }" />
+          <span class="text-center"
+                id="tabNotesSpan"><small>Pets</small></span>
+        </div>
+        <div class="hidden-xs">
+          <img class="tab-icon"
+              data-bind="attr: { src: icons.petsTab }" />
+          <br />
+          <span class="text-center"
+                id="tabNotesSpan"><small>Pets</small></span>
+        </div>
+      </a>
+    </li>
+    <li role="presentation"
         id="tabNotesLink">
       <a href="#notes"
          aria-controls="notes"
@@ -389,11 +415,23 @@
   <!-- End Inventory Tab -->
   <div role="tabpanel"
        class="tab-pane"
-       id="notes"
-       data-bind="css: notesTabStatus">
+       id="pets"
+       data-bind="css: petsTabStatus">
     <div class="row">
       <div class="col col-xs-12"
            style="z-index: 4">
+        <pets-list params="{tabId: 'pets'}"></pets-list>
+      </div>
+    </div>
+  </div>
+ <!-- End pets Tab -->
+ <div role="tabpanel"
+      class="tab-pane"
+      id="notes"
+      data-bind="css: notesTabStatus">
+    <div class="row">
+      <div class="col col-xs-12"
+          style="z-index: 4">
         <notes-list params="{tabId: 'notes'}"></notes-list>
       </div>
     </div>

@@ -1,0 +1,250 @@
+
+<div id="pets-pane">
+  <hr class="ac-table-header">
+  <table class="table table-responsive table-ac-bordered table-hover">
+    <thead>
+      <tr>
+        <th data-bind="click: ()=> {sortBy('name');}"
+            class="col-md-4">
+          Name
+          <span data-bind="css: sortArrow('name')"></span>
+        </th>
+        <th
+            class="col-xs-2 hidden-xs hidden-sm">
+          AC
+        </th>
+        <th 
+            class="col-xs-4 hidden-xs hidden-sm">
+          Hit Points
+        </th>
+        <th class="col-xs-1 text-right toggle-collapse-col">
+          <a href="#"
+              data-bind="{click: collapseAll}">
+            <span class="fa fa-minus"></span>
+          </a>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- ko foreach: $component.filteredAndSortedEntities -->
+      <tr
+        class="clickable petRow"
+        data-bind="attr: { id: `#pet_row_${uuid()}` }">
+        <td data-toggle="collapse" data-bind="attr: {
+          'data-target': `#pet_list_${uuid()}`,
+        }">
+          <span data-bind="text: name"></span>
+        </td>
+        <td class="hidden-xs hidden-sm" data-toggle="collapse" data-bind="
+          text: armorClass,
+          attr: { 'data-target': `#pet_list_${uuid()}` }"></td>
+        <td class="hidden-xs hidden-sm" data-toggle="collapse" data-bind="
+          text: hitPoints,
+          attr: { 'data-target': `#pet_list_${uuid()}` }"></td>
+     
+        <td class="text-right toggle-collapse-col">
+          <span data-toggle="collapse"
+              data-bind="attr:{'data-target': `#pet_list_${uuid()}`}"
+              class="rotate fa fa-chevron-left"></span>
+        </td>
+      </tr>
+      <tr class="collapseRow safari-card-fix">
+        <td colspan="8">
+          <flip-card params="{
+                  dataId: $data.uuid(),
+                  tabId: $parent.tabId,
+                  collapsable: true,
+                  elementId: 'pet_list',
+                  context: {
+                    data: $data,
+                  }
+                }">
+            <div class="front">
+              <div>
+                <card-edit-actions params="{ flip: flip }"></card-edit-actions>
+              </div>
+
+              <div class="row" data-bind="with: context.data">
+                <div class="col-xs-12 d-flex">
+                  <div class="d-flex-1 pr-2" data-bind="visible: convertedDisplayUrl">
+                    <img
+                      data-bind="
+                        attr: { src: convertedDisplayUrl },
+                        click: () => $parent.fullScreen(convertedDisplayUrl())
+                      "
+                      width="80"
+                      height="80"
+                      class="img img-circle clickable"
+                    />
+                  </div>
+                  <div class="d-flex-5 d-flex align-items-center">
+                    <div class="h4">
+                      <span data-bind="text: name"></span><br />
+                      <small data-bind="text: nameLabel"></small>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xs-12">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th width="16%" class="text-center">Strength</th>
+                        <th width="16%" class="text-center">Dexterity</th>
+                        <th width="16%" class="text-center">Constitution</th>
+                        <th width="16%" class="text-center">Intelligence</th>
+                        <th width="16%" class="text-center">Wisdom</th>
+                        <th width="16%" class="text-center">Charisma</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="text-center">
+                          <span data-bind="text: findAbilityScoreByName('Strength').value"></span>
+                          <sup>
+                            <span class="badge" data-bind="text: findAbilityScoreByName('Strength').modifierLabel"></span>
+                          </sup>
+                        </td>
+                        <td class="text-center">
+                          <span data-bind="text: findAbilityScoreByName('Dexterity').value"></span>
+                          <sup>
+                            <span class="badge" data-bind="text: findAbilityScoreByName('Dexterity').modifierLabel"></span>
+                          </sup>
+                        </td>
+                        <td class="text-center">
+                          <span data-bind="text: findAbilityScoreByName('Constitution').value"></span>
+                          <sup>
+                            <span class="badge" data-bind="text: findAbilityScoreByName('Constitution').modifierLabel"></span>
+                          </sup>
+                        </td>
+                        <td class="text-center">
+                          <span data-bind="text: findAbilityScoreByName('Intelligence').value"></span>
+                          <sup>
+                            <span class="badge" data-bind="text: findAbilityScoreByName('Intelligence').modifierLabel"></span>
+                          </sup>
+                        </td>
+                        <td class="text-center">
+                          <span data-bind="text: findAbilityScoreByName('Wisdom').value"></span>
+                          <sup>
+                            <span class="badge" data-bind="text: findAbilityScoreByName('Wisdom').modifierLabel"></span>
+                          </sup>
+                        </td>
+                        <td class="text-center">
+                          <span data-bind="text: findAbilityScoreByName('Charisma').value"></span>
+                          <sup>
+                            <span class="badge" data-bind="text: findAbilityScoreByName('Charisma').modifierLabel"></span>
+                          </sup>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-xs-12">
+                  <table class="table table-hover table-condensed table-ac-bordered">
+                    <tbody>
+                      <tr data-bind="visible: armorClass">
+                        <th scope="row">Armor Class</th>
+                        <td data-bind="text: armorClass"></td>
+                      </tr>
+                      <tr data-bind="visible: hitPoints">
+                        <th scope="row">Hit Points</th>
+                        <td data-bind="text: hitPoints"></td>
+                      </tr>
+                      <tr data-bind="visible: speed">
+                        <th scope="row">Speed</th>
+                        <td data-bind="markdownPreview: speed"></td>
+                      </tr>
+                      <tr data-bind="visible: languages">
+                        <th scope="row">Languages</th>
+                        <td data-bind="markdownPreview: languages"></td>
+                      </tr>
+                      <tr data-bind="visible: damageVulnerabilities">
+                        <th scope="row">Damage Vulnerabilities</th>
+                        <td data-bind="markdownPreview: damageVulnerabilities"></td>
+                      </tr>
+                      <tr data-bind="visible: damageImmunities">
+                        <th scope="row">Damage Immunities</th>
+                        <td data-bind="markdownPreview: damageImmunities"></td>
+                      </tr>
+                      <tr data-bind="visible: damageResistances">
+                        <th scope="row">Damage Resistances</th>
+                        <td data-bind="markdownPreview: damageResistances"></td>
+                      </tr>
+                      <tr data-bind="visible: conditionImmunities">
+                        <th scope="row">Condition Immunities</th>
+                        <td data-bind="markdownPreview: conditionImmunities"></td>
+                      </tr>
+              
+                      <tr data-bind="visible: savingThrows">
+                        <th scope="row">Saving Throws</th>
+                        <td data-bind="markdownPreview: savingThrows"></td>
+                      </tr>
+                      <tr data-bind="visible: skills">
+                        <th scope="row">Skills</th>
+                        <td data-bind="markdownPreview: skills"></td>
+                      </tr>
+                      <tr data-bind="visible: skills">
+                        <th scope="row">Senses</th>
+                        <td data-bind="markdownPreview: skills"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-xs-12" data-bind="description">
+                  <label>Description</label>
+                  <div data-bind="markdownPreview: description"></div>
+                </div>              
+              </div>
+            </div>
+            <div class="back">
+              back
+              <pet-form params="{
+                containerId: elementId,
+                collapsable: true,
+                data: context.data,
+                show: showBack,
+                flip: flip,
+                forceCardResize: forceCardResize
+              }"></pet-form>
+            </div>
+          </flip-card>
+        </td>
+      </tr>
+      <!-- /ko -->
+      <tr id="add-pet" class="collapse add-card">
+        <td colspan="5">
+        <pet-form params="{
+            containerId:'add-pet',
+            show: $component.displayAddForm,
+            flip: $component.toggleShowAddForm,
+          }"></pet-form>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+          <td colspan="8">
+          <div class="row">
+            <div class="col">
+              <!-- ko ifnot: $component.displayAddForm -->
+              <button type="button"
+                  class="btn btn-link btn-block btn-sm"
+                  id="petAddButton"
+                  data-toggle="collapse"
+                  data-target="#add-pet"
+                  data-bind="click: $component.toggleShowAddForm"><i class="fa fa-plus"></i> Add Pet</button>
+              <!-- /ko -->
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
+<full-screen-image
+  params="
+    imageSource: $component.fullScreen,
+    fullScreenStatus: $component.fullScreen
+"
+></full-screen-image>

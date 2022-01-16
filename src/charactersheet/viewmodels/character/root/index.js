@@ -22,6 +22,7 @@ import inventoryTab from 'images/tab_icons/knapsack.svg';
 import ko from 'knockout';
 import notesTab from 'images/tab_icons/quill-ink.svg';
 import partyTab from 'images/tab_icons/backup.svg';
+import petsTab from 'images/tab_icons/wyvern.svg';
 import profileSection from 'images/standing-man-3.svg';
 import profileTab from 'images/tab_icons/read.svg';
 import skillSection from 'images/sword-spin.svg';
@@ -52,7 +53,8 @@ export function CharacterRootViewModel(params) {
         armorSection: armorSection,
         inventorySection: inventorySection,
         profileSection: profileSection,
-        battleGear: battleGear
+        battleGear: battleGear,
+        petsTab: petsTab
     };
 
     self.playerType = () => {
@@ -103,6 +105,9 @@ export function CharacterRootViewModel(params) {
     self.inventoryTabStatus = ko.pureComputed(() => {
         return self._tabIsVisible('inventory');
     });
+    self.petsTabStatus = ko.pureComputed(() => {
+        return self._tabIsVisible('pets');
+    });
     self.notesTabStatus = ko.pureComputed(() => {
         return self._tabIsVisible('notes');
     });
@@ -130,6 +135,9 @@ export function CharacterRootViewModel(params) {
     };
     self.activateInventoryTab = () => {
         self._setActiveTab('inventory');
+    };
+    self.activatePetsTab = () => {
+        self._setActiveTab('pets');
     };
     self.activateNotesTab = () => {
         self._setActiveTab('notes');
@@ -170,9 +178,10 @@ export function CharacterRootViewModel(params) {
         HotkeysService.registerHotkey('3', self.activateSpellsTab);
         HotkeysService.registerHotkey('4', self.activateEquipmentTab);
         HotkeysService.registerHotkey('5', self.activateInventoryTab);
-        HotkeysService.registerHotkey('6', self.activateNotesTab);
-        HotkeysService.registerHotkey('7', self.activatePartyTab);
-        HotkeysService.registerHotkey('8', self.activateExhibitTab);
+        HotkeysService.registerHotkey('6', self.activatePetsTab);
+        HotkeysService.registerHotkey('7', self.activateNotesTab);
+        HotkeysService.registerHotkey('8', self.activatePartyTab);
+        HotkeysService.registerHotkey('9', self.activateExhibitTab);
     };
 
     self.unload = () => {

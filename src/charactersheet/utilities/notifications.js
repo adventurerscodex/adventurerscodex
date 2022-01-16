@@ -230,6 +230,11 @@ export var Notifications = {
         changed: new Signal(),
     },
 
+    pet: {
+        added: new Signal(),
+        changed: new Signal(),
+        deleted: new Signal()
+    },
     playerimage: {
         changed: new Signal()
     },
