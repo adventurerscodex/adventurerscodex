@@ -1,5 +1,3 @@
-import './view';
-
 import { AbstractTabularViewModel } from 'charactersheet/viewmodels/abstract';
 import { Fixtures, Notifications } from 'charactersheet/utilities';
 import { Companion } from 'charactersheet/models';
