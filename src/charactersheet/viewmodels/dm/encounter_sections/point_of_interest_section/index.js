@@ -81,7 +81,14 @@ class PointOfInterestSectionViewModel extends AbstractEncounterTabularViewModel 
             poi.isExhibited(!poi.isExhibited());
             return;
         }
-        this.markAsExhibited(poi.uuid());
+
+        if (poi.isExhibited()) {
+            this.markAsExhibited(poi.uuid());
+            PartyService.updatePresence({ exhibit: poi.uuid() });
+        } else {
+            this.markAsExhibited(null);
+            PartyService.updatePresence({ exhibit: null });
+        }
     }
 
     // Events

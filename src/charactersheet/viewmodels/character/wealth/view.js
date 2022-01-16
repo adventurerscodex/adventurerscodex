@@ -1,5 +1,6 @@
 import { ModelBackedViewModel } from 'charactersheet/viewmodels/abstract';
 import { Wealth } from 'charactersheet/models';
+import { PartyService } from 'charactersheet/services';
 
 import autoBind from 'auto-bind';
 import cpCoins from 'images/cp-coin.svg';
@@ -46,7 +47,7 @@ class WealthViewModel extends ModelBackedViewModel {
         const totalAmountInCopper = quickSpendAmount * this.entity().EXCHANGE_RATES[type];
 
         if (!!quickSpendAmount
-            && quickSpendAmount >=0
+            && quickSpendAmount >= 0
             && this.entity().worthInCopper() >= totalAmountInCopper) {
             try {
                 this.entity().subtract(quickSpendAmount, type);
@@ -61,6 +62,8 @@ class WealthViewModel extends ModelBackedViewModel {
         }
 
         this.quickSpendAmount('');
+
+        PartyService.updatePresence();
     }
 }
 

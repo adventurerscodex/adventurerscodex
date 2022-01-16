@@ -18,6 +18,7 @@ import template from './view.html';
 
 // Manage the interactions between health and death saves
 export class StatsCardViewModel {
+
     constructor(params) {
         this.tabId = params.tabId;
         this.containerId = params.containerId;

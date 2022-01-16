@@ -72,6 +72,10 @@ let config = merge(common, {
              */
             'HOST_URL': process.env.HOST_URL,
             /**
+             * The URL of the Web-Socket Server
+             */
+            'WS_URL': process.env.WS_URL,
+            /**
              * The URL of the homepage.
              */
             'HOME_URL': process.env.HOME_URL,

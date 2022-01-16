@@ -228,6 +228,9 @@ export var Notifications = {
 
     party: {
         changed: new Signal(),
+        connecting: new Signal(),
+        connected: new Signal(),
+        disconnected: new Signal(),
     },
 
     playerimage: {

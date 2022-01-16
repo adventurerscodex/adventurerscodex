@@ -992,6 +992,10 @@ li.image-chat-highlight {
   background: #e74c3c;
 }
 
+.circle-indicator.warning {
+  background: #f0ad4e;
+}
+
 div.toggle-arrow-container {
   padding-left: 5px;
   padding-right: 5px;

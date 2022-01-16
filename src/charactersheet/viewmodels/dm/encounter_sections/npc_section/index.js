@@ -82,7 +82,14 @@ class NPCSectionViewModel extends AbstractEncounterTabularViewModel {
             npc.isExhibited(!npc.isExhibited());
             return;
         }
-        this.markAsExhibited(npc.uuid());
+
+        if (npc.isExhibited()) {
+            this.markAsExhibited(npc.uuid());
+            PartyService.updatePresence({ exhibit: npc.uuid() });
+        } else {
+            this.markAsExhibited(null);
+            PartyService.updatePresence({ exhibit: null });
+        }
     }
 
     // Events

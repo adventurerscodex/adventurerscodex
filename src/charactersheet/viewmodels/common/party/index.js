@@ -13,6 +13,7 @@ export class PartyViewModel extends ViewModel {
         super();
         autoBind(this);
         this.party = observable(PartyService.party);
+        this.filterByOnline = observable(false);
 
         const key = CoreManager.activeCore().type.name();
         this.playerType = observable(key);
@@ -28,8 +29,16 @@ export class PartyViewModel extends ViewModel {
     isConnectedToParty = pureComputed(() => (!!this.party()));
 
     players = pureComputed(() => (
-        this.isConnectedToParty() ? this.party().members : []
+        this.filterByOnline()
+        ? this.party().members.filter(player => (
+            PartyService.playerIsOnline(player.uuid)
+        ))
+        : this.party().members
     ));
+
+    toggleFilterByOnline() {
+        this.filterByOnline(!this.filterByOnline());
+    }
 
     isDM = pureComputed(() => (
         PlayerTypes.dm.key === this.playerType()

@@ -1,17 +1,34 @@
 <div class="card-title h4">
-  Party Members<br />
-  <!-- ko if: isDM -->
+  <span data-bind="if: filterByOnline">Online</span> Party Members<br />
   <small>
-    Check on the health, status, and stats of your players. This dashboard updates
-    in real time whenever your players make changes.
+    <span data-bind="ifnot: filterByOnline">
+      <!-- ko if: isDM -->
+      Check on the health, status, and stats of your players. This dashboard updates
+      in real time whenever your players make changes.<br />
+      <!-- /ko -->
+      <!-- ko if: isCharacter -->
+      See who's in your party and how they're doing. This can be useful in combat.
+      This dashboard updates in real time whenever anyone makes changes.<br />
+      <!-- /ko -->
+    </span>
+    <span data-bind="if: filterByOnline">
+      Only <b>online</b> party members are shown below. Only players with the app currently open will appear in this list.<br />
+    </span>
+    <span
+      style="color: #2c3e50;"
+      class="clickable"
+      data-bind="click: $component.toggleFilterByOnline"
+    >
+      <input
+        type="checkbox"
+        class="filter-checkbox sr-only clickable"
+        data-bind="checked: filterByOnline"
+      />
+      <label for="filterByOnline"></label>
+      <span data-bind="if: filterByOnline">Show All Party Members</span>
+      <span data-bind="ifnot: filterByOnline">Show Online Party Members</span>
+    </span>
   </small>
-  <!-- /ko -->
-  <!-- ko if: isCharacter -->
-  <small>
-    See who's in your party and how they're doing. This can be useful in combat.
-    This dashboard updates in real time whenever anyone makes changes.
-  </small>
-  <!-- /ko -->
 </div>
 <hr class="ac-table-header">
 <!-- ko ifnot: loaded(), completeOn: 'render' -->

@@ -6,6 +6,7 @@ import {
 import { AbstractFormModel } from 'charactersheet/viewmodels/abstract';
 import { CoreManager } from 'charactersheet/utilities';
 import { Notifications } from 'charactersheet/utilities';
+import { PartyService } from 'charactersheet/services';
 
 import { StatsCardViewModel } from './view';
 import { StatsHealthViewModel } from './health';
@@ -47,6 +48,12 @@ export class StatsHealthFormViewModel extends AbstractFormModel {
 
     setHitDiceType = (hitDiceType) => {
         this.hitDice().type(hitDiceType);
+    }
+
+
+    didSave(success, error) {
+        super.didSave(success, error);
+        PartyService.updatePresence();
     }
 
     validation = {

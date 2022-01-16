@@ -1,20 +1,10 @@
 import 'bin/popover_bind';
-import {
-    AbilityScore,
-    SavingThrow
-} from 'charactersheet/models/character';
-
-import {
-    AbstractGridFormModel
-} from 'charactersheet/viewmodels/abstract';
-
-import {
-    Notifications
-} from 'charactersheet/utilities';
-
+import { AbilityScore, SavingThrow } from 'charactersheet/models/character';
+import { AbstractGridFormModel } from 'charactersheet/viewmodels/abstract';
+import { Notifications } from 'charactersheet/utilities';
+import { PartyService } from 'charactersheet/services';
 import autoBind from 'auto-bind';
 import { find } from 'lodash';
-
 import ko from 'knockout';
 import template from './form.html';
 
@@ -63,6 +53,8 @@ export class ScoreSaveFormViewModel extends AbstractGridFormModel {
             }
         });
         await Promise.all(updates);
+
+        PartyService.updatePresence();
     }
 
     validation = {
