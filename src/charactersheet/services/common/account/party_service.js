@@ -24,6 +24,9 @@ class _PartyService {
     }
 
     setupNotifications() {
+        Notifications.coreManager.changing.add(
+            this.shutdownConnection
+        );
         Notifications.coreManager.changed.add(
             this.checkForPartyAndSetupPollingIfNeccessary
         );
@@ -84,10 +87,20 @@ class _PartyService {
     }
 
     shutdownConnection() {
-        this.provider.disconnect();
+        if (this.provider) {
+            this.provider.disconnect();
+        }
     }
 
     updatePresence(additionalData={}) {
+        if (!this.awareness) {
+            // We're not connected to a party so this
+            // is a No-Op. This allows other VMs to call
+            // this method w/o fear of breaking anything if
+            // no party is found.
+            return;
+        }
+
         this._presenceState = {
             // Any old data
             ...this._presenceState,
@@ -113,6 +126,13 @@ class _PartyService {
      */
     _debouncedUpdatePresence = debounce(
         () => {
+            if (!this.awareness) {
+                console.warn(
+                    'Unable to send presence data. Debounced '
+                    + 'callback has no awareness state.'
+                );
+                return;
+            }
             this.awareness.setLocalState({
                 ...this._presenceState,
                 // Append a random number to ensure the
@@ -144,7 +164,6 @@ class _PartyService {
         }
 
         const states = this.awareness.states;
-        console.log(states, coreUuid)
         // Do any of the current awareness states contain a value
         // with the id we were just given? If so, they're online.
         for (const value of states.values()) {
