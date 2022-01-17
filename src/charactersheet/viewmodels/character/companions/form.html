@@ -149,71 +149,78 @@
       />
     </div>
   </div>
-  <table class="table">
-    <thead>
-      <tr>
-        <th width="16%" class="text-center">Strength<i class="required"></i></th>
-        <th width="16%" class="text-center">Dexterity<i class="required"></i></th>
-        <th width="16%" class="text-center">Constitution<i class="required"></i></th>
-        <th width="16%" class="text-center">Intelligence<i class="required"></i></th>
-        <th width="16%" class="text-center">Wisdom<i class="required"></i></th>
-        <th width="16%" class="text-center">Charisma<i class="required"></i></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <!-- ko if: !!findAbilityScoreByName('Strength') -->
-        <td class="text-center">
-          <input type="number"
-                  class="form-control"
-                  name="strength"
-                  data-bind="value: findAbilityScoreByName('Strength').value">
-        </td>
-        <!-- /ko -->
-        <!-- ko if: !!findAbilityScoreByName('Dexterity') -->
-        <td class="text-center">
-          <input type="number"
-                  class="form-control"
-                  name="dexterity"
-                  data-bind="value: findAbilityScoreByName('Dexterity').value">
-        </td>
-        <!-- /ko -->
-        <!-- ko if: !!findAbilityScoreByName('Constitution') -->
-        <td class="text-center">
-          <input type="number"
-                  class="form-control"
-                  name="constitution"
-                  data-bind="value: findAbilityScoreByName('Constitution').value">
-        </td>
-        <!-- /ko -->
-        <!-- ko if: !!findAbilityScoreByName('Intelligence') -->
-        <td class="text-center">
-          <input type="number"
-                  class="form-control"
-                  name="intelligence"
-                  data-bind="value: findAbilityScoreByName('Intelligence').value">
-        </td>
-        <!-- /ko -->
-        <!-- ko if: !!findAbilityScoreByName('Wisdom') -->
-        <td class="text-center">
-          <input type="number"
-                  class="form-control"
-                  name="wisdom"
-                  data-bind="value: findAbilityScoreByName('Wisdom').value">
-        </td>
-        <!-- /ko -->
-        <!-- ko if: !!findAbilityScoreByName('Charisma') -->
-        <td class="text-center">
-          <input type="number"
-                  class="form-control"
-                  name="charisma"
-                  data-bind="value: findAbilityScoreByName('Charisma').value">
-        </td>
-        <!-- /ko -->
-      </tr>
-    </tbody>
-  </table>
   <div class="row">
+    <hr />
+    <div class="form-group col-xs-6 col-md-4 col-lg-2">
+      <label>Stength<i class="required"></i></label>
+        <!-- ko if: !!findAbilityScoreByName('Strength') -->
+        <input
+          type="number"
+          class="form-control"
+          name="strength"
+          data-bind="value: findAbilityScoreByName('Strength').value"
+        />
+      <!-- /ko -->
+    </div>
+    <div class="form-group col-xs-6 col-md-4 col-lg-2">
+      <label>Dexterity<i class="required"></i></label>
+        <!-- ko if: !!findAbilityScoreByName('Dexterity') -->
+        <input
+          type="number"
+          class="form-control"
+          name="dexterity"
+          data-bind="value: findAbilityScoreByName('Dexterity').value"
+        />
+        <!-- /ko -->
+    </div>
+    <div class="form-group col-xs-6 col-md-4 col-lg-2">
+      <label>Constitution<i class="required"></i></label>
+      <!-- ko if: !!findAbilityScoreByName('Constitution') -->
+      <input
+          type="number"
+          class="form-control"
+          name="constitution"
+          data-bind="value: findAbilityScoreByName('Constitution').value"
+        />
+        <!-- /ko -->
+    </div>
+    <div class="form-group col-xs-6 col-md-4 col-lg-2">
+      <label>Intelligence<i class="required"></i></label>
+      <!-- ko if: !!findAbilityScoreByName('Intelligence') -->
+      <input
+        type="number"
+        class="form-control"
+        name="intelligence"
+        data-bind="value: findAbilityScoreByName('Intelligence').value"
+      />
+        <!-- /ko -->
+    </div>
+    <div class="form-group col-xs-6 col-md-4 col-lg-2">
+      <label>Wisdom<i class="required"></i></label>
+      <!-- ko if: !!findAbilityScoreByName('Wisdom') -->
+      <input
+        type="number"
+        class="form-control"
+        name="wisdom"
+        data-bind="value: findAbilityScoreByName('Wisdom').value"
+      />
+      <!-- /ko -->
+    </div>
+    <div class="form-group col-xs-6 col-md-4 col-lg-2">
+      <label>Charisma<i class="required"></i></label>
+      <!-- ko if: !!findAbilityScoreByName('Charisma') -->
+      <input
+        type="number"
+        class="form-control"
+        name="strength"
+        data-bind="value: findAbilityScoreByName('Charisma').value"
+      />
+        <!-- /ko -->
+
+    </div>
+  </div>
+  <div class="row">
+    <hr />
     <div class="form-group col-xs-12">
       <label>Saving Throws</label>
       <input

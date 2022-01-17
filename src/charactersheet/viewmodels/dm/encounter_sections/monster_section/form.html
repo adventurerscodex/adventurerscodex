@@ -125,6 +125,34 @@
       <input
         type="text"
         class="form-control"
+        name="maxHitPoints"
+        placeholder="367 (21d20 + 147)"
+        data-bind="
+          value: maxHitPoints,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.maxHitPoints },
+        "
+      />
+    </div>
+    <div class="form-group col-xs-12 col-lg-6">
+      <label>Damage<i class="required"></i></label>
+      <input
+        type="text"
+        class="form-control"
+        name="damage"
+        placeholder="367 (21d20 + 147)"
+        data-bind="
+          value: damage,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.damage },
+        "
+      />
+    </div>
+    <div class="form-group col-xs-12 col-lg-6">
+      <label>Hit Dice<i class="required"></i></label>
+      <input
+        type="text"
+        class="form-control"
         name="hitPoints"
         placeholder="367 (21d20 + 147)"
         data-bind="

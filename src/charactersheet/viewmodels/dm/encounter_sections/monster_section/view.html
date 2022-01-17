@@ -79,8 +79,16 @@
           <th scope="row">Armor Class</th>
           <td data-bind="text: armorClass"></td>
         </tr>
-        <tr data-bind="visible: hitPoints">
+        <tr>
           <th scope="row">Hit Points</th>
+          <td data-bind="text: maxHitPoints"></td>
+        </tr>
+        <tr>
+          <th scope="row">Damage</th>
+          <td data-bind="text: damage"></td>
+        </tr>
+        <tr data-bind="visible: hitPoints">
+          <th scope="row">Hit Dice</th>
           <td data-bind="text: hitPoints"></td>
         </tr>
         <tr data-bind="visible: speed">

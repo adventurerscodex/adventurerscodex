@@ -39,72 +39,71 @@
           data-toggle="collapse" 
           data-bind="attr: {
           'data-target': `#companion_list_${uuid()}`,
-        }">
-        <div class="row d-flex">
-          <div class="hidden-xs hidden-sm col-md-4 d-flex">
-            <img
-              data-bind="
-                attr: { src: convertedDisplayUrl },
-              "
-              width="60"
-              height="60"
-              class="img img-circle"
-            />
-          </div>
-          <div class="col-xs-8 d-flex">
-            <div class="h4">
-              <span data-bind="text: name"></span><br />
-              <small class="hidden-xs hidden-sm" data-bind="text: nameLabel"></small>
+          }">
+            <div class="row d-flex">
+            <div class="hidden-xs hidden-sm col-md-4 d-flex">
+              <img
+                data-bind="
+                  attr: { src: convertedDisplayUrl },
+                "
+                width="60"
+                height="60"
+                class="img img-circle"
+              />
+            </div>
+            <div class="col-xs-8 d-flex">
+              <div class="h4">
+                <span data-bind="text: name"></span><br />
+                <small class="hidden-xs hidden-sm" data-bind="text: nameLabel"></small>
+              </div>
             </div>
           </div>
-        </div>
-      </td>
-      <td 
-      data-toggle="collapse" 
-      data-bind="
-      attr: { 'data-target': `#companion_list_${uuid()}` }">
-        <div 
-          id="ArmorClassShield"
-          class="defenseShield"
-          style="
-          text-align: inherit;
-          height: auto;
-          background-size: auto;
-          margin-top: auto;
-          margin-bottom: auto;">
-          <span data-bind="text: armorClass" />
-        </div>
-      </td>
-      <td >
-        <div class="row d-flex">
-          <div class="col-xs-2 col-md-1" style="padding: 6px;">
-            <mini-plus-minus params="value: damage,
-                      max: maxHitPoints, hideUp: true, onChange: ()=>{$component.onUsedChange($data)}">
-            </mini-plus-minus>
+        </td>
+        <td 
+          data-toggle="collapse" 
+          data-bind="
+          attr: { 'data-target': `#companion_list_${uuid()}` }">
+          <div 
+            id="ArmorClassShield"
+            class="defenseShield"
+            style="
+            text-align: inherit;
+            height: auto;
+            background-size: auto;
+            margin-top: auto;
+            margin-bottom: auto;">
+            <span data-bind="text: armorClass" />
           </div>
-          <div class="hidden-xs col-sm-6 col-md-8" style="padding: 6px;">
-            <div style="padding: 10px"
-            data-bind="barProgress: $component.mapToChart($data)"> </div>
+        </td>
+        <td>
+          <div class="row d-flex">
+            <div class="col-xs-2 col-md-1" style="padding: 6px;">
+              <mini-plus-minus params="value: damage,
+                        max: maxHitPoints, hideUp: true, onChange: ()=>{$component.onUsedChange($data)}">
+              </mini-plus-minus>
+            </div>
+            <div class="hidden-xs col-sm-6 col-md-8" style="padding: 6px;">
+              <div style="padding: 10px"
+              data-bind="barProgress: $component.mapToChart($data)"> </div>
+            </div>
+            <div class="col-xs-8 visible-xs hidden-md hidden-lg text-center">
+              <span data-bind="text: usesDisplay()"></span>
+            </div>
+            <div class="col-xs-2 col-md-1" style="padding: 6px;">
+              <mini-plus-minus params="value: damage,
+                        max: maxHitPoints, hideDown: true, onChange: ()=>{$component.onUsedChange($data)}">
+              </mini-plus-minus>
+            </div>
+            <div class="hidden-xs col-sm-3 col-md-2 text-center">
+              <span data-bind="text: usesDisplay()"></span>
+            </div>
           </div>
-          <div class="col-xs-8 visible-xs hidden-md hidden-lg text-center">
-            <span data-bind="text: usesDisplay()"></span>
-          </div>
-          <div class="col-xs-2 col-md-1" style="padding: 6px;">
-            <mini-plus-minus params="value: damage,
-                      max: maxHitPoints, hideDown: true, onChange: ()=>{$component.onUsedChange($data)}">
-            </mini-plus-minus>
-          </div>
-          <div class="hidden-xs col-sm-3 col-md-2 text-center">
-            <span data-bind="text: usesDisplay()"></span>
-          </div>
-        </div>
-      </td>
+        </td>
         <td class="text-right toggle-collapse-col">
           <span data-toggle="collapse"
               data-bind="attr:{'data-target': `#companion_list_${uuid()}`}"
               class="rotate fa fa-chevron-left"></span>
         </td>
-      </td>
       </tr>
       <tr class="collapseRow safari-card-fix">
         <td colspan="4">
@@ -286,7 +285,6 @@
               </div>
             </div>
             <div class="back">
-              back
               <companion-form params="{
                 containerId: elementId,
                 collapsable: true,
@@ -312,7 +310,7 @@
     </tbody>
     <tfoot>
         <tr>
-          <td colspan="8">
+          <td colspan="4">
           <div class="row">
             <div class="col">
               <!-- ko ifnot: $component.displayAddForm -->
