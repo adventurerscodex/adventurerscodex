@@ -35,7 +35,6 @@ class CampaignMapsAndImagesViewModel extends AbstractTabularViewModel {
 
     setUpSubscriptions() {
         super.setUpSubscriptions();
-        console.log('setUpSubscriptions')
         this.subscriptions.push(Notifications.party.changed.add(this.partyDidChange));
     }
 
@@ -72,7 +71,13 @@ class CampaignMapsAndImagesViewModel extends AbstractTabularViewModel {
             moi.isExhibited(!moi.isExhibited());
             return;
         }
-        this.markAsExhibited(moi.uuid());
+        if (moi.isExhibited()) {
+            this.markAsExhibited(moi.uuid());
+            PartyService.updatePresence({ exhibit: moi.uuid() });
+        } else {
+            this.markAsExhibited(null);
+            PartyService.updatePresence({ exhibit: null });
+        }
     }
 
     // Events

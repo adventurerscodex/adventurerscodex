@@ -4,7 +4,7 @@ import {
 } from 'charactersheet/utilities';
 import { AbstractFormModel } from 'charactersheet/viewmodels/abstract';
 import { Profile } from 'charactersheet/models/character';
-
+import { PartyService } from 'charactersheet/services';
 import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './form.html';
@@ -33,6 +33,11 @@ export class ProfileFormViewModel extends AbstractFormModel {
     setRace = (label, value) => {
         this.entity().race(value);
     };
+
+    didSave(success, error) {
+        super.didSave(success, error);
+        PartyService.updatePresence();
+    }
 }
 
 ko.components.register('profile-form', {

@@ -1,6 +1,7 @@
 import { DataRepository, Fixtures, Notifications } from 'charactersheet/utilities';
 import { AbstractChildFormModel } from 'charactersheet/viewmodels/abstract';
 import { Feature } from 'charactersheet/models';
+import { PartyService } from 'charactersheet/services';
 import { SELECTDATA } from 'charactersheet/constants';
 import { TrackedForm } from 'charactersheet/components/form-tracked-component';
 import autoBind from 'auto-bind';
@@ -31,6 +32,16 @@ export class FeatureFormViewModel  extends AbstractChildFormModel {
     setUpSubscriptions() {
         super.setUpSubscriptions();
         this.subscriptions.push(this.entity().isTracked.subscribe(this.forceResize));
+    }
+
+    didSave(success, error) {
+        super.didSave(success, error);
+        PartyService.updatePresence();
+    }
+
+    didDelete(success, error) {
+        super.didDelete(success, error);
+        PartyService.updatePresence();
     }
 }
 

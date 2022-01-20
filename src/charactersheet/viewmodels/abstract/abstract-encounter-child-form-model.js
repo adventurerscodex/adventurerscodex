@@ -1,4 +1,5 @@
 import { CoreManager } from 'charactersheet/utilities';
+import { PartyService } from 'charactersheet/services';
 import { AbstractChildFormModel } from 'charactersheet/viewmodels/abstract';
 import ko from 'knockout';
 
@@ -33,5 +34,13 @@ export class AbstractChildEncounterFormModel extends AbstractChildFormModel {
             this.addForm(true);
         }
         this.showDisclaimer(false);
+    }
+
+    didSave(success, error) {
+        super.didSave(success, error);
+
+        if (ko.unwrap(this.entity().isExhibited)) {
+            PartyService.updatePresence({ exhibit: this.entity().uuid() });
+        }
     }
 }

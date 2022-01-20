@@ -70,9 +70,16 @@ export class CharacterPortraitViewModel {
         return this.profileImage().imageUrl().length ? 'no-border' : 'dashed-border';
     });
 
-    statusIndicatorClass = ko.pureComputed(() => (
-        this.isConnectedToParty() ? 'success' : 'failure'
-    ));
+    statusIndicatorClass = ko.pureComputed(() => {
+        const status = PartyService.status();
+        if (!this.isConnectedToParty()) {
+            return 'failure';
+        } else if (status !== PartyService.Status.connected) {
+            return 'warning';
+        } else {
+            return 'success';
+        }
+    });
 
     timeSinceLabel = ko.pureComputed(() => {
         const createdAt = new Date(this.campaign().createdAt());

@@ -6,6 +6,7 @@ import {
 } from 'charactersheet/models/character';
 import { AbstractChildFormModel } from 'charactersheet/viewmodels/abstract';
 import { CoreManager } from 'charactersheet/utilities';
+import { PartyService } from 'charactersheet/services';
 import {
     ProficiencyTypeComponentViewModel
 } from 'charactersheet/components/proficiency-marker';
@@ -89,6 +90,16 @@ export class SkillsAddFormViewModel extends AbstractChildFormModel {
         const abilityScore = find(this.abilityScores(), (score) => (score.name() === this.abilityScoreChoice()));
         this.entity().abilityScore(abilityScore);
         await super.save();
+    }
+
+    didSave(success, error) {
+        super.didSave(success, error);
+        PartyService.updatePresence();
+    }
+
+    didDelete(success, error) {
+        super.didDelete(success, error);
+        PartyService.updatePresence();
     }
 
     validation = {

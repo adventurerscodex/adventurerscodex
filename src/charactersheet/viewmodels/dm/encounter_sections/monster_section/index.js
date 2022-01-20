@@ -83,7 +83,13 @@ class MonsterSectionViewModel extends AbstractEncounterTabularViewModel {
             monster.isExhibited(!monster.isExhibited());
             return;
         }
-        this.markAsExhibited(monster.uuid());
+        if (monster.isExhibited()) {
+            this.markAsExhibited(monster.uuid());
+            PartyService.updatePresence({ exhibit: monster.uuid() });
+        } else {
+            this.markAsExhibited(null);
+            PartyService.updatePresence({ exhibit: null });
+        }
     }
 
     // Events

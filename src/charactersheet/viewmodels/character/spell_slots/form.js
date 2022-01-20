@@ -1,12 +1,7 @@
-import {
-    AbstractChildFormModel
-} from 'charactersheet/viewmodels/abstract';
-import {
-    Notifications
-} from 'charactersheet/utilities';
-import {
-    SpellSlot
-} from 'charactersheet/models/character';
+import { AbstractChildFormModel } from 'charactersheet/viewmodels/abstract';
+import { Notifications } from 'charactersheet/utilities';
+import { SpellSlot } from 'charactersheet/models/character';
+import { PartyService } from 'charactersheet/services';
 
 import autoBind from 'auto-bind';
 import campingTentWhite from 'images/camping-tent.svg';
@@ -15,6 +10,7 @@ import meditationWhite from 'images/meditation.svg';
 import template from './form.html';
 
 export class SpellSlotFormComponentViewModel extends AbstractChildFormModel {
+
     constructor(params) {
         super(params);
         this.nextSlotLevel = params.nextSlotLevel;
@@ -42,9 +38,21 @@ export class SpellSlotFormComponentViewModel extends AbstractChildFormModel {
             this.refresh();
         }
     }
+
     setUpSubscriptions() {
         super.setUpSubscriptions();
         this.subscriptions.push(Notifications.spellslot.changed.add(this.updateFormData));
+    }
+
+
+    didSave(success, error) {
+        super.didSave(success, error);
+        PartyService.updatePresence();
+    }
+
+    didDelete(success, error) {
+        super.didDelete(success, error);
+        PartyService.updatePresence();
     }
 }
 

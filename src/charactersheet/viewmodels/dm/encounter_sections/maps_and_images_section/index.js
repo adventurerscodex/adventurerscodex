@@ -81,7 +81,14 @@ class MapsAndImagesSectionViewModel extends AbstractEncounterTabularViewModel {
             moi.isExhibited(!moi.isExhibited());
             return;
         }
-        this.markAsExhibited(moi.uuid());
+
+        if (moi.isExhibited()) {
+            this.markAsExhibited(moi.uuid());
+            PartyService.updatePresence({ exhibit: moi.uuid() });
+        } else {
+            this.markAsExhibited(null);
+            PartyService.updatePresence({ exhibit: null });
+        }
     }
 
     // Events

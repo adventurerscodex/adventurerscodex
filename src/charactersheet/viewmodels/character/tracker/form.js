@@ -2,12 +2,14 @@ import { CoreManager, Notifications } from 'charactersheet/utilities';
 import { AbstractChildFormModel } from 'charactersheet/viewmodels/abstract';
 import { Tracked } from 'charactersheet/models';
 import { TrackedForm } from 'charactersheet/components/form-tracked-component';
+import { PartyService } from 'charactersheet/services';
 
 import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './form.html';
 
 export class TrackedDetailForm extends AbstractChildFormModel {
+
     constructor(params) {
         super(params);
         autoBind(this);
@@ -35,9 +37,14 @@ export class TrackedDetailForm extends AbstractChildFormModel {
         return null;
     }
 
-
     validation = {
         ...Tracked.validationConstraints.fieldParams
+    }
+
+
+    didSave(success, error) {
+        super.didSave(success, error);
+        PartyService.updatePresence();
     }
 }
 
