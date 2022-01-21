@@ -8,6 +8,7 @@ export { MagicItem } from './magic_item';
 export { Note } from './note';
 export { Party } from './party';
 export { ProfileImage } from './player_image';
+export { Patron } from './patron';
 export { PlayerTypes } from './player_types';
 export { ShareKey } from './share_key';
 export { Spell } from './spell';
