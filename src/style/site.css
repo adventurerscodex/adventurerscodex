@@ -2098,6 +2098,10 @@ tr .panel {
   background-color: #fff;
 }
 
+.patron-circle {
+  border: 5px solid purple;
+}
+
 /* Fix for BS 3 selects as input-group-btn */
 .input-group-btn>select.form-control {
   padding: 2px;

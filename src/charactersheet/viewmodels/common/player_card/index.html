@@ -8,14 +8,19 @@
       <div class="row">
         <div class="col-xs-12">
           <img class="img-circle center-block"
-            data-bind="attr: {
-              src: player.imageUrl || 'https://www.gravatar.com/avatar/{}?d=mm',
-              height: 80,
-              width: 80,
-            }">
-            <div class="connection-status">
-              <div class="circle-indicator" data-bind="css: statusIndicatorClass"></div>
-            </div>
+            data-bind="
+              css: { 'patron-circle': player.isActivePatron },
+              attr: {
+                src: player.imageUrl || 'https://www.gravatar.com/avatar/{}?d=mm',
+                height: 80,
+                width: 80,
+                alt: player.isActivePatron ? `${player.name} is an active patron.` : '',
+              },
+            "
+          >
+          <div class="connection-status">
+            <div class="circle-indicator" data-bind="css: statusIndicatorClass"></div>
+          </div>
         </div>
       </div>
       <div class="row">
