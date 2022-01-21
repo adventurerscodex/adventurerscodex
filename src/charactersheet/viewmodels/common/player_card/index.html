@@ -9,7 +9,10 @@
         <div class="col-xs-12">
           <img class="img-circle center-block"
             data-bind="
-              css: { 'patron-circle': player.isActivePatron },
+              css: {
+                'patron-circle': player.isActivePatron,
+                [player.canonicalPatreonTier]: player.isActivePatron,
+              },
               attr: {
                 src: player.imageUrl || 'https://www.gravatar.com/avatar/{}?d=mm',
                 height: 80,

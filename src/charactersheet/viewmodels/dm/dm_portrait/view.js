@@ -73,7 +73,11 @@ export class CharacterPortraitViewModel {
 
     isActivePatron = ko.pureComputed(() => (
         !!this.user() ? this.user().isActivePatron : false
-    ))
+    ));
+
+    canonicalPatreonTier = ko.pureComputed(() => (
+        !!this.user() ? this.user().canonicalPatreonTier : false
+    ));
 
     statusIndicatorClass = ko.pureComputed(() => {
         const status = PartyService.status();

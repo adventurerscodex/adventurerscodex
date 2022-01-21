@@ -97,6 +97,10 @@ export class CharacterPortraitViewModel {
         !!this.user() ? this.user().isActivePatron : false
     ))
 
+    canonicalPatreonTier = ko.pureComputed(() => (
+        !!this.user() ? this.user().canonicalPatreonTier : false
+    ))
+
     statusIndicatorClass = ko.pureComputed(() => (
         this.isConnectedToParty() ? 'success' : 'failure'
     ));

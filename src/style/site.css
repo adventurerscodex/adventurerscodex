@@ -2099,7 +2099,19 @@ tr .panel {
 }
 
 .patron-circle {
-  border: 5px solid purple;
+  border: 4px solid transparent;
+}
+
+.patron-circle.gold {
+  background: linear-gradient(to left, #b8860b, #e1ad21, #ffd700) border-box;
+}
+
+.patron-circle.silver {
+  background: linear-gradient(to left, #838996, #c9c0bb, #c4aead) border-box;
+}
+
+.patron-circle.copper {
+  background: linear-gradient(to left, #996515, #da8a67, #cb6d51) border-box;
 }
 
 /* Fix for BS 3 selects as input-group-btn */

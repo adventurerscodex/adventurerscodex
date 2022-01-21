@@ -19,7 +19,10 @@
           <!-- ko if: imageUrl -->
           <img class="img-circle"
             data-bind="
-              css: { 'patron-circle': $component.isActivePatron },
+              css: {
+                'patron-circle': $component.isActivePatron,
+                [$component.canonicalPatreonTier()]: $component.isActivePatron,
+              },
               attr: {
                 src: imageUrl,
                 height: $component.imageHeight,
