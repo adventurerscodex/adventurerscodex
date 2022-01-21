@@ -2,7 +2,7 @@ import { Core, ProfileImage } from 'charactersheet/models/common';
 import { OtherStats, Profile } from 'charactersheet/models/character';
 import { CoreManager, Notifications } from 'charactersheet/utilities';
 import { DELAY } from 'charactersheet/constants';
-import { PartyService } from 'charactersheet/services';
+import { PartyService, UserServiceManager } from 'charactersheet/services';
 import autoBind from 'auto-bind';
 import { defer } from 'lodash';
 import ko from 'knockout';
@@ -20,6 +20,7 @@ export class CharacterPortraitViewModel {
         this.otherStats = ko.observable(new OtherStats());
         this.profileImage = ko.observable(new ProfileImage());
         this.isConnectedToParty = ko.observable(!!PartyService.party);
+        this.user = UserServiceManager.sharedService().user;
 
         this.imageHeight = 80;
         this.imageWidth = 80;
@@ -91,6 +92,14 @@ export class CharacterPortraitViewModel {
         const inspired = this.otherStats().inspiration() ? 'image-border-inspired' : '';
         return `${border} ${inspired}`;
     });
+
+    isActivePatron = ko.pureComputed(() => (
+        !!this.user() ? this.user().isActivePatron : false
+    ))
+
+    canonicalPatreonTier = ko.pureComputed(() => (
+        !!this.user() ? this.user().canonicalPatreonTier : false
+    ))
 
     statusIndicatorClass = ko.pureComputed(() => (
         this.isConnectedToParty() ? 'success' : 'failure'

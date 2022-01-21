@@ -7,6 +7,7 @@ import {
     TabFragmentManager
 } from 'charactersheet/utilities';
 import { Core } from 'charactersheet/models/common/core';
+import { UserServiceManager } from 'charactersheet/services';
 import ko from 'knockout';
 import navLogo from 'images/logo-full-circle-icon.png';
 import style from 'style/site.css';
@@ -74,6 +75,10 @@ export function AdventurersCodexViewModel() {
     self.shouldShowPicker = ko.pureComputed(function() {
         return self.state() == APP_STATE.SELECT;
     });
+
+    self.userIsPatron = ko.pureComputed(() => (
+        UserServiceManager.sharedService().user().isActivePatron
+    ))
 
     //Public Methods
 
