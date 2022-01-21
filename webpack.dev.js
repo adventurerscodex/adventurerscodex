@@ -9,9 +9,9 @@ module.exports = merge(common, {
     // As per-recommended on:
     // https://github.com/webpack/webpack/issues/4363
     // devtool: 'cheap-module-eval-source-map',
-    devtool: 'cheap-module-eval-source-map',
+    devtool: 'cheap-module-source-map',
     devServer: {
-        contentBase: './dist',
+//         contentBase: './dist',
         port: 3000
     },
     plugins: [

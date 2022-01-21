@@ -22,17 +22,21 @@ module.exports = {
       // Injects bundles in your index.html instead of wiring all manually.
       // It also adds hash to all injected assets so we don't have problems
       // with cache purging during deployment.
+
+      // CUAING ISSUES
     new HtmlWebpackPlugin({
       template: 'index.html',
       inject: 'body',
       hash: true
     }),
-    new CopyWebpackPlugin([
-        {
-            from: 'images/sample-headshots',
-            to: 'images/sample-headshots'
-        }
-    ]),
+    new CopyWebpackPlugin({
+        patterns: [
+            {
+                from: 'images/sample-headshots',
+                to: 'images/sample-headshots'
+            }
+        ],
+    }),
     new ExtractTextWebpackPlugin({
       filename: '[name].[chunkhash].css',
       disable: process.env.BABEL_ENV !== 'production'
@@ -98,7 +102,11 @@ module.exports = {
       },
       {
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: "url-loader?limit=10000&mimetype=application/font-woff"
+        loader: "url-loader",
+        options: {
+            limit: 10000,
+            mimetype: 'application/font-woff'
+        }
       },
       {
         test: /\.(ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
