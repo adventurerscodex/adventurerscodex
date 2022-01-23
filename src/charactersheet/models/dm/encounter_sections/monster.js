@@ -60,6 +60,18 @@ export class Monster extends KOModel {
         }
     });
 
+    modifierLabel = (bonus) => {
+        let modifier = '+ 0';
+        let bonusNumber = parseInt(bonus);
+        if (bonusNumber && !isNaN(bonusNumber)) {
+            if (bonusNumber < 0) {
+                return `- ${Math.abs(bonusNumber)}`;
+            }
+            return `+ ${bonusNumber}`;
+        }
+        return '+ 0';
+    }
+
     convertedDisplayUrl = ko.pureComputed(() => (
         Utility.string.createDirectDropboxLink(this.sourceUrl())
     ));
