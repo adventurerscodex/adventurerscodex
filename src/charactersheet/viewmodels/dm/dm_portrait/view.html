@@ -18,11 +18,17 @@
         <div class="image-upload-preview text-center" data-bind="with: profileImage">
           <!-- ko if: imageUrl -->
           <img class="img-circle"
-            data-bind="attr: {
-              src: imageUrl,
-              height: $component.imageHeight,
-              width: $component.imageWidth
-            }">
+            data-bind="
+              css: {
+                'patron-circle': $component.isActivePatron,
+                [$component.canonicalPatreonTier()]: $component.isActivePatron,
+              },
+              attr: {
+                src: imageUrl,
+                height: $component.imageHeight,
+                width: $component.imageWidth
+              }
+            ">
           <!-- /ko -->
           <!-- ko ifnot: imageUrl -->
           <div class="text-muted player-image-style" id="profilePictureAddToggle">

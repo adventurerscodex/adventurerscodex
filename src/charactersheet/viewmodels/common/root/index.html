@@ -64,6 +64,7 @@
                 <i class="fa fa-share-square-o"></i>&nbsp;&nbsp;Share </a>
             </li>
             <!-- /ko -->
+            <!-- ko ifnot: userIsPatron -->
             <li class="visible-xs visible-lg">
               <a
                 href="https://www.patreon.com/bePatron?u=5313385"
@@ -73,6 +74,7 @@
               >
                 <i class="fa fa-usd"></i>&nbsp;&nbsp;Support Us </a>
             </li>
+            <!-- /ko -->
             <!-- /ko -->
           </ul>
           <login></login>
@@ -134,39 +136,35 @@
     </div>
   </div>
   <user-notifications></user-notifications>
-  <!-- ko if: shouldShowApp -->
-  <div class="container-fluid main">
-    <div
-      style="padding-left: 5%; padding-right: 5%"
-      class="col-xs-12"
-    >
-      <!-- ko if: selectedCore() -->
-      <!-- ko if: selectedCore().type.name() == 'character' -->
+  <div class="container main pl-2 pr-2">
+    <!-- ko if: shouldShowApp -->
+      <!-- ko if: selectedCore() && selectedCore().type.name() == 'character' -->
       <character-root
         params="activeCharacter: selectedCore"
       ></character-root>
       <!-- /ko -->
-      <!-- ko if: selectedCore().type.name() == 'dm' -->
+      <!-- ko if: selectedCore() && selectedCore().type.name() == 'dm' -->
       <dm-root params="activeCharacter: selectedCore"></dm-root>
       <!-- /ko -->
-      <!-- /ko -->
-    </div>
+    <!-- /ko -->
+    <!-- ko if: shouldShowWizard -->
+    <wizard></wizard>
+    <!-- /ko -->
+    <!-- ko if: shouldShowPicker -->
+    <core-picker params="state: state"></core-picker>
+    <!-- /ko -->
   </div>
 
-  <!-- Switch Characters Modal -->
-  <!-- ko if: characterAndGamesModalStatus -->
-  <characters params="modalStatus: characterAndGamesModalStatus"></characters>
-  <!-- /ko -->
-  <!-- Share Modal -->
-  <!-- ko if: shareModalStatus -->
-  <share params="modalStatus: shareModalStatus"></share>
-  <!-- /ko -->
-  <!-- /ko -->
-  <!-- ko if: shouldShowWizard -->
-  <wizard></wizard>
-  <!-- /ko -->
-  <!-- ko if: shouldShowPicker -->
-  <core-picker params="state: state"></core-picker>
+  <!-- Additional Core-Related Modals -->
+  <!-- ko if: shouldShowApp -->
+    <!-- Switch Characters Modal -->
+    <!-- ko if: characterAndGamesModalStatus -->
+    <characters params="modalStatus: characterAndGamesModalStatus"></characters>
+    <!-- /ko -->
+    <!-- Share Modal -->
+    <!-- ko if: shareModalStatus -->
+    <share params="modalStatus: shareModalStatus"></share>
+    <!-- /ko -->
   <!-- /ko -->
 </div>
 <!-- Footer -->
