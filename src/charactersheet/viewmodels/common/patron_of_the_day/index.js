@@ -15,12 +15,7 @@ export class PatronOfTheDayViewModel extends ViewModel {
     }
 
     async load() {
-        const { object: patron } = await Patron.ps.client.action({
-            keys: Patron.__skeys__,
-            params: {},
-            model: Patron,
-            many: false,
-        });
+        const { object: patron } = await Patron.ps.read();
         this.entity(patron);
     }
 }
