@@ -10,13 +10,21 @@
       aria-haspopup="true"
       aria-expanded="false"
     >
-      <span data-bind="text: username"></span>
-      <span class="caret"></span>
+      <div class="d-flex justify-content-center" style="align-items:center;">
+        <i class="fa fa-user"></i>
+        <div
+          class="d-inline-block"
+          style="text-overflow: ellipsis; max-width: 110px; overflow: hidden; white-space: nowrap;"
+        >
+          &nbsp;&nbsp;<span data-bind="text: username"></span>&nbsp;
+        </div>
+        <span class="caret"></span>
+      </div>
     </a>
     <ul class="dropdown-menu">
       <li>
         <a href="/accounts/profile/" title="User Profile">
-          <i class="fa fa-user"></i>&nbsp;&nbsp;Account
+          <i class="fa fa-gear"></i>&nbsp;&nbsp;Account
         </a>
       </li>
       <li role="separator" class="divider"></li>
