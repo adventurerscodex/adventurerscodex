@@ -60,9 +60,17 @@ export class Monster extends KOModel {
         }
     });
 
-    modifierLabel = (bonus) => {
+    modifier = (score) => {
+        if (score.value()) {
+            return Math.floor((score.value() - 10) / 2);
+        } else {
+            return 0;
+        }
+    };
+
+    modifierLabel = (score) => {
         let modifier = '+ 0';
-        let bonusNumber = parseInt(bonus);
+        let bonusNumber = parseInt(this.modifier(score));
         if (bonusNumber && !isNaN(bonusNumber)) {
             if (bonusNumber < 0) {
                 return `- ${Math.abs(bonusNumber)}`;
@@ -70,7 +78,7 @@ export class Monster extends KOModel {
             return `+ ${bonusNumber}`;
         }
         return '+ 0';
-    }
+    };
 
     convertedDisplayUrl = ko.pureComputed(() => (
         Utility.string.createDirectDropboxLink(this.sourceUrl())
