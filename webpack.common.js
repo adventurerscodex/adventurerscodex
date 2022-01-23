@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 
-let ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
+let MiniCssExtractPlugin = require('mini-css-extract-plugin');
 let HtmlWebpackPlugin = require('html-webpack-plugin');
 let CopyWebpackPlugin = require('copy-webpack-plugin');
 
@@ -16,18 +16,15 @@ module.exports = {
     modules: [
         path.resolve('./src'),
         path.resolve('./node_modules')
-    ]
+    ],
   },
   plugins: [
-      // Injects bundles in your index.html instead of wiring all manually.
-      // It also adds hash to all injected assets so we don't have problems
-      // with cache purging during deployment.
-
-      // CUAING ISSUES
+    // Injects bundles in your index.html instead of wiring all manually.
+    // It also adds hash to all injected assets so we don't have problems
+    // with cache purging during deployment.
     new HtmlWebpackPlugin({
-      template: 'index.html',
-      inject: 'body',
-      hash: true
+        template: 'index.html',
+        inject: 'body',
     }),
     new CopyWebpackPlugin({
         patterns: [
@@ -37,10 +34,10 @@ module.exports = {
             }
         ],
     }),
-    new ExtractTextWebpackPlugin({
-      filename: '[name].[chunkhash].css',
-      disable: process.env.BABEL_ENV !== 'production'
-    })
+    new MiniCssExtractPlugin({
+        filename: '[name].[chunkhash].css',
+//         disable: process.env.BABEL_ENV !== 'production'
+    }),
   ],
   module: {
     rules: [
@@ -61,35 +58,36 @@ module.exports = {
         }
       },
       {  // for loading in css files
-        test: /\.css$/,
-        use: ExtractTextWebpackPlugin.extract({
-          use: [
+        test: /\.css$/i,
+        use: [
             {
-              loader: 'css-loader',
-              options: { minimize: process.env.BABEL_ENV === 'production' }
-            }
-          ],
-          fallback: 'style-loader'
-        })
+                loader: MiniCssExtractPlugin.loader,
+                options: {
+                    esModule: false,
+                },
+            },
+            "css-loader",
+        ],
       },
       {
         // Compress images
         // Credit: https://iamakulov.com/notes/optimize-images-webpack/
-        test: /\.(jpg|png|gif|svg)$/,
+        test: /\.(jpe?g|png|gif|svg)$/,
         loader: 'image-webpack-loader',
         // Specify enforce: 'pre' to apply the loader
         // before url-loader/svg-url-loader
         // and not duplicate it in rules with them
         enforce: 'pre',
         options: {
-          bypassOnDebug: true
-        }
+          disable: false,
+        },
+        type: 'javascript/auto'
       },
       {
         // inline <10kB images, otherwise treat them like file-loader
-        test: /\.(png|jpg|gif)$/,
+        test: /\.(png|jpe?g|gif)$/,
         loader: 'url-loader',
-        options: { limit: 10 * 1024 }
+        options: { limit: 10 * 1024 },
       },
       {
         // inline <10kB SVG images, otherwise treat them like file-loader
@@ -97,8 +95,9 @@ module.exports = {
         loader: 'svg-url-loader',
         options: {
           limit: 10 * 1024,
-          noquotes: true // Images will not load if this is disabled
-        }
+          noquotes: true, // Images will not load if this is disabled
+        },
+        type: 'javascript/auto'
       },
       {
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -106,14 +105,16 @@ module.exports = {
         options: {
             limit: 10000,
             mimetype: 'application/font-woff'
-        }
+        },
+        type: 'javascript/auto'
       },
       {
-        test: /\.(ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: "file-loader"
-      },
+        test: /\.(png|jpe?g|gif|ttf|eot)$/,
+        type: 'asset/resource'
+      }
     ],
   },
+
   externals: {
     coreapi: 'coreapi',
     schema: 'schema',

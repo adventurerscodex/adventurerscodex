@@ -3,7 +3,7 @@ import { KOModel } from 'hypnos/lib/models/ko';
 import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
-import uuid from 'node-uuid';
+import uuid from 'uuid';
 
 /**
  * A directory-like container with meta-data information about a container.

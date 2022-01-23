@@ -13,7 +13,7 @@ import { Settings } from 'charactersheet/settings';
 import { Utility } from 'charactersheet/utilities/convenience';
 import ko from 'knockout';
 import saveAs from 'save-as';
-import uuid from 'node-uuid';
+import uuid from 'uuid';
 
 
 /**

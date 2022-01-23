@@ -4,7 +4,7 @@ import { Fixtures } from 'charactersheet/utilities/fixtures';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { Proficiency } from 'charactersheet/models/character/proficiency';
 import { Tracked } from 'charactersheet/models/character/tracked';
-import uuid from 'node-uuid';
+import uuid from 'uuid';
 
 /**
  * Migrates Feats, Features, Proficiencies, and Daily Features to new models.
