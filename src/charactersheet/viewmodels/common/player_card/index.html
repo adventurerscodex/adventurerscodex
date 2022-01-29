@@ -7,20 +7,31 @@
       <!-- Player Info -->
       <div class="row">
         <div class="col-xs-12">
-          <img class="img-circle center-block"
-            data-bind="
-              css: {
-                'patron-circle': player.isActivePatron,
-                [player.canonicalPatreonTier]: player.isActivePatron,
-              },
-              attr: {
-                src: player.imageUrl || 'https://www.gravatar.com/avatar/{}?d=mm',
-                height: 80,
-                width: 80,
-                alt: player.isActivePatron ? `${player.name} is an active patron.` : '',
-              },
-            "
+          <a
+            role="button"
+            tabindex="0"
+            class="statsPopover"
+            data-bind="popover: {
+              placement: 'bottom',
+              content: $component.popoverHtml(),
+            }"
           >
+            <img
+              class="img-circle center-block"
+              data-bind="
+                css: {
+                  'patron-circle': player.isActivePatron,
+                  [player.canonicalPatreonTier]: player.isActivePatron,
+                },
+                attr: {
+                  src: player.imageUrl || 'https://www.gravatar.com/avatar/{}?d=mm',
+                  height: 80,
+                  width: 80,
+                  alt: player.isActivePatron ? `${player.name} is an active patron.` : '',
+                },
+              "
+            >
+          </a>
           <div class="connection-status">
             <div class="circle-indicator" data-bind="css: statusIndicatorClass"></div>
           </div>
