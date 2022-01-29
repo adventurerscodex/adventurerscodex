@@ -1,4 +1,5 @@
 import autoBind from 'auto-bind';
+import { capitalize } from 'lodash';
 import { observable, components, pureComputed } from 'knockout';
 import { ViewModel } from 'charactersheet/viewmodels/abstract';
 import { PartyService } from 'charactersheet/services/common';
@@ -63,8 +64,16 @@ export class PlayerCardViewModel extends ViewModel {
 
     statusIndicatorClass = pureComputed(() => (
         this.isOnline() ? 'success' : 'failure'
-    ))
+    ));
 
+    popoverHtml() {
+        if (!this.player.isActivePatron) {
+            return '';
+        }
+        const name = this.player.name || 'Player';
+        const tier = capitalize(`${this.player.canonicalPatreonTier} Tier`);
+        return `${name} is a <a href="https://www.patreon.com/adventurerscodex" target='_blank'>${tier} supporter</a> on Patreon.`
+    }
     // Events
 
     partyDidChange() {

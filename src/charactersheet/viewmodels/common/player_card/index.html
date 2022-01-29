@@ -13,11 +13,7 @@
             class="statsPopover"
             data-bind="popover: {
               placement: 'bottom',
-              content: (
-                player.isActivePatron
-                ? `${player.name || 'Player'} is a <a href='https://www.patreon.com/adventurerscodex' target='_blank'>supporter</a> on Patreon.`
-                : ''
-              ),
+              content: $component.popoverHtml(),
             }"
           >
             <img
