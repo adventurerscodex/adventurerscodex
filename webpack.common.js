@@ -36,7 +36,7 @@ module.exports = {
     }),
     new MiniCssExtractPlugin({
         filename: '[name].[chunkhash].css',
-//         disable: process.env.BABEL_ENV !== 'production'
+        disable: process.env.BABEL_ENV !== 'production'
     }),
   ],
   module: {

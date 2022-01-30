@@ -1,7 +1,6 @@
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const common = require('./webpack.common.js');
 const package_ = require('./package.json');
@@ -13,16 +12,7 @@ let config = merge(common, {
     },
     optimization: {
         minimize: true,
-        minimizer: [
-            new TerserPlugin({
-                cache: true,
-                parallel: true,
-                sourceMap: true,
-                terserOptions: {
-                    mangle: false,
-                }
-            })
-        ],
+        minimizer: [new TerserPlugin()],
         splitChunks: {
             chunks: 'all'
         }
@@ -37,7 +27,6 @@ let config = merge(common, {
     },
     plugins: [
         new CleanWebpackPlugin(['dist']),
-        // new CompressionWebpackPlugin(),
         new webpack.DefinePlugin({
             // Some package detect NODE_ENV to determine which build to use
             'process.env': {
