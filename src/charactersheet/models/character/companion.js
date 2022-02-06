@@ -45,7 +45,6 @@ export class Companion extends KOModel {
     languages = ko.observable();
     sourceUrl = ko.observable();
     description = ko.observable();
-    // // UI Stuff
 
     hpPercent = ko.pureComputed(() => {
         return (
@@ -162,6 +161,7 @@ Companion.validationConstraints = {
             maxlength: 64
         },
         maxHitPoints: {
+            required: true,
             number: true,
             min: 0,
             max: 100000000

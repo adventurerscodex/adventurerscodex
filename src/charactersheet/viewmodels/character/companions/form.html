@@ -1,7 +1,7 @@
 <form data-bind="submit: submit, with: entity">
   <card-submit-actions params="{reset: $component.reset}"></card-submit-actions>
   <!-- ko if: $component.addForm -->
-  <div class="h4 collapsable-card-title">New Monster</div>
+  <div class="h4 collapsable-card-title">New Companion</div>
   <!-- /ko -->
   <div class="row">
     <div class="form-group col-xs-12">
@@ -26,7 +26,7 @@
     <div class="form-group col-xs-12">
       <div class="d-flex justify-content-between">
         <label class="d-flex-1">
-          Image URL<i class="required"></i></label>
+          Image URL</label>
         </label>
       </div>
       <input
@@ -117,7 +117,7 @@
     <div class="form-group col-xs-12 col-md-6 col-lg-4">
       <label>Hit Points<i class="required"></i></label>
       <input
-        type="text"
+        type="number"
         class="form-control"
         name="maxHitPoints"
         placeholder="10"
@@ -131,7 +131,7 @@
     <div class="form-group col-xs-12 col-md-6 col-lg-4">
       <label>Damage<i class="required"></i></label>
       <input
-        type="text"
+        type="number"
         class="form-control"
         name="damage"
         placeholder="10"
@@ -335,7 +335,7 @@
         class="form-control"
         name="description"
         rows="4"
-        placeholder="What is this map?"
+        placeholder="Melee claw attack - To Hit: +5. Damage: 1d6 slashing damage"
         data-bind="
           value: description,
           event: { blur: $component.reviewInput, invalid: $component.invalidate },
