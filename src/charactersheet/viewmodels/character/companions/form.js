@@ -1,6 +1,6 @@
 import autoBind from 'auto-bind';
 
-import { copy, first, get, split, trim } from 'lodash';
+import { first, get, split, trim } from 'lodash';
 import { DataRepository } from 'charactersheet/utilities';
 import { AbstractChildFormModel } from 'charactersheet/viewmodels/abstract';
 import { Companion } from 'charactersheet/models/character';
@@ -47,6 +47,7 @@ class CompanionFormViewModel extends AbstractChildFormModel {
             maxHitPoints = 10;
         }
         item['maxHitPoints'] = maxHitPoints;
+        item['damage'] = 0;
         this.entity().importValues(item);
         this.showDisclaimer(true);
         this.forceCardResize();

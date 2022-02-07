@@ -5,7 +5,7 @@
   <!-- /ko -->
   <div class="row">
     <div class="form-group col-xs-12">
-      <label>Name<i class="required"></i></label>
+      <label>Name</label>
       <input
         type="text"
         class="form-control"
@@ -101,7 +101,7 @@
   <div class="row">
     <hr />
     <div class="form-group col-xs-12 col-lg-4">
-      <label>Armor Class<i class="required"></i></label>
+      <label>Armor Class</label>
       <input
         type="number"
         class="form-control"
@@ -115,7 +115,7 @@
       />
     </div>
     <div class="form-group col-xs-12 col-md-6 col-lg-4">
-      <label>Hit Points<i class="required"></i></label>
+      <label>Hit Points</label>
       <input
         type="number"
         class="form-control"
@@ -129,12 +129,12 @@
       />
     </div>
     <div class="form-group col-xs-12 col-md-6 col-lg-4">
-      <label>Damage<i class="required"></i></label>
+      <label>Current Damage</label>
       <input
         type="number"
         class="form-control"
         name="damage"
-        placeholder="10"
+        placeholder="0"
         data-bind="
           value: damage,
           event: { blur: $component.reviewInput, invalid: $component.invalidate },
@@ -146,7 +146,7 @@
   <div class="row">
     <hr />
     <div class="form-group col-xs-6 col-md-4 col-lg-2">
-      <label>Stength<i class="required"></i></label>
+      <label>Stength</label>
         <!-- ko if: !!findAbilityScoreByName('Strength') -->
         <input
           type="number"
@@ -157,7 +157,7 @@
       <!-- /ko -->
     </div>
     <div class="form-group col-xs-6 col-md-4 col-lg-2">
-      <label>Dexterity<i class="required"></i></label>
+      <label>Dexterity</label>
         <!-- ko if: !!findAbilityScoreByName('Dexterity') -->
         <input
           type="number"
@@ -168,7 +168,7 @@
         <!-- /ko -->
     </div>
     <div class="form-group col-xs-6 col-md-4 col-lg-2">
-      <label>Constitution<i class="required"></i></label>
+      <label>Constitution</label>
       <!-- ko if: !!findAbilityScoreByName('Constitution') -->
       <input
           type="number"
@@ -179,7 +179,7 @@
         <!-- /ko -->
     </div>
     <div class="form-group col-xs-6 col-md-4 col-lg-2">
-      <label>Intelligence<i class="required"></i></label>
+      <label>Intelligence</label>
       <!-- ko if: !!findAbilityScoreByName('Intelligence') -->
       <input
         type="number"
@@ -190,7 +190,7 @@
         <!-- /ko -->
     </div>
     <div class="form-group col-xs-6 col-md-4 col-lg-2">
-      <label>Wisdom<i class="required"></i></label>
+      <label>Wisdom</label>
       <!-- ko if: !!findAbilityScoreByName('Wisdom') -->
       <input
         type="number"
@@ -201,7 +201,7 @@
       <!-- /ko -->
     </div>
     <div class="form-group col-xs-6 col-md-4 col-lg-2">
-      <label>Charisma<i class="required"></i></label>
+      <label>Charisma</label>
       <!-- ko if: !!findAbilityScoreByName('Charisma') -->
       <input
         type="number"

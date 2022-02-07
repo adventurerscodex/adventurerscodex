@@ -156,10 +156,6 @@ Companion.validationConstraints = {
             min: 0,
             max: 10000
         },
-        hitPoints: {
-            required: true,
-            maxlength: 64
-        },
         maxHitPoints: {
             required: true,
             number: true,
@@ -167,6 +163,7 @@ Companion.validationConstraints = {
             max: 100000000
         },
         damage: {
+            required: true,
             number: true,
             min: 0,
             max: 100000000
@@ -253,16 +250,13 @@ Companion.validationConstraints = {
             min: 0,
             max: 10000
         },
-        hitPoints: {
-            required: true,
-            maxlength: 64
-        },
         maxHitPoints: {
             number: true,
             min: 0,
             max: 100000000
         },
         damage: {
+            required: true,
             number: true,
             min: 0,
             max: 100000000

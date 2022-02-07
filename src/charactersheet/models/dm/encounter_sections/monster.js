@@ -15,8 +15,8 @@ export class Monster extends KOModel {
     ];
 
     static mapping = {
-        include: ['coreUuid', 'encounterUuid', 'uuid', 'name', 'size', 'type', 'maxHitPoints',
-            'damage', 'alignment', 'armorClass', 'hitPoints', 'speed', 'savingThrows',
+        include: ['coreUuid', 'encounterUuid', 'uuid', 'name', 'size', 'type', 'alignment', 
+            'armorClass', 'hitPoints', 'speed', 'savingThrows',
             'skills', 'senses', 'damageVulnerabilities', 'damageImmunities', 'damageResistances',
             'conditionImmunities', 'languages', 'challenge', 'experience', 'description',
             'sourceUrl', 'playerText', 'isExhibited']
@@ -31,8 +31,6 @@ export class Monster extends KOModel {
     alignment = ko.observable();
     armorClass = ko.observable();
     hitPoints = ko.observable();
-    maxHitPoints = ko.observable();
-    damage = ko.observable();
     speed = ko.observable();
     abilityScores = ko.observableArray([]);
     savingThrows = ko.observable();
@@ -146,16 +144,6 @@ Monster.validationConstraints = {
             required: true,
             maxlength: 64
         },
-        maxHitPoints: {
-            number: true,
-            min: 0,
-            max: 100000000
-        },
-        damage: {
-            number: true,
-            min: 0,
-            max: 100000000
-        },
         speed: {
             maxlength: 64
         },
@@ -249,16 +237,6 @@ Monster.validationConstraints = {
         hitPoints: {
             required: true,
             maxlength: 64
-        },
-        maxHitPoints: {
-            number: true,
-            min: 0,
-            max: 100000000
-        },
-        damage: {
-            number: true,
-            min: 0,
-            max: 100000000
         },
         speed: {
             maxlength: 64
