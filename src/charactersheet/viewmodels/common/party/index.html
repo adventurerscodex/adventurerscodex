@@ -14,6 +14,7 @@
     <span data-bind="if: filterByOnline">
       Only <b>online</b> party members are shown below. Only players with the app currently open will appear in this list.<br />
     </span>
+    <!-- ko if: isConnectedToParty -->
     <span
       style="color: #2c3e50;"
       class="clickable"
@@ -28,6 +29,7 @@
       <span data-bind="if: filterByOnline">Show All Party Members</span>
       <span data-bind="ifnot: filterByOnline">Show Online Party Members</span>
     </span>
+    <!-- /ko -->
   </small>
 </div>
 <hr class="ac-table-header">
