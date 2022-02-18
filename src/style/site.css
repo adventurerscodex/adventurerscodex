@@ -2341,6 +2341,14 @@ tr .panel {
   background-color: rgba(0,0,0,0);
 }
 
+.d20photos-help>a {
+  text-decoration: none !important;
+}
+
+.d20photos-help>a:hover {
+  text-decoration: underline !important;
+}
+
 .position-relative {
   position: relative;
 }

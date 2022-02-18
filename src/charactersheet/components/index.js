@@ -13,3 +13,4 @@ import { ProficiencyTypeComponentViewModel } from './proficiency-marker';
 import './column-navigation';
 import './back-button';
 import './markdown-help';
+import './d20.photos-help';
