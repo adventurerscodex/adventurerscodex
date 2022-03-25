@@ -37,17 +37,6 @@ class CompanionFormViewModel extends AbstractChildFormModel {
 
     populate = (label, value) => {
         const item = DataRepository[this.prePopSource][label];
-        let maxHitPoints;
-        try {
-            const hitPoints = get(item, 'hitPoints', '');
-            const splitPoints = split(hitPoints, '(');
-            const splitFirst = first(splitPoints);
-            maxHitPoints = trim(splitFirst);
-        } catch (error) {
-            maxHitPoints = 10;
-        }
-        item['maxHitPoints'] = maxHitPoints;
-        item['damage'] = 0;
         this.entity().importValues(item);
         this.showDisclaimer(true);
         this.forceCardResize();

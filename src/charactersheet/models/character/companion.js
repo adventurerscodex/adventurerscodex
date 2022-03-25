@@ -79,7 +79,6 @@ export class Companion extends KOModel {
     convertedDisplayUrl = ko.pureComputed(() => (
         Utility.string.createDirectDropboxLink(this.sourceUrl())
     ));
-    
 
     findAbilityScoreByName = function(name) {
         var foundScore;
@@ -163,7 +162,7 @@ Companion.validationConstraints = {
             max: 100000000
         },
         damage: {
-            required: true,
+            required: false,
             number: true,
             min: 0,
             max: 100000000
