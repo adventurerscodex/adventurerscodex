@@ -164,6 +164,32 @@
       </a>
     </li>
     <li role="presentation"
+        id="tabCompanionsLink">
+      <a href="#companions"
+        aria-controls="companions"
+        role="tab"
+        data-toggle="tab"
+        id="companionsTabTrigger"
+        class="tab-subtext"
+        data-bind="click: activateCompanionsTab">
+        <div class="visible-xs"
+            data-toggle="collapse"
+            data-target="#descriptionTab">
+          <img class="tab-icon"
+              data-bind="attr: { src: icons.companionsTab }" />
+          <span class="text-center"
+                id="tabCompanionSpan"><small>Companions</small></span>
+        </div>
+        <div class="hidden-xs">
+          <img class="tab-icon"
+              data-bind="attr: { src: icons.companionsTab }" />
+          <br />
+          <span class="text-center"
+                id="tabCompanionSpan"><small>Companions</small></span>
+        </div>
+      </a>
+    </li>
+    <li role="presentation"
         id="tabNotesLink">
       <a href="#notes"
          aria-controls="notes"
@@ -389,11 +415,23 @@
   <!-- End Inventory Tab -->
   <div role="tabpanel"
        class="tab-pane"
-       id="notes"
-       data-bind="css: notesTabStatus">
+       id="companions"
+       data-bind="css: companionsTabStatus">
     <div class="row">
       <div class="col col-xs-12"
            style="z-index: 4">
+        <companions-list params="{tabId: 'companions'}"></companions-list>
+      </div>
+    </div>
+  </div>
+ <!-- End companions Tab -->
+ <div role="tabpanel"
+      class="tab-pane"
+      id="notes"
+      data-bind="css: notesTabStatus">
+    <div class="row">
+      <div class="col col-xs-12"
+          style="z-index: 4">
         <notes-list params="{tabId: 'notes'}"></notes-list>
       </div>
     </div>

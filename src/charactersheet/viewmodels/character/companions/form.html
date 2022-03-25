@@ -1,0 +1,355 @@
+<form data-bind="submit: submit, with: entity">
+  <card-submit-actions params="{reset: $component.reset}"></card-submit-actions>
+  <!-- ko if: $component.addForm -->
+  <div class="h4 collapsable-card-title">New Companion</div>
+  <!-- /ko -->
+  <div class="row">
+    <div class="form-group col-xs-12">
+      <label>Name</label>
+      <input
+        type="text"
+        class="form-control"
+        name="name"
+        placeholder="Kobold"
+        data-bind="
+          textInput: name,
+          hasFocus: $component.formElementHasFocus,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.name },
+          autocomplete: {
+            source: $component.prePopFilter,
+            onselect: $component.populate,
+          }
+        "
+      />
+    </div>
+    <div class="form-group col-xs-12">
+      <div class="d-flex justify-content-between">
+        <label class="d-flex-1">
+          Image URL</label>
+        </label>
+      </div>
+      <input
+        type="url"
+        class="form-control"
+        name="Image Link"
+        placeholder="http://myurl.com/image.jpg"
+        data-bind="
+          value: sourceUrl,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.sourceUrl },
+        "
+      />
+    </div>
+    <div class="form-group col-xs-12 col-md-6">
+      <label>Size</label>
+      <input
+        type="text"
+        class="form-control"
+        name="name"
+        placeholder="Gargantuan"
+        data-bind="
+          value: size,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.size },
+        "
+      />
+    </div>
+    <div class="form-group col-xs-12 col-md-6">
+      <label>Type</label>
+      <input
+        type="text"
+        class="form-control"
+        name="name"
+        placeholder="Dragon"
+        data-bind="
+          value: type,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.type },
+        "
+      />
+    </div>
+    <div class="form-group col-xs-12 col-md-6">
+      <label>Speed</label>
+      <input
+        type="text"
+        class="form-control"
+        name="speed"
+        placeholder="30ft"
+        data-bind="
+          value: speed,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.speed },
+        "
+      />
+    </div>
+    <div class="form-group col-xs-12 col-md-6">
+      <label>Alignment</label>
+      <input
+        type="text"
+        class="form-control"
+        name="alignment"
+        placeholder="Chaotic Evil"
+        data-bind="
+          value: alignment,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.alignment },
+        "
+      />
+    </div>
+  </div>
+  <div class="row">
+    <hr />
+    <div class="form-group col-xs-12 col-lg-4">
+      <label>Armor Class</label>
+      <input
+        type="number"
+        class="form-control"
+        name="armorClass"
+        placeholder="22 (natural armor)"
+        data-bind="
+          value: armorClass,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.armorClass },
+        "
+      />
+    </div>
+    <div class="form-group col-xs-12 col-md-6 col-lg-4">
+      <label>Hit Points</label>
+      <input
+        type="number"
+        class="form-control"
+        name="maxHitPoints"
+        placeholder="10"
+        data-bind="
+          value: maxHitPoints,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.maxHitPoints },
+        "
+      />
+    </div>
+    <div class="form-group col-xs-12 col-md-6 col-lg-4">
+      <label>Current Damage</label>
+      <input
+        type="number"
+        class="form-control"
+        name="damage"
+        placeholder="0"
+        data-bind="
+          value: damage,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.damage },
+        "
+      />
+    </div>
+  </div>
+  <div class="row">
+    <hr />
+    <div class="form-group col-xs-6 col-md-4 col-lg-2">
+      <label>Stength</label>
+        <!-- ko if: !!findAbilityScoreByName('Strength') -->
+        <input
+          type="number"
+          class="form-control"
+          name="strength"
+          data-bind="value: findAbilityScoreByName('Strength').value"
+        />
+      <!-- /ko -->
+    </div>
+    <div class="form-group col-xs-6 col-md-4 col-lg-2">
+      <label>Dexterity</label>
+        <!-- ko if: !!findAbilityScoreByName('Dexterity') -->
+        <input
+          type="number"
+          class="form-control"
+          name="dexterity"
+          data-bind="value: findAbilityScoreByName('Dexterity').value"
+        />
+        <!-- /ko -->
+    </div>
+    <div class="form-group col-xs-6 col-md-4 col-lg-2">
+      <label>Constitution</label>
+      <!-- ko if: !!findAbilityScoreByName('Constitution') -->
+      <input
+          type="number"
+          class="form-control"
+          name="constitution"
+          data-bind="value: findAbilityScoreByName('Constitution').value"
+        />
+        <!-- /ko -->
+    </div>
+    <div class="form-group col-xs-6 col-md-4 col-lg-2">
+      <label>Intelligence</label>
+      <!-- ko if: !!findAbilityScoreByName('Intelligence') -->
+      <input
+        type="number"
+        class="form-control"
+        name="intelligence"
+        data-bind="value: findAbilityScoreByName('Intelligence').value"
+      />
+        <!-- /ko -->
+    </div>
+    <div class="form-group col-xs-6 col-md-4 col-lg-2">
+      <label>Wisdom</label>
+      <!-- ko if: !!findAbilityScoreByName('Wisdom') -->
+      <input
+        type="number"
+        class="form-control"
+        name="wisdom"
+        data-bind="value: findAbilityScoreByName('Wisdom').value"
+      />
+      <!-- /ko -->
+    </div>
+    <div class="form-group col-xs-6 col-md-4 col-lg-2">
+      <label>Charisma</label>
+      <!-- ko if: !!findAbilityScoreByName('Charisma') -->
+      <input
+        type="number"
+        class="form-control"
+        name="strength"
+        data-bind="value: findAbilityScoreByName('Charisma').value"
+      />
+        <!-- /ko -->
+
+    </div>
+  </div>
+  <div class="row">
+    <hr />
+    <div class="form-group col-xs-12">
+      <label>Saving Throws</label>
+      <input
+        type="text"
+        class="form-control"
+        name="savingThrows"
+        placeholder="Dex +7, Con +10, Wis +6, Cha +8"
+        data-bind="
+          value: savingThrows,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.savingThrows },
+        "
+      />
+    </div>
+    <div class="form-group col-xs-12">
+      <label>Skills</label>
+      <input
+        type="text"
+        class="form-control"
+        name="skills"
+        placeholder="Perception +11, Stealth +7"
+        data-bind="
+          value: skills,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.skills },
+        "
+      />
+    </div>
+    <div class="form-group col-xs-12 col-lg-6">
+      <label>Damage Immunities</label>
+      <input
+        type="text"
+        class="form-control"
+        name="damageImmunities"
+        placeholder="Acid"
+        data-bind="
+          value: damageImmunities,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.damageImmunities },
+        "
+      />
+    </div>
+    <div class="form-group col-xs-12 col-lg-6">
+      <label>Damage Vulnerabilities</label>
+      <input
+        type="text"
+        class="form-control"
+        name="damageVulnerabilities"
+        placeholder="Force"
+        data-bind="
+          value: damageVulnerabilities,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.damageVulnerabilities },
+        "
+      />
+    </div>
+    <div class="form-group col-xs-12 col-lg-6">
+      <label>Damage Resistances</label>
+      <input
+        type="text"
+        class="form-control"
+        name="damageResistances"
+        placeholder="None"
+        data-bind="
+          value: damageResistances,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.damageResistances },
+        "
+      />
+    </div>
+    <div class="form-group col-xs-12 col-lg-6">
+      <label>Condition Immunities</label>
+      <input
+        type="text"
+        class="form-control"
+        name="conditionImmunities"
+        placeholder="None"
+        data-bind="
+          value: conditionImmunities,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.conditionImmunities },
+        "
+      />
+    </div>
+    <div class="form-group col-xs-12">
+      <label>Senses</label>
+      <input
+        type="text"
+        class="form-control"
+        name="senses"
+        placeholder="Blindsight 60 ft., darkvision 120 ft., passive Perception 21"
+        data-bind="
+          value: senses,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.senses },
+        "
+      />
+    </div>
+    <div class="form-group col-xs-12">
+      <label>Languages</label>
+      <input
+        type="text"
+        class="form-control"
+        name="languages"
+        placeholder="Common, Draconic"
+        data-bind="
+          value: languages,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.languages },
+        "
+      />
+    </div>
+
+    <div class="form-group col-xs-12">
+      <label>Description</label>
+      <textarea
+        type="text"
+        class="form-control"
+        name="description"
+        rows="4"
+        placeholder="Melee claw attack - To Hit: +5. Damage: 1d6 slashing damage"
+        data-bind="
+          value: description,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.description },
+        "></textarea>
+        <markdown-help />
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <form-submit-actions params="{
+      reset: $component.reset,
+      delete: $component.delete,
+      addForm: $component.addForm,
+    }"></form-submit-actions>
+  </div>
+</form>

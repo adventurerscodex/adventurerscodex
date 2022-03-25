@@ -63,7 +63,7 @@ class CampaignMapsAndImagesViewModel extends AbstractTabularViewModel {
         try {
             await moi.save();
         } catch(error) {
-            const message = !!error ? error.message : '';
+            const message = error ? error.message : '';
             Notifications.userNotification.dangerNotification.dispatch(
                 `Unable to update exhibit. ${message}`,
                 'Error'
@@ -89,7 +89,7 @@ class CampaignMapsAndImagesViewModel extends AbstractTabularViewModel {
         // be fired from multiple places.
         const exhibitUuid = get(party, 'exhibit.uuid', null);
         this.markAsExhibited(exhibitUuid);
-    };
+    }
 
     markAsExhibited(exhibitUuid) {
         this.entities(

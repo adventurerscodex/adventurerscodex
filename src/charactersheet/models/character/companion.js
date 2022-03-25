@@ -2,28 +2,28 @@ import { KOModel } from 'hypnos/lib/models/ko';
 import { Notifications, Utility } from 'charactersheet/utilities';
 import ko from 'knockout';
 
-export class Monster extends KOModel {
-    static __skeys__ = ['core', 'encounters', 'monsters'];
 
-    static __dependents__ = [
-        'Image',
-        'Environment',
-        'NPC',
-        'PlayerText',
-        'PointOfInterest',
-        'EncounterImage',
-    ];
+const modifierLabel = (bonus) => {
+    let bonusNumber = 0;
+    if (bonus && !isNaN(bonus)) {
+        bonusNumber = Math.floor((parseInt(bonus) - 10) / 2);
+    }
+    if (bonusNumber < 0) {
+        return `- ${Math.abs(bonusNumber)}`;
+    }
+    return `+ ${bonusNumber}`;
+};
+export class Companion extends KOModel {
+    static __skeys__ = ['core', 'companions'];
 
     static mapping = {
-        include: ['coreUuid', 'encounterUuid', 'uuid', 'name', 'size', 'type', 'alignment', 
-            'armorClass', 'hitPoints', 'speed', 'savingThrows',
-            'skills', 'senses', 'damageVulnerabilities', 'damageImmunities', 'damageResistances',
-            'conditionImmunities', 'languages', 'challenge', 'experience', 'description',
-            'sourceUrl', 'playerText', 'isExhibited']
+        include: ['coreUuid']
     };
 
-    coreUuid = ko.observable();
-    encounterUuid = ko.observable();
+    DANGER_THRESHOLD = 0.30;
+    WARNING_THRESHOLD = 0.50;
+
+    coreUuid = ko.observable(null);
     uuid = ko.observable();
     name = ko.observable();
     size = ko.observable();
@@ -31,6 +31,8 @@ export class Monster extends KOModel {
     alignment = ko.observable();
     armorClass = ko.observable();
     hitPoints = ko.observable();
+    maxHitPoints = ko.observable();
+    damage = ko.observable();
     speed = ko.observable();
     abilityScores = ko.observableArray([]);
     savingThrows = ko.observable();
@@ -41,14 +43,28 @@ export class Monster extends KOModel {
     damageResistances = ko.observable();
     conditionImmunities = ko.observable();
     languages = ko.observable();
-    challenge = ko.observable();
-    experience = ko.observable();
     sourceUrl = ko.observable();
-    playerText = ko.observable();
-    isExhibited = ko.observable(false);
     description = ko.observable();
 
-    // UI Stuff
+    hpPercent = ko.pureComputed(() => {
+        return (
+            (this.maxHitPoints() - this.damage())
+                / (this.maxHitPoints())
+        );
+    });
+
+    usesDisplay = ko.pureComputed(() => {
+        return this.hitPoints() + ' / ' + this.maxHitPoints();
+    });
+
+    isDangerous = ko.pureComputed(() => {
+        return this.hpPercent() < this.DANGER_THRESHOLD ? true : false;
+    });
+
+    isWarning = ko.pureComputed(() => {
+        return this.hpPercent() < this.WARNING_THRESHOLD ? true : false;
+    });
+
 
     nameLabel = ko.pureComputed(() => {
         if (this) {
@@ -60,31 +76,10 @@ export class Monster extends KOModel {
         }
     });
 
-    modifier = (score) => {
-        if (score.value()) {
-            return Math.floor((score.value() - 10) / 2);
-        } else {
-            return 0;
-        }
-    };
-
-    modifierLabel = (score) => {
-        let modifier = '+ 0';
-        let bonusNumber = parseInt(this.modifier(score));
-        if (bonusNumber && !isNaN(bonusNumber)) {
-            if (bonusNumber < 0) {
-                return `- ${Math.abs(bonusNumber)}`;
-            }
-            return `+ ${bonusNumber}`;
-        }
-        return '+ 0';
-    };
-
     convertedDisplayUrl = ko.pureComputed(() => (
         Utility.string.createDirectDropboxLink(this.sourceUrl())
     ));
-
-    // Public Methods
+    
 
     findAbilityScoreByName = function(name) {
         var foundScore;
@@ -93,31 +88,32 @@ export class Monster extends KOModel {
                 foundScore = score;
             }
         });
+        foundScore.modifierLabel = modifierLabel(ko.unwrap(foundScore.value));
         return foundScore;
     };
 
     // Helpers
 
     load = async (params) => {
-        const response = await this.ps.model.ps.read(params);
+        const response = await this.ps.read(params);
         this.importValues(response.object.exportValues());
     }
 
     create = async () => {
         const response = await this.ps.create();
         this.importValues(response.object.exportValues());
-        Notifications.monster.added.dispatch(this);
+        Notifications.companion.added.dispatch(this);
     }
 
     save = async () => {
         const response = await this.ps.save();
         this.importValues(response.object.exportValues());
-        Notifications.monster.changed.dispatch(this);
+        Notifications.companion.changed.dispatch(this);
     }
 
     delete = async () => {
         await this.ps.delete();
-        Notifications.monster.deleted.dispatch(this);
+        Notifications.companion.deleted.dispatch(this);
     }
 
     // Overrides
@@ -139,7 +135,7 @@ export class Monster extends KOModel {
     }
 }
 
-Monster.validationConstraints = {
+Companion.validationConstraints = {
     fieldParams: {
         name: {
             required: true,
@@ -160,9 +156,17 @@ Monster.validationConstraints = {
             min: 0,
             max: 10000
         },
-        hitPoints: {
+        maxHitPoints: {
             required: true,
-            maxlength: 64
+            number: true,
+            min: 0,
+            max: 100000000
+        },
+        damage: {
+            required: true,
+            number: true,
+            min: 0,
+            max: 100000000
         },
         speed: {
             maxlength: 64
@@ -190,14 +194,6 @@ Monster.validationConstraints = {
         },
         languages: {
             maxlength: 256
-        },
-        challenge: {
-            maxlength: 32
-        },
-        experience: {
-            number: true,
-            min: -10000,
-            max: 100000000
         },
         strength: {
             required: true,
@@ -254,9 +250,16 @@ Monster.validationConstraints = {
             min: 0,
             max: 10000
         },
-        hitPoints: {
+        maxHitPoints: {
+            number: true,
+            min: 0,
+            max: 100000000
+        },
+        damage: {
             required: true,
-            maxlength: 64
+            number: true,
+            min: 0,
+            max: 100000000
         },
         speed: {
             maxlength: 64
@@ -284,14 +287,6 @@ Monster.validationConstraints = {
         },
         languages: {
             maxlength: 256
-        },
-        challenge: {
-            maxlength: 32
-        },
-        experience: {
-            number: true,
-            min: -10000,
-            max: 100000000
         },
         strength: {
             required: true,

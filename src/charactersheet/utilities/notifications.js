@@ -233,6 +233,11 @@ export var Notifications = {
         disconnected: new Signal(),
     },
 
+    companion: {
+        added: new Signal(),
+        changed: new Signal(),
+        deleted: new Signal()
+    },
     playerimage: {
         changed: new Signal()
     },

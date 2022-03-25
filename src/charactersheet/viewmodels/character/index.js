@@ -9,6 +9,7 @@ export { FeatsViewModel } from './feats';
 export { FeaturesViewModel } from './features';
 export { ItemsViewModel } from './items';
 export { MagicItemsViewModel } from './magic_items';
+export { CompanionsListViewModel } from './companions';
 export { ProficienciesViewModel } from './proficiencies';
 export { ProfileViewModel } from './profile';
 export { CharacterRootViewModel } from './root';
