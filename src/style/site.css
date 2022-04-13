@@ -2137,6 +2137,10 @@ tr .panel {
   display: flex;
 }
 
+.d-flex-wrap {
+  flex-wrap: wrap;
+}
+
 .d-flex-1 {
   flex: 1;
 }
