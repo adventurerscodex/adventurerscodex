@@ -5,7 +5,7 @@ import { ViewModel } from 'charactersheet/viewmodels/abstract';
 import { PartyService } from 'charactersheet/services/common';
 import { Notifications } from 'charactersheet/utilities';
 import template from './index.html';
-
+import './index.css';
 
 export class PlayerCardViewModel extends ViewModel {
 
