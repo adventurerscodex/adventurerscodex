@@ -2,6 +2,8 @@ export * from './character_picker';
 export * from './characters';
 export * from './exhibit';
 export * from './login';
+export * from './media';
+export * from './media_manager';
 export * from './notes';
 export * from './party';
 export * from './party_manager';

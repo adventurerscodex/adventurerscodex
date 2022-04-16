@@ -1,0 +1,15 @@
+<div class="collapsable-card-title h4">
+  <div class="btn-group edit-btn" role="group" aria-label="actionButtons">
+    <button class="btn btn-link" data-bind="click: flip" type="reset">
+      <span class="fa fa-color fa-times-circle fa-color-hover" aria-hidden="true"></span>
+    </button>
+  </div>
+  Select an Image
+</div>
+<hr class="ac-table-header">
+<media-browser
+  params="
+    setImageUrl: setImageUrl,
+    flip: flip,
+  "
+></media-browser>

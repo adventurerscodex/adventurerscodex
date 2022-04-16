@@ -3,6 +3,7 @@ export { AuthenticationToken } from './authentication_token';
 export { Character } from './character';
 export { Core } from './core';
 export { EncounterImage } from './image';
+export { ImageMedia } from './image_media';
 export { Item } from './item';
 export { MagicItem } from './magic_item';
 export { Note } from './note';

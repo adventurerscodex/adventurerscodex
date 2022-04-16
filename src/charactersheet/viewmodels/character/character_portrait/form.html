@@ -74,6 +74,15 @@
                   value: $component.imageType() === 'url' ? sourceUrl : '', enable: $component.imageType() === 'url'">
             </div>
             <small class="help-block">Paste in a link to your favorite profile picture. Make sure it's the full image link though.</small>
+            <!-- ko if: $component.imageType() === 'url' -->
+            <media-manager
+              params="
+                forceCardResize: $parents[1].forceCardResize,
+                setImageUrl: sourceUrl,
+                tabId: 'player_portrait',
+              "
+            />
+            <!-- /ko -->
           </div>
           <div class="form-group  col-xs-12 col-lg-6">
             <!-- Image URL -->
