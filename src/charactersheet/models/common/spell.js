@@ -189,6 +189,10 @@ Spell.validationConstraints = {
             maxlength: 128,
             required: true
         },
+        materialComponents: {
+            maxlength: 256,
+            required: false
+        },
         components: {
             maxlength: 256,
             required: true
@@ -234,6 +238,10 @@ Spell.validationConstraints = {
         duration: {
             maxlength: 128,
             required: true
+        },
+        materialComponents: {
+            maxlength: 256,
+            required: false
         },
         components: {
             maxlength: 256,
