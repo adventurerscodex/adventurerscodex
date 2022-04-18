@@ -14,3 +14,4 @@ import './column-navigation';
 import './back-button';
 import './markdown-help';
 import './d20.photos-help';
+import './compendium-help';
