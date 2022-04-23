@@ -49,6 +49,14 @@
           attr: { ...$component.validation.sourceUrl },
         "
       />
+      <media-manager
+        params="
+          forceCardResize: $parents[1].forceCardResize,
+          setImageUrl: sourceUrl,
+          tabId: 'encounter_monster',
+        "
+      />
+      <d20photos-help />
     </div>
     <div class="form-group col-xs-12 col-md-6">
       <label>Size</label>

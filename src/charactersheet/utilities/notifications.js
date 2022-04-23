@@ -188,6 +188,12 @@ export var Notifications = {
         deleted: new Signal()
     },
 
+    imagemedia: {
+        added: new Signal(),
+        changed: new Signal(),
+        deleted: new Signal()
+    },
+
     item: {
         added: new Signal(),
         changed: new Signal(),

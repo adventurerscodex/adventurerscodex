@@ -1,0 +1,159 @@
+<div class="mt-1 mb-1 p-3">
+  <!-- ko if: isSelecting -->
+  <div
+    class="dashed-border p-2 rounded"
+  >
+    <!-- ko if: isActivePatron() && canUpload() -->
+    <div class="text-center text-muted">
+      <div>
+        <b>Upload an image</b>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-offset-2 col-md-4 mb-1">
+          <button
+            class="btn btn-xs btn-primary btn-block"
+            type="button"
+            data-bind="click: clickFileInput"
+          >
+            Upload image
+          </button>
+          <input
+            type="file"
+            accept=".jpg,.png,jpeg,.webp"
+            class="d-none"
+            data-bind="
+              event: { change: () => upload($element.files[0]) },
+              attr: { id: fileInputId },
+            "
+          />
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4">
+          <button
+            class="btn btn-xs btn-default btn-block"
+            type="button"
+            data-bind="click: browse"
+          >
+            Browse images
+          </button>
+        </div>
+      </div>
+      <small>
+        You have
+        <span data-bind="text: imagesRemaining"></span>
+        slots remaining.
+      </small>
+    </div>
+    <!-- /ko -->
+    <!-- ko if: !isActivePatron() -->
+    <div class="text-center text-muted">
+      <div>
+        <b>Become a patron to upload images</b>
+      </div>
+      <a
+        href="https://www.patreon.com/bePatron?u=5313385"
+        target="_blank"
+        rel="noreferrer"
+        title="Patreon"
+      >
+        Check out our Patreon page &#8594;
+      </a>
+    </div>
+    <!-- /ko -->
+    <!-- ko if: isActivePatron() && !canUpload() -->
+    <div class="text-center text-muted">
+      <div>
+        <b>You can't upload any more images.</b>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-offset-3 col-md-3 mb-1">
+          <a
+            href="https://www.patreon.com/bePatron?u=5313385"
+            target="_blank"
+            rel="noreferrer"
+            title="Patreon"
+            class="btn btn-block btn-xs btn-primary"
+          >
+            Upgrade to a higher tier
+          </a>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-3 mb-1">
+          <a
+            href="/accounts/media/"
+            title="Account Media"
+              class="btn btn-block btn-xs btn-default"
+          >
+            Delete unused images
+          </a>
+        </div>
+      </div>
+    </div>
+    <!-- /ko -->
+  </div>
+  <!-- /ko -->
+  <!-- ko if: isUploading -->
+  <div class="bordered pt-2 pb-2 pl-2 pr-2 rounded">
+    <div class="text-center text-muted mb-2">
+      <b>Uploading...</b>
+    </div>
+    <div data-bind="barProgress: {
+      data: {
+        value: progress,
+        maxValue: 100
+      },
+      config: {
+        strokeWidth: 2,
+        trailWidth: 1,
+        svgStyle: {
+          display: 'block',
+          width: '100%',
+          minHeight: '5px',
+          maxHeight: '5px',
+        },
+        from: {
+          color: barColor()
+        },
+        to: {
+          color: barColor()
+        }
+      }
+    }"></div>
+  </div>
+  <!-- /ko -->
+  <!-- ko if: isDone -->
+  <div class="bordered pt-2 pb-2 pl-2 pr-2 rounded">
+    <div class="text-center text-muted mb-2">
+      <!-- ko ifnot: error -->
+      <div>
+        <i class="fa fa-check-circle text-success"></i>&nbsp;
+        <b>Upload Complete!</b>
+      </div>
+      <!-- /ko -->
+      <!-- ko if: error -->
+      <div>
+        <i class="fa fa-exclamation-triangle text-warning"></i>&nbsp;
+        <b>Upload Failed!</b>
+        <div>
+          <small data-bind="text: error().message"></small>
+        </div>
+      </div>
+      <!-- /ko -->
+      <div class="row mt-1">
+        <div class="col-xs-12 col-sm-offset-3 col-sm-6 col-md-offset-4 col-md-4">
+          <button
+            class="btn btn-xs btn-default btn-block"
+            type="button"
+            data-bind="click: reset"
+          >
+            <!-- ko ifnot: error -->
+            Upload Another Image
+            <!-- /ko -->
+            <!-- ko if: error -->
+            Try Again
+            <!-- /ko -->
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /ko -->
+</div>

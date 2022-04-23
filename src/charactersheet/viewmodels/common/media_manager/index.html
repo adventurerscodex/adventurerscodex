@@ -1,0 +1,29 @@
+<div class="mt-2">
+  <flip-card params="{
+    tabId: tabId,
+    elementId: `${tabId}_${Math.random() * 100000 | 0}_media_list`,
+    onResize: forceCardResize,
+    onFlip: forceCardResize,
+    context: $data,
+    defaultHeight: 75,
+  }">
+    <div class="front">
+      <media-manager-front params="
+        flip: flip,
+        show: showFront,
+        setImageUrl: context.setImageUrl,
+        forceCardResize: forceCardResize,
+        forceOuterCardResize: context.forceCardResize,
+      "></media-manager-front>
+    </div>
+    <div class="back">
+      <media-manager-back params="
+        flip: flip,
+        show: showFront,
+        setImageUrl: context.setImageUrl,
+        forceCardResize: forceCardResize,
+        forceOuterCardResize: context.forceCardResize,
+      "></media-manager-back>
+    </div>
+  </flip-card>
+</div>

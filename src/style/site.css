@@ -2166,7 +2166,7 @@ tr .panel {
 }
 
 .justify-content-between {
-  justify-content: between;
+  justify-content: space-between;
 }
 
 .justify-content-center {
@@ -2239,6 +2239,10 @@ tr .panel {
 
 .pr-3 {
   padding-right: 1.5rem;
+}
+
+.p-auto {
+  padding: auto;
 }
 
 .m-auto {
@@ -2343,6 +2347,18 @@ tr .panel {
   pointer-events: auto;
   content: "";
   background-color: rgba(0,0,0,0);
+}
+
+.dashed-border {
+  border: dashed 2px var(--border-color);
+}
+
+.bordered {
+  border: solid 2px var(--border-color);
+}
+
+.rounded {
+  border-radius: 4px;
 }
 
 .d20photos-help>a {

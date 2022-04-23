@@ -1,0 +1,48 @@
+<div class="media-manager">
+  <div
+    style="overflow-x:scroll;white-space:nowrap;"
+    data-bind="foreach: entities"
+    class="media-list"
+  >
+    <div style="max-width:120px;max-height:100px;display:inline-block;" class="mb-1">
+      <a
+        href="#"
+        class="thumbnail d-flex"
+        style="height:100%;"
+        data-bind="click: () => $component.selectImage($data)"
+      >
+        <img
+          loading="lazy"
+          data-bind="attr: { src: file }"
+          style="object-fit:cover;"
+        />
+      </a>
+    </div>
+  </div>
+  <!-- ko if: entities().length === 0 -->
+  <div class="well">
+    No images found. Please upload an image to use it.
+  </div>
+  <!-- /ko -->
+  <div class="row">
+    <div class="col-xs-4 text-left">
+      <button
+        class="btn btn-xs btn-default"
+        data-bind="click: scrollLeft"
+      >
+        <i class="fa fa-chevron-left"></i>
+      </button>
+    </div>
+    <div class="col-xs-4 text-center text-muted">
+      <hr />
+    </div>
+    <div class="col-xs-4 text-right">
+      <button
+        class="btn btn-xs btn-default"
+        data-bind="click: scrollRight"
+      >
+        <i class="fa fa-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+</div>
