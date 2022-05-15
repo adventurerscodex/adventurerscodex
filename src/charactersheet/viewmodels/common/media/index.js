@@ -24,6 +24,13 @@ export class ImageMediaViewModel extends AbstractTabularViewModel {
         this.entities(response.objects);
     }
 
+    // Override addToList to prepend not append.
+    addToList(item) {
+        if (item) {
+            this.entities.unshift(item);
+        }
+    }
+
     selectImage({ file }) {
         if (this.setImageUrl) {
             this.setImageUrl(file());

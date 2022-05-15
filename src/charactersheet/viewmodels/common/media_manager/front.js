@@ -70,19 +70,24 @@ export class MediaManagerViewModel extends ViewModel {
         this.state(this.State.UPLOADING);
 
         try {
-            const { file: imageUrl } = await uploadFile(
+            const media = await uploadFile(
                 file,
                 // Use the Hypnos schema to get the media API URL.
                 schema.content.media.create.url,
                 this.progress
             );
-            this.setImageUrl(imageUrl);
+            this.setImageUrl(media.file);
             this.error(null);
+
+            // Trigger a refresh of account info
+            UserServiceManager.sharedService().getAccount();
+            Notifications.imagemedia.added.dispatch(media);
         } catch(error) {
-            this.error(error)
+            this.error(error);
         }
 
         this.state(this.State.DONE);
+        setTimeout(() => this.reset(), 3000);
     }
 
     reset() {
@@ -104,7 +109,6 @@ export class MediaManagerViewModel extends ViewModel {
             this.imagesRemaining(user.remainingMediaUploads);
         }
     }
-
 }
 
 
