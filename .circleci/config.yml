@@ -1,26 +1,15 @@
 version: 2.1
 
 orbs:
-  docker: circleci/docker@1.7.0
-
-jobs:
-  run-test-build:
-    docker:
-      - image: cimg/base:stable
-
-    steps:
-      - checkout
-      # The test build validates that the application can and will 
-      # build on the production/nightly servers. This doesn't 
-      # run any tests or linting, but it does at least provide
-      # some insight if we break things too badly.
-      - run: |
-          echo "Building docker image..."
-          docker build -t core-test-build .
-          echo "🎉 Ready to ship!"
-
+  node: circleci/node@5.0.2
 
 workflows:
-  test-build-workflow:
+  run-npm-command:
     jobs:
-      - run-test-build
+      - node/run:
+          npm-run: build
+          matrix:
+            parameters:
+              version:
+                - '14.19'
+                - '16.15'
