@@ -10,12 +10,14 @@ jobs:
 
     steps:
       - checkout
-      - docker/build:
-          # The test build validates that the application can and will 
-          # build on the production/nightly servers. This doesn't 
-          # run any tests or linting, but it does at least provide
-          # some insight if we break things too badly.
-          image: core-test-build 
+      # The test build validates that the application can and will 
+      # build on the production/nightly servers. This doesn't 
+      # run any tests or linting, but it does at least provide
+      # some insight if we break things too badly.
+      - run: |
+          echo "Building docker image..."
+          docker build -t core-test-build .
+          echo "🎉 Ready to ship!"
 
 
 workflows:
