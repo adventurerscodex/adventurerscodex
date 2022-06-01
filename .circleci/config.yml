@@ -19,6 +19,6 @@ jobs:
 
 
 workflows:
-  say-hello-workflow:
+  test-build-workflow:
     jobs:
       - run-test-build
