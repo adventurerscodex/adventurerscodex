@@ -1,0 +1,15 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@5.0.2
+
+workflows:
+  run-npm-command:
+    jobs:
+      - node/run:
+          npm-run: build
+          matrix:
+            parameters:
+              version:
+                - '14.19'
+                - '16.15'
