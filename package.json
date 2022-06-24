@@ -56,7 +56,7 @@
     "image-webpack-loader": "^4.5.0",
     "jquery": "^3.5.0",
     "jquery-ui": "^1.12.1",
-    "jquery-validation": "^1.19.3",
+    "jquery-validation": "^1.19.4",
     "knockout": "3.5.0",
     "knockout-mapping": "^2.6.0",
     "less": "^3.9.0",
