@@ -43,6 +43,10 @@ export class NPC extends KOModel {
         return Utility.string.truncateStringAtLength(this.description(), this.SHORT_DESCRIPTION_MAX_LENGTH);
     });
 
+    convertedDisplayUrl = ko.pureComputed(() => (
+        Utility.string.createDirectDropboxLink(this.sourceUrl())
+    ));
+
     // Helpers
 
     load = async (params) => {
