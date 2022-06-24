@@ -37,10 +37,6 @@ export class Environment extends KOModel {
 
     // Public Methods
 
-    toJSON = function() {
-        return { name: 'Environment', url: this.imageUrl() };
-    };
-
     name = ko.pureComputed(() => {
         return 'Weather: {weather}, Terrain: {terrain}'.replace(
             '{weather}', this.weather() ? this.weather() : 'Unknown'
