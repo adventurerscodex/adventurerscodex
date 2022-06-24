@@ -74,7 +74,7 @@
     "svg-url-loader": "^2.3.2",
     "toastr": "^2.1.2",
     "uglifyjs-webpack-plugin": "^1.0.1",
-    "urijs": "^1.19.7",
+    "urijs": "^1.19.11",
     "url-loader": "^1.1.1",
     "uuid": "^3.3.2",
     "webpack": "^4.46.0",
