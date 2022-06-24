@@ -46,6 +46,10 @@ export class Image extends KOModel {
         }
     });
 
+    convertedDisplayUrl = ko.pureComputed(() => (
+        Utility.string.createDirectDropboxLink(this.sourceUrl())
+    ));
+
     // Helpers
 
     load = async (params) => {
