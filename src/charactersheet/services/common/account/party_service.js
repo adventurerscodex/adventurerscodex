@@ -12,6 +12,21 @@ import { debounce } from 'lodash';
 import { observable } from 'knockout';
 
 
+// Shared Resources
+
+const ChatMessageType = {
+    CHAT: 'chat',
+    WHISPER: 'whisper',
+    SYSTEM: 'system',
+};
+
+const SharedDocument = {
+    CHAT_LOG: 'chat-log',
+    PARTY_NOTE: 'party-note',
+};
+
+// Service
+
 class _PartyService {
 
     constructor({ REFRESH_INTERVAL }) {
@@ -221,6 +236,22 @@ class _PartyService {
         this._setParty(null);
         this.resetTimers();
         this.shutdownConnection();
+    }
+
+    // Chat
+
+    getChatLog() {
+        return this.doc.getArray(SharedDocument.CHAT_LOG);
+    }
+
+    pushToChat(to, message, type=ChatMessageType.CHAT, options={}) {
+        this.getChatLog().push([{ to, message, type, options }]);
+    }
+
+    // Party Note
+
+    getPartyNote() {
+        return this.doc.getXmlFragment(SharedDocument.PARTY_NOTE);
     }
 
     // Private
