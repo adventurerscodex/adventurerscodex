@@ -12,14 +12,16 @@ import ko from 'knockout';
  * have equipped.
  */
 export class Item extends KOModel {
+
     constructor(params) {
         super(params);
         autoBind(this);
     }
+
     static __skeys__ = ['core', 'items'];
 
     static mapping = {
-        include: ['coreUuid', 'quantity']
+        include: ['coreUuid', 'quantity', 'parent' , 'children']
     }; // Not sure why quantity is required here, but without it
     // we cannot create a large 'quantity' of items
     static SHORT_DESCRIPTION_MAX_LENGTH = 100;
@@ -32,12 +34,27 @@ export class Item extends KOModel {
     weight = ko.observable(0);
     cost = ko.observable(0);
     currencyDenomination = ko.observable('');
+    contributesToTotalWeight = ko.observable(true);
+    isContainer = ko.observable(false);
+    isFixedWeight = ko.observable(false);
+    children = ko.observable([]);
+    parent = ko.observable(null);
 
     totalWeight = ko.pureComputed(() => {
+        let weight = 0;
+
         if (this.quantity() && this.weight()) {
-            return parseInt(this.quantity()) * parseFloat(this.weight());
+            weight += parseInt(this.quantity()) * parseFloat(this.weight());
         }
-        return 0;
+
+        if (!this.isFixedWeight()) {
+            weight += this.children().reduce(
+                (a, b) => (a + parseFloat(b.totalWeight())),
+                0
+            );
+        }
+
+        return weight;
     }, this);
 
     calculatedCost = ko.pureComputed(() => {
@@ -117,6 +134,14 @@ export class Item extends KOModel {
         return this.totalCost() !== '' ? this.totalCalculatedCost() + ' GP': '';
     }, this);
 
+    hasParent = ko.pureComputed(() => (
+        !!this.parent()
+    ));
+
+    hasChildren = ko.pureComputed(() => (
+        !!this.children().length
+    ));
+
     toSchemaValues = (values) => {
         if (values.cost === '') {
             values.cost = 0;
@@ -155,6 +180,28 @@ export class Item extends KOModel {
         Notifications.item.deleted.dispatch(this);
     }
 
+    /**
+     * Due to the recursive nature of Encounters, they require a custom import.
+     * This import performs the normal duties of mapping, but also calls
+     * importValues on the children, mapping all children recursively.
+     */
+    importValues = (values) => {
+        // Set aside these values because rendering the un-parsed children
+        // causes issues before we're done here.
+        const childrenValues = values.children || [];
+        values.children = [];
+
+        // Do initial mapping.
+        ko.mapping.fromJS(values, this._mapping, this);
+
+        // Recursively map the child encounters.
+        const children = childrenValues.map(childValues => {
+            const child = new Item();
+            child.importValues(childValues);
+            return child;
+        });
+        this.children(children);
+    };
 }
 
 Item.validationConstraints = {
@@ -184,6 +231,15 @@ Item.validationConstraints = {
         },
         currencyDenomination: {
             maxlength: 64
+        },
+        contributesToTotalWeight: {
+            type: 'checkbox',
+        },
+        isContainer: {
+            type: 'checkbox',
+        },
+        isFixedWeight: {
+            type: 'checkbox',
         }
     },
     rules: {

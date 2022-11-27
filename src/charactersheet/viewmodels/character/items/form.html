@@ -3,32 +3,46 @@
   <!-- ko if: $component.addForm -->
   <div class="h4 collapsable-card-title"> New Item </div>
   <!-- /ko -->
-  <div class="row"
-      data-bind="with: entity">
+  <div class="row" data-bind="with: entity">
     <div class="form-group col col-sm-12">
-      <label for="name"
-          class=" control-label">Name</label>
+      <label for="name" class=" control-label">Name</label>
       <!-- ko ifnot: $component.addForm -->
       <input type="text"
-          class="form-control"
-          placeholder="Rations"
-          name="name"
-          data-bind="value: name,
-               event: { blur: $component.reviewInput, invalid: $component.invalidate },
-               attr: { ...$component.validation.name }">
+        class="form-control"
+        placeholder="Rations"
+        name="name"
+        data-bind="
+          value: name,
+          event: {
+            blur: $component.reviewInput,
+            invalid: $component.invalidate
+          },
+          attr: { ...$component.validation.name }
+        "
+      >
       <!-- /ko -->
       <!-- ko if: $component.addForm -->
       <input type="text"
-          class="form-control"
-          placeholder="Rations"
-          name="name"
-          data-bind="value: name,
-               event: { blur: $component.reviewInput, invalid: $component.invalidate },
-               attr: { autocomplete: 'off', ...$component.validation.name },
-               hasFocus: $component.formElementHasFocus,
-               autocomplete: {
-                 source: $component.prePopFilter,
-                 onselect: $component.populate }">
+        class="form-control"
+        placeholder="Rations"
+        name="name"
+        data-bind="
+          value: name,
+          hasFocus: $component.formElementHasFocus,
+          event: {
+            blur: $component.reviewInput,
+            invalid: $component.invalidate
+          },
+          attr: {
+            autocomplete: 'off',
+            ...$component.validation.name
+          },
+          autocomplete: {
+            source: $component.prePopFilter,
+            onselect: $component.populate
+          }
+        "
+      >
       <compendium-help />
       <!-- /ko -->
     </div>
@@ -36,60 +50,211 @@
       <label for="weight"
           class="control-label">Weight</label>
       <div class="input-group">
-        <input class="form-control"
-            placeholder="Item Weight"
-            name="weight"
-            data-bind='value: weight,
-               event: { blur: $component.reviewInput, invalid: $component.invalidate },
-               attr: { ...$component.validation.weight }'>
+        <input
+          class="form-control"
+          placeholder="Item Weight"
+          name="weight"
+          data-bind="
+            value: weight,
+            attr: { ...$component.validation.weight },
+            event: {
+              blur: $component.reviewInput,
+              invalid: $component.invalidate
+            },
+          "
+        >
         <span class="input-group-addon no-top-bottom-padding"> lbs. </span>
       </div>
     </div>
     <div class="form-group col col-sm-6 col-lg-3">
-      <label for="quantity"
-          class="control-label">Quantity</label>
-      <input class="form-control"
-          placeholder="Item Quantity"
-          name="quantity"
-          data-bind="value: quantity,
-             event: { blur: $component.reviewInput, invalid: $component.invalidate },
-             attr: { ...$component.validation.quantity },">
+      <label for="quantity" class="control-label">
+        Quantity
+      </label>
+      <input
+        class="form-control"
+        placeholder="Item Quantity"
+        name="quantity"
+        data-bind="
+          value: quantity,
+          attr: { ...$component.validation.quantity },
+          event: {
+            blur: $component.reviewInput,
+            invalid: $component.invalidate
+          },
+        "
+      >
     </div>
-    <div class="form-group col col-sm-12 col-lg-6">
-      <label class="control-label">Cost</label>
+    <div class="form-group col col-sm-6 col-lg-3">
+      <label class="control-label">
+        Cost
+      </label>
       <div class="input-group">
-        <input class="form-control input-jquery-addon"
-            name="cost"
-            data-bind="value: cost,
-               event: { blur: $component.reviewInput, invalid: $component.invalidate },
-               attr: { ...$component.validation.cost }" />
+        <input
+          class="form-control input-jquery-addon"
+          name="cost"
+          data-bind="value: cost,
+            attr: { ...$component.validation.cost },
+            event: {
+              blur: $component.reviewInput,
+              invalid: $component.invalidate
+            },
+          "
+        />
         <span class="input-group-addon input-group-addon-jquery">
-          <input class="form-control"
-              placeholder="GP"
-              name="currencyDenomination"
-              data-bind="value: currencyDenomination,
-                 event: { blur: $component.reviewInput, invalid: $component.invalidate },
-                 attr: { ...$component.validation.currencyDenomination },
-                 autocomplete: {
-                      source: $component.currencyDenominationOptions,
-                      onselect: $component.setItemCurrencyDenomination
-                }">
+          <input
+            class="form-control"
+            placeholder="GP"
+            name="currencyDenomination"
+            data-bind="
+              value: currencyDenomination,
+              attr: { ...$component.validation.currencyDenomination },
+              event: {
+                blur: $component.reviewInput,
+                invalid: $component.invalidate
+              },
+              autocomplete: {
+                source: $component.currencyDenominationOptions,
+                onselect: $component.setItemCurrencyDenomination
+              }
+            "
+          />
         </span>
       </div>
     </div>
-    <div class="form-group col col-xs-12">
-      <label for="description"
-          class="control-label">Description</label>
+    <div class="form-group col col-sm-6 col-lg-3">
+      <label class="control-label hidden-xs">
+        &nbsp;
+      </label>
+      <div class="bordered rounded checkbox-padding">
+        <div class="checkbox m-0">
+          <label class="control-label">
+            <input
+              name="contributesToTotalWeight"
+              data-bind="
+                checked: contributesToTotalWeight,
+                attr: { ...$component.validation.contributesToTotalWeight },
+                event: {
+                  blur: $component.reviewInput,
+                  invalid: $component.invalidate
+                },
+              "
+            />
+          <!-- ko ifnot: hasParent -->
+            Include in Total Weight
+          <!-- /ko -->
+          <!-- ko if: hasParent -->
+            Include in Container Weight
+          <!-- /ko -->
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group col col-sm-6">
+      <label class="control-label" style="visibility: hidden;">
+        &nbsp;
+      </label>
+      <!-- Items cannot be nested. If we're in a container, do not allow another. -->
+      <!-- ko ifnot: hasParent -->
+      <div class="bordered rounded checkbox-padding">
+        <div class="checkbox m-0">
+          <label class="control-label">
+            <input
+              name="isContainer"
+              data-bind="
+                checked: isContainer,
+                disable: hasChildren,
+                attr: { ...$component.validation.isContainer },
+                event: {
+                  blur: $component.reviewInput,
+                  invalid: $component.invalidate,
+                  click: function() {
+                    $component.forceCardResize();
+                    return true;
+                  },
+                },
+              "
+            />
+            This item is a Container
+          </label>
+          <!-- ko if: hasChildren -->
+          <small class="text-muted">
+            <p>
+              Please remove all child items before unchecking this box.
+            </p>
+          </small>
+          <!-- /ko -->
+        </div>
+        <!-- ko if: isContainer -->
+        <div class="mt-1 pl-1 pr-1 pt-1 pb-1">
+          <h4>Container Settings</h4>
+          <div class="checkbox m-0">
+            <label class="control-label">
+              <input
+                name="isFixedWeight"
+                data-bind="
+                  checked: isFixedWeight,
+                  attr: { ...$component.validation.isFixedWeight },
+                  event: {
+                    blur: $component.reviewInput,
+                    invalid: $component.invalidate,
+                  },
+                "
+              />
+              This is a Fixed Weight Container
+            </label>
+            <small class="text-muted">
+              <p>
+                Fixed weight containers do not include the weight of their
+                contents as a part of their weight (e.g. Bag of Holding). Their
+                weight is only the weight of the container itself.
+              </p>
+            </small>
+          </div>
+        </div>
+        <!-- /ko -->
+      </div>
+      <!-- /ko -->
+    </div>
+    <div class="form-group col col-sm-6">
+      <!-- ko ifnot: isContainer -->
+      <label class="control-label">
+        Inside Container
+      </label>
+      <select
+        class="form-control"
+        data-bind="
+          options: $component.parentItemOptions,
+          optionsText: function(entity) {
+            return entity.name();
+          },
+          optionsValue: function(entity) {
+            return entity.url();
+          },
+          value: parent,
+          optionsCaption: 'Choose...'
+        "
+      ></select>
+      <!-- /ko -->
+    </div>
+    <div class="form-group col col-sm-12">
+      <label for="description" class="control-label">
+        Description
+      </label>
       <!-- ko if: $component.show -->
-      <textarea class="form-control"
-          placeholder="Rations consist of..."
-          rows="4"
-          data-bind='value: description,
-                event: { blur: $component.reviewInput, invalid: $component.invalidate },
-                markdownEditor: true'>
-     </textarea>
-      <small class="text-muted"> Text in this panel can be styled using Markdown. Click <a target="_blank"
-            href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">here</a> to see a guide. </small>
+      <textarea
+        class="form-control"
+        placeholder="Rations consist of..."
+        rows="4"
+        data-bind="
+          value: description,
+          markdownEditor: true,
+          event: {
+            blur: $component.reviewInput,
+            invalid: $component.invalidate
+          }
+        "
+      ></textarea>
+      <markdown-help></markdown-help>
       <!-- /ko -->
     </div>
     <form-submit-actions params="{

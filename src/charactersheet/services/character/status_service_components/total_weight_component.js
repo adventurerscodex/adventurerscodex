@@ -205,16 +205,11 @@ export function TotalWeightStatusServiceComponent() {
         }
     };
 
-    self.getWeightForMass = () => {
-        return reduce(self.allMass(), function(sum, item) {
-            const quantity = item.quantity ? item.quantity() : 1;
-            if (item.weight && item.weight() && quantity) {
-                const weightValue = parseFloat(item.weight()).toFixed(2) * quantity;
-                return sum + weightValue;
-            }
-            return sum;
-        }, 0);
-    };
+    self.getWeightForMass = () => (
+        reduce(self.allMass(), (a, b) => (
+            a + b.totalWeight()
+        ), 0)
+    );
 
     self.getWeightForWealth = () => {
         return self.wealth().totalWeight();

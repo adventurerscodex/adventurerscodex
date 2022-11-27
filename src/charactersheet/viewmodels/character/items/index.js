@@ -12,12 +12,14 @@ import ko from 'knockout';
 import template from './index.html';
 
 export class ItemsViewModel extends AbstractTabularViewModel {
+
     constructor(params) {
         super(params);
         this.addFormId = '#add-item';
         this.collapseAllId = '#item-pane';
         autoBind(this);
     }
+
     modelClass () {
         return Item;
     }
@@ -38,13 +40,25 @@ export class ItemsViewModel extends AbstractTabularViewModel {
         };
     }
 
-    totalCost = ko.pureComputed(() => {
-        return calculateTotalValue(this.entities(), 'cost');
-    });
+    totalCost = ko.pureComputed(() => (
+        calculateTotalValue(
+            this.entities().flatMap(entity => (
+                [entity, ...entity.children()]
+            )),
+            'cost'
+        )
+    ));
 
-    totalWeight = ko.pureComputed(() => {
-        return calculateTotalLoad(this.entities());
-    });
+    totalWeight = ko.pureComputed(() => (
+        calculateTotalLoad(this.entities(), 'totalWeight', null)
+    ));
+
+    // TODO: Add form should not add to main list if parent has value.
+
+    // TODO: Fix sorting
+
+    // TODO: Fix collapsing nested items
+
 }
 
 ko.components.register('items', {
