@@ -52,6 +52,10 @@
       <div class="row">
         <div class="col-xs-12" data-bind="visible: player.maxHitPoints">
           Hit Points
+          <span class="text-muted pull-right">
+            <small data-bind="text: currentHp()"></small> /
+            <small data-bind="text: currentMaxHp()"></small>
+          </span>
           <div class="progress thin">
             <div class="progress thin">
               <div
@@ -78,9 +82,13 @@
           </div>
         </div>
       </div>
-      <div class="row" data-bind="visible: player.totalSpellSlots">
+      <div class="row">
         <div class="col-xs-12">
           Spell Slots
+          <span class="text-muted pull-right">
+            <small data-bind="text: currentSpellSlots()"></small> /
+            <small data-bind="text: currentMaxSpellSlots()"></small>
+          </span>
           <div class="progress thin">
             <div
               class="progress-bar progress-bar-info"
@@ -93,9 +101,13 @@
           </div>
         </div>
       </div>
-      <div class="row" data-bind="visible: player.totalTrackables">
+      <div class="row">
         <div class="col-xs-12">
           Features, Feats, and Traits
+          <span class="text-muted pull-right">
+            <small data-bind="text: currentTrackables()"></small> /
+            <small data-bind="text: currentMaxTrackables()"></small>
+          </span>
           <div class="progress thin">
             <div
               class="progress-bar progress-bar-warning"
@@ -111,33 +123,33 @@
       <div class="row">
         <div class="col-xs-12 col-padded">
           <table class="table table-striped table-condensed">
-            <tr data-bind="visible: player.armorClass">
+            <tr>
               <th scope="row">Armor Class</th>
-              <td data-bind="text: player.armorClass"></td>
+              <td data-bind="text: player.armorClass || 0"></td>
             </tr>
-            <tr data-bind="visible: player.hitDice">
+            <tr>
               <th scope="row">Hit Dice</th>
-              <td data-bind="text: player.hitDice"></td>
+              <td data-bind="text: player.hitDice || 0"></td>
             </tr>
-            <tr data-bind="visible: player.spellSaveDc">
+            <tr>
               <th scope="row">Spell Save DC</th>
-              <td data-bind="text: player.spellSaveDc"></td>
+              <td data-bind="text: player.spellSaveDc || 0"></td>
             </tr>
-            <tr data-bind="visible: player.experience">
+            <tr>
               <th scope="row">Experience</th>
-              <td data-bind="text: player.experience"></td>
+              <td data-bind="text: player.experience || 0"></td>
             </tr>
-            <tr data-bind="visible: player.passivePerception">
+            <tr>
               <th scope="row">Passive Perception</th>
-              <td data-bind="text: player.passivePerception"></td>
+              <td data-bind="text: player.passivePerception || 0"></td>
             </tr>
-            <tr data-bind="visible: player.passiveInvestigation">
+            <tr>
               <th scope="row">Passive Investigation</th>
-              <td data-bind="text: player.passiveInvestigation"></td>
+              <td data-bind="text: player.passiveInvestigation || 0"></td>
             </tr>
-            <tr data-bind="visible: player.worthInGold">
+            <tr>
               <th scope="row">Gold</th>
-              <td data-bind="text: '~' + player.worthInGold"></td>
+              <td data-bind="text: '~' + player.worthInGold || 0"></td>
             </tr>
           </table>
         </div>
