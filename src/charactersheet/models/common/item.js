@@ -87,15 +87,21 @@ export class Item extends KOModel {
     }, this);
 
     totalCalculatedCost = ko.pureComputed(() => {
+        let costInGold = 0;
         if (this.quantity() &&
             this.quantity() > 0 &&
             this.cost() &&
             this.cost() > 0 &&
             this.currencyDenomination() &&
             this.currencyDenomination() != '') {
-            return parseInt(this.quantity()) * parseFloat(this.calculatedCost());
+            costInGold = parseInt(this.quantity()) * parseFloat(this.calculatedCost());
         }
-        return 0;
+        costInGold += this.children().reduce(
+            (a, b) => (a + parseFloat(b.totalCalculatedCost())),
+            0
+        );
+
+        return costInGold;
     }, this);
 
     shortDescription = ko.pureComputed(() => {
@@ -131,7 +137,16 @@ export class Item extends KOModel {
     }, this);
 
     totalCalculatedCostLabel = ko.pureComputed(() => {
-        return this.totalCost() !== '' ? this.totalCalculatedCost() + ' GP': '';
+        if (this.totalCalculatedCost() === '') {
+            return '';
+        }
+        if (this.totalCalculatedCost() >= 1) {
+            return this.totalCalculatedCost() + ' GP';
+        }
+        if (this.totalCalculatedCost() >= 0.1) {
+            return this.totalCalculatedCost() * 10 + ' SP';
+        }
+        return this.totalCalculatedCost() * 100 + ' CP';
     }, this);
 
     hasParent = ko.pureComputed(() => (

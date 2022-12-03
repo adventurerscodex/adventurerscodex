@@ -154,8 +154,9 @@
         &nbsp;
       </label>
       <!-- Items cannot be nested. If we're in a container, do not allow another. -->
-      <!-- ko ifnot: hasParent -->
       <div class="bordered rounded checkbox-padding">
+        <!-- ko if: $component.addForm -->
+
         <div class="checkbox m-0">
           <label class="control-label">
             <input
@@ -176,14 +177,8 @@
             />
             This item is a Container
           </label>
-          <!-- ko if: hasChildren -->
-          <small class="text-muted">
-            <p>
-              Please remove all child items before unchecking this box.
-            </p>
-          </small>
-          <!-- /ko -->
         </div>
+        <!-- /ko -->
         <!-- ko if: isContainer -->
         <div class="mt-1 pl-1 pr-1 pt-1 pb-1">
           <h4>Container Settings</h4>
@@ -213,7 +208,6 @@
         </div>
         <!-- /ko -->
       </div>
-      <!-- /ko -->
     </div>
     <div class="form-group col col-sm-6">
       <!-- ko ifnot: isContainer -->

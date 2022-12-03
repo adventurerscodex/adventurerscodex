@@ -4,8 +4,9 @@ import {
     calculateTotalValue
 } from 'charactersheet/viewmodels/abstract';
 import { Item } from 'charactersheet/models/common';
+import { ItemContainerViewModel } from './container';
 import { ItemFormViewModel } from './form';
-import { Notifications } from 'charactersheet/utilities';
+import { ItemViewModel } from './view';
 
 import autoBind from 'auto-bind';
 import ko from 'knockout';
@@ -41,12 +42,7 @@ export class ItemsViewModel extends AbstractTabularViewModel {
     }
 
     totalCost = ko.pureComputed(() => (
-        calculateTotalValue(
-            this.entities().flatMap(entity => (
-                [entity, ...entity.children()]
-            )),
-            'cost'
-        )
+        calculateTotalValue(this.entities(), 'totalCalculatedCost', null)
     ));
 
     totalWeight = ko.pureComputed(() => (

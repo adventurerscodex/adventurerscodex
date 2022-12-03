@@ -1,0 +1,79 @@
+<div style="margin-bottom: 0px;" class="well inventory-well collapse" data-bind="class: `item_list_${entity().uuid()}`">
+    <div class="h4 inventory-well-title collapsable-card-title">Contents</div>
+    <table class="table table-responsive table-ac-bordered table-hover">
+    <thead>
+      <tr class="ac-table-header">
+        <th data-bind="click: function(){sortBy('name');}"> Item <span data-bind="css: sortArrow('name')" />
+        </th>
+        <th data-bind="click: function(){sortBy('quantity');}">
+          <span class="hidden-xs hidden-sm">Quantity</span>
+          <span class="visible-xs visible-sm">Qty</span>
+          <span data-bind="css: sortArrow('quantity')" />
+        </th>
+        <th class="hidden-xs"
+            data-bind="click: function(){sortBy('totalWeight');}"> Total Weight <span data-bind="css: sortArrow('totalWeight')" />
+        </th>
+        <th class="hidden-xs"
+            data-bind="click: function(){sortBy('totalCalculatedCost');}"> Total Value <span data-bind="css: sortArrow('totalCalculatedCost')" />
+        </th>
+        <th class="col-xss-1 text-right">
+          <a href="#"
+              data-bind="{click: collapseAll}">
+            <span class="fa fa-minus" />
+          </a>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- ko foreach: filteredAndSortedEntities -->
+      <tr class="clickable expandRow"
+          data-toggle="collapse"
+          data-bind="attr:{'data-target': `#item_list_${$parent.entity().uuid()}_${$data.uuid()}`, 'data-parent': `${$component.containerId}`}">
+        <td>
+           <span data-bind="text: $component.shortText(name)" />
+        </td>
+        <td><span data-bind="text: quantity" /></td>
+        <td class="hidden-xs"><span data-bind="text: totalWeightLabel" /></td>
+        <td class="hidden-xs"><span data-bind="text: totalCostLabel" /></td>
+        <td class="col-xs-1 text-right">
+          <span data-toggle="collapse"
+              data-bind="attr:{'data-target': `#item_list_${$parent.entity().uuid()}_${$data.uuid()}`}"
+              class="rotate fa fa-chevron-left" />
+        </td>
+      </tr>
+      <tr class="collapseRow">
+        <td colspan="5">
+          <flip-card params="{
+                    dataId: $data.uuid,
+                    tabId: $parent.tabId,
+                    collapsable: true,
+                    elementId: `item_list_${$parent.entity().uuid()}`,
+                    onResize: $parent.forceCardResize,
+                    context: { data: $data }
+                  }">
+            <div class="front">
+              <item-view params="{
+                containerId: elementId,
+                show: showFront,
+                forceCardResize: forceCardResize,
+                flip: flip,
+                data: context.data
+              }"></item-view>
+            </div>
+            <div class="back">
+              <item-form params="{
+                    data: context.data,
+                    tabId: $parent.tabId,
+                    containerId: elementId,
+                    show: showBack,
+                    flip: flip,
+                    forceCardResize: forceCardResize,
+                }"></item-form>
+            </div>
+          </flip-card>
+        </td>
+      </tr>
+      <!-- /ko -->
+    </tbody>
+  </table>
+</div>
