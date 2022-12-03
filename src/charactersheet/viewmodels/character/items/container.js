@@ -53,6 +53,7 @@ export class ItemContainerViewModel extends AbstractTabularViewModel {
             const coreKey = CoreManager.activeCore().uuid();
             await this.entity().load({uuid: coreKey});
         }
+        this.entities(this.entity().children());
     }
 
     sorts() {
@@ -71,15 +72,42 @@ export class ItemContainerViewModel extends AbstractTabularViewModel {
         };
     }
 
-    filteredAndSortedEntities = ko.pureComputed(
-        () => SortService.sortAndFilter(
-            this.entity().children(),
-            this.sort(),
-            null)
-    );
-
     collapseAll() {
         $(this.collapseAllId + ' .collapse.in').collapse('hide');
+    }
+
+    contains(item) {
+        return this.entities().find(e=>e.uuid() === item.uuid()) !== undefined;
+    }
+
+    isTheParentOf(item) {
+        return ko.utils.unwrapObservable(item.hasParent) && this.entity().url() === item.parent();
+    }
+
+    addToList(item) {
+        if (item && this.isTheParentOf(item)) {
+            super.addToList(item);
+        }
+    }
+
+    replaceInList(item) {
+        if (item) {
+            if (this.contains(item)) {
+                if (!this.isTheParentOf(item)) {
+                    super.removeFromList(item);
+                } else { 
+                    super.replaceInList(item);
+                }
+            } else if (this.isTheParentOf(item)) {
+                super.addToList(item);
+            }
+        }
+    }
+
+    removeFromList(item) {
+        if (item && this.contains(item)) {
+            super.removeFromList(item);
+        }
     }
 
 }

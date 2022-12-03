@@ -49,6 +49,34 @@ export class ItemsViewModel extends AbstractTabularViewModel {
         calculateTotalLoad(this.entities(), 'totalWeight', null)
     ));
 
+    contains(item) {
+        return this.entities().find(e=>e.uuid() === item.uuid()) !== undefined;
+    }
+
+    addToList(item) {
+        if (item && !ko.utils.unwrapObservable(item.hasParent)) {
+            super.addToList(item);
+        }
+    }
+
+    replaceInList(item) {
+        if (item) {
+            if (ko.utils.unwrapObservable(item.hasParent)) {
+                super.removeFromList(item);
+            } else if (!this.contains(item)) {
+                super.addToList(item);
+            } else {
+                super.replaceInList(item);
+            }
+        }
+    }
+
+    removeFromList(item) {
+        if (item && this.contains(item)) {
+            super.removeFromList(item);
+        }
+    }
+
     // TODO: Add form should not add to main list if parent has value.
 
     // TODO: Fix sorting

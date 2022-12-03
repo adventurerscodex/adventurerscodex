@@ -6,6 +6,7 @@ import {
 import { KOModel } from 'hypnos';
 import autoBind from 'auto-bind';
 import ko from 'knockout';
+import { map } from 'lodash';
 
 /**
  * Models an item in the user's backpack or something they
@@ -89,11 +90,7 @@ export class Item extends KOModel {
     totalCalculatedCost = ko.pureComputed(() => {
         let costInGold = 0;
         if (this.quantity() &&
-            this.quantity() > 0 &&
-            this.cost() &&
-            this.cost() > 0 &&
-            this.currencyDenomination() &&
-            this.currencyDenomination() != '') {
+            this.quantity() > 0) {
             costInGold = parseInt(this.quantity()) * parseFloat(this.calculatedCost());
         }
         costInGold += this.children().reduce(
@@ -192,6 +189,11 @@ export class Item extends KOModel {
 
     async delete () {
         await this.ps.delete();
+        if (this.isContainer()) {
+            map(this.children(), (child)=> {
+                Notifications.item.changed.dispatch(child);
+            });
+        }
         Notifications.item.deleted.dispatch(this);
     }
 
