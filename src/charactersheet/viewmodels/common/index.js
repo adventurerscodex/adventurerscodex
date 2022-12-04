@@ -9,6 +9,7 @@ export * from './notes';
 export * from './party';
 export * from './party_manager';
 export * from './player_card';
+export * from './party_note';
 export * from './party_status';
 export * from './patron_of_the_day';
 export * from './root';
