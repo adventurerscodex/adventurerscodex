@@ -72,17 +72,10 @@ export class ItemsViewModel extends AbstractTabularViewModel {
     }
 
     removeFromList(item) {
-        if (item && this.contains(item)) {
+        if (item && !ko.utils.unwrapObservable(item.hasParent)) {
             super.removeFromList(item);
         }
     }
-
-    // TODO: Add form should not add to main list if parent has value.
-
-    // TODO: Fix sorting
-
-    // TODO: Fix collapsing nested items
-
 }
 
 ko.components.register('items', {

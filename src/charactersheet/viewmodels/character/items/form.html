@@ -46,27 +46,46 @@
       <compendium-help />
       <!-- /ko -->
     </div>
-    <div class="form-group col col-sm-6 col-lg-3">
-      <label for="weight"
-          class="control-label">Weight</label>
-      <div class="input-group">
-        <input
-          class="form-control"
-          placeholder="Item Weight"
-          name="weight"
-          data-bind="
-            value: weight,
-            attr: { ...$component.validation.weight },
-            event: {
-              blur: $component.reviewInput,
-              invalid: $component.invalidate
-            },
-          "
-        >
-        <span class="input-group-addon no-top-bottom-padding"> lbs. </span>
-      </div>
+    <div class="form-group col col-sm-6 col-md-4">
+    <!-- ko if: $component.addForm-->
+    <input type='checkbox'
+        class='ac-checkbox sr-only'
+        data-bind="checked: isContainer,
+        disable: quantity > 1,
+        attr: {id: `${$component.containerId}_isContainer`,
+        ...$component.validation.isContainer},
+        event: { 
+          blur: $component.reviewInput,
+          invalid: $component.invalidate,
+        }">
+      </input>
+      <!-- /ko -->
+      <!-- ko ifnot: $component.addForm -->
+      <input type='checkbox'
+        class='ac-checkbox sr-only'
+        disabled
+        data-bind="checked: isContainer,
+        attr: {id: `${$component.containerId}_isContainer`,
+        ...$component.validation.isContainer},
+        event: { 
+          blur: $component.reviewInput,
+          invalid: $component.invalidate,
+        }">
+      </input>
+       <!-- /ko -->
+      <label for="isContainer"
+      data-bind="attr: {for: `${$component.containerId}_isContainer`}"
+      class='control-label'>
+        This is a Container
+      </label>
+      <small class="text-muted">
+        <p>
+          Containers can hold other items. This property cannot be changed once it is set.
+        </p>
+      </small>
     </div>
-    <div class="form-group col col-sm-6 col-lg-3">
+
+    <div class="form-group col col-sm-6 col-md-4">
       <label for="quantity" class="control-label">
         Quantity
       </label>
@@ -76,6 +95,7 @@
         name="quantity"
         data-bind="
           value: quantity,
+          disable: isContainer,
           attr: { ...$component.validation.quantity },
           event: {
             blur: $component.reviewInput,
@@ -83,8 +103,21 @@
           },
         "
       >
+      <p class="help-block">
+      <!-- ko ifnot: isContainer -->
+      <small class="text-muted">
+        More than one? 
+      </small>
+      <!-- /ko -->
+      <!-- ko if: isContainer -->
+      <small class="text-muted">
+          Each container must be listed individually. 
+      </small>
+      <!-- /ko -->
+    </p>
     </div>
-    <div class="form-group col col-sm-6 col-lg-3">
+
+    <div class="form-group col col-sm-6 col-md-4">
       <label class="control-label">
         Cost
       </label>
@@ -100,7 +133,7 @@
             },
           "
         />
-        <span class="input-group-addon input-group-addon-jquery">
+        <span style="min-width: 90px" class="input-group-addon input-group-addon-jquery">
           <input
             class="form-control"
             placeholder="GP"
@@ -121,95 +154,9 @@
         </span>
       </div>
     </div>
-    <div class="form-group col col-sm-6 col-lg-3">
-      <label class="control-label hidden-xs">
-        &nbsp;
-      </label>
-      <div class="bordered rounded checkbox-padding">
-        <div class="checkbox m-0">
-          <label class="control-label">
-            <input
-              name="contributesToTotalWeight"
-              data-bind="
-                checked: contributesToTotalWeight,
-                attr: { ...$component.validation.contributesToTotalWeight },
-                event: {
-                  blur: $component.reviewInput,
-                  invalid: $component.invalidate
-                },
-              "
-            />
-          <!-- ko ifnot: hasParent -->
-            Include in Total Weight
-          <!-- /ko -->
-          <!-- ko if: hasParent -->
-            Include in Container Weight
-          <!-- /ko -->
-          </label>
-        </div>
-      </div>
-    </div>
-    <div class="form-group col col-sm-6">
-      <label class="control-label" style="visibility: hidden;">
-        &nbsp;
-      </label>
-      <!-- Items cannot be nested. If we're in a container, do not allow another. -->
-      <div class="bordered rounded checkbox-padding">
-        <!-- ko if: $component.addForm -->
 
-        <div class="checkbox m-0">
-          <label class="control-label">
-            <input
-              name="isContainer"
-              data-bind="
-                checked: isContainer,
-                disable: hasChildren,
-                attr: { ...$component.validation.isContainer },
-                event: {
-                  blur: $component.reviewInput,
-                  invalid: $component.invalidate,
-                  click: function() {
-                    $component.forceCardResize();
-                    return true;
-                  },
-                },
-              "
-            />
-            This item is a Container
-          </label>
-        </div>
-        <!-- /ko -->
-        <!-- ko if: isContainer -->
-        <div class="mt-1 pl-1 pr-1 pt-1 pb-1">
-          <h4>Container Settings</h4>
-          <div class="checkbox m-0">
-            <label class="control-label">
-              <input
-                name="isFixedWeight"
-                data-bind="
-                  checked: isFixedWeight,
-                  attr: { ...$component.validation.isFixedWeight },
-                  event: {
-                    blur: $component.reviewInput,
-                    invalid: $component.invalidate,
-                  },
-                "
-              />
-              This is a Fixed Weight Container
-            </label>
-            <small class="text-muted">
-              <p>
-                Fixed weight containers do not include the weight of their
-                contents as a part of their weight (e.g. Bag of Holding). Their
-                weight is only the weight of the container itself.
-              </p>
-            </small>
-          </div>
-        </div>
-        <!-- /ko -->
-      </div>
-    </div>
-    <div class="form-group col col-sm-6">
+    <div class="clearfix visible-md-block visible-lg-block"></div>
+    <div class="form-group col col-sm-6 col-md-4">
       <!-- ko ifnot: isContainer -->
       <label class="control-label">
         Inside Container
@@ -225,11 +172,91 @@
             return entity.url();
           },
           value: parent,
-          optionsCaption: 'Choose...'
+          optionsCaption: 'No container'
         "
       ></select>
       <!-- /ko -->
+
+      <!-- ko if: isContainer -->
+      <input type='checkbox'
+        class='ac-checkbox sr-only'
+        data-bind="checked: isFixedWeight,
+        attr: {id: `${$component.containerId}_isFixedWeight`,
+        ...$component.validation.isFixedWeight},
+        event: { 
+          blur: $component.reviewInput,
+          invalid: $component.invalidate,
+        }">
+      </input>
+      <label for="isFixedWeight"
+      data-bind="attr: {for: `${$component.containerId}_isFixedWeight`}"
+      class='control-label'>
+      This is a Fixed Weight Container
+      </label>
+      <small class="text-muted">
+        <p>
+          Fixed weight containers make their contents weightless (like a Bag of Holding). 
+          Only the weight of the container itself counts.
+        </p>
+      </small>
+    <!-- /ko -->
     </div>
+    <div class="clearfix visible-sm-block"></div>
+
+    <div class="form-group col col-sm-6 col-md-4">
+      <label for="weight"
+          class="control-label">Weight</label>
+      <div class="input-group">
+        <input
+          class="form-control"
+          placeholder="Item Weight"
+          name="weight"
+          data-bind="
+            value: weight,
+            attr: { ...$component.validation.weight },
+            event: {
+              blur: $component.reviewInput,
+              invalid: $component.invalidate
+            },
+          "
+        >
+        <span class="input-group-addon no-top-bottom-padding"> lbs. </span>
+      </div>
+    </div>
+
+    <div class="form-group col col-sm-6 col-md-4">
+      <input type='checkbox'
+        class='ac-checkbox sr-only'
+        data-bind="checked: contributesToTotalWeight,
+        attr: {id: `${$component.containerId}_contributesToTotalWeight`,
+        ...$component.validation.contributesToTotalWeight},
+        event: { 
+          blur: $component.reviewInput,
+          invalid: $component.invalidate,
+        }">
+      </input>
+      <label for="contributesToTotalWeight"
+      data-bind="attr: {for: `${$component.containerId}_contributesToTotalWeight`}"
+      class='control-label'>
+        <!-- ko ifnot: hasParent -->
+          Include in Total Weight
+        <!-- /ko -->
+        <!-- ko if: hasParent -->
+          Include in Container Weight
+        <!-- /ko -->
+      </label>
+      <small class="text-muted">
+        <p>
+         Not carrying this item? Then it
+         <!-- ko if: isContainer -->
+         and everything it contains
+         <!-- /ko -->
+         won't count againt encumberance. 
+        </p>
+      </small>
+    </div>
+
+    
     <div class="form-group col col-sm-12">
       <label for="description" class="control-label">
         Description
