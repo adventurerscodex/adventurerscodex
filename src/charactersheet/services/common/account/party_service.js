@@ -24,11 +24,13 @@ const SharedDocument = {
 
 class _PartyService {
 
-    constructor({ REFRESH_INTERVAL }) {
+    constructor({ REFRESH_INTERVAL, CHAT_LOG_MAX_ITEMS, EVENT_LOG_MAX_ITEMS }) {
         autoBind(this);
 
         this.party = null;
         this.refreshInterval = REFRESH_INTERVAL;
+        this.maxChatItems = CHAT_LOG_MAX_ITEMS;
+        this.maxEventItems = EVENT_LOG_MAX_ITEMS;
 
         this.setupNotifications();
     }
@@ -239,8 +241,18 @@ class _PartyService {
         return this.doc.getArray(SharedDocument.CHAT_LOG);
     }
 
+    /**
+     * Add an item to end of the chat log. This method also automatically
+     * trims the log to the required length at the same time if needed.
+     */
     pushToChatLog(message, to=null, options={}) {
-        this.getChatLog().push([{ to, message, options }]);
+        this.doc.transact(() => {
+            this.getChatLog().push([{ message, to, options }]);
+            const itemsToDelete = this.getChatLog().length - this.maxChatItems;
+            if (itemsToDelete > 0) {
+                this.getChatLog().delete(0, itemsToDelete);
+            }
+        });
     }
 
     // Events
@@ -249,8 +261,18 @@ class _PartyService {
         return this.doc.getArray(SharedDocument.EVENT_LOG);
     }
 
+    /**
+     * Add an item to end of the event log. This method also automatically
+     * trims the log to the required length at the same time if needed.
+     */
     pushToEventLog(message, to=null, options={}) {
-        this.getChatLog().push([{ message, to, options }]);
+        this.doc.transact(() => {
+            this.getEventLog().push([{ message, to, options }]);
+            const itemsToDelete = this.getEventLog().length - this.maxEventItems;
+            if (itemsToDelete > 0) {
+                this.getEventLog().delete(0, itemsToDelete);
+            }
+        });
     }
 
     // Party Note
@@ -307,4 +329,6 @@ class _PartyService {
 
 export const PartyService = new _PartyService({
     REFRESH_INTERVAL: 300000,  // 5 minutes
+    CHAT_LOG_MAX_ITEMS: 1000,
+    EVENT_LOG_MAX_ITEMS: 1000,
 });
