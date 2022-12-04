@@ -238,19 +238,48 @@ class _PartyService {
     // Chat
 
     getChatLog() {
-        return this.doc.getArray(SharedDocument.CHAT_LOG);
+        return this.doc.getArray(SharedDocument.CHAT_LOG).toArray();
+    }
+
+    /**
+     * Add an observer to the chat log. This allows you to be notified of
+     * changes and update other components when messages arrive.
+     */
+    observeChatLog(callback) {
+        this.doc.getArray(SharedDocument.CHAT_LOG).observe(event => {
+            try {
+                callback(event);
+            } catch(error) {
+                console.log(`Error in chat log observer:`, error);
+            }
+        });
     }
 
     /**
      * Add an item to end of the chat log. This method also automatically
      * trims the log to the required length at the same time if needed.
+     *
+     * Sending a global message to all participants can be done by simply
+     * calling `pushToChatLog("some message")` with no additional parameters.
+     *
+     * Whisper messages are defined as messages with at least one recipient.
+     * For example: `pushToChatLog("some message", ["user1", "user2"])`
+     *
+     * Formatting can be applied to messages by specifying various options.
      */
     pushToChatLog(message, to=null, options={}) {
+        if (!!to && !Array.isArray(to)) {
+            throw new Error(
+                'Invalid Parameter: to= parameter was given, but it is not an array.'
+            )
+        }
+
         this.doc.transact(() => {
-            this.getChatLog().push([{ message, to, options }]);
-            const itemsToDelete = this.getChatLog().length - this.maxChatItems;
+            const log = this.doc.getArray(SharedDocument.CHAT_LOG)
+            log.push([{ message, to, options }]);
+            const itemsToDelete = log.length - this.maxChatItems;
             if (itemsToDelete > 0) {
-                this.getChatLog().delete(0, itemsToDelete);
+                log.delete(0, itemsToDelete);
             }
         });
     }
@@ -258,19 +287,49 @@ class _PartyService {
     // Events
 
     getEventLog() {
-        return this.doc.getArray(SharedDocument.EVENT_LOG);
+        return this.doc.getArray(SharedDocument.EVENT_LOG).toArray();
+    }
+
+    /**
+     * Add an observer to the event log. This allows you to be notified of
+     * changes and update other components when messages arrive.
+     */
+    observeEventLog(callback) {
+        this.doc.getArray(SharedDocument.EVENT_LOG).observe(event => {
+            try {
+                callback(event);
+            } catch(error) {
+                console.log(`Error in event log observer:`, error);
+            }
+        });
     }
 
     /**
      * Add an item to end of the event log. This method also automatically
      * trims the log to the required length at the same time if needed.
+     *
+     * Sending a global message to all participants can be done by simply
+     * calling `pushToChatLog("some message")` with no additional parameters.
+     *
+     * Whisper messages are defined as messages with at least one recipient.
+     * For example: `pushToChatLog("some message", ["user1", "user2"])`
+     *
+     * Send additional options via the options parameter. This could include
+     * transactional information as well as other values.
      */
-    pushToEventLog(message, to=null, options={}) {
+    pushToEventLog(message, to=[], options={}) {
+        if (!!to && !Array.isArray(to)) {
+            throw new Error(
+                'Invalid Parameter: to= parameter was given, but it is not an array.'
+            )
+        }
+
         this.doc.transact(() => {
-            this.getEventLog().push([{ message, to, options }]);
-            const itemsToDelete = this.getEventLog().length - this.maxEventItems;
+            const log = this.doc.getArray(SharedDocument.EVENT_LOG);
+            log.push([{ message, to, options }]);
+            const itemsToDelete = log.length - this.maxEventItems;
             if (itemsToDelete > 0) {
-                this.getEventLog().delete(0, itemsToDelete);
+                log.delete(0, itemsToDelete);
             }
         });
     }
