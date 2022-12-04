@@ -48,8 +48,9 @@
     </div>
     <div class="form-group col col-sm-6 col-md-4">
     <!-- ko if: $component.addForm-->
-    <input type='checkbox'
+      <input type='checkbox'
         class='ac-checkbox sr-only'
+        name="isContainer"
         data-bind="checked: isContainer,
         disable: quantity > 1,
         attr: {id: `${$component.containerId}_isContainer`,
@@ -63,6 +64,7 @@
       <!-- ko ifnot: $component.addForm -->
       <input type='checkbox'
         class='ac-checkbox sr-only'
+        name="isContainer"
         disabled
         data-bind="checked: isContainer,
         attr: {id: `${$component.containerId}_isContainer`,
@@ -226,6 +228,7 @@
 
     <div class="form-group col col-sm-6 col-md-4">
       <input type='checkbox'
+        name="contributesToTotalWeight"
         class='ac-checkbox sr-only'
         data-bind="checked: contributesToTotalWeight,
         attr: {id: `${$component.containerId}_contributesToTotalWeight`,

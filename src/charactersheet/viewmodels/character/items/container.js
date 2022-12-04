@@ -1,10 +1,9 @@
 import {
     AbstractTabularViewModel
 } from 'charactersheet/viewmodels/abstract';
-import { CoreManager } from 'charactersheet/utilities';
+import { CoreManager, Notifications } from 'charactersheet/utilities';
 import { Item } from 'charactersheet/models/common';
 import { SortService } from 'charactersheet/services/common';
-
 import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './container.html';
@@ -36,6 +35,16 @@ export class ItemContainerViewModel extends AbstractTabularViewModel {
         return newEntity;
     }
 
+    emptyContainer() {
+        this.entities().map(this.removeFromContainer);
+    }
+
+    async removeFromContainer(item) {
+        item.parent(null);
+        await item.save();
+        this.removeFromList(item);
+    }
+
     async load() {
         this.entity(this.generateBlank());
         await this.refresh();
@@ -63,8 +72,8 @@ export class ItemContainerViewModel extends AbstractTabularViewModel {
             'quantity desc': { field: 'quantity', direction: 'desc', numeric: true},
             'weight asc': { field: 'weight', direction: 'asc', numeric: true},
             'weight desc': { field: 'weight', direction: 'desc', numeric: true},
-            'totalWeight asc': { field: 'totalWeight', direction: 'asc', numeric: true},
-            'totalWeight desc': { field: 'totalWeight', direction: 'desc', numeric: true},
+            'totalCalculatedWeight asc': { field: 'totalCalculatedWeight', direction: 'asc', numeric: true},
+            'totalCalculatedWeight desc': { field: 'totalCalculatedWeight', direction: 'desc', numeric: true},
             'cost asc': { field: 'cost', direction: 'asc', numeric: true},
             'cost desc': { field: 'cost', direction: 'desc', numeric: true},
             'totalCalculatedCost asc': { field: 'totalCalculatedCost', direction: 'asc', numeric: true},
@@ -87,6 +96,7 @@ export class ItemContainerViewModel extends AbstractTabularViewModel {
     addToList(item) {
         if (item && this.isTheParentOf(item)) {
             super.addToList(item);
+            Notifications.item.changed.dispatch(this.entity());
         }
     }
 
@@ -94,12 +104,14 @@ export class ItemContainerViewModel extends AbstractTabularViewModel {
         if (item) {
             if (this.contains(item)) {
                 if (!this.isTheParentOf(item)) {
-                    super.removeFromList(item);
+                    this.removeFromList(item);
                 } else { 
                     super.replaceInList(item);
                 }
+                Notifications.item.changed.dispatch(this.entity());
             } else if (this.isTheParentOf(item)) {
-                super.addToList(item);
+                this.addToList(item);
+                Notifications.item.changed.dispatch(this.entity());
             }
         }
     }
@@ -107,6 +119,7 @@ export class ItemContainerViewModel extends AbstractTabularViewModel {
     removeFromList(item) {
         if (item && this.contains(item)) {
             super.removeFromList(item);
+            Notifications.item.changed.dispatch(this.entity());
         }
     }
 

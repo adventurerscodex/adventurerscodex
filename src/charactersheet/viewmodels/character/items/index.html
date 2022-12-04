@@ -5,15 +5,17 @@
   <table class="table table-responsive table-ac-bordered table-hover">
     <thead>
       <tr class="ac-table-header">
-        <th data-bind="click: function(){sortBy('name');}"> Item <span data-bind="css: sortArrow('name')" />
-        </th>
+        <th data-bind="click: function(){sortBy('isContainer');}">  <i class="fa fa-shopping-bag"></i><span data-bind="css: sortArrow('isContainer')" />
+          </th>
+          <th data-bind="click: function(){sortBy('name');}"> Item <span data-bind="css: sortArrow('name')" />
+          </th>
         <th data-bind="click: function(){sortBy('quantity');}">
           <span class="hidden-xs hidden-sm">Quantity</span>
           <span class="visible-xs visible-sm">Qty</span>
           <span data-bind="css: sortArrow('quantity')" />
         </th>
         <th class="hidden-xs"
-            data-bind="click: function(){sortBy('totalWeight');}"> Total Weight <span data-bind="css: sortArrow('totalWeight')" />
+            data-bind="click: function(){sortBy('totalCalculatedWeight');}"> Total Weight <span data-bind="css: sortArrow('totalWeight')" />
         </th>
         <th class="hidden-xs"
             data-bind="click: function(){sortBy('totalCalculatedCost');}"> Total Value <span data-bind="css: sortArrow('totalCalculatedCost')" />
@@ -35,14 +37,16 @@
       <tr class="clickable expandRow"
           data-toggle="collapse"
           data-bind="attr:{'data-target': `#item_list_${$data.uuid()}`}">
+          <td data-toggle="collapse" data-bind="attr:{'data-target': `.item_list_${$data.uuid()}`}">
+            <!-- ko if: isContainer -->
+            <i class="fa fa-shopping-bag"></i>
+            <!-- /ko -->
+         </td>
         <td data-toggle="collapse" data-bind="attr:{'data-target': `.item_list_${$data.uuid()}`}">
-           <!-- ko if: isContainer -->
-           <i class="fa fa-folder"></i>
-           <!-- /ko -->
            <span data-bind="text: $component.shortText(name)" />
         </td>
         <td data-toggle="collapse" data-bind="attr:{'data-target': `.item_list_${$data.uuid()}`}"><span data-bind="text: quantity" /></td>
-        <td class="hidden-xs" data-toggle="collapse" data-bind="attr:{'data-target': `.item_list_${$data.uuid()}`}"><span data-bind="text: totalWeightLabel" /></td>
+        <td class="hidden-xs" data-toggle="collapse" data-bind="attr:{'data-target': `.item_list_${$data.uuid()}`}"><span data-bind="css: contributesToTotalWeight() ? '': 'text-muted', text: totalCalculatedWeightLabel" /></td>
         <td class="hidden-xs" data-toggle="collapse" data-bind="attr:{'data-target': `.item_list_${$data.uuid()}`}"><span data-bind="text: totalCalculatedCostLabel" /></td>
         <td class="col-xs-1 text-right" data-toggle="collapse" data-bind="attr:{'data-target': `.item_list_${$data.uuid()}`}">
           <span 
@@ -52,7 +56,7 @@
         </td>
       </tr>
       <tr class="collapseRow">
-        <td colspan="5">
+        <td colspan="6">
             <flip-card params="{
                     dataId: $data.uuid,
                     tabId: $parent.tabId,

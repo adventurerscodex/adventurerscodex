@@ -42,8 +42,18 @@ export class Item extends KOModel {
     parent = ko.observable(null);
 
     totalWeight = ko.pureComputed(() => {
-        let weight = 0;
+        // This is the total weight for encumberance
+        if (!this.contributesToTotalWeight()) {
+            return 0;
+        }
+        return this.totalCalculatedWeight();
+    }, this);
 
+
+    totalCalculatedWeight = ko.pureComputed(() => {
+        // This is the total weight, irregardless of whether it contributes to 
+        // encuberance;
+        let weight = 0;
         if (this.quantity() && this.weight()) {
             weight += parseInt(this.quantity()) * parseFloat(this.weight());
         }
@@ -57,6 +67,7 @@ export class Item extends KOModel {
 
         return weight;
     }, this);
+
 
     calculatedCost = ko.pureComputed(() => {
         if (this.cost() &&
@@ -125,6 +136,10 @@ export class Item extends KOModel {
         return  this.totalWeight() >= 0 ? this.totalWeight() + ' lbs.' : '0 lbs.';
     }, this);
 
+    totalCalculatedWeightLabel = ko.pureComputed(() => {
+        return  this.totalCalculatedWeight() >= 0 ? this.totalCalculatedWeight() + ' lbs.' : '0 lbs.';
+    }, this);
+
     costLabel = ko.pureComputed(() => {
         return this.cost() !== '' ? this.cost() + ' ' + this.currencyDenomination() : '';
     }, this);
@@ -166,7 +181,6 @@ export class Item extends KOModel {
         if (values.weight === '') {
             values.weight = 0;
         }
-
         return values;
     }
 

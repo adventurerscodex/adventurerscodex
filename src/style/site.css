@@ -851,6 +851,17 @@ ul.ui-autocomplete .ui-state-active {
   background-position: center;
 }
 
+.item-container-icon {
+  background-image: url('../images/tab_icons/knapsack.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 1.2em;
+  width: 1.2em;
+}
+
+.item-container-icone[aria-expanded="true"] {
+  color: white;
+}
 /*
  * Encounter Section Icon CSS
  */
