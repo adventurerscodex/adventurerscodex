@@ -904,6 +904,14 @@ li.image-chat-highlight {
   border: none;
 }
 
+.list-group.list-group-flush .list-group-item {
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  border-bottom: 2px solid var(--border-color);
+  border-radius: 0px;
+}
+
 .tight-right {
   padding-right:0px;
 }

@@ -238,6 +238,9 @@ class _PartyService {
     // Chat
 
     getChatLog() {
+        if (!this.doc) {
+            return null;
+        }
         return this.doc.getArray(SharedDocument.CHAT_LOG).toArray();
     }
 
@@ -246,6 +249,9 @@ class _PartyService {
      * changes and update other components when messages arrive.
      */
     observeChatLog(callback) {
+        if (!this.doc) {
+            throw new Error('Shared Document is not ready yet.')
+        }
         this.doc.getArray(SharedDocument.CHAT_LOG).observe(event => {
             try {
                 callback(event);
@@ -276,7 +282,13 @@ class _PartyService {
 
         this.doc.transact(() => {
             const log = this.doc.getArray(SharedDocument.CHAT_LOG)
-            log.push([{ message, to, options }]);
+            log.push([{
+                message,
+                to,
+                from: CoreManager.activeCore().uuid(),
+                options,
+                createdAt: (new Date()).toISOString(),
+            }]);
             const itemsToDelete = log.length - this.maxChatItems;
             if (itemsToDelete > 0) {
                 log.delete(0, itemsToDelete);
@@ -287,6 +299,9 @@ class _PartyService {
     // Events
 
     getEventLog() {
+        if (!this.doc) {
+            return null;
+        }
         return this.doc.getArray(SharedDocument.EVENT_LOG).toArray();
     }
 
@@ -295,6 +310,9 @@ class _PartyService {
      * changes and update other components when messages arrive.
      */
     observeEventLog(callback) {
+        if (!this.doc) {
+            throw new Error('Shared Document is not ready yet.')
+        }
         this.doc.getArray(SharedDocument.EVENT_LOG).observe(event => {
             try {
                 callback(event);
@@ -326,7 +344,13 @@ class _PartyService {
 
         this.doc.transact(() => {
             const log = this.doc.getArray(SharedDocument.EVENT_LOG);
-            log.push([{ message, to, options }]);
+            log.push([{
+                message,
+                to,
+                from: CoreManager.activeCore().uuid(),
+                options,
+                createdAt: (new Date()).toISOString(),
+            }]);
             const itemsToDelete = log.length - this.maxEventItems;
             if (itemsToDelete > 0) {
                 log.delete(0, itemsToDelete);
