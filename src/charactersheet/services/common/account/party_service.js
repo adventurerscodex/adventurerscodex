@@ -14,14 +14,9 @@ import { observable } from 'knockout';
 
 // Shared Resources
 
-const ChatMessageType = {
-    CHAT: 'chat',
-    WHISPER: 'whisper',
-    SYSTEM: 'system',
-};
-
 const SharedDocument = {
     CHAT_LOG: 'chat-log',
+    EVENT_LOG: 'event-log',
     PARTY_NOTE: 'party-note',
 };
 
@@ -244,8 +239,18 @@ class _PartyService {
         return this.doc.getArray(SharedDocument.CHAT_LOG);
     }
 
-    pushToChat(to, message, type=ChatMessageType.CHAT, options={}) {
-        this.getChatLog().push([{ to, message, type, options }]);
+    pushToChatLog(message, to=null, options={}) {
+        this.getChatLog().push([{ to, message, options }]);
+    }
+
+    // Events
+
+    getEventLog() {
+        return this.doc.getArray(SharedDocument.EVENT_LOG);
+    }
+
+    pushToEventLog(message, to=null, options={}) {
+        this.getChatLog().push([{ message, to, options }]);
     }
 
     // Party Note
