@@ -62,7 +62,7 @@ export class ItemContainerViewModel extends AbstractTabularViewModel {
             const coreKey = CoreManager.activeCore().uuid();
             await this.entity().load({uuid: coreKey});
         }
-        this.entities(this.entity().children());
+        this.entities = this.entity().children;
     }
 
     sorts() {
@@ -90,7 +90,7 @@ export class ItemContainerViewModel extends AbstractTabularViewModel {
     }
 
     isTheParentOf(item) {
-        return ko.utils.unwrapObservable(item.hasParent) && this.entity().url() === item.parent();
+        return !!item.hasParent() && this.entity().url() === item.parent();
     }
 
     addToList(item) {
@@ -102,16 +102,15 @@ export class ItemContainerViewModel extends AbstractTabularViewModel {
 
     replaceInList(item) {
         if (item) {
-            if (this.contains(item)) {
-                if (!this.isTheParentOf(item)) {
-                    this.removeFromList(item);
-                } else { 
+            if (this.isTheParentOf(item)) {
+                if (!this.contains(item)) {
+                    this.addToList(item);
+                } else {
                     super.replaceInList(item);
+                    Notifications.item.changed.dispatch(this.entity());
                 }
-                Notifications.item.changed.dispatch(this.entity());
-            } else if (this.isTheParentOf(item)) {
-                this.addToList(item);
-                Notifications.item.changed.dispatch(this.entity());
+            } else if (this.contains(item)) {
+                this.removeFromList(item);
             }
         }
     }

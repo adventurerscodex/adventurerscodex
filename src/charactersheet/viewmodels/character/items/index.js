@@ -60,39 +60,28 @@ export class ItemsViewModel extends AbstractTabularViewModel {
     }
 
     addToList(item) {
-        if (item && !ko.utils.unwrapObservable(item.hasParent)) {
+        if (item && !item.hasParent()) {
             super.addToList(item);
         }
     }
 
     replaceInList(item) {
         if (item) {
-            if (ko.utils.unwrapObservable(item.hasParent)) {
-                if (this.contains(item)) {
-                    super.removeFromList(item);
+            if (!item.hasParent()) {
+                if (!this.contains(item)) {
+                    this.addToList(item);
+                } else {
+                    super.replaceInList(item);
                 }
-                let parentContainer = this.parentOf(item);
-                if (parentContainer) {
-                    this.replaceInList(parentContainer);
-                }
-            } else if (!this.contains(item)) {
-                super.addToList(item);
-            } else {
-                super.replaceInList(item);
+            } else if (this.contains(item)) {
+                this.removeFromList(item);
             }
         }
     }
 
     removeFromList(item) {
-        if (item) {
-            if (!ko.utils.unwrapObservable(item.hasParent)) {
-                super.removeFromList(item);
-            } else {
-                let parentContainer = this.parentOf(item);
-                if (parentContainer) {
-                    this.replaceInList(parentContainer);
-                }
-            }
+        if (this.contains(item)) {
+            super.removeFromList(item);
         }
     }
 }

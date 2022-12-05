@@ -38,7 +38,7 @@ export class Item extends KOModel {
     contributesToTotalWeight = ko.observable(true);
     isContainer = ko.observable(false);
     isFixedWeight = ko.observable(false);
-    children = ko.observable([]);
+    children = ko.observableArray([]);
     parent = ko.observable(null);
 
     totalWeight = ko.pureComputed(() => {
