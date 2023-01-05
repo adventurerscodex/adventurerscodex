@@ -1537,12 +1537,12 @@ fieldset.fieldset-bordered {
 }
 
 .inventory-well>table {
-  box-shadow: 10px 10px 5px rgba(200, 200, 200);
+  box-shadow: 4px 4px 5px rgba(200, 200, 200);
 }
 
 
 .inventory-well-title {
-  text-shadow: 4px 4px 2px rgba(200, 200, 200);
+  text-shadow: 2px 2px 3px rgba(200, 200, 200);
 }
 
 
