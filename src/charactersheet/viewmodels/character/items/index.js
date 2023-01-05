@@ -4,9 +4,10 @@ import {
     calculateTotalValue
 } from 'charactersheet/viewmodels/abstract';
 import { Item } from 'charactersheet/models/common';
+import { ItemContainerViewModel } from './container';
 import { ItemFormViewModel } from './form';
-import { Notifications } from 'charactersheet/utilities';
-
+import { ItemViewModel } from './view';
+import { map } from 'lodash';
 import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './index.html';
@@ -27,12 +28,14 @@ export class ItemsViewModel extends AbstractTabularViewModel {
     sorts() {
         return {
             ...super.sorts(),
+            'isContainer asc': { field: 'isContainer', direction: 'asc', numeric: true},
+            'isContainer desc': { field: 'isContainer', direction: 'desc', numeric: true},
             'quantity asc': { field: 'quantity', direction: 'asc', numeric: true},
             'quantity desc': { field: 'quantity', direction: 'desc', numeric: true},
             'weight asc': { field: 'weight', direction: 'asc', numeric: true},
             'weight desc': { field: 'weight', direction: 'desc', numeric: true},
-            'totalWeight asc': { field: 'totalWeight', direction: 'asc', numeric: true},
-            'totalWeight desc': { field: 'totalWeight', direction: 'desc', numeric: true},
+            'totalCalculatedWeight asc': { field: 'totalCalculatedWeight', direction: 'asc', numeric: true},
+            'totalCalculatedWeight desc': { field: 'totalCalculatedWeight', direction: 'desc', numeric: true},
             'cost asc': { field: 'cost', direction: 'asc', numeric: true},
             'cost desc': { field: 'cost', direction: 'desc', numeric: true},
             'totalCalculatedCost asc': { field: 'totalCalculatedCost', direction: 'asc', numeric: true},
@@ -41,24 +44,46 @@ export class ItemsViewModel extends AbstractTabularViewModel {
     }
 
     totalCost = ko.pureComputed(() => (
-        calculateTotalValue(
-            this.entities().flatMap(entity => (
-                [entity, ...entity.children()]
-            )),
-            'cost'
-        )
+        calculateTotalValue(this.entities(), 'totalCalculatedCost', null)
     ));
 
     totalWeight = ko.pureComputed(() => (
         calculateTotalLoad(this.entities(), 'totalWeight', null)
     ));
 
-    // TODO: Add form should not add to main list if parent has value.
+    contains(item) {
+        return this.entities().find(e=>e.uuid() === item.uuid()) !== undefined;
+    }
 
-    // TODO: Fix sorting
+    parentOf(item) {
+        return this.entities().find(e=>e.url() === item.parent());
+    }
 
-    // TODO: Fix collapsing nested items
+    addToList(item) {
+        if (item && !item.hasParent()) {
+            super.addToList(item);
+        }
+    }
 
+    replaceInList(item) {
+        if (item) {
+            if (!item.hasParent()) {
+                if (!this.contains(item)) {
+                    this.addToList(item);
+                } else {
+                    super.replaceInList(item);
+                }
+            } else if (this.contains(item)) {
+                this.removeFromList(item);
+            }
+        }
+    }
+
+    removeFromList(item) {
+        if (this.contains(item)) {
+            super.removeFromList(item);
+        }
+    }
 }
 
 ko.components.register('items', {

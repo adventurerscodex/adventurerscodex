@@ -15,10 +15,11 @@ import { PlayerTypes } from 'charactersheet/models/common/player_types';
 import { Profile } from 'charactersheet/models/character';
 import armorSection from 'images/checked-shield.svg';
 import battleGear from 'images/tab_icons/battle-gear.svg';
+import containerTab from 'images/tab_icons/knapsack.svg';
 import exhibitTab from 'images/tab_icons/film-projector.svg';
 import healthSection from 'images/nested-hearts.svg';
 import inventorySection from 'images/misc_icons/locked-chest.svg';
-import inventoryTab from 'images/tab_icons/knapsack.svg';
+import inventoryTab from 'images/tab_icons/open-treasure-chest.svg';
 import ko from 'knockout';
 import notesTab from 'images/tab_icons/quill-ink.svg';
 import partyTab from 'images/tab_icons/backup.svg';
@@ -42,6 +43,7 @@ export function CharacterRootViewModel(params) {
         skillsTab: skillsTab,
         spellsTab: spellsTab,
         inventoryTab: inventoryTab,
+        containerTab: containerTab,
         notesTab: notesTab,
         partyTab: partyTab,
         profileTab: profileTab,

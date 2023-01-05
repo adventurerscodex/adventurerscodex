@@ -28,6 +28,13 @@ export class MagicItem extends KOModel {
     weight = ko.observable(0);
     description = ko.observable('');
 
+    totalWeight = ko.pureComputed(() => {
+        if (this.weight()) {
+            return parseFloat(this.weight());
+        }
+        return 0;
+    }, this);
+
     chargesDisplay = ko.pureComputed(() => {
         if (this.maxCharges() == 0) {
             return '-';

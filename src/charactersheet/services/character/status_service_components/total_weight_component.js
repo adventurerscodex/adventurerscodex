@@ -46,7 +46,7 @@ export function TotalWeightStatusServiceComponent() {
         Notifications.armor.deleted.add(self.massDeleted);
 
         Notifications.item.added.add(self.massAdded);
-        Notifications.item.changed.add(self.massChanged);
+        Notifications.item.changed.add(self.itemMassChanged);
         Notifications.item.deleted.add(self.massDeleted);
 
         Notifications.magicitem.added.add(self.massAdded);
@@ -146,6 +146,18 @@ export function TotalWeightStatusServiceComponent() {
         }
     };
 
+    self.itemMassChanged = function (item) {
+        if (item) {
+            if (item.hasParent()) {
+                self.massDeleted(item);
+            } else if (!item.isContainer()) {
+                self.massAdded(item);
+            } else {
+                self.massChanged();
+            }
+        }
+    };
+
 
     /**
      * This method generates and persists a status that reflects
@@ -205,11 +217,11 @@ export function TotalWeightStatusServiceComponent() {
         }
     };
 
-    self.getWeightForMass = () => (
-        reduce(self.allMass(), (a, b) => (
+    self.getWeightForMass = () => {
+        return reduce(self.allMass(), (a, b) => (
             a + b.totalWeight()
-        ), 0)
-    );
+        ), 0);
+    };
 
     self.getWeightForWealth = () => {
         return self.wealth().totalWeight();

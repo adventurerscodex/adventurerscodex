@@ -37,9 +37,14 @@ export class ItemFormViewModel extends AbstractChildFormModel {
     parentItemOptions = ko.observable();
 
     currencyDenominationOptions = Fixtures.general.currencyDenominationList;
+
     setItemCurrencyDenomination = (label, value) => {
         this.entity().currencyDenomination(value);
     };
+
+    resizeOnFieldVisibility = () => {
+        setTimeout(this.forceCardResize, 50);
+    }
 }
 
 ko.components.register('item-form', {

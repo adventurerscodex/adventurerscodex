@@ -6,6 +6,7 @@ import {
 import { KOModel } from 'hypnos';
 import autoBind from 'auto-bind';
 import ko from 'knockout';
+import { map } from 'lodash';
 
 /**
  * Models an item in the user's backpack or something they
@@ -37,12 +38,22 @@ export class Item extends KOModel {
     contributesToTotalWeight = ko.observable(true);
     isContainer = ko.observable(false);
     isFixedWeight = ko.observable(false);
-    children = ko.observable([]);
+    children = ko.observableArray([]);
     parent = ko.observable(null);
 
     totalWeight = ko.pureComputed(() => {
-        let weight = 0;
+        // This is the total weight for encumberance
+        if (!this.contributesToTotalWeight()) {
+            return 0;
+        }
+        return this.totalCalculatedWeight();
+    }, this);
 
+
+    totalCalculatedWeight = ko.pureComputed(() => {
+        // This is the total weight, irregardless of whether it contributes to 
+        // encuberance;
+        let weight = 0;
         if (this.quantity() && this.weight()) {
             weight += parseInt(this.quantity()) * parseFloat(this.weight());
         }
@@ -56,6 +67,7 @@ export class Item extends KOModel {
 
         return weight;
     }, this);
+
 
     calculatedCost = ko.pureComputed(() => {
         if (this.cost() &&
@@ -87,15 +99,17 @@ export class Item extends KOModel {
     }, this);
 
     totalCalculatedCost = ko.pureComputed(() => {
+        let costInGold = 0;
         if (this.quantity() &&
-            this.quantity() > 0 &&
-            this.cost() &&
-            this.cost() > 0 &&
-            this.currencyDenomination() &&
-            this.currencyDenomination() != '') {
-            return parseInt(this.quantity()) * parseFloat(this.calculatedCost());
+            this.quantity() > 0) {
+            costInGold = parseInt(this.quantity()) * parseFloat(this.calculatedCost());
         }
-        return 0;
+        costInGold += this.children().reduce(
+            (a, b) => (a + parseFloat(b.totalCalculatedCost())),
+            0
+        );
+
+        return costInGold;
     }, this);
 
     shortDescription = ko.pureComputed(() => {
@@ -122,6 +136,10 @@ export class Item extends KOModel {
         return  this.totalWeight() >= 0 ? this.totalWeight() + ' lbs.' : '0 lbs.';
     }, this);
 
+    totalCalculatedWeightLabel = ko.pureComputed(() => {
+        return  this.totalCalculatedWeight() >= 0 ? this.totalCalculatedWeight() + ' lbs.' : '0 lbs.';
+    }, this);
+
     costLabel = ko.pureComputed(() => {
         return this.cost() !== '' ? this.cost() + ' ' + this.currencyDenomination() : '';
     }, this);
@@ -131,7 +149,16 @@ export class Item extends KOModel {
     }, this);
 
     totalCalculatedCostLabel = ko.pureComputed(() => {
-        return this.totalCost() !== '' ? this.totalCalculatedCost() + ' GP': '';
+        if (this.totalCalculatedCost() === '') {
+            return '';
+        }
+        if (this.totalCalculatedCost() >= 1) {
+            return this.totalCalculatedCost() + ' GP';
+        }
+        if (this.totalCalculatedCost() >= 0.1) {
+            return this.totalCalculatedCost() * 10 + ' SP';
+        }
+        return this.totalCalculatedCost() * 100 + ' CP';
     }, this);
 
     hasParent = ko.pureComputed(() => (
@@ -154,7 +181,6 @@ export class Item extends KOModel {
         if (values.weight === '') {
             values.weight = 0;
         }
-
         return values;
     }
 
@@ -177,6 +203,11 @@ export class Item extends KOModel {
 
     async delete () {
         await this.ps.delete();
+        if (this.isContainer()) {
+            map(this.children(), (child)=> {
+                Notifications.item.changed.dispatch(child);
+            });
+        }
         Notifications.item.deleted.dispatch(this);
     }
 
