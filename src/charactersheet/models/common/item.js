@@ -51,7 +51,7 @@ export class Item extends KOModel {
 
 
     totalCalculatedWeight = ko.pureComputed(() => {
-        // This is the total weight, irregardless of whether it contributes to 
+        // This is the total weight, irregardless of whether it contributes to
         // encuberance;
         let weight = 0;
         if (this.quantity() && this.weight()) {
@@ -149,16 +149,16 @@ export class Item extends KOModel {
     }, this);
 
     totalCalculatedCostLabel = ko.pureComputed(() => {
-        if (this.totalCalculatedCost() === '') {
+        const cost = this.totalCalculatedCost();
+        if (cost === '') {
             return '';
+        } else if (cost >= 1) {
+            return parseInt(cost) + ' GP';
+        } else if (cost >= 0.1) {
+            return parseInt(cost * 10) + ' SP';
+        } else {
+            return parseInt(cost * 100) + ' CP';
         }
-        if (this.totalCalculatedCost() >= 1) {
-            return this.totalCalculatedCost() + ' GP';
-        }
-        if (this.totalCalculatedCost() >= 0.1) {
-            return this.totalCalculatedCost() * 10 + ' SP';
-        }
-        return this.totalCalculatedCost() * 100 + ' CP';
     }, this);
 
     hasParent = ko.pureComputed(() => (
