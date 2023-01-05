@@ -44,7 +44,7 @@ export class ItemFormViewModel extends AbstractChildFormModel {
 
     resizeOnFieldVisibility = () => {
         setTimeout(this.forceCardResize, 50);
-    }
+    };
 }
 
 ko.components.register('item-form', {

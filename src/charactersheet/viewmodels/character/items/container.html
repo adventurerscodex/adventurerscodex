@@ -5,10 +5,17 @@
 >
     <div class="h4 inventory-well-title collapsable-card-title">
       <span data-bind="text: entity().name" /> <span>contents</span>
-      <div class="pull-right">
-        <button class="btn btn-sm btn-warning"
-                type="submit"
-                data-bind="click: $component.emptyContainer">Empty <i class="fa fa-eject" /></button>
+      <div class="pull-right mb-1">
+        <button
+          class="btn btn-xs btn-warning"
+          type="submit"
+          data-bind="
+            click: $component.emptyContainer,
+            enable: filteredAndSortedEntities().length > 0
+          "
+        >
+          <i class="fa fa-eject"></i>&nbsp;Empty
+        </button>
       </div>
     </div>
 

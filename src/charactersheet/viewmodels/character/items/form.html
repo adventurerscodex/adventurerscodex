@@ -51,30 +51,38 @@
       <input type='checkbox'
         class='ac-checkbox sr-only'
         name="isContainer"
-        data-bind="checked: isContainer,
-        disable: quantity > 1,
-        attr: {id: `${$component.containerId}_isContainer`,
-        ...$component.validation.isContainer},
-        event: { 
-          blur: $component.reviewInput,
-          invalid: $component.invalidate,
-        }">
-      </input>
+        data-bind="
+          checked: isContainer,
+          disable: quantity() > 1,
+          attr: {
+            id: `${$component.containerId}_isContainer`,
+            ...$component.validation.isContainer
+          },
+          event: {
+            blur: $component.reviewInput,
+            invalid: $component.invalidate,
+          }
+        "
+      />
       <!-- /ko -->
       <!-- ko ifnot: $component.addForm -->
       <input type='checkbox'
         class='ac-checkbox sr-only'
         name="isContainer"
         disabled
-        data-bind="checked: isContainer,
-        attr: {id: `${$component.containerId}_isContainer`,
-        ...$component.validation.isContainer},
-        event: { 
-          blur: $component.reviewInput,
-          invalid: $component.invalidate,
-        }">
-      </input>
-       <!-- /ko -->
+        data-bind="
+          checked: isContainer,
+          attr: {
+            id: `${$component.containerId}_isContainer`,
+            ...$component.validation.isContainer
+          },
+          event: {
+            blur: $component.reviewInput,
+            invalid: $component.invalidate,
+          }
+        "
+      />
+      <!-- /ko -->
       <label for="isContainer"
       data-bind="attr: {for: `${$component.containerId}_isContainer`}"
       class='control-label'>
@@ -108,12 +116,12 @@
       <p class="help-block">
       <!-- ko ifnot: isContainer -->
       <small class="text-muted">
-        More than one? 
+        More than one?
       </small>
       <!-- /ko -->
       <!-- ko if: isContainer -->
       <small class="text-muted">
-          Each container must be listed individually. 
+          Each container must be listed individually.
       </small>
       <!-- /ko -->
     </p>
@@ -185,7 +193,7 @@
         data-bind="checked: isFixedWeight,
         attr: {id: `${$component.containerId}_isFixedWeight`,
         ...$component.validation.isFixedWeight},
-        event: { 
+        event: {
           blur: $component.reviewInput,
           invalid: $component.invalidate,
         }">
@@ -197,7 +205,7 @@
       </label>
       <small class="text-muted">
         <p>
-          Fixed weight containers make their contents weightless (like a Bag of Holding). 
+          Fixed weight containers make their contents weightless (like a Bag of Holding).
           Only the weight of the container itself counts.
         </p>
       </small>
@@ -233,7 +241,7 @@
         data-bind="checked: contributesToTotalWeight,
         attr: {id: `${$component.containerId}_contributesToTotalWeight`,
         ...$component.validation.contributesToTotalWeight},
-        event: { 
+        event: {
           blur: $component.reviewInput,
           invalid: $component.invalidate,
         }">
@@ -254,12 +262,12 @@
          <!-- ko if: isContainer -->
          and everything it contains
          <!-- /ko -->
-         won't count againt encumberance. 
+         won't count againt encumberance.
         </p>
       </small>
     </div>
 
-    
+
     <div class="form-group col col-sm-12">
       <label for="description" class="control-label">
         Description
