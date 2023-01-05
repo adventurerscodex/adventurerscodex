@@ -49,7 +49,7 @@
         <td class="hidden-xs" data-toggle="collapse" data-bind="attr:{'data-target': `.item_list_${$data.uuid()}`}"><span data-bind="css: contributesToTotalWeight() ? '': 'text-muted', text: totalCalculatedWeightLabel" /></td>
         <td class="hidden-xs" data-toggle="collapse" data-bind="attr:{'data-target': `.item_list_${$data.uuid()}`}"><span data-bind="text: totalCalculatedCostLabel" /></td>
         <td class="col-xs-1 text-right" data-toggle="collapse" data-bind="attr:{'data-target': `.item_list_${$data.uuid()}`}">
-          <span 
+          <span
           data-toggle="collapse"
               data-bind="attr:{'data-target': `#item_list_${$data.uuid()}`}"
               class="rotate fa fa-chevron-left" />
@@ -89,13 +89,13 @@
                 containerId: `item_list_${$data.uuid()}`,
                 data: $data
         }"></item-container-view>
-          <!-- /ko --> 
+          <!-- /ko -->
         </td>
       </tr>
-   
+
       <!-- /ko -->
       <tr class="collapseRow add-form">
-        <td colspan="5">
+        <td colspan="6">
           <div id="add-item" class="collapse add-card">
             <item-form params="{
                 containerId: 'add-item',
@@ -108,7 +108,7 @@
     </tbody>
     <tfoot>
       <tr>
-        <td colspan="5">
+        <td colspan="6">
           <div class="row">
             <div class="pull-left col col-xs-4 text-muted">
               <small class="table-foot-content">
