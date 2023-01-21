@@ -45,9 +45,9 @@ export function TotalWeightStatusServiceComponent() {
         Notifications.armor.changed.add(self.massChanged);
         Notifications.armor.deleted.add(self.massDeleted);
 
-        Notifications.item.added.add(self.massAdded);
+        Notifications.item.added.add(self.itemMassAdded);
         Notifications.item.changed.add(self.itemMassChanged);
-        Notifications.item.deleted.add(self.massDeleted);
+        Notifications.item.deleted.add(self.itemMassDeleted);
 
         Notifications.magicitem.added.add(self.massAdded);
         Notifications.magicitem.changed.add(self.massChanged);
@@ -146,18 +146,47 @@ export function TotalWeightStatusServiceComponent() {
         }
     };
 
-    self.itemMassChanged = function (item) {
+    self.itemMassAdded = function (item) {
         if (item) {
             if (item.hasParent()) {
-                self.massDeleted(item);
-            } else if (!item.isContainer()) {
-                self.massAdded(item);
+                const parent = find(self.allMass(), (mass)=> {
+                    return ko.utils.unwrapObservable(item).parentUuid() === ko.utils.unwrapObservable(mass).uuid();
+                });
+                self.massChanged(parent);
             } else {
-                self.massChanged();
+                self.massAdded(item);
             }
         }
     };
 
+    self.itemMassChanged = function (item) {
+        if (item) {
+            if (item.hasParent()) {
+                const parent = find(self.allMass(), (mass)=> {
+                    return ko.utils.unwrapObservable(item).parentUuid() === ko.utils.unwrapObservable(mass).uuid();
+                });
+                self.massDeleted(item);
+                self.massChanged(parent);
+            } else if (!item.isContainer()) {
+                // Abusing the fact that massAdded defensively calls massChanged if the item already exists
+                self.massAdded(item); 
+            } else {
+                self.massChanged(item);
+            }
+        }
+    };
+
+    self.itemMassDeleted = function (item) {
+        if (item) {
+            if (item.hasParent()) {
+                const parent = find(self.allMass(), (mass)=> {
+                    return ko.utils.unwrapObservable(item).parentUuid() === ko.utils.unwrapObservable(mass).uuid();
+                });
+                self.massChanged(parent);
+            } 
+            self.massDeleted(item);
+        }
+    };
 
     /**
      * This method generates and persists a status that reflects
