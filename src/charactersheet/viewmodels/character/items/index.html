@@ -5,7 +5,7 @@
   <table class="table table-responsive table-ac-bordered table-hover">
     <thead>
       <tr class="ac-table-header">
-        <th data-bind="click: function(){sortBy('isContainer');}">  <i class="fa fa-shopping-bag"></i><span data-bind="css: sortArrow('isContainer')" />
+        <th data-bind="click: function(){sortBy('isContainer');}"><i class="item-container-icon"></i><span data-bind="css: sortArrow('isContainer')" />
           </th>
           <th data-bind="click: function(){sortBy('name');}"> Item <span data-bind="css: sortArrow('name')" />
           </th>
@@ -39,7 +39,7 @@
           data-bind="attr:{'data-target': `#item_list_${$data.uuid()}`}">
           <td data-toggle="collapse" data-bind="attr:{'data-target': `.item_list_${$data.uuid()}`}">
             <!-- ko if: isContainer -->
-            <i class="fa fa-shopping-bag"></i>
+            <i class="item-container-icon"></i>
             <!-- /ko -->
          </td>
         <td data-toggle="collapse" data-bind="attr:{'data-target': `.item_list_${$data.uuid()}`}">

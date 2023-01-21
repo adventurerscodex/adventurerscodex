@@ -7,7 +7,6 @@ import { Item } from 'charactersheet/models/common';
 import { ItemContainerViewModel } from './container';
 import { ItemFormViewModel } from './form';
 import { ItemViewModel } from './view';
-import { map } from 'lodash';
 import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './index.html';
