@@ -28,7 +28,7 @@ export class CompanionsListViewModel extends AbstractTabularViewModel {
     async onUsedChange(companion) {
         await companion.save();
     }
-   
+
     getHealthColor(companion) {
         if (companion.isDangerous()) {
             return Fixtures.general.healthColor.dangerous;

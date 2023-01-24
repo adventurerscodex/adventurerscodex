@@ -5,6 +5,7 @@ import { FlipCardComponentViewModel } from './flip-card';
 import { FullScreenImageComponentViewModel } from './full-screen-image';
 import { ImagePickerComponentViewModel } from './image-picker';
 import { MarkdownEditPreviewComponentViewModel } from './markdown-edit-preview';
+import { MiniHealthInputComponentViewModel } from './mini-health-input';
 import { MiniPlusMinusComponentViewModel } from './mini-plus-minus';
 import { NestedListComponentViewModel } from './nested-list';
 import { PlusMinusComponentViewModel } from './plus-minus';
