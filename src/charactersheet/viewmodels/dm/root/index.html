@@ -44,12 +44,6 @@
         <span class="text-center" id="tabPartySpan"><small>Party</small></span>
       </a>
     </li>
-    <li role="presentation" id="tabChatLink" data-bind="click: activateChatTab">
-      <a href="#chat" aria-controls="chat-tab" role="tab" data-toggle="tab" class="tab-subtext">
-        <img class="tab-icon" data-bind="attr: { src: chatTabImage }"></img></br>
-        <span class="text-center" id="tabChatSpan"><small>Chat</small></span>
-      </a>
-    </li>
     <li role="presentation" id="tabExhibitLink" data-bind="click: activateExhibitTab">
       <a href="#exhibit" aria-controls="exhibit-tab" role="tab" data-toggle="tab" class="tab-subtext">
         <img class="tab-icon" data-bind="attr: { src: exhibitTabImage }"></img></br>
@@ -75,10 +69,6 @@
     <party></party>
   </div>
   <!-- End Party Tab -->
-  <div role="tabpanel" class="tab-pane" id="chat" data-bind="css: chatTabStatus">
-     <chat></chat>
-  </div>
-  <!-- End Chat Tab -->
   <div role="tabpanel" class="tab-pane" id="exhibit" data-bind="css: exhibitTabStatus">
      <exhibit></exhibit>
   </div>

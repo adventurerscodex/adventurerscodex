@@ -1,73 +1,111 @@
-<div id="notes-pane">
-  <div class="h4 card-title"> Chat<br />
-    <small>It is a chat, yo</small>
-  </div>
-  <table class="table table-responsive table-ac-bordered">
-    <thead class="ac-table-header">
-      <tr>
-        <th></th>
-        <th class="col-xs-1 text-right">
-        </th>
-      </tr>
-    </thead>
-    <!-- ko ifnot: loaded(), completeOn: 'render' -->
-    <tbody><tr><td colspan=3><div class="loader-wrapper"><div class="loader"></div></div></td></tr></tbody>
-    <!-- /ko -->
+<div
+  class="flyover"
+  data-bind="style: { display: isVisible() ? 'block' : 'none' }"
+>
+  <div id="chat-pane" class="ml-1 mr-1">
+    <div class="h4 card-title" style="margin-top: 0;"> Party Chat
+    </div>
+    <table class="table table-responsive table-ac-bordered">
+      <thead class="ac-table-header">
+        <tr>
+          <th></th>
+          <th class="col-xs-1 text-right"></th>
+        </tr>
+      </thead>
+      <!-- ko ifnot: loaded(), completeOn: 'render' -->
+      <tbody><tr><td colspan="2"><div class="loader-wrapper"><div class="loader"></div></div></td></tr></tbody>
+      <!-- /ko -->
+    </table>
     <!-- ko if: loaded(), completeOn: 'render' -->
-    <tbody>
-      <tr>
-        <td colspan="2">
-          <div class="chat-log bordered rounded list-group list-group-flush" style="height: 500px; overflow-y: scroll;">
-            <!-- ko foreach: entities -->
-            <div class="list-group-item">
-              <div class="d-flex">
-                <div class="profile-image mr-2">
-                  <img
-                    src="/images/sample-headshots/orc-head.png"
-                    height="40px"
-                    width="40px"
-                    class="img-circle"
-                  />
-                </div>
-                <div class="message">
-                  <div class="message-sender mb-2">
-                    <b data-bind="text: from"></b>
-                    <small class="text-muted" data-bind="text: createdAt"></small>
-                  </div>
-                  <div class="message-body" data-bind="text: message">
-                    <!-- The message body -->
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- /ko -->
-          </div>
-        </td>
-      </tr>
-    </tbody>
-    <tfoot>
-      <tr>
-        <td colspan="2">
-          <form data-bind="submit: sendToChat">
-            <div class="input-group input-group-lg">
-              <input
-                type="text"
-                required
-                placeholder="What's up?"
-                maxlength="500"
-                class="form-control"
-              />
-              <div class="input-group-btn">
-                <button class="btn btn-primary" type="submit">
-                  Send
-                </button>
-              </div>
-            </div>
-          </form>
-        </td>
-      </tr>
-    </tfoot>
+
+    <!-- ko ifnot: isConnected -->
+    <div class="chat-warning alert alert-warning">
+      <p>
+        You are not connected to the chat. Please double check your
+        network connection.
+      </p>
+      <p>
+        You can still send chat messages. They will be synced when you reconnect.
+      </p>
+    </div>
     <!-- /ko -->
-  </table>
+    <div
+      id="chat-log-main"
+      class="chat-log bordered rounded list-group list-group-flush"
+      style="height: calc(100vh - 225px); overflow-y: scroll;"
+      data-bind="event: { scroll: chatDidScroll }"
+    >
+      <!-- ko template: { name: 'chat-message-template', foreach: entities } -->
+      <!-- /ko -->
+      <!-- ko if: hasNewMessages -->
+      <div class="chat-messages-alert text-center">
+        <button
+          class="btn btn-sm btn-info"
+          data-bind="click: scrollChatToBottom"
+        >
+          <i class="fa fa-arrow-down"></i>
+          New Messages
+        </button>
+      </div>
+      <!-- /ko -->
+      <!-- ko if: showScrollToBottomButton -->
+      <div class="chat-messages-alert text-center">
+        <button
+          class="btn btn-sm btn-default"
+          data-bind="click: scrollChatToBottom"
+        >
+          <i class="fa fa-arrow-down"></i>
+          Scroll to Bottom
+        </button>
+      </div>
+      <!-- /ko -->
+    </div>
+    <form data-bind="submit: sendToChat">
+      <div class="input-group input-group-md">
+        <input
+          type="text"
+          required
+          placeholder="What's up?"
+          maxlength="500"
+          class="form-control"
+          data-bind="
+            value: currentMessage,
+            hasFocus: messageHasFocus,
+          "
+        />
+        <div class="input-group-btn">
+          <button
+            class="btn btn-sm btn-primary"
+            type="submit"
+          >
+            Send
+          </button>
+        </div>
+      </div>
+    </form>
+    <!-- /ko -->
+  </div>
 </div>
 
+<!-- ko if: shouldShowChat() || isVisible() -->
+<button
+  class="toggle-chat"
+  data-bind="click: toggleIsVisible"
+>
+  <!-- ko if: isVisible -->
+  <i class="fa fa-lg fa-times"></i>
+  <!-- /ko -->
+  <!-- ko ifnot: isVisible -->
+  <i class="fa fa-lg fa-comments-o"></i>
+  <!-- /ko -->
+  <!-- ko if: hasNewMessages -->
+  <span class="unread-badge"></span>
+  <!-- /ko -->
+</button>
+<!-- /ko -->
+
+<template id="chat-message-template">
+  <div class="list-group-item">
+    <chat-message params="message: $data"></chat-message>
+  </div>
+</template>

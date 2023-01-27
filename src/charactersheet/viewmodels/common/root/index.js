@@ -78,7 +78,7 @@ export function AdventurersCodexViewModel() {
 
     self.userIsPatron = ko.pureComputed(() => (
         UserServiceManager.sharedService().user().isActivePatron
-    ))
+    ));
 
     //Public Methods
 

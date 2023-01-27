@@ -16,7 +16,6 @@ import ko from 'knockout';
 import notesTabImage from 'images/tab_icons/quill-ink.svg';
 import encounterTabImage from 'images/tab_icons/bookmarklet.svg';
 import partyTabImage from 'images/tab_icons/backup.svg';
-import chatTabImage from 'images/tab_icons/conversation.svg';
 import exhibitTabImage from 'images/tab_icons/film-projector.svg';
 import template from './index.html';
 
@@ -40,7 +39,6 @@ export function DMRootViewModel() {
     self.notesTabImage = notesTabImage;
     self.partyTabImage = partyTabImage;
     self.exhibitTabImage = exhibitTabImage;
-    self.chatTabImage = chatTabImage;
 
     //UI Methods
 
@@ -92,10 +90,6 @@ export function DMRootViewModel() {
         return self._tabIsVisible('party');
     });
 
-    self.chatTabStatus = ko.pureComputed(() => {
-        return self._tabIsVisible('chat');
-    });
-
     self.exhibitTabStatus = ko.pureComputed(() => {
         return self._tabIsVisible('exhibit');
     });
@@ -118,10 +112,6 @@ export function DMRootViewModel() {
 
     self.activatePartyTab = () => {
         self._setActiveTab('party');
-    };
-
-    self.activateChatTab = () => {
-        self._setActiveTab('chat');
     };
 
     self.activateExhibitTab = () => {

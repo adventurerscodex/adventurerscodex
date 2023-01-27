@@ -273,7 +273,7 @@ class _PartyService {
      *
      * Formatting can be applied to messages by specifying various options.
      */
-    pushToChatLog(message, to=null, options={}) {
+    pushToChatLog(message, to=null, from=null, options={}) {
         if (!!to && !Array.isArray(to)) {
             throw new Error(
                 'Invalid Parameter: to= parameter was given, but it is not an array.'
@@ -285,7 +285,7 @@ class _PartyService {
             log.push([{
                 message,
                 to,
-                from: CoreManager.activeCore().uuid(),
+                from,
                 options,
                 createdAt: (new Date()).toISOString(),
             }]);

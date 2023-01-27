@@ -16,6 +16,11 @@ Responsive Styles
     text-align: left;
 }
 
+.flyover {
+    height: 100%;
+    width: 100%;
+}
+
 /* Small devices (tablets, 768px and up) */
 @media (min-width: 768px) {
     .text-center-sm {
@@ -23,6 +28,9 @@ Responsive Styles
     }
     .text-left-sm {
         text-align: left;
+    }
+    .flyover {
+        width: 40vw;
     }
 }
 
@@ -34,6 +42,9 @@ Responsive Styles
     .text-left-md {
         text-align: left;
     }
+    .flyover {
+        width: 30vw;
+    }
 }
 
 /* Large devices (large desktops, 1200px and up) */
@@ -43,6 +54,9 @@ Responsive Styles
     }
     .text-left-lg {
         text-align: left;
+    }
+    .flyover {
+        width: 25vw;
     }
 }
 
@@ -990,10 +1004,16 @@ li.image-chat-highlight {
   border: 2px solid white;
 }
 
+.connection-status.connection-status-sm .circle-indicator {
+  width:14px;
+  height:14px;
+  margin-left: 20px;
+  margin-top: -14px;
+  border-radius:12px;
+}
+
 .circle-indicator.success {
   background: #18bc9c;
-	transform: scale(1);
-	animation: pulse 2s infinite;
 }
 
 .circle-indicator.failure {
@@ -2733,3 +2753,87 @@ img.ProseMirror-separator {
 }
 
 .ProseMirror p { margin-bottom: 1em }
+
+
+/* Flyover Menu */
+
+.flyover {
+  position: fixed;
+  z-index: 3000;
+  top: 0;
+  right: 0;
+  background-color: white;
+  overflow-x: hidden;
+  transition: 0.5s;
+  box-shadow: -2px 0px 10px #111;
+  transform: translateZ(51px);
+}
+
+#content {
+  transition: margin-left .5s;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translate3d(100%, 0, 0);
+    visibility: visible;
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.slideInRight {
+  animation-name: slideInRight;
+}
+
+#chat-pane div.chat-warning {
+  position: absolute;
+  box-shadow: 2px 4px 5px #ccc;
+  z-index: 10;
+}
+
+#chat-pane .chat-messages-alert {
+  position: sticky;
+  padding-bottom: 1rem;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+}
+
+#chat-pane .chat-messages-alert button {
+  box-shadow: 2px 4px 5px #ccc;
+  opacity: 85%;
+  border-radius: 25px;
+}
+
+.chat-log .chat-image {
+  max-width: 100%;
+  border-radius: 4px;
+}
+
+.toggle-chat {
+  border-radius: 50%;
+  background-color: #eee;
+  border: 2px solid #111;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 10000;
+  width: 50px;
+  height: 50px;
+  box-shadow: 1px 1px 8px #ccc;
+  transform: translateZ(52px);
+}
+
+.unread-badge {
+  position: absolute;
+  height: 16px;
+  width: 16px;
+  top: -4px;
+  right: 0;
+  background-color: #e74c3c;
+  border-radius: 8px;
+  border: 2px solid #eee;
+}

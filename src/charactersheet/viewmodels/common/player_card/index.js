@@ -74,6 +74,7 @@ export class PlayerCardViewModel extends ViewModel {
         const tier = capitalize(`${this.player.canonicalPatreonTier} Tier`);
         return `${name} is a <a href="https://www.patreon.com/adventurerscodex" target='_blank'>${tier} supporter</a> on Patreon.`
     }
+
     // Events
 
     partyDidChange() {

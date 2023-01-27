@@ -1,0 +1,35 @@
+<div class="d-flex" data-bind="with: message">
+  <div class="profile-image mr-2">
+    <img
+      data-bind="attr: { src: from?.imageUrl }"
+      height="40px"
+      width="40px"
+      class="img-circle"
+    />
+    <div class="connection-status connection-status-sm">
+      <div
+        class="circle-indicator"
+        data-bind="css: $component.statusIndicatorClass"
+      ></div>
+    </div>
+  </div>
+  <div class="message" style="flex-grow: 1;">
+    <div class="message-sender row">
+      <div class="col-xs-12 col-sm-6 text-left">
+        <b data-bind="text: from?.name || 'Unknown'"></b>
+      </div>
+      <div class="d-xs-hidden d-sm-visible col-sm-6 text-right">
+        <small
+          class="text-muted"
+          data-bind="text: $component.timestamp"
+        ></small>
+      </div>
+    </div>
+    <div
+      class="message-body"
+      data-bind="html: $component.linkifiedHTML"
+    >
+      <!-- The message body -->
+    </div>
+  </div>
+</div>
