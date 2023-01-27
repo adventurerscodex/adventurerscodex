@@ -55,7 +55,13 @@
               </div>
             </div>
             <div class="back">
-
+              <notes-form params="{
+                 data: context.data,
+                 containerId: elementId,
+                 show: showBack,
+                 flip: flip,
+                 forceCardResize: forceCardResize
+                }"></notes-form>
             </div>
           </flip-card>
         </td>
@@ -67,6 +73,11 @@
         <td colspan="2">
           <div id="add-note"
               class="collapse add-card">
+            <notes-form params="{
+                  containerId:'add-note',
+                  show: $component.displayAddForm,
+                  flip: $component.toggleShowAddForm
+                 }"></notes-form>
           </div>
           <!-- ko ifnot: $component.displayAddForm -->
           <center>
