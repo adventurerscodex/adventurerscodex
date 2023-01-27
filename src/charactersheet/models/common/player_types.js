@@ -13,7 +13,6 @@ export var PlayerTypes = {
             'settings',
             'party',
             'exhibit',
-            'chat',
         ],
         defaultTab: 'stats'
     },
@@ -26,7 +25,6 @@ export var PlayerTypes = {
             'party',
             'notes',
             'exhibit',
-            'chat',
         ],
         defaultTab: 'encounter'
     }

@@ -137,8 +137,7 @@ export function DMRootViewModel() {
         HotkeysService.registerHotkey('3', self.activateDmScreenTab);
         HotkeysService.registerHotkey('4', self.activateNotesTab);
         HotkeysService.registerHotkey('5', self.activatePartyTab);
-        HotkeysService.registerHotkey('6', self.activateChatTab);
-        HotkeysService.registerHotkey('7', self.activateExhibitTab);
+        HotkeysService.registerHotkey('6', self.activateExhibitTab);
     };
 
     self.unload = () => {
