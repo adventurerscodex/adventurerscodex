@@ -29,18 +29,30 @@ export class PlayerCardViewModel extends ViewModel {
 
     // UI
 
+    currentMaxHp() {
+        return this.player.maxHitPoints - this.player.maxHitPointsReductionDamage;
+    }
+
+    currentHp() {
+        return this.currentMaxHp() - this.currentDamage();
+    }
+
+    currentTempHp() {
+        return this.player.tempHitPoints;
+    }
+
+    currentDamage() {
+        return this.player.damage;
+    }
+
     hpPercent() {
         return (
-            (this.player.maxHitPoints - this.player.maxHitPointsReductionDamage - this.player.damage)
-                / (this.player.maxHitPoints - this.player.maxHitPointsReductionDamage + this.player.tempHitPoints)
+            (this.currentHp()) / (this.currentMaxHp() + this.currentTempHp())
         );
     }
 
     tempHpPercent() {
-        return (
-            this.player.tempHitPoints
-                / (this.player.maxHitPoints - this.player.maxHitPointsReductionDamage + this.player.tempHitPoints)
-        );
+        return (this.currentTempHp() / (this.currentMaxHp() + this.currentTempHp()));
     }
 
     hpProgressBarCss() {
@@ -54,12 +66,28 @@ export class PlayerCardViewModel extends ViewModel {
         }
     }
 
+    currentSpellSlots() {
+        return this.player.remainingSpellSlots;
+    }
+
+    currentMaxSpellSlots() {
+        return this.player.totalSpellSlots;
+    }
+
     spellSlotPercent() {
-        return (this.player.remainingSpellSlots / this.player.totalSpellSlots);
+        return (this.currentSpellSlots() / this.currentMaxSpellSlots());
+    }
+
+    currentTrackables() {
+        return this.player.remainingTrackables;
+    }
+
+    currentMaxTrackables() {
+        return this.player.totalTrackables;
     }
 
     trackedPercent() {
-        return (this.player.remainingTrackables / this.player.totalTrackables);
+        return (this.currentTrackables() / this.currentMaxTrackables());
     }
 
     statusIndicatorClass = pureComputed(() => (
