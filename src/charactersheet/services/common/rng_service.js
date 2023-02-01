@@ -1,5 +1,5 @@
 import Random from 'random-js';
-import {SharedServiceManager} from './shared_service_manager';
+import { SharedServiceManager } from './shared_service_manager';
 
 /**
  * A utility class that generates random numbers on demand.
@@ -16,7 +16,7 @@ export var RandomNumberGeneratorService = new SharedServiceManager(_RandomNumber
 function _RandomNumberGeneratorService(configuration) {
     var self = this;
 
-    self.RNG = Random.engines.mt19937().autoSeed();
+    self.RNG = new Random(Random.engines.mt19937().autoSeed());
 
     /**
      * Create a random number generator that uses Math.random()
@@ -107,5 +107,14 @@ function _RandomNumberGeneratorService(configuration) {
             return self.RNG.bool(numerator, denominator);
         }
         return self.RNG.bool(percentage);
+    };
+
+    /**
+     * Create a random v4 UUID
+     *
+     *  @returns string
+     */
+    self.uuid = function () {
+        return self.RNG.uuid4();
     };
 }

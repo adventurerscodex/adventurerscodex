@@ -18,6 +18,7 @@ const SharedDocument = {
     CHAT_LOG: 'chat-log',
     EVENT_LOG: 'event-log',
     PARTY_NOTE: 'party-note',
+    INITIATIVE: 'initiative',
 };
 
 // Service
@@ -362,6 +363,37 @@ class _PartyService {
 
     getPartyNote() {
         return this.doc.getXmlFragment(SharedDocument.PARTY_NOTE);
+    }
+
+    // Initiative
+
+    getInitiative() {
+        if (!this.doc) {
+            return null;
+        }
+        return this.doc.getMap(SharedDocument.INITIATIVE).toJSON();
+    }
+
+    observeInitiative(callback) {
+        if (!this.doc) {
+            throw new Error('Shared Document is not ready yet.')
+        }
+        this.doc.getMap(SharedDocument.INITIATIVE).observe(event => {
+            try {
+                callback(event);
+            } catch(error) {
+                console.log(`Error in event log observer:`, error);
+            }
+        });
+    }
+
+    updateInitiative(values={}) {
+        this.doc.transact(() => {
+            const initiative = this.doc.getMap(SharedDocument.INITIATIVE);
+            for (const key in values) {
+                initiative.set(key, values[key]);
+            }
+        });
     }
 
     // Private

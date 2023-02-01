@@ -5,7 +5,7 @@ import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './form.html';
 
-export class NotesFormViewModel  extends AbstractChildFormModel {
+export class NotesFormViewModel extends AbstractChildFormModel {
     constructor(params) {
         super(params);
         autoBind(this);

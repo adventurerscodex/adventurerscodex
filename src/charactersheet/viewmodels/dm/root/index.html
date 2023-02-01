@@ -50,6 +50,12 @@
         <span class="text-center" id="tabExhibitSpan"><small>Exhibit</small></span>
       </a>
     </li>
+    <li role="presentation" id="tabInitiativeTrackerLink" data-bind="click: activateInitiativeTrackerTab">
+      <a href="#initiative" aria-controls="initiative-tracker-tab" role="tab" data-toggle="tab" class="tab-subtext">
+        <img class="tab-icon" data-bind="attr: { src: exhibitTabImage }"></img></br>
+        <span class="text-center" id="tabInitiativeTrackerSpan"><small>Initiative</small></span>
+      </a>
+    </li>
   </ul>
 </div>
 <div class="tab-content">
@@ -77,4 +83,8 @@
     <notes-list></notes-list>
   </div>
   <!-- End Notes Tab -->
+  <div role="tabpanel" class="tab-pane" id="initiative-tracker" data-bind="css: initiativeTrackerTabStatus">
+    <initiative-tracker params="{tabId: 'initiative-tracker'}"></initiative-tracker>
+  </div>
+  <!-- End Initiative Tracker Tab -->
 </div>

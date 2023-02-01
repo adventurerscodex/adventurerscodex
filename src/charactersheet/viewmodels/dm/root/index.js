@@ -39,6 +39,9 @@ export function DMRootViewModel() {
     self.notesTabImage = notesTabImage;
     self.partyTabImage = partyTabImage;
     self.exhibitTabImage = exhibitTabImage;
+    self.initiativeTrackerTabImage = partyTabImage;
+
+    self.subscriptions = [];
 
     //UI Methods
 
@@ -94,6 +97,10 @@ export function DMRootViewModel() {
         return self._tabIsVisible('exhibit');
     });
 
+    self.initiativeTrackerTabStatus = ko.pureComputed(() => {
+        return self._tabIsVisible('initiative');
+    });
+
     self.activateEncounterTab = () => {
         self._setActiveTab('encounter');
     };
@@ -118,6 +125,10 @@ export function DMRootViewModel() {
         self._setActiveTab('exhibit');
     };
 
+    self.activateInitiativeTrackerTab = () => {
+        self._setActiveTab('initiative');
+    };
+
     //Public Methods
 
     /**
@@ -138,10 +149,17 @@ export function DMRootViewModel() {
         HotkeysService.registerHotkey('4', self.activateNotesTab);
         HotkeysService.registerHotkey('5', self.activatePartyTab);
         HotkeysService.registerHotkey('6', self.activateExhibitTab);
+        HotkeysService.registerHotkey('7', self.activateInitiativeTrackerTab);
+
+        self.subscriptions.push(Notifications.dm.tabShouldChange.add(self._setActiveTab));
     };
 
     self.unload = () => {
         HotkeysService.flushHotkeys();
+
+        for (const subscription of self.subscriptions) {
+            subscription.dispose();
+        }
     };
 
     //Private Methods

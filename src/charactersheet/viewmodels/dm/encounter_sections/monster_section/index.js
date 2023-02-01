@@ -5,7 +5,11 @@ import {
     Utility
 } from 'charactersheet/utilities';
 import { AbstractEncounterTabularViewModel } from 'charactersheet/viewmodels/abstract';
-import { PartyService, SortService } from 'charactersheet/services/common';
+import {
+    PartyService,
+    SortService,
+    RandomNumberGeneratorService,
+} from 'charactersheet/services/common';
 import { Monster } from 'charactersheet/models/dm';
 import ko from 'knockout';
 import { get } from 'lodash';
@@ -28,6 +32,7 @@ class MonsterSectionViewModel extends AbstractEncounterTabularViewModel {
 
     fullScreen = ko.observable(false);
     shouldShowExhibitButton = ko.observable(!!PartyService.party);
+    initiativeState = ko.observable('called');
 
     modelClass() {
         return Monster;
@@ -68,6 +73,10 @@ class MonsterSectionViewModel extends AbstractEncounterTabularViewModel {
         SortService.sortAndFilter(this.entities(), this.sort(), null)
     ), this);
 
+    canAddToInitiative = ko.pureComputed(() => (
+        this.entities().length > 0
+    ));
+
     // Actions
 
     async toggleExhibit(monster) {
@@ -90,6 +99,30 @@ class MonsterSectionViewModel extends AbstractEncounterTabularViewModel {
             this.markAsExhibited(null);
             PartyService.updatePresence({ exhibit: null });
         }
+    }
+
+    addToInitiative() {
+        // Add the Monsters to the current Initiative Order.
+        const initiative = PartyService.getInitiative()
+        if (!initiative) {
+            return;
+        }
+
+        const rng = RandomNumberGeneratorService.sharedService();
+        const monsters = this.entities().map(monster => ({
+            ...monster.exportValues(),
+            initiative: rng.rollDie(20),
+            initiativeModifier: 0,
+            dexterityBonus: monster.modifier(
+                monster.findAbilityScoreByName('Dexterity')
+            ),
+        }));
+
+        const order = [...initiative.order, ...monsters];
+        PartyService.updateInitiative({ order });
+
+        // Let the root know to change tabs.
+        Notifications.dm.tabShouldChange.dispatch('initiative');
     }
 
     // Events

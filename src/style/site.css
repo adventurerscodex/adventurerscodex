@@ -2389,6 +2389,38 @@ tr .panel {
   border-radius: 4px;
 }
 
+.bg-primary {
+  background-color: #2c3e50;
+}
+
+.bg-default {
+  background-color: #798d8f;
+}
+
+.bg-info {
+  background-color: #18bc9c;
+}
+
+.bg-success {
+  background-color: #128770;
+}
+
+.bg-warning {
+  background-color: #9f1f14;
+}
+
+.bg-danger {
+  background-color: #925d07;
+}
+
+.text-white {
+  color: white;
+}
+
+.text-primary {
+  color: #2c3e50;
+}
+
 .d20photos-help>a {
   text-decoration: none !important;
 }
