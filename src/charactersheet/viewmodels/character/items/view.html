@@ -8,16 +8,53 @@
         <table class="table table-hover table-condensed table-ac-bordered">
         <tbody>
             <tr>
-            <th>Quantity:</th>
-            <td><span data-bind="text: quantity"></span></td>
+            <!-- ko if: isContainer -->
+                <th>Carry Weight:</th>
+                <td>
+                    <!-- ko if: contributesToTotalWeight -->
+                    <span style="white-space: nowrap" data-bind="text: totalCalculatedWeightLabel"></span>
+                    <!-- /ko -->
+                    <!-- ko ifnot: contributesToTotalWeight -->
+                        Not Carrying
+                    <!-- /ko -->
+                </td>
+            <!-- /ko -->
+            <!-- ko ifnot: isContainer -->
+                <th>Quantity:</th>
+                <td><span data-bind="text: quantity"></span></td>
+            <!-- /ko -->
             </tr>
             <tr>
-            <th>Weight Each:</th>
-            <td><span data-bind="text: weightLabel"></span></td>
+            <th>
+                <!-- ko if: isContainer -->
+                Weight (contents):
+                <!-- /ko -->
+                <!-- ko ifnot: isContainer -->
+                Weight (total):
+                <!-- /ko -->
+            </th>
+            <td>
+                <span style="white-space: nowrap;" data-bind="text: weightLabel"></span>
+                <span style="white-space: nowrap;" >
+                (<span data-bind="text: totalUnfixedCalculatedWeightLabel"></span>)
+                </span>
+            </td>
             </tr>
             <tr>
-            <th>Price Each:</th>
-            <td><span data-bind="text: costLabel"></span></td>
+            <th>
+                <!-- ko if: isContainer -->
+                Value (contents):
+                <!-- /ko -->
+                <!-- ko ifnot: isContainer -->
+                Value (total):
+                <!-- /ko -->
+            </th>
+            <td>
+                <span style="white-space: nowrap;" data-bind="text: costLabel"></span>
+                <span style="white-space: nowrap;" >
+                (<span data-bind="text: totalCalculatedCostLabel"></span>)
+                </span>
+            </td>
             </tr>
         </tbody>
         </table>
