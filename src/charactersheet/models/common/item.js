@@ -76,6 +76,20 @@ export class Item extends KOModel {
         return weight;
     }, this);
 
+    totalUnfixedCalculatedWeight = ko.pureComputed(() => {
+        // This is the total weight, irregardless of whether it contributes to
+        // encuberance and if the container is fixed in weight;
+        let weight = 0;
+        if (this.quantity() && this.weight()) {
+            weight += parseInt(this.quantity()) * parseFloat(this.weight());
+        }
+
+        weight += this.children().reduce(
+            (a, b) => (a + parseFloat(b.totalWeight())),
+            0
+        );
+        return weight;
+    }, this);
 
     calculatedCost = ko.pureComputed(() => {
         if (this.cost() &&
@@ -146,6 +160,10 @@ export class Item extends KOModel {
 
     totalCalculatedWeightLabel = ko.pureComputed(() => {
         return  this.totalCalculatedWeight() >= 0 ? this.totalCalculatedWeight() + ' lbs.' : '0 lbs.';
+    }, this);
+
+    totalUnfixedCalculatedWeightLabel = ko.pureComputed(() => {
+        return  this.totalUnfixedCalculatedWeight() >= 0 ? this.totalUnfixedCalculatedWeight() + ' lbs.' : '0 lbs.';
     }, this);
 
     costLabel = ko.pureComputed(() => {
