@@ -51,7 +51,7 @@ export class ItemContainerViewModel extends AbstractTabularViewModel {
         await super.load();
         if (this.containerId) {
             $(`#${this.containerId}`).on('hidden.bs.collapse', this.collapseAll);
-    
+
         }
     }
 
@@ -101,17 +101,19 @@ export class ItemContainerViewModel extends AbstractTabularViewModel {
     }
 
     replaceInList(item) {
-        if (item) {
-            if (this.isTheParentOf(item)) {
-                if (!this.contains(item)) {
-                    this.addToList(item);
-                } else {
-                    super.replaceInList(item);
-                    Notifications.item.changed.dispatch(this.entity());
-                }
-            } else if (this.contains(item)) {
-                this.removeFromList(item);
+        if (!item) {
+            return;
+        }
+
+        if (this.isTheParentOf(item)) {
+            if (!this.contains(item)) {
+                this.addToList(item);
+            } else {
+                super.replaceInList(item);
+                Notifications.item.changed.dispatch(this.entity());
             }
+        } else if (this.contains(item)) {
+            this.removeFromList(item);
         }
     }
 
