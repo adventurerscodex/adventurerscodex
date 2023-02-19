@@ -1,6 +1,6 @@
 import autoBind from 'auto-bind';
 import { ViewModel } from 'charactersheet/viewmodels/abstract';
-import { Notifications } from 'charactersheet/utilities';
+import { CoreManager, Notifications } from 'charactersheet/utilities';
 import { PartyService } from 'charactersheet/services';
 import { observable, components, pureComputed } from 'knockout';
 import template from './index.html';
@@ -24,14 +24,28 @@ export class PartyStatusViewModel extends ViewModel {
 
     isConnectedToParty = pureComputed(() => (!!this.party()));
 
+    isCurrentTurn = observable(false);
+
+    isNextTurn = observable(false);
+
     // Events
 
     partyDidChange(party) {
         this.party(party);
     }
 
+    partyDidConnect(party) {
+        PartyService.observeInitiative(this.initiativeDidChange)
+    }
+
     coreDidChange() {
         this._clearPartyStatus();
+    }
+
+    initiativeDidChange() {
+        const { currentTurn } = PartyService.getInitiative();
+        const { uuid } = CoreManager.activeCore();
+        this.currentTurn(currentTurn.uuid === uuid());
     }
 
     onClose() {
