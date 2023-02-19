@@ -218,7 +218,7 @@ export class Item extends KOModel {
     }
 
     /**
-     * Due to the recursive nature of Encounters, they require a custom import.
+     * Due to the recursive nature of Items, they require a custom import.
      * This import performs the normal duties of mapping, but also calls
      * importValues on the children, mapping all children recursively.
      */
@@ -231,7 +231,7 @@ export class Item extends KOModel {
         // Do initial mapping.
         ko.mapping.fromJS(values, this._mapping, this);
 
-        // Recursively map the child encounters.
+        // Recursively map the child items.
         const children = childrenValues.map(childValues => {
             const child = new Item();
             child.importValues(childValues);
