@@ -124,6 +124,16 @@ export class ItemContainerViewModel extends AbstractTabularViewModel {
         }
     }
 
+    async updateEntity(container) {
+        if (container.uuid() == this.entity().uuid()) {
+            this.refresh();
+        }
+    }
+
+    setUpSubscriptions () {
+        super.setUpSubscriptions();
+        this.subscriptions.push(Notifications.item.changed.add(this.updateEntity));
+    }
 }
 
 
