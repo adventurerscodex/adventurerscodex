@@ -22,7 +22,13 @@ export class Item extends KOModel {
     static __skeys__ = ['core', 'items'];
 
     static mapping = {
-        include: ['coreUuid', 'quantity', 'parent' , 'children']
+        include: [
+            'coreUuid',
+            'quantity',
+            'parent' ,
+            'children',
+            'isContainer',
+        ]
     }; // Not sure why quantity is required here, but without it
     // we cannot create a large 'quantity' of items
     static SHORT_DESCRIPTION_MAX_LENGTH = 100;
