@@ -295,5 +295,12 @@
       addForm: $component.addForm,
       showDisclaimer: $component.showDisclaimer
     }"></form-submit-actions>
+    <!-- ko if: isContainer() && !$component.addForm() && children().length !== 0 -->
+    <div class="col-xs-12 mb-1 text-danger pl-0">
+      <small>
+        Deleting a container will also delete its contents.
+      </small>
+    </div>
+    <!-- /ko -->
   </div>
 </form>
