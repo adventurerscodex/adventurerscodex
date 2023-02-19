@@ -852,15 +852,16 @@ ul.ui-autocomplete .ui-state-active {
 }
 
 .item-container-icon {
-  background-image: url('../images/tab_icons/knapsack.svg');
+  background-image: url('../images/knapsack.svg');
   background-repeat: no-repeat;
   background-position: center;
-  height: 1.2em;
-  width: 1.2em;
+  height: 1em;
+  width: 1em;
+  display: block;
 }
 
-.item-container-icone[aria-expanded="true"] {
-  color: white;
+*[aria-expanded="true"] .item-container-icon {
+  background-image: url('../images/knapsack-white.svg');
 }
 /*
  * Encounter Section Icon CSS
