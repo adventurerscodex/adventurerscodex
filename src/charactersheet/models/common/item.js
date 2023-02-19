@@ -28,6 +28,8 @@ export class Item extends KOModel {
             'parent' ,
             'children',
             'isContainer',
+            'isFixedWeight',
+            'contributesToTotalWeight',
         ]
     }; // Not sure why quantity is required here, but without it
     // we cannot create a large 'quantity' of items
