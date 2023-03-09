@@ -101,6 +101,7 @@
             </span>
             <span class="input-group-btn d-flex-3">
               <button
+                style="width: 100%"
                 class="btn btn-default"
                 type="submit"
               >
@@ -109,6 +110,43 @@
             </span>
           </div>
           <b data-bind="text: $component.quickSpendMessage"></b>
+        </form>
+      </div>
+      <div class="col-xs-12">
+        <form data-bind="submit: $component.quickEarn">
+          <div class="input-group input-group-sm d-flex">
+            <input
+              type="number"
+              minvalue="1"
+              required
+              class="form-control d-flex-4"
+              placeholder="Quick earn"
+              data-bind="value: $component.quickEarnAmount"
+            >
+            <span class="input-group-btn d-flex-3">
+              <select
+                required
+                class="form-control"
+                data-bind="value: $component.quickEarnCoinType"
+              >
+                <option value="copper">CP</option>
+                <option value="silver">SP</option>
+                <option value="electrum">EP</option>
+                <option value="gold" selected>GP</option>
+                <option value="platinum">PP</option>
+              </select>
+            </span>
+            <span class="input-group-btn d-flex-3">
+              <button
+                style="width: 100%"
+                class="btn btn-default"
+                type="submit"
+              >
+                Earn
+              </button>
+            </span>
+          </div>
+          <b data-bind="text: $component.quickEarnMessage"></b>
         </form>
       </div>
     </div>
