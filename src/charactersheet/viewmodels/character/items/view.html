@@ -15,7 +15,10 @@
                     <span style="white-space: nowrap" data-bind="text: totalCalculatedWeightLabel"></span>
                     <!-- /ko -->
                     <!-- ko ifnot: contributesToTotalWeight -->
-                        Not Carrying
+                      Not Carrying
+                    <!-- /ko -->
+                    <!-- ko if: isFixedWeight -->
+                      <span class="badge ml-1">F</span>
                     <!-- /ko -->
                 </td>
             <!-- /ko -->

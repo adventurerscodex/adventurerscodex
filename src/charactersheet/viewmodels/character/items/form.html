@@ -47,13 +47,13 @@
       <!-- /ko -->
     </div>
     <div class="form-group col col-sm-6 col-md-4">
-    <!-- ko if: $component.addForm-->
+      <!-- ko if: $component.addForm -->
       <input type='checkbox'
         class='ac-checkbox sr-only'
         name="isContainer"
         data-bind="
           checked: isContainer,
-          disable: quantity() > 1,
+          disable: quantity() > 1 || !!parent(),
           attr: {
             id: `${$component.containerId}_isContainer`,
             ...$component.validation.isContainer
@@ -64,25 +64,6 @@
           }
         "
       />
-      <!-- /ko -->
-      <!-- ko ifnot: $component.addForm -->
-      <input type='checkbox'
-        class='ac-checkbox sr-only'
-        name="isContainer"
-        disabled
-        data-bind="
-          checked: isContainer,
-          attr: {
-            id: `${$component.containerId}_isContainer`,
-            ...$component.validation.isContainer
-          },
-          event: {
-            blur: $component.reviewInput,
-            invalid: $component.invalidate,
-          }
-        "
-      />
-      <!-- /ko -->
       <label for="isContainer"
       data-bind="attr: {for: `${$component.containerId}_isContainer`}"
       class='control-label'>
@@ -93,6 +74,7 @@
           Containers can hold other items. This property cannot be changed once it is set.
         </p>
       </small>
+      <!-- /ko -->
     </div>
 
     <div class="form-group col col-sm-6 col-md-4">
@@ -202,6 +184,9 @@
       data-bind="attr: {for: `${$component.containerId}_isFixedWeight`}"
       class='control-label'>
       This is a Fixed Weight Container
+      <!-- ko if: isFixedWeight -->
+        <span class="badge ml-1">F</span>
+      <!-- /ko -->
       </label>
       <small class="text-muted">
         <p>

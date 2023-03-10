@@ -43,16 +43,26 @@
             <!-- /ko -->
          </td>
         <td data-toggle="collapse" data-bind="attr:{'data-target': `.item_list_${$data.uuid()}`}">
-           <span data-bind="text: $component.shortText(name)" />
+           <span data-bind="text: $component.shortText(name)"></span>
         </td>
-        <td data-toggle="collapse" data-bind="attr:{'data-target': `.item_list_${$data.uuid()}`}"><span data-bind="text: quantity" /></td>
-        <td class="hidden-xs" data-toggle="collapse" data-bind="attr:{'data-target': `.item_list_${$data.uuid()}`}"><span data-bind="css: contributesToTotalWeight() ? '': 'text-muted', text: totalCalculatedWeightLabel" /></td>
-        <td class="hidden-xs" data-toggle="collapse" data-bind="attr:{'data-target': `.item_list_${$data.uuid()}`}"><span data-bind="text: totalCalculatedCostLabel" /></td>
+        <td data-toggle="collapse" data-bind="attr:{'data-target': `.item_list_${$data.uuid()}`}">
+          <span data-bind="text: quantity"></span>
+        </td>
+        <td class="hidden-xs" data-toggle="collapse" data-bind="attr:{'data-target': `.item_list_${$data.uuid()}`}">
+          <span data-bind="css: contributesToTotalWeight() ? '': 'text-muted', text: totalCalculatedWeightLabel" />
+          <!-- ko if: isFixedWeight -->
+            <span class="badge ml-1">F</span>
+          <!-- /ko -->
+        </td>
+        <td class="hidden-xs" data-toggle="collapse" data-bind="attr:{'data-target': `.item_list_${$data.uuid()}`}">
+          <span data-bind="text: totalCalculatedCostLabel"></span>
+        </td>
         <td class="col-xs-1 text-right" data-toggle="collapse" data-bind="attr:{'data-target': `.item_list_${$data.uuid()}`}">
           <span
-          data-toggle="collapse"
-              data-bind="attr:{'data-target': `#item_list_${$data.uuid()}`}"
-              class="rotate fa fa-chevron-left" />
+            data-toggle="collapse"
+            data-bind="attr:{'data-target': `#item_list_${$data.uuid()}`}"
+            class="rotate fa fa-chevron-left"
+          ></span>
         </td>
       </tr>
       <tr class="collapseRow">
