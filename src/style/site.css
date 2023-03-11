@@ -851,6 +851,18 @@ ul.ui-autocomplete .ui-state-active {
   background-position: center;
 }
 
+.item-container-icon {
+  background-image: url('../images/knapsack.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 1em;
+  width: 1em;
+  display: block;
+}
+
+*[aria-expanded="true"] .item-container-icon {
+  background-image: url('../images/knapsack-white.svg');
+}
 /*
  * Encounter Section Icon CSS
  */
@@ -1520,6 +1532,20 @@ fieldset.fieldset-bordered {
   text-align: center;
   padding: 10px;
 }
+
+.inventory-well {
+  background: radial-gradient( rgba(255, 255, 255, 0.0), rgba(200, 200, 200, 0.25));
+}
+
+.inventory-well>table {
+  box-shadow: 4px 4px 5px rgba(200, 200, 200);
+}
+
+
+.inventory-well-title {
+  text-shadow: 2px 2px 3px rgba(200, 200, 200);
+}
+
 
 @media screen and (max-width: 767px){
     .nav-tabs > li{
@@ -2249,6 +2275,10 @@ tr .panel {
   margin: auto;
 }
 
+.m-0 {
+  margin: 0;
+}
+
 .ml-auto {
   margin-left: auto;
 }
@@ -2317,6 +2347,10 @@ tr .panel {
   max-width: 100%;
 }
 
+.checkbox-padding {
+  padding: 8px;
+}
+
 .border {
   border: 1px solid var(--border-color);
 }
@@ -2354,7 +2388,7 @@ tr .panel {
 }
 
 .bordered {
-  border: solid 2px var(--border-color);
+  border: 2px solid var(--border-color);
 }
 
 .rounded {
@@ -2389,4 +2423,3 @@ tr .panel {
 		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
 	}
 }
-

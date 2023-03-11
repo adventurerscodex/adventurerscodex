@@ -24,7 +24,7 @@ export function calculateLoad (
     return Math.round(weight * quantity);
 }
 
-export function calculateTotalLoad (
+export function calculateTotalLoad(
     entityList,
     weightProperty = 'weight',
     quantityProperty = 'quantity'

@@ -2,7 +2,7 @@
     data-bind="attr:{ id: `${elementId}`},
      style: { height: elementHeight},
      collapseCard: { hiddenCallback: hiddenCallback, shownCallback: shownCallback },
-     css: collapsable() ? 'panel panel-default collapse':''">
+     css: collapsable() ? `panel panel-default collapse ${elementId}`:''">
   <div data-bind="css: collapsable() ? 'panel-body':''"
       style="position: relative; height: 100%;">
     <div class="card-flip-container"
