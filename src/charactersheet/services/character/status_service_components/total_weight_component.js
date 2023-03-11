@@ -169,7 +169,7 @@ export function TotalWeightStatusServiceComponent() {
                 self.massChanged(parent);
             } else if (!item.isContainer()) {
                 // Abusing the fact that massAdded defensively calls massChanged if the item already exists
-                self.massAdded(item); 
+                self.massAdded(item);
             } else {
                 self.massChanged(item);
             }
@@ -183,7 +183,7 @@ export function TotalWeightStatusServiceComponent() {
                     return ko.utils.unwrapObservable(item).parentUuid() === ko.utils.unwrapObservable(mass).uuid();
                 });
                 self.massChanged(parent);
-            } 
+            }
             self.massDeleted(item);
         }
     };

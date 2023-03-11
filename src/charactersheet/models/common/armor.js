@@ -27,6 +27,10 @@ export class Armor extends KOModel {
         return this.type() && this.type().toLowerCase().includes('shield');
     }, this);
 
+    totalWeight = ko.pureComputed(() => (
+        parseInt(this.weight()) || 0
+    ), this);
+
     acCalculatedLabel = ko.pureComputed(() => {
         if (this.armorClass()) {
             if (this.magicalModifier()) {
@@ -35,7 +39,8 @@ export class Armor extends KOModel {
             return  this.armorClass();
         }
         return '';
-    })
+    });
+
     acLabel = ko.pureComputed(() => {
         if (this.armorClass()) {
             return 'AC ' + this.armorClass();
