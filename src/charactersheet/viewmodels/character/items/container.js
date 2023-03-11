@@ -94,7 +94,6 @@ export class ItemContainerViewModel extends AbstractTabularViewModel {
     }
 
     addToList(item) {
-        console.log('ADD TO LIST', item)
         if (item && this.isTheParentOf(item)) {
             super.addToList(item);
             Notifications.item.changed.dispatch(this.entity());
