@@ -16,7 +16,6 @@ import { observable } from 'knockout';
 
 const SharedDocument = {
     CHAT_LOG: 'chat-log',
-    EVENT_LOG: 'event-log',
 };
 
 // Service
@@ -279,65 +278,6 @@ class _PartyService {
                 createdAt: (new Date()).toISOString(),
             }]);
             const itemsToDelete = log.length - this.maxChatItems;
-            if (itemsToDelete > 0) {
-                log.delete(0, itemsToDelete);
-            }
-        });
-    }
-
-    // Events
-
-    getEventLog() {
-        if (!this.doc) {
-            return null;
-        }
-        return this.doc.getArray(SharedDocument.EVENT_LOG).toArray();
-    }
-
-    /**
-     * Add an observer to the event log. This allows you to be notified of
-     * changes and update other components when messages arrive.
-     */
-    observeEventLog(callback) {
-        if (!this.doc) {
-            throw new Error('Shared Document is not ready yet.')
-        }
-        this.doc.getArray(SharedDocument.EVENT_LOG).observe(event => {
-            try {
-                callback(event);
-            } catch(error) {
-                console.log(`Error in event log observer:`, error);
-            }
-        });
-    }
-
-    /**
-     * Add an item to end of the event log. This method also automatically
-     * trims the log to the required length at the same time if needed.
-     *
-     * Sending a global message to all participants can be done by simply
-     * calling `pushToEventLog("some message")` with no additional parameters.
-     *
-     * Send additional options via the options parameter. This could include
-     * transactional information as well as other values.
-     */
-    pushToEventLog(message, to=[], options={}) {
-        if (!!to && !Array.isArray(to)) {
-            throw new Error(
-                'Invalid Parameter: to= parameter was given, but it is not an array.'
-            )
-        }
-
-        this.doc.transact(() => {
-            const log = this.doc.getArray(SharedDocument.EVENT_LOG);
-            log.push([{
-                message,
-                to,
-                from: CoreManager.activeCore().uuid(),
-                options,
-                createdAt: (new Date()).toISOString(),
-            }]);
-            const itemsToDelete = log.length - this.maxEventItems;
             if (itemsToDelete > 0) {
                 log.delete(0, itemsToDelete);
             }
