@@ -17,7 +17,6 @@ import { observable } from 'knockout';
 const SharedDocument = {
     CHAT_LOG: 'chat-log',
     EVENT_LOG: 'event-log',
-    PARTY_NOTE: 'party-note',
 };
 
 // Service
@@ -343,12 +342,6 @@ class _PartyService {
                 log.delete(0, itemsToDelete);
             }
         });
-    }
-
-    // Party Note
-
-    getPartyNote() {
-        return this.doc.getXmlFragment(SharedDocument.PARTY_NOTE);
     }
 
     // Private
