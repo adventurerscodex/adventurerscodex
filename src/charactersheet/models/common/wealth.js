@@ -79,14 +79,17 @@ export class Wealth extends KOModel {
 
                 // Now make change for the amount we over-spent
                 const change = this.getChange(credit);
-                console.log(`Change ${change}`);
 
                 change.forEach(([coin, count]) => {
-                    console.log(coin, count);
                     this[coin](this[coin]() + count);
                 });
             }
         }
+    };
+
+    add = (amount, denomination) => {
+        // If we can just take from the correct category, then just do that...        
+        this[denomination](this[denomination]() + amount);
     };
 
     worthInGoldLabel = ko.pureComputed(() => {
