@@ -68,6 +68,9 @@ class ChatViewModel extends ViewModel {
         this.isVisible(!this.isVisible());
         if (this.isVisible()) {
             this.chatDidAppear();
+            if (this.pinToBottom()) {
+                this.hasNewMessages(false);
+            }
         }
     }
 

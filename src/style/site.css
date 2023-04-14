@@ -2454,7 +2454,7 @@ tr .panel {
 #chat-pane div.chat-warning {
   position: absolute;
   box-shadow: 2px 4px 5px #ccc;
-  z-index: 10;
+  z-index: 1010;
 }
 
 #chat-pane .chat-messages-alert {
