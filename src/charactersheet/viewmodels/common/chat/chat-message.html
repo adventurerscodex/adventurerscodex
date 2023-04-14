@@ -18,10 +18,10 @@
       <div class="col-xs-12 col-sm-6 text-left">
         <b data-bind="text: from?.name || 'Unknown'"></b>
       </div>
-      <div class="d-xs-hidden d-sm-visible col-sm-6 text-right">
+      <div class="hidden-xs col-sm-6 text-right">
         <small
           class="text-muted"
-          data-bind="text: $component.timestamp"
+          data-bind="text: $component.localizedSentAt"
         ></small>
       </div>
     </div>

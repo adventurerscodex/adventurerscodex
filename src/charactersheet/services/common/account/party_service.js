@@ -268,23 +268,13 @@ class _PartyService {
      * Sending a global message to all participants can be done by simply
      * calling `pushToChatLog("some message")` with no additional parameters.
      *
-     * Whisper messages are defined as messages with at least one recipient.
-     * For example: `pushToChatLog("some message", ["user1", "user2"])`
-     *
      * Formatting can be applied to messages by specifying various options.
      */
-    pushToChatLog(message, to=null, from=null, options={}) {
-        if (!!to && !Array.isArray(to)) {
-            throw new Error(
-                'Invalid Parameter: to= parameter was given, but it is not an array.'
-            )
-        }
-
+    pushToChatLog(message, from=null, options={}) {
         this.doc.transact(() => {
             const log = this.doc.getArray(SharedDocument.CHAT_LOG)
             log.push([{
                 message,
-                to,
                 from,
                 options,
                 createdAt: (new Date()).toISOString(),
@@ -327,10 +317,7 @@ class _PartyService {
      * trims the log to the required length at the same time if needed.
      *
      * Sending a global message to all participants can be done by simply
-     * calling `pushToChatLog("some message")` with no additional parameters.
-     *
-     * Whisper messages are defined as messages with at least one recipient.
-     * For example: `pushToChatLog("some message", ["user1", "user2"])`
+     * calling `pushToEventLog("some message")` with no additional parameters.
      *
      * Send additional options via the options parameter. This could include
      * transactional information as well as other values.

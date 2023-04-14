@@ -30,8 +30,14 @@ class ChatMessageViewModel extends ViewModel {
 
     // UI State
 
-    localize = ko.pureComputed(() => (
-        (new Date(this.message().createdAt)).toLocaleString()
+    localizedSentAt = ko.pureComputed(() => (
+        (new Date(this.message().createdAt)).toLocaleString([], {
+            month: '2-digit',
+            year: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+        })
     ));
 
     statusIndicatorClass = ko.pureComputed(() => (
