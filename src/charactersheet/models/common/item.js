@@ -6,20 +6,31 @@ import {
 import { KOModel } from 'hypnos';
 import autoBind from 'auto-bind';
 import ko from 'knockout';
+import { map } from 'lodash';
 
 /**
  * Models an item in the user's backpack or something they
  * have equipped.
  */
 export class Item extends KOModel {
+
     constructor(params) {
         super(params);
         autoBind(this);
     }
+
     static __skeys__ = ['core', 'items'];
 
     static mapping = {
-        include: ['coreUuid', 'quantity']
+        include: [
+            'coreUuid',
+            'quantity',
+            'parent' ,
+            'children',
+            'isContainer',
+            'isFixedWeight',
+            'contributesToTotalWeight',
+        ]
     }; // Not sure why quantity is required here, but without it
     // we cannot create a large 'quantity' of items
     static SHORT_DESCRIPTION_MAX_LENGTH = 100;
@@ -32,12 +43,52 @@ export class Item extends KOModel {
     weight = ko.observable(0);
     cost = ko.observable(0);
     currencyDenomination = ko.observable('');
+    contributesToTotalWeight = ko.observable(true);
+    isContainer = ko.observable(false);
+    isFixedWeight = ko.observable(false);
+    children = ko.observableArray([]);
+    parent = ko.observable(null);
 
     totalWeight = ko.pureComputed(() => {
-        if (this.quantity() && this.weight()) {
-            return parseInt(this.quantity()) * parseFloat(this.weight());
+        // This is the total weight for encumberance
+        if (!this.contributesToTotalWeight()) {
+            return 0;
         }
-        return 0;
+        return this.totalCalculatedWeight();
+    }, this);
+
+
+    totalCalculatedWeight = ko.pureComputed(() => {
+        // This is the total weight, irregardless of whether it contributes to
+        // encuberance;
+        let weight = 0;
+        if (this.quantity() && this.weight()) {
+            weight += parseInt(this.quantity()) * parseFloat(this.weight());
+        }
+
+        if (!this.isFixedWeight()) {
+            weight += this.children().reduce(
+                (a, b) => (a + parseFloat(b.totalWeight())),
+                0
+            );
+        }
+
+        return weight;
+    }, this);
+
+    totalUnfixedCalculatedWeight = ko.pureComputed(() => {
+        // This is the total weight, irregardless of whether it contributes to
+        // encuberance and if the container is fixed in weight;
+        let weight = 0;
+        if (this.quantity() && this.weight()) {
+            weight += parseInt(this.quantity()) * parseFloat(this.weight());
+        }
+
+        weight += this.children().reduce(
+            (a, b) => (a + parseFloat(b.totalWeight())),
+            0
+        );
+        return weight;
     }, this);
 
     calculatedCost = ko.pureComputed(() => {
@@ -70,15 +121,17 @@ export class Item extends KOModel {
     }, this);
 
     totalCalculatedCost = ko.pureComputed(() => {
+        let costInGold = 0;
         if (this.quantity() &&
-            this.quantity() > 0 &&
-            this.cost() &&
-            this.cost() > 0 &&
-            this.currencyDenomination() &&
-            this.currencyDenomination() != '') {
-            return parseInt(this.quantity()) * parseFloat(this.calculatedCost());
+            this.quantity() > 0) {
+            costInGold = parseInt(this.quantity()) * parseFloat(this.calculatedCost());
         }
-        return 0;
+        costInGold += this.children().reduce(
+            (a, b) => (a + parseFloat(b.totalCalculatedCost())),
+            0
+        );
+
+        return costInGold;
     }, this);
 
     shortDescription = ko.pureComputed(() => {
@@ -105,6 +158,14 @@ export class Item extends KOModel {
         return  this.totalWeight() >= 0 ? this.totalWeight() + ' lbs.' : '0 lbs.';
     }, this);
 
+    totalCalculatedWeightLabel = ko.pureComputed(() => {
+        return  this.totalCalculatedWeight() >= 0 ? this.totalCalculatedWeight() + ' lbs.' : '0 lbs.';
+    }, this);
+
+    totalUnfixedCalculatedWeightLabel = ko.pureComputed(() => {
+        return  this.totalUnfixedCalculatedWeight() >= 0 ? this.totalUnfixedCalculatedWeight() + ' lbs.' : '0 lbs.';
+    }, this);
+
     costLabel = ko.pureComputed(() => {
         return this.cost() !== '' ? this.cost() + ' ' + this.currencyDenomination() : '';
     }, this);
@@ -114,8 +175,25 @@ export class Item extends KOModel {
     }, this);
 
     totalCalculatedCostLabel = ko.pureComputed(() => {
-        return this.totalCost() !== '' ? this.totalCalculatedCost() + ' GP': '';
+        const cost = this.totalCalculatedCost();
+        if (cost === '') {
+            return '';
+        } else if (cost >= 1) {
+            return parseInt(cost) + ' GP';
+        } else if (cost >= 0.1) {
+            return parseInt(cost * 10) + ' SP';
+        } else {
+            return parseInt(cost * 100) + ' CP';
+        }
     }, this);
+
+    hasParent = ko.pureComputed(() => (
+        !!this.parent()
+    ));
+
+    hasChildren = ko.pureComputed(() => (
+        !!this.children().length
+    ));
 
     toSchemaValues = (values) => {
         if (values.cost === '') {
@@ -129,7 +207,6 @@ export class Item extends KOModel {
         if (values.weight === '') {
             values.weight = 0;
         }
-
         return values;
     }
 
@@ -152,9 +229,36 @@ export class Item extends KOModel {
 
     async delete () {
         await this.ps.delete();
+        if (this.isContainer()) {
+            map(this.children(), (child)=> {
+                Notifications.item.changed.dispatch(child);
+            });
+        }
         Notifications.item.deleted.dispatch(this);
     }
 
+    /**
+     * Due to the recursive nature of Items, they require a custom import.
+     * This import performs the normal duties of mapping, but also calls
+     * importValues on the children, mapping all children recursively.
+     */
+    importValues = (values) => {
+        // Set aside these values because rendering the un-parsed children
+        // causes issues before we're done here.
+        const childrenValues = values.children || [];
+        values.children = [];
+
+        // Do initial mapping.
+        ko.mapping.fromJS(values, this._mapping, this);
+
+        // Recursively map the child items.
+        const children = childrenValues.map(childValues => {
+            const child = new Item();
+            child.importValues(childValues);
+            return child;
+        });
+        this.children(children);
+    };
 }
 
 Item.validationConstraints = {
@@ -184,6 +288,15 @@ Item.validationConstraints = {
         },
         currencyDenomination: {
             maxlength: 64
+        },
+        contributesToTotalWeight: {
+            type: 'checkbox',
+        },
+        isContainer: {
+            type: 'checkbox',
+        },
+        isFixedWeight: {
+            type: 'checkbox',
         }
     },
     rules: {

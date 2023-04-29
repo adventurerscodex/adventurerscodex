@@ -14,14 +14,14 @@
     </div>
   </div>
   <div class="message" style="flex-grow: 1;">
-    <div class="message-sender row">
-      <div class="col-xs-12 col-sm-6 text-left">
+    <div class="message-sender">
+      <div class="col-xs-6 col-sm-6 text-left">
         <b data-bind="text: from?.name || 'Unknown'"></b>
       </div>
-      <div class="d-xs-hidden d-sm-visible col-sm-6 text-right">
+      <div class="col-xs-6 text-right">
         <small
           class="text-muted"
-          data-bind="text: $component.timestamp"
+          data-bind="text: $component.localizedSentAt"
         ></small>
       </div>
     </div>

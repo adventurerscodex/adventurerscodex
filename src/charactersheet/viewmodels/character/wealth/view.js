@@ -19,6 +19,11 @@ class WealthViewModel extends ModelBackedViewModel {
         this.quickSpendAmount = ko.observable();
         this.quickSpendCoinType = ko.observable('gold');
         this.quickSpendMessage = ko.observable('');
+
+        this.quickEarnAmount = ko.observable();
+        this.quickEarnCoinType = ko.observable('gold');
+        this.quickEarnMessage = ko.observable('');
+
     }
 
     modelClass() {
@@ -58,10 +63,33 @@ class WealthViewModel extends ModelBackedViewModel {
         } else if (quickSpendAmount < 0) {
             this.quickSpendMessage('Please enter a positive value.');
         } else {
-            this.quickSpendMessage('You don\'t have that much money.')
+            this.quickSpendMessage('You don\'t have that much money.');
         }
 
         this.quickSpendAmount('');
+
+        PartyService.updatePresence();
+    }
+
+    async quickEarn() {
+        this.quickEarnMessage('');  // Clear any previous message
+
+        const quickEarnAmount = this.quickEarnAmount() | 0;
+        const type = this.quickEarnCoinType();
+        const totalAmountInCopper = quickEarnAmount * this.entity().EXCHANGE_RATES[type];
+
+        if (!!quickEarnAmount && quickEarnAmount >= 0) {
+            try {
+                this.entity().add(quickEarnAmount, type);
+                await this.entity().ps.save();
+            } catch(e) {
+                this.quickEarnMessage(`Error: ${e.message}`);
+            }
+        } else if (quickEarnAmount < 0) {
+            this.quickEarnMessage('Please enter a positive value.');
+        }
+
+        this.quickEarnAmount('');
 
         PartyService.updatePresence();
     }

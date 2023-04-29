@@ -68,6 +68,9 @@ class ChatViewModel extends ViewModel {
         this.isVisible(!this.isVisible());
         if (this.isVisible()) {
             this.chatDidAppear();
+            if (this.pinToBottom()) {
+                this.hasNewMessages(false);
+            }
         }
     }
 
@@ -120,11 +123,7 @@ class ChatViewModel extends ViewModel {
     }
 
     async sendGlobal(message, options={}) {
-        PartyService.pushToChatLog(message, null, await this.me(), options);
-    }
-
-    async sendWhisper(message, to=[]) {
-        PartyService.pushToChatLog(message, to, await this.me(), options);
+        PartyService.pushToChatLog(message, await this.me(), options);
     }
 
     // Events

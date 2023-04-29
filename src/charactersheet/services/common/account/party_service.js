@@ -16,9 +16,6 @@ import { observable } from 'knockout';
 
 const SharedDocument = {
     CHAT_LOG: 'chat-log',
-    EVENT_LOG: 'event-log',
-    PARTY_NOTE: 'party-note',
-    INITIATIVE: 'initiative',
 };
 
 // Service
@@ -269,23 +266,13 @@ class _PartyService {
      * Sending a global message to all participants can be done by simply
      * calling `pushToChatLog("some message")` with no additional parameters.
      *
-     * Whisper messages are defined as messages with at least one recipient.
-     * For example: `pushToChatLog("some message", ["user1", "user2"])`
-     *
      * Formatting can be applied to messages by specifying various options.
      */
-    pushToChatLog(message, to=null, from=null, options={}) {
-        if (!!to && !Array.isArray(to)) {
-            throw new Error(
-                'Invalid Parameter: to= parameter was given, but it is not an array.'
-            )
-        }
-
+    pushToChatLog(message, from=null, options={}) {
         this.doc.transact(() => {
             const log = this.doc.getArray(SharedDocument.CHAT_LOG)
             log.push([{
                 message,
-                to,
                 from,
                 options,
                 createdAt: (new Date()).toISOString(),
@@ -293,105 +280,6 @@ class _PartyService {
             const itemsToDelete = log.length - this.maxChatItems;
             if (itemsToDelete > 0) {
                 log.delete(0, itemsToDelete);
-            }
-        });
-    }
-
-    // Events
-
-    getEventLog() {
-        if (!this.doc) {
-            return null;
-        }
-        return this.doc.getArray(SharedDocument.EVENT_LOG).toArray();
-    }
-
-    /**
-     * Add an observer to the event log. This allows you to be notified of
-     * changes and update other components when messages arrive.
-     */
-    observeEventLog(callback) {
-        if (!this.doc) {
-            throw new Error('Shared Document is not ready yet.')
-        }
-        this.doc.getArray(SharedDocument.EVENT_LOG).observe(event => {
-            try {
-                callback(event);
-            } catch(error) {
-                console.log(`Error in event log observer:`, error);
-            }
-        });
-    }
-
-    /**
-     * Add an item to end of the event log. This method also automatically
-     * trims the log to the required length at the same time if needed.
-     *
-     * Sending a global message to all participants can be done by simply
-     * calling `pushToChatLog("some message")` with no additional parameters.
-     *
-     * Whisper messages are defined as messages with at least one recipient.
-     * For example: `pushToChatLog("some message", ["user1", "user2"])`
-     *
-     * Send additional options via the options parameter. This could include
-     * transactional information as well as other values.
-     */
-    pushToEventLog(message, to=[], options={}) {
-        if (!!to && !Array.isArray(to)) {
-            throw new Error(
-                'Invalid Parameter: to= parameter was given, but it is not an array.'
-            )
-        }
-
-        this.doc.transact(() => {
-            const log = this.doc.getArray(SharedDocument.EVENT_LOG);
-            log.push([{
-                message,
-                to,
-                from: CoreManager.activeCore().uuid(),
-                options,
-                createdAt: (new Date()).toISOString(),
-            }]);
-            const itemsToDelete = log.length - this.maxEventItems;
-            if (itemsToDelete > 0) {
-                log.delete(0, itemsToDelete);
-            }
-        });
-    }
-
-    // Party Note
-
-    getPartyNote() {
-        return this.doc.getXmlFragment(SharedDocument.PARTY_NOTE);
-    }
-
-    // Initiative
-
-    getInitiative() {
-        if (!this.doc) {
-            return null;
-        }
-        return this.doc.getMap(SharedDocument.INITIATIVE).toJSON();
-    }
-
-    observeInitiative(callback) {
-        if (!this.doc) {
-            throw new Error('Shared Document is not ready yet.')
-        }
-        this.doc.getMap(SharedDocument.INITIATIVE).observe(event => {
-            try {
-                callback(event);
-            } catch(error) {
-                console.log(`Error in event log observer:`, error);
-            }
-        });
-    }
-
-    updateInitiative(values={}) {
-        this.doc.transact(() => {
-            const initiative = this.doc.getMap(SharedDocument.INITIATIVE);
-            for (const key in values) {
-                initiative.set(key, values[key]);
             }
         });
     }
