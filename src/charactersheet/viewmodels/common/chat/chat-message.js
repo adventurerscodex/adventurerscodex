@@ -30,15 +30,24 @@ class ChatMessageViewModel extends ViewModel {
 
     // UI State
 
-    localizedSentAt = ko.pureComputed(() => (
-        (new Date(this.message().createdAt)).toLocaleString([], {
+    localizedSentAt = ko.pureComputed(() => {
+        const sentAt = new Date(this.message().createdAt);
+        const sentAtCombined = sentAt.toLocaleString([], {
             month: '2-digit',
             year: '2-digit',
             day: '2-digit',
             hour: '2-digit',
             minute: '2-digit',
-        })
-    ));
+        });
+
+        if (sentAt.toLocaleDateString() == (new Date()).toLocaleDateString()) {
+            // It was sent today, just display the time.
+            return sentAtCombined.split(',')[1];
+        } else {
+            // It was sent another day, just display the date.
+            return sentAtCombined.split(',')[0];
+        }
+    });
 
     statusIndicatorClass = ko.pureComputed(() => (
         this.isOnline()
