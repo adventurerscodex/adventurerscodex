@@ -58,6 +58,8 @@ export class InitiativeTrackerViewModel extends AbstractTabularViewModel {
 
     isConnectedToParty = pureComputed(() => (!!this.party()));
 
+    canReRoll = pureComputed(() => (this.state() === this.State.called));
+
     /**
      * By default return all players & additional participants, but if the
      * filterByOnline is set, then filter the former to only show online players.
@@ -90,7 +92,7 @@ export class InitiativeTrackerViewModel extends AbstractTabularViewModel {
         PlayerTypes.character.key === this.playerType()
     ));
 
-    currentIndex = pureComputed(() => this.order.indexOf(this.currentTurn()));
+    currentIndex = pureComputed(() => this.order().indexOf(this.currentTurn()));
 
     nextIndex = pureComputed(() => {
         if (this.currentIndex() + 1 >= this.order().length) {
@@ -142,6 +144,7 @@ export class InitiativeTrackerViewModel extends AbstractTabularViewModel {
         this.order(this.order().map(row => (
             { ...row, initiative: rng.rollDie(20) }
         )));
+        this.resort();
     }
 
     canGoForward = pureComputed(() => {

@@ -118,7 +118,8 @@ class MonsterSectionViewModel extends AbstractEncounterTabularViewModel {
             ),
         }));
 
-        const order = [...initiative.order, ...monsters];
+        const existingOrder = initiative.order || [];
+        const order = [...existingOrder, ...monsters];
         PartyService.updateInitiative({ order });
 
         // Let the root know to change tabs.
