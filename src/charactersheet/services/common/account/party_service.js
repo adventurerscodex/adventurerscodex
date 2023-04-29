@@ -12,13 +12,23 @@ import { debounce } from 'lodash';
 import { observable } from 'knockout';
 
 
+// Shared Resources
+
+const SharedDocument = {
+    CHAT_LOG: 'chat-log',
+};
+
+// Service
+
 class _PartyService {
 
-    constructor({ REFRESH_INTERVAL }) {
+    constructor({ REFRESH_INTERVAL, CHAT_LOG_MAX_ITEMS, EVENT_LOG_MAX_ITEMS }) {
         autoBind(this);
 
         this.party = null;
         this.refreshInterval = REFRESH_INTERVAL;
+        this.maxChatItems = CHAT_LOG_MAX_ITEMS;
+        this.maxEventItems = EVENT_LOG_MAX_ITEMS;
 
         this.setupNotifications();
     }
@@ -223,6 +233,57 @@ class _PartyService {
         this.shutdownConnection();
     }
 
+    // Chat
+
+    getChatLog() {
+        if (!this.doc) {
+            return null;
+        }
+        return this.doc.getArray(SharedDocument.CHAT_LOG).toArray();
+    }
+
+    /**
+     * Add an observer to the chat log. This allows you to be notified of
+     * changes and update other components when messages arrive.
+     */
+    observeChatLog(callback) {
+        if (!this.doc) {
+            throw new Error('Shared Document is not ready yet.')
+        }
+        this.doc.getArray(SharedDocument.CHAT_LOG).observe(event => {
+            try {
+                callback(event);
+            } catch(error) {
+                console.log(`Error in chat log observer:`, error);
+            }
+        });
+    }
+
+    /**
+     * Add an item to end of the chat log. This method also automatically
+     * trims the log to the required length at the same time if needed.
+     *
+     * Sending a global message to all participants can be done by simply
+     * calling `pushToChatLog("some message")` with no additional parameters.
+     *
+     * Formatting can be applied to messages by specifying various options.
+     */
+    pushToChatLog(message, from=null, options={}) {
+        this.doc.transact(() => {
+            const log = this.doc.getArray(SharedDocument.CHAT_LOG)
+            log.push([{
+                message,
+                from,
+                options,
+                createdAt: (new Date()).toISOString(),
+            }]);
+            const itemsToDelete = log.length - this.maxChatItems;
+            if (itemsToDelete > 0) {
+                log.delete(0, itemsToDelete);
+            }
+        });
+    }
+
     // Private
 
     _fetchParty = async () => {
@@ -271,4 +332,6 @@ class _PartyService {
 
 export const PartyService = new _PartyService({
     REFRESH_INTERVAL: 300000,  // 5 minutes
+    CHAT_LOG_MAX_ITEMS: 1000,
+    EVENT_LOG_MAX_ITEMS: 1000,
 });

@@ -11,7 +11,7 @@ export var HotkeysService = {
         if (keypressIsInBody) {
             var metaKey = HotkeysService._determineMetakey(event);
 
-            var alphaNumericKey = String.fromCharCode(event.which);
+            var alphaNumericKey = event.key;
             var cb = HotkeysService._callbackFromKeys(metaKey, alphaNumericKey);
 
             if(typeof cb === 'function'){
