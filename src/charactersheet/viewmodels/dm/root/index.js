@@ -17,6 +17,7 @@ import notesTabImage from 'images/tab_icons/quill-ink.svg';
 import encounterTabImage from 'images/tab_icons/bookmarklet.svg';
 import partyTabImage from 'images/tab_icons/backup.svg';
 import exhibitTabImage from 'images/tab_icons/film-projector.svg';
+import initiativeTabImage from 'images/tab_icons/sword-clash.svg';
 import template from './index.html';
 
 
@@ -39,7 +40,7 @@ export function DMRootViewModel() {
     self.notesTabImage = notesTabImage;
     self.partyTabImage = partyTabImage;
     self.exhibitTabImage = exhibitTabImage;
-    self.initiativeTrackerTabImage = partyTabImage;
+    self.initiativeTrackerTabImage = initiativeTabImage;
 
     self.subscriptions = [];
 
