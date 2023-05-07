@@ -18,6 +18,12 @@ export class PartyStatusViewModel extends ViewModel {
     setUpSubscriptions() {
         this.subscriptions.push(Notifications.coreManager.changed.add(this.coreDidChange));
         this.subscriptions.push(Notifications.party.changed.add(this.partyDidChange));
+        this.subscriptions.push(Notifications.party.connected.add(this.partyDidConnect));
+
+        // Just in case it's already connected.
+        if (this.isConnectedToParty()) {
+            this.partyDidConnect();
+        }
     }
 
     // UI
@@ -43,9 +49,10 @@ export class PartyStatusViewModel extends ViewModel {
     }
 
     initiativeDidChange() {
-        const { currentTurn } = PartyService.getInitiative();
+        const { currentTurn, nextTurn } = PartyService.getInitiative();
         const { uuid } = CoreManager.activeCore();
-        this.currentTurn(currentTurn.uuid === uuid());
+        this.isCurrentTurn(currentTurn && currentTurn.uuid === uuid());
+        this.isNextTurn(nextTurn && nextTurn.uuid === uuid());
     }
 
     onClose() {

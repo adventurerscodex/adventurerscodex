@@ -272,6 +272,7 @@ export class InitiativeTrackerViewModel extends AbstractTabularViewModel {
                 rounds: this.rounds(),
                 state: this.state(),
                 currentTurn: this.currentTurn(),
+                nextTurn: this.nextTurn(),
             });
         }
     }
