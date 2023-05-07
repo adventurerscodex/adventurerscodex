@@ -65,7 +65,7 @@
         <td class="hidden-xs hidden-sm" data-toggle="collapse" data-bind="
           text: hitPoints,
           attr: { 'data-target': `#monster_list_${uuid()}` }"></td>
-        <!-- ko if: $component.shouldShowExhibitButton -->
+        <!-- ko if: $component.isConnectedToParty -->
         <td class="text-center">
           <a data-bind="click: () => $component.toggleExhibit($data)" href="#" title="Send to Exhibit">
             <i data-bind="css: { exhibitActiveIcon: isExhibited }" class="fa fa-desktop fa-color-hover clickable">
@@ -73,7 +73,7 @@
           </a>
         </td>
         <!-- /ko -->
-        <!-- ko ifnot: $component.shouldShowExhibitButton -->
+        <!-- ko ifnot: $component.isConnectedToParty -->
         <td class="text-center">
           <span class="fa fa-desktop fa-disabled"
             data-bind="popover: { content: 'Join a Party in order to send to Exhibit' }">

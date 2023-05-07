@@ -31,7 +31,7 @@ class MonsterSectionViewModel extends AbstractEncounterTabularViewModel {
     }
 
     fullScreen = ko.observable(false);
-    shouldShowExhibitButton = ko.observable(!!PartyService.party);
+    isConnectedToParty = ko.observable(!!PartyService.party);
     initiativeState = ko.observable('called');
 
     modelClass() {
@@ -74,7 +74,7 @@ class MonsterSectionViewModel extends AbstractEncounterTabularViewModel {
     ), this);
 
     canAddToInitiative = ko.pureComputed(() => (
-        this.entities().length > 0
+        this.entities().length > 0 && this.isConnectedToParty()
     ));
 
     // Actions
@@ -119,7 +119,11 @@ class MonsterSectionViewModel extends AbstractEncounterTabularViewModel {
         }));
 
         const existingOrder = initiative.order || [];
-        const order = [...existingOrder, ...monsters];
+        // Don't re-add the same monster twice.
+        const additions = monsters.filter(({ uuid }) => (
+            !existingOrder.some(existing => uuid === existing.uuid)
+        ));
+        const order = [...existingOrder, ...additions];
         PartyService.updateInitiative({ order });
 
         // Let the root know to change tabs.
@@ -129,7 +133,7 @@ class MonsterSectionViewModel extends AbstractEncounterTabularViewModel {
     // Events
 
     partyDidChange(party) {
-        this.shouldShowExhibitButton(!!party);
+        this.isConnectedToParty(!!party);
 
         // Update everything that isn't on exhibit. This event can
         // be fired from multiple places.
