@@ -137,6 +137,8 @@ export class InitiativeTrackerViewModel extends AbstractTabularViewModel {
         return this.party().members.some(p => participant.uuid === p.uuid);
     }
 
+    playerIsOnline = player => PartyService.playerIsOnline(player.uuid);
+
     // UI Methods
 
     rollForInitiative() {

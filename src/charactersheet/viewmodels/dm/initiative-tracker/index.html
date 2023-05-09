@@ -225,6 +225,12 @@
             height="40px"
             width="40px"
           />
+          <div
+            class="connection-status connection-status-sm"
+            data-bind="if: $component.isPlayer($data)"
+          >
+            <div class="circle-indicator" data-bind="css: $component.playerIsOnline($data) ? 'success' : 'failure' "></div>
+          </div>
         </div>
         <div>
           <h5 class="player-name" data-bind="text: name"></h5>
