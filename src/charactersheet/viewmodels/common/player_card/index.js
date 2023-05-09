@@ -3,7 +3,8 @@ import { capitalize } from 'lodash';
 import { observable, components, pureComputed } from 'knockout';
 import { ViewModel } from 'charactersheet/viewmodels/abstract';
 import { PartyService } from 'charactersheet/services/common';
-import { Notifications } from 'charactersheet/utilities';
+import { CoreManager, Notifications } from 'charactersheet/utilities';
+import { PlayerTypes } from 'charactersheet/models/common';
 import template from './index.html';
 import './index.css';
 
@@ -18,16 +19,22 @@ export class PlayerCardViewModel extends ViewModel {
         this.isOnline = observable(
             PartyService.playerIsOnline(this.player.uuid)
         );
+        const key = CoreManager.activeCore().type.name();
+        this.playerType = observable(key);
     }
 
     setUpSubscriptions() {
         super.setUpSubscriptions();
 
-        const partyDidChange = Notifications.party.changed.add(this.partyDidChange);
-        this.subscriptions.push(partyDidChange);
+        this.subscriptions.push(Notifications.coreManager.changed.add(this.coreDidChange));
+        this.subscriptions.push(Notifications.party.changed.add(this.partyDidChange));
     }
 
     // UI
+
+    isDM = pureComputed(() => (
+        PlayerTypes.dm.key === this.playerType()
+    ));
 
     currentMaxHp() {
         return this.player.maxHitPoints - this.player.maxHitPointsReductionDamage;
@@ -107,6 +114,11 @@ export class PlayerCardViewModel extends ViewModel {
 
     partyDidChange() {
         this.isOnline(PartyService.playerIsOnline(this.player.uuid));
+    }
+
+    coreDidChange() {
+        const key = CoreManager.activeCore().type.name();
+        this.playerType(PlayerTypes[key]);
     }
 }
 
