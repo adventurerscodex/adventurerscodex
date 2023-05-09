@@ -94,6 +94,16 @@ export class PlayerCardViewModel extends ViewModel {
         this.isOnline() ? 'success' : 'failure'
     ));
 
+    hasStats = pureComputed(() => (
+        this.player.armorClass !== undefined
+        || this.player.hitDice !== undefined
+        || this.player.spellSaveDc !== undefined
+        || this.player.experience !== undefined
+        || this.player.passivePerception !== undefined
+        || this.player.passiveInvestigation !== undefined
+        || this.player.worthInGold !== undefined
+    ));
+
     popoverHtml() {
         if (!this.player.isActivePatron) {
             return '';

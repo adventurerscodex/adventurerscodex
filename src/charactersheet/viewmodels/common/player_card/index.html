@@ -50,7 +50,7 @@
       </div>
       <!-- Health, Spells, and Features  -->
       <div class="row">
-        <div class="col-xs-12" data-bind="visible: player.maxHitPoints">
+        <div class="col-xs-12" data-bind="visible: player.maxHitPoints !== undefined">
           Hit Points
           <span class="text-muted pull-right">
             <small data-bind="text: currentHp()"></small> /
@@ -83,7 +83,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-12">
+        <div class="col-xs-12" data-bind="visible: player.totalSpellSlots !== undefined">
           Spell Slots
           <span class="text-muted pull-right">
             <small data-bind="text: currentSpellSlots()"></small> /
@@ -102,7 +102,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-12">
+        <div class="col-xs-12" data-bind="visible: player.totalTrackables !== undefined">
           Features, Feats, and Traits
           <span class="text-muted pull-right">
             <small data-bind="text: currentTrackables()"></small> /
@@ -121,7 +121,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-12 col-padded">
+        <div class="col-xs-12 col-padded" data-bind="visible: hasStats">
           <table class="table table-striped table-condensed">
             <tr>
               <th scope="row">Armor Class</th>
