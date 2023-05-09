@@ -117,8 +117,6 @@ export class PlayerCardViewModel extends ViewModel {
     }
 
     coreDidChange() {
-        this.party(null);
-
         const key = CoreManager.activeCore().type.name();
         this.playerType(PlayerTypes[key]);
     }
