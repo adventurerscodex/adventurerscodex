@@ -1,5 +1,5 @@
 import autoBind from 'auto-bind';
-import { observable, observableArray, components, pureComputed } from 'knockout';
+import { observable, observableArray, components, pureComputed, mapping } from 'knockout';
 import { AbstractTabularViewModel } from 'charactersheet/viewmodels/abstract';
 import { CoreManager, Notifications } from 'charactersheet/utilities';
 import {
@@ -52,6 +52,11 @@ export class InitiativeTrackerViewModel extends AbstractTabularViewModel {
 
         HotkeysService.registerHotkey('j', this.goBackward);
         HotkeysService.registerHotkey('k', this.goForward);
+
+        // Trigger the signal if we're already too late.
+        if (this.isConnectedToParty()) {
+            partyDidConnect();
+        }
     }
 
     // UI
@@ -69,14 +74,14 @@ export class InitiativeTrackerViewModel extends AbstractTabularViewModel {
         this.filterByOnline()
         ? this.order().filter(participant => (
             !this.isPlayer(participant)
-            || PartyService.playerIsOnline(participant.uuid)
+            || PartyService.playerIsOnline(participant.uuid())
         ))
         : this.order()
     ));
 
     remainingPlayers = pureComputed(() => (
         this.party().members.filter(member => (
-            !this.order().some(participant => participant.uuid === member.uuid)
+            !this.order().some(participant => participant.uuid() === member.uuid)
         ))
     ));
 
@@ -92,7 +97,13 @@ export class InitiativeTrackerViewModel extends AbstractTabularViewModel {
         PlayerTypes.character.key === this.playerType()
     ));
 
-    currentIndex = pureComputed(() => this.order().indexOf(this.currentTurn()));
+    currentIndex = pureComputed(() => {
+        const current = this.currentTurn();
+        if (!current) {
+            return null;
+        }
+        return this.order().map(i => i.uuid()).indexOf(current.uuid());
+    });
 
     nextIndex = pureComputed(() => {
         if (this.currentIndex() + 1 >= this.order().length) {
@@ -123,29 +134,29 @@ export class InitiativeTrackerViewModel extends AbstractTabularViewModel {
     });
 
     modifierFor(item) {
-        const bonus = parseInt(item.dexterityBonus) || 0;
-        const modifier = parseInt(item.initiativeModifier) || 0;
+        const bonus = parseInt(item.dexterityBonus()) || 0;
+        const modifier = parseInt(item.initiativeModifier()) || 0;
         return bonus + modifier;
     }
 
     totalInitiativeFor(item) {
-        const roll = parseInt(item.initiative) || 0;
+        const roll = parseInt(item.initiative()) || 0;
         return roll + this.modifierFor(item);
     }
 
     isPlayer(participant) {
-        return this.party().members.some(p => participant.uuid === p.uuid);
+        return this.party().members.some(p => participant.uuid() === p.uuid);
     }
 
-    playerIsOnline = player => PartyService.playerIsOnline(player.uuid);
+    playerIsOnline = player => PartyService.playerIsOnline(player.uuid());
 
     // UI Methods
 
     rollForInitiative() {
         const rng = RandomNumberGeneratorService.sharedService();
-        this.order(this.order().map(row => (
-            { ...row, initiative: rng.rollDie(20) }
-        )));
+        this.order().forEach(row => (
+            row.initiative(rng.rollDie(20))
+        ));
         this.resort();
     }
 
@@ -213,8 +224,8 @@ export class InitiativeTrackerViewModel extends AbstractTabularViewModel {
                 bInitiative = this.totalInitiativeFor(b);
 
             if (aInitiative === bInitiative) {
-                const aDex = a.dexterityBonus || 0,
-                    bDex = b.dexterityBonus || 0;
+                const aDex = a.dexterityBonus() || 0,
+                    bDex = b.dexterityBonus() || 0;
 
                 if (aDex === bDex) {
                     return a.name > b.name;
@@ -234,10 +245,6 @@ export class InitiativeTrackerViewModel extends AbstractTabularViewModel {
     }
 
     addPartyToOrderIfNeeded() {
-        if (this.order().length > 0) {
-            return;
-        }
-
         this.party().members.forEach(player =>
             this.addToOrderIfNeededAndSort(player)
         );
@@ -246,37 +253,39 @@ export class InitiativeTrackerViewModel extends AbstractTabularViewModel {
     // Data Methods
 
     addToOrderIfNeededAndSort(entryToAdd) {
-        const existingEntry = this.order().filter(({ uuid }) => uuid === entryToAdd.uuid)[0];
+        const existingEntry = this.order().filter(({ uuid }) => uuid() === entryToAdd.uuid)[0];
         if (!existingEntry) {
-            if (entryToAdd.initiative === undefined) {
-                const rng = RandomNumberGeneratorService.sharedService();
-                entryToAdd.initiative = rng.rollDie(20);
-            }
-            if (entryToAdd.dexterityBonus === undefined) {
-                entryToAdd.dexterityBonus = 0;
-            }
-            if (entryToAdd.initiativeModifier === undefined) {
-                entryToAdd.initiativeModifier = 0;
-            }
-
-            this.order.push(entryToAdd);
+            const koEntryToAdd = mapping.fromJS(this.withRequiredFields(entryToAdd));
+            this.order.push(koEntryToAdd);
         } else {
             const index = this.order.indexOf(existingEntry);
-            this.order()[index] = { ...existingEntry, ...entryToAdd };
+            const koEntryToAdd = mapping.fromJS(this.withRequiredFields(entryToAdd));
+            this.order()[index] = { ...existingEntry, ...koEntryToAdd };
         }
         this.resort();
     }
 
     updateInitiativeIfNeeded(force=false) {
         if (force || this.state() === this.State.started) {
-            PartyService.updateInitiative({
+            PartyService.updateInitiative(mapping.toJS({
                 order: this.order(),
                 rounds: this.rounds(),
                 state: this.state(),
                 currentTurn: this.currentTurn(),
                 nextTurn: this.nextTurn(),
-            });
+            }));
         }
+    }
+
+    withRequiredFields(item) {
+        const rng = RandomNumberGeneratorService.sharedService();
+        return {
+            initiative: rng.rollDie(20),
+            dexterityBonus: 0,
+            initiativeModifier: 0,
+            // Overwrite with old values if they already exist.
+            ...item,
+        };
     }
 
     // Events
@@ -296,10 +305,14 @@ export class InitiativeTrackerViewModel extends AbstractTabularViewModel {
     initiativeDidChange() {
         const doc = PartyService.getInitiative();
         if (doc) {
-            this.order(doc.order || this.order());
+            const order = doc.order || this.order();
+            this.order(order.map(i => mapping.fromJS(this.withRequiredFields(i))));
             this.rounds(doc.rounds || this.rounds());
             this.state(doc.state || this.state());
-            this.currentTurn(doc.currentTurn || this.currentTurn());
+            const currentTurn = doc.currentTurn || this.currentTurn();
+            if (currentTurn) {
+                this.currentTurn(mapping.fromJS(this.withRequiredFields(currentTurn)));
+            }
         }
     }
 

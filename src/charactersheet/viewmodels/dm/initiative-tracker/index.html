@@ -90,7 +90,7 @@
               <center>
                 <button
                   type="button"
-                  class="btn btn-link btn-sm btn-block"
+                  class="btn btn-link btn-sm"
                   id="initiativeAddButton"
                   data-toggle="collapse"
                   data-target="#add-initiative"
@@ -215,7 +215,7 @@
         class="d-flex"
         data-toggle="collapse"
         data-bind="attr: {
-          'data-target': `#initiative_list_${uuid}`,
+          'data-target': `#initiative_list_${uuid()}`,
         }"
       >
         <div class="img-header mr-2">
@@ -236,10 +236,10 @@
           <h5 class="player-name" data-bind="text: name"></h5>
           <div class="player-status">
             <!-- ko if: $component.state() === $component.State.started -->
-            <!-- ko if: $component.currentTurn() && $component.currentTurn().uuid === uuid -->
+            <!-- ko if: $component.currentTurn() && $component.currentTurn().uuid() === uuid() -->
             <span class="badge">Current Turn</span>
             <!-- /ko -->
-            <!-- ko if: $component.nextTurn() && $component.nextTurn().uuid === uuid -->
+            <!-- ko if: $component.nextTurn() && $component.nextTurn().uuid() === uuid() -->
             <span class="badge bg-default">Up Next</span>
             <!-- /ko -->
             <!-- /ko -->
@@ -257,6 +257,7 @@
           type="number"
           data-bind="value: initiative"
           class="form-control"
+          style="width: 6rem;"
         />
         &nbsp;+&nbsp;
         <span data-bind="text: $component.modifierFor($data)"></span>
@@ -272,7 +273,7 @@
         class="rotate fa fa-chevron-left"
         data-toggle="collapse"
         data-bind="attr: {
-          'data-target': `#initiative_list_${uuid}`
+          'data-target': `#initiative_list_${uuid()}`
         }"
       ></span>
     </td>

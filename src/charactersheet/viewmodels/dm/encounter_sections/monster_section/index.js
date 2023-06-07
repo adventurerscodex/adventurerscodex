@@ -111,6 +111,7 @@ class MonsterSectionViewModel extends AbstractEncounterTabularViewModel {
         const rng = RandomNumberGeneratorService.sharedService();
         const monsters = this.entities().map(monster => ({
             ...monster.exportValues(),
+            imageUrl: monster.sourceUrl(),
             initiative: rng.rollDie(20),
             initiativeModifier: 0,
             dexterityBonus: monster.modifier(
