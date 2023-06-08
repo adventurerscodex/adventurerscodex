@@ -342,7 +342,6 @@ export class InitiativeTrackerViewModel extends AbstractTabularViewModel {
     initiativeDidChange() {
         const doc = PartyService.getInitiative();
         if (doc) {
-            console.log(doc)
             this.rounds(doc.rounds || this.rounds());
             this.state(doc.state || this.state());
             this.exclusions(doc.exclusions || []);
