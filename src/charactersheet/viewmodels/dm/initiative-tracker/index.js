@@ -1,5 +1,12 @@
 import autoBind from 'auto-bind';
-import { observable, observableArray, components, pureComputed, mapping } from 'knockout';
+import {
+    observable,
+    observableArray,
+    components,
+    pureComputed,
+    mapping,
+    unwrap,
+} from 'knockout';
 import { AbstractTabularViewModel } from 'charactersheet/viewmodels/abstract';
 import { CoreManager, Notifications } from 'charactersheet/utilities';
 import {
@@ -38,6 +45,7 @@ export class InitiativeTrackerViewModel extends AbstractTabularViewModel {
         this.order = observableArray([]);
         this.currentTurn = observable(null);
         this.rounds = observable(1);
+        this.exclusions = observableArray([]);
     }
 
     refresh() {
@@ -64,30 +72,6 @@ export class InitiativeTrackerViewModel extends AbstractTabularViewModel {
     isConnectedToParty = pureComputed(() => (!!this.party()));
 
     canReRoll = pureComputed(() => (this.state() === this.State.called));
-
-    /**
-     * By default return all players & additional participants, but if the
-     * filterByOnline is set, then filter the former to only show online players.
-     * all additions will still be shown.
-     */
-    participants = pureComputed(() => (
-        this.filterByOnline()
-        ? this.order().filter(participant => (
-            !this.isPlayer(participant)
-            || PartyService.playerIsOnline(participant.uuid())
-        ))
-        : this.order()
-    ));
-
-    remainingPlayers = pureComputed(() => (
-        this.party().members.filter(member => (
-            !this.order().some(participant => participant.uuid() === member.uuid)
-        ))
-    ));
-
-    toggleFilterByOnline() {
-        this.filterByOnline(!this.filterByOnline());
-    }
 
     isDM = pureComputed(() => (
         PlayerTypes.dm.key === this.playerType()
@@ -129,8 +113,6 @@ export class InitiativeTrackerViewModel extends AbstractTabularViewModel {
         const seconds = time - (minutes * 60);
         const formattedSeconds = ('0000'+seconds).slice(-2)
         return `${minutes}:${formattedSeconds}`
-
-        if (seconds < 60) {}
     });
 
     modifierFor(item) {
@@ -239,29 +221,50 @@ export class InitiativeTrackerViewModel extends AbstractTabularViewModel {
     }
 
     startOver() {
-        this.order([]);
-        this.addPartyToOrderIfNeeded();
+        this.order(this.party().members.map(member => this.prepare(member)));
+        this.exclusions([]);
         this.updateInitiativeIfNeeded(true);
     }
 
-    addPartyToOrderIfNeeded() {
-        this.party().members.forEach(player =>
-            this.addToOrderIfNeededAndSort(player)
-        );
+    include(entry) {
+        if (!this.existsInOrder(entry)) {
+            this.addToOrderAndSort(entry);
+            // Remove from the exclusions if they're there.
+            this.exclusions(this.exclusions().filter(
+                ({ uuid }) => unwrap(uuid) !== unwrap(entry.uuid)
+            ))
+        }
+
+        this.updateInitiativeIfNeeded(true);
+    }
+
+    exclude(entry) {
+        this.order(this.order().filter(item => item.uuid() !== entry.uuid()));
+        this.exclusions.push(entry);
+        this.updateInitiativeIfNeeded(true);
     }
 
     // Data Methods
 
-    addToOrderIfNeededAndSort(entryToAdd) {
-        const existingEntry = this.order().filter(({ uuid }) => uuid() === entryToAdd.uuid)[0];
-        if (!existingEntry) {
-            const koEntryToAdd = mapping.fromJS(this.withRequiredFields(entryToAdd));
-            this.order.push(koEntryToAdd);
-        } else {
-            const index = this.order.indexOf(existingEntry);
-            const koEntryToAdd = mapping.fromJS(this.withRequiredFields(entryToAdd));
-            this.order()[index] = { ...existingEntry, ...koEntryToAdd };
-        }
+    existsInOrder(entry) {
+        return this.order().some(({ uuid }) =>
+            unwrap(uuid) === unwrap(entry.uuid)
+        );
+    }
+
+    existsInExclusions(entry) {
+        return this.exclusions().some(({ uuid }) =>
+            unwrap(uuid) === unwrap(entry.uuid)
+        );
+    }
+
+    prepare(entry) {
+        return mapping.fromJS(this.withRequiredFields(entry));
+    }
+
+    addToOrderAndSort(entryToAdd) {
+        const koEntryToAdd = mapping.fromJS(this.withRequiredFields(entryToAdd));
+        this.order.push(koEntryToAdd);
         this.resort();
     }
 
@@ -269,6 +272,7 @@ export class InitiativeTrackerViewModel extends AbstractTabularViewModel {
         if (force || this.state() === this.State.started) {
             PartyService.updateInitiative(mapping.toJS({
                 order: this.order(),
+                exclusions: this.exclusions(),
                 rounds: this.rounds(),
                 state: this.state(),
                 currentTurn: this.currentTurn(),
@@ -278,41 +282,83 @@ export class InitiativeTrackerViewModel extends AbstractTabularViewModel {
     }
 
     withRequiredFields(item) {
-        const rng = RandomNumberGeneratorService.sharedService();
-        return {
-            initiative: rng.rollDie(20),
-            dexterityBonus: 0,
-            initiativeModifier: 0,
-            // Overwrite with old values if they already exist.
-            ...item,
-        };
+        if (item.initiative === undefined) {
+            const rng = RandomNumberGeneratorService.sharedService();
+            item.initiative = rng.rollDie(20);
+        }
+        if (item.dexterityBonus === undefined) {
+            item.dexterityBonus = 0;
+        }
+        if (item.initiativeModifier === undefined) {
+            item.initiativeModifier = 0;
+        }
+        return item;
     }
 
     // Events
 
-    partyDidChange(party) {
+    partyDidChange = (party) => {
         this.party(party);
 
-        this.initiativeDidChange();
+        // Add & Update Party Member Info
 
-        this.addPartyToOrderIfNeeded();
+        this.party().members.forEach(member => {
+            if (this.existsInOrder(member)) {
+                this.order().forEach(entry => {
+                    if (unwrap(entry.uuid) === member.uuid) {
+                        mapping.fromJS(member, {}, entry);
+                    }
+                });
+            } else if (this.existsInExclusions(member)) {
+                this.exclusions().forEach(entry => {
+                    if (unwrap(entry.uuid) === member.uuid) {
+                        mapping.fromJS(member, {}, entry);
+                    }
+                });
+            } else {
+                if (this.state() === this.State.called) {
+                    this.addToOrderAndSort(this.prepare(member));
+                } else {
+                    // Add all new players to the exclusions
+                    // so as to not mess with combat already in progress.
+                    this.exclusions.push(this.prepare(member))
+                }
+            }
+        });
+
+        // Note: Players who leave the party in the middle of initiative
+        // cannot be removed as they are effectively 'demoted to a monster'
+        // and there is no way to tell them apart from another monster.
+        // They will be promoted again if they rejoin, but the DM will need
+        // to actually remove them from the order.
+
+        this.updateInitiativeIfNeeded();
     }
 
-    partyDidConnect(party) {
+    partyDidConnect(_) {
         PartyService.observeInitiative(this.initiativeDidChange)
     }
 
     initiativeDidChange() {
         const doc = PartyService.getInitiative();
         if (doc) {
-            const order = doc.order || this.order();
-            this.order(order.map(i => mapping.fromJS(this.withRequiredFields(i))));
+            console.log(doc)
             this.rounds(doc.rounds || this.rounds());
             this.state(doc.state || this.state());
-            const currentTurn = doc.currentTurn || this.currentTurn();
-            if (currentTurn) {
-                this.currentTurn(mapping.fromJS(this.withRequiredFields(currentTurn)));
+            this.exclusions(doc.exclusions || []);
+
+            const order = doc.order || [];
+            if (order.length === 0) {
+                this.order(this.party().members.map(member => mapping.fromJS(member)));
+            } else {
+                this.order(order.map(entry => mapping.fromJS(entry)));
             }
+
+            this.currentTurn(
+                !!doc.currentTurn
+                ? this.prepare(doc.currentTurn)
+                : this.currentTurn()
+            );
         }
     }
 

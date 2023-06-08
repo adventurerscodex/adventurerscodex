@@ -72,7 +72,7 @@
         <!-- /ko -->
         <!-- ko if: loaded(), completeOn: 'render' -->
         <tbody>
-          <!-- ko template: { name: 'participant-row', foreach: participants } -->
+          <!-- ko template: { name: 'participant-row', foreach: order } -->
           <!-- /ko -->
         </tbody>
         <tfoot>
@@ -83,7 +83,8 @@
                   containerId:'add-initiative',
                   show: $component.displayAddForm,
                   flip: $component.toggleShowAddForm,
-                  remainingPlayers: $component.remainingPlayers,
+                  available: $component.exclusions,
+                  include: $component.include,
                  }"></initiative-form>
               </div>
               <!-- ko ifnot: $component.displayAddForm -->
@@ -255,7 +256,7 @@
       >
         <input
           type="number"
-          data-bind="value: initiative"
+          data-bind="value: console.log($data) ||  initiative"
           class="form-control"
           style="width: 6rem;"
         />
@@ -285,7 +286,7 @@
         tabId: $component.tabId,
         collapsable: true,
         elementId: 'initiative_list',
-        context: { data: $data }
+        context: { data: $data, exclude: $component.exclude, include: $component.include }
       }">
         <div class="front" data-bind="with: context.data">
           <card-edit-actions params="{ flip: $parent.flip }"></card-edit-actions>
@@ -312,7 +313,9 @@
              containerId: elementId,
              show: showBack,
              flip: flip,
-             forceCardResize: forceCardResize
+             forceCardResize: forceCardResize,
+             exclude: context.exclude,
+             include: context.include,
             }"></initiative-form>
         </div>
       </flip-card>

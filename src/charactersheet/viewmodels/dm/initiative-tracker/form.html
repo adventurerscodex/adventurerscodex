@@ -1,7 +1,7 @@
 <form data-bind="submit: $component.submit">
   <card-submit-actions params="{reset: $component.reset}"></card-submit-actions>
   <!-- ko if: $component.addForm -->
-  <!-- ko if: remainingPlayers().length > 0 -->
+  <!-- ko if: available().length > 0 -->
   <div class="h4 collapsable-card-title">
     Quick Add Existing Player</h5>
   </div>
@@ -10,7 +10,7 @@
   </p>
 
   <div class="d-flex" style="flex-wrap: wrap;">
-    <!-- ko foreach: remainingPlayers -->
+    <!-- ko foreach: available -->
     <div
       class="bordered clickable rounded pl-1 pr-1 pt-1 pb-1 mr-1"
       data-bind="click: () => $component.quickAdd($data)"

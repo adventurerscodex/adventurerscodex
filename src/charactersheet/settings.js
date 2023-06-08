@@ -8,7 +8,7 @@ export var Settings = {
     /**
      * A series of values to always ignore when mapping KO Objects.
      */
-    mappingAlwaysIgnore: ['__id', 'ps'],
+    mappingAlwaysIgnore: ['__id', 'ps', '__ko_mapping__'],
 
     dropboxSaveOptions: {
         // Success is called once all files have been successfully added to the user's

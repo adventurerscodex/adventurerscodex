@@ -11,7 +11,9 @@ export class InitiativeFormViewModel extends AbstractChildFormModel {
         super(params);
         autoBind(this);
 
-        this.remainingPlayers = params.remainingPlayers;
+        this.available = params.available;
+        this.include = params.include;
+        this.exclude = params.exclude;
         this.defaultImageUrl = 'https://www.gravatar.com/avatar/x?d=mm'
     }
 
@@ -45,47 +47,19 @@ export class InitiativeFormViewModel extends AbstractChildFormModel {
     }
 
     quickAdd(player) {
-        const currentInitiative = PartyService.getInitiative();
-        const currentOrder = currentInitiative.order || [];
-        PartyService.updateInitiative({
-            ...currentInitiative,
-            order: [...currentOrder, ko.mapping.toJS({
-                ...this.generateBlank(),
-                ...player,
-            })]
-        });
+        this.include(ko.mapping.toJS({
+            ...this.generateBlank(),
+            ...player,
+        }));
         this.flip();
     }
 
     save() {
-        const currentInitiative = PartyService.getInitiative();
-        const currentOrder = currentInitiative.order || [];
-
-        let order;
-        const exists = currentOrder.some(item => item.uuid === this.entity().uuid());
-        if (exists) {
-            order = currentOrder.map(item => (
-                item.uuid === this.entity().uuid()
-                ? ko.mapping.toJS(this.entity())
-                : item
-            ));
-        } else {
-            order = [...currentOrder, ko.mapping.toJS(this.entity())]
-        }
-
-        PartyService.updateInitiative({
-            ...currentInitiative,
-            order
-        });
+        this.include(ko.mapping.toJS(this.entity()));
     }
 
     delete() {
-        const currentInitiative = PartyService.getInitiative();
-        const currentOrder = currentInitiative.order || [];
-        PartyService.updateInitiative({
-            ...currentInitiative,
-            order: currentOrder.filter(item => item.uuid !== this.entity().uuid()),
-        });
+        this.exclude(this.entity());
     }
 
     validation = {
