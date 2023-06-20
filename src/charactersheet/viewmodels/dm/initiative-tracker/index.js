@@ -212,10 +212,10 @@ export class InitiativeTrackerViewModel extends AbstractTabularViewModel {
                 if (aDex === bDex) {
                     return a.name > b.name;
                 } else {
-                    return aDex < bDex;
+                    return bDex - aDex;
                 }
             }
-            return aInitiative < bInitiative;
+            return bInitiative - aInitiative;
         });
         this.updateInitiativeIfNeeded();
     }
