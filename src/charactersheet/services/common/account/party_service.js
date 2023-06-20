@@ -16,6 +16,7 @@ import { observable } from 'knockout';
 
 const SharedDocument = {
     CHAT_LOG: 'chat-log',
+    INITIATIVE: 'initiative',
 };
 
 // Service
@@ -280,6 +281,37 @@ class _PartyService {
             const itemsToDelete = log.length - this.maxChatItems;
             if (itemsToDelete > 0) {
                 log.delete(0, itemsToDelete);
+            }
+        });
+    }
+
+    // Initiative
+
+    getInitiative() {
+        if (!this.doc) {
+            return null;
+        }
+        return this.doc.getMap(SharedDocument.INITIATIVE).toJSON();
+    }
+
+    observeInitiative(callback) {
+        if (!this.doc) {
+            throw new Error('Shared Document is not ready yet.')
+        }
+        this.doc.getMap(SharedDocument.INITIATIVE).observe(event => {
+            try {
+                callback(event);
+            } catch(error) {
+                console.log(`Error in event log observer:`, error);
+            }
+        });
+    }
+
+    updateInitiative(values={}) {
+        this.doc.transact(() => {
+            const initiative = this.doc.getMap(SharedDocument.INITIATIVE);
+            for (const key in values) {
+                initiative.set(key, values[key]);
             }
         });
     }

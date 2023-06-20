@@ -1,8 +1,21 @@
 <div id="monster-pane">
   <div class="card-title h4">
-    <back-button params="{ column: column }"></back-button>
-    <span data-bind="text: name"></span><br />
-    <small data-bind="text: tagline"></small>
+    <div class="row">
+      <div class="col-xs-12 col-md-8 col-lg-9">
+        <back-button params="{ column: column }"></back-button>
+        <span data-bind="text: name"></span><br />
+        <small data-bind="text: tagline"></small>
+      </div>
+      <div class="hidden-xs hidden-sm col-md-4 col-lg-3">
+        <button
+          class="btn btn-xs btn-info"
+          type="button"
+          data-bind="click: addToInitiative, enable: canAddToInitiative"
+        >
+          Add to Initiative
+        </button>
+      </div>
+    </div>
   </div>
   <hr class="ac-table-header">
   <table class="table table-responsive table-ac-bordered table-hover">
@@ -52,7 +65,7 @@
         <td class="hidden-xs hidden-sm" data-toggle="collapse" data-bind="
           text: hitPoints,
           attr: { 'data-target': `#monster_list_${uuid()}` }"></td>
-        <!-- ko if: $component.shouldShowExhibitButton -->
+        <!-- ko if: $component.isConnectedToParty -->
         <td class="text-center">
           <a data-bind="click: () => $component.toggleExhibit($data)" href="#" title="Send to Exhibit">
             <i data-bind="css: { exhibitActiveIcon: isExhibited }" class="fa fa-desktop fa-color-hover clickable">
@@ -60,7 +73,7 @@
           </a>
         </td>
         <!-- /ko -->
-        <!-- ko ifnot: $component.shouldShowExhibitButton -->
+        <!-- ko ifnot: $component.isConnectedToParty -->
         <td class="text-center">
           <span class="fa fa-desktop fa-disabled"
             data-bind="popover: { content: 'Join a Party in order to send to Exhibit' }">

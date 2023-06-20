@@ -17,6 +17,7 @@ import notesTabImage from 'images/tab_icons/quill-ink.svg';
 import encounterTabImage from 'images/tab_icons/bookmarklet.svg';
 import partyTabImage from 'images/tab_icons/backup.svg';
 import exhibitTabImage from 'images/tab_icons/film-projector.svg';
+import initiativeTabImage from 'images/tab_icons/sword-clash.svg';
 import template from './index.html';
 
 
@@ -39,6 +40,9 @@ export function DMRootViewModel() {
     self.notesTabImage = notesTabImage;
     self.partyTabImage = partyTabImage;
     self.exhibitTabImage = exhibitTabImage;
+    self.initiativeTrackerTabImage = initiativeTabImage;
+
+    self.subscriptions = [];
 
     //UI Methods
 
@@ -94,6 +98,10 @@ export function DMRootViewModel() {
         return self._tabIsVisible('exhibit');
     });
 
+    self.initiativeTrackerTabStatus = ko.pureComputed(() => {
+        return self._tabIsVisible('initiative');
+    });
+
     self.activateEncounterTab = () => {
         self._setActiveTab('encounter');
     };
@@ -118,6 +126,10 @@ export function DMRootViewModel() {
         self._setActiveTab('exhibit');
     };
 
+    self.activateInitiativeTrackerTab = () => {
+        self._setActiveTab('initiative');
+    };
+
     //Public Methods
 
     /**
@@ -138,10 +150,17 @@ export function DMRootViewModel() {
         HotkeysService.registerHotkey('4', self.activateNotesTab);
         HotkeysService.registerHotkey('5', self.activatePartyTab);
         HotkeysService.registerHotkey('6', self.activateExhibitTab);
+        HotkeysService.registerHotkey('7', self.activateInitiativeTrackerTab);
+
+        self.subscriptions.push(Notifications.dm.tabShouldChange.add(self._setActiveTab));
     };
 
     self.unload = () => {
         HotkeysService.flushHotkeys();
+
+        for (const subscription of self.subscriptions) {
+            subscription.dispose();
+        }
     };
 
     //Private Methods

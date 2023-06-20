@@ -1,0 +1,98 @@
+<form data-bind="submit: $component.submit">
+  <card-submit-actions params="{reset: $component.reset}"></card-submit-actions>
+  <!-- ko if: $component.addForm -->
+  <!-- ko if: available().length > 0 -->
+  <div class="h4 collapsable-card-title">
+    Quick Add Existing Player</h5>
+  </div>
+  <p>
+    Select a player from your party to add to the initiative.
+  </p>
+
+  <div class="d-flex" style="flex-wrap: wrap;">
+    <!-- ko foreach: available -->
+    <div
+      class="bordered clickable rounded pl-1 pr-1 pt-1 pb-1 mr-1"
+      data-bind="click: () => $component.quickAdd($data)"
+    >
+      <img
+        width="42px"
+        height="42px"
+        data-bind="attr: { src: imageUrl }"
+        class="img-circle bordered"
+      />
+      <span data-bind="text: name"></span>
+    </div>
+    <!-- /ko -->
+  </div>
+  <hr />
+  <!-- /ko -->
+  <div class="h4 collapsable-card-title">
+    New Participant
+  </div>
+  <!-- /ko -->
+  <div class="panel-body" data-bind="with: entity">
+    <div class="row">
+      <div class="col-xs-12 col-md-6">
+        <div class="form-group">
+          <label for="title" class="control-label">
+            Name
+          </label>
+          <input
+            class="form-control"
+            placeholder="Player's Name"
+            data-bind="
+              value: name,
+              event: { blur: $component.reviewInput, invalid: $component.invalidate },
+              attr: { ...$component.validation.name },
+              hasFocus: $component.formElementHasFocus
+            "
+          />
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-md-6">
+        <div class="form-group">
+          <label for="dexterity-bonus" class="control-label">
+            Dexterity Bonus
+          </label>
+          <input
+            class="form-control"
+            type="number"
+            required
+            value="0"
+            data-bind="
+              value: dexterityBonus,
+              event: { blur: $component.reviewInput, invalid: $component.invalidate },
+              attr: { ...$component.validation.dexterityBonus },
+            "
+          />
+        </div>
+      </div>
+      <div class="col-xs-12 col-md-6">
+        <div class="form-group">
+          <label for="initiative-modifier" class="control-label">
+            Initiative Modifier
+          </label>
+          <input
+            class="form-control"
+            type="number"
+            required
+            value="0"
+            data-bind="
+              value: initiativeModifier,
+              event: { blur: $component.reviewInput, invalid: $component.invalidate },
+              attr: { ...$component.validation.initiativeModifier },
+            "
+          />
+        </div>
+      </div>
+    </div>
+    <form-submit-actions params="{
+        reset: $component.reset,
+        delete: $component.delete,
+        addForm: $component.addForm
+      }"></form-submit-actions>
+  </div>
+</form>

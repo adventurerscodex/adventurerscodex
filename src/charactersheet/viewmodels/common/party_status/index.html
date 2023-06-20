@@ -10,6 +10,16 @@
     <i class="fa fa-pencil"></i>
     You are connected to <span data-bind="text: party().shortCode"></span>.
   </button>
+  <!-- ko if: isCurrentTurn -->
+  <span class="badge bg-primary pl-2 pr-2 pt-1 pb-1 ml-1">
+    It's Your Turn
+  </span>
+  <!-- /ko -->
+  <!-- ko if: isNextTurn -->
+  <span class="badge bg-default pl-2 pr-2 pt-1 pb-1 ml-1">
+    You're Up Next
+  </span>
+  <!-- /ko -->
   <!-- /ko -->
 
   <!-- ko ifnot: isConnectedToParty -->

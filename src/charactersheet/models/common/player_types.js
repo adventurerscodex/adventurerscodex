@@ -25,6 +25,7 @@ export var PlayerTypes = {
             'party',
             'notes',
             'exhibit',
+            'initiative',
         ],
         defaultTab: 'encounter'
     }

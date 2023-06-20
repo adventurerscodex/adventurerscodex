@@ -142,6 +142,10 @@ export var Notifications = {
         changed: new Signal()
     },
 
+    dm: {
+        tabShouldChange: new Signal()
+    },
+
     encounter: {
         added: new Signal(),
         changed: new Signal(),
