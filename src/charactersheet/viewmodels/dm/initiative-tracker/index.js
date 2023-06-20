@@ -210,7 +210,7 @@ export class InitiativeTrackerViewModel extends AbstractTabularViewModel {
                     bDex = b.dexterityBonus() || 0;
 
                 if (aDex === bDex) {
-                    return a.name > b.name;
+                    return b.name > a.name ? 1 : -1;
                 } else {
                     return bDex - aDex;
                 }
