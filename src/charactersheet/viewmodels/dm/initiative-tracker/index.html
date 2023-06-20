@@ -261,7 +261,14 @@
           style="width: 6rem;"
         />
         &nbsp;+&nbsp;
-        <span data-bind="text: $component.modifierFor($data)"></span>
+        <span>
+          <!-- ko if: $component.modifierFor($data) >= 0 -->
+          <span data-bind="text: $component.modifierFor($data)"></span>
+          <!-- /ko -->
+          <!-- ko ifnot: $component.modifierFor($data) >= 0 -->
+          (<span data-bind="text: $component.modifierFor($data)"></span>)
+          <!-- /ko -->
+        </span>
         &nbsp;=&nbsp;
         <b
           data-bind="text: $component.totalInitiativeFor($data)"
