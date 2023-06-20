@@ -49,8 +49,8 @@
         </div>
       </div>
       <!-- Health, Spells, and Features  -->
-      <div class="row">
-        <div class="col-xs-12" data-bind="visible: player.maxHitPoints">
+      <div class="row" data-bind="visible: isDM">
+        <div class="col-xs-12">
           Hit Points
           <span class="text-muted pull-right">
             <small data-bind="text: currentHp()"></small> /
@@ -82,7 +82,7 @@
           </div>
         </div>
       </div>
-      <div class="row">
+      <div class="row" data-bind="visible: isDM">
         <div class="col-xs-12">
           Spell Slots
           <span class="text-muted pull-right">
@@ -101,7 +101,7 @@
           </div>
         </div>
       </div>
-      <div class="row">
+      <div class="row" data-bind="visible: isDM">
         <div class="col-xs-12">
           Features, Feats, and Traits
           <span class="text-muted pull-right">
@@ -120,7 +120,7 @@
           </div>
         </div>
       </div>
-      <div class="row">
+      <div class="row" data-bind="visible: isDM">
         <div class="col-xs-12 col-padded">
           <table class="table table-striped table-condensed">
             <tr>
