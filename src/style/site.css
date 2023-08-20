@@ -637,9 +637,8 @@ ul.footer-icons li {
   overflow-y: auto;
 }
 
-.encounter-detail-place-holder {
-  height: 400px;
-  padding-top:175px;
+#encounter-pane {
+  min-height: 600px;
 }
 
 .notes-place-holder {

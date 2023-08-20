@@ -18,6 +18,7 @@
     onselect: entity => {
       active(entity);
       column.push('encounter-detail', {encounter: active});
+      setTimeout($component.forceCardResize, 300);
     }"
   ></nested-list>
   <div class="mt-2 pt-2 border-top">
@@ -31,17 +32,45 @@
         }"
       ></encounter-form>
     </div>
+    <div id="import-donjon-encounter" class="collapse add-card">
+      <encounter-import-form
+        params="{
+          containerId: 'import-donjon-encounter',
+          show: $component.displayImportForm,
+          flip: $component.toggleShowImportForm,
+          forceCardResize: $component.forceCardResize,
+        }"
+      ></encounter-import-form>
+    </div>
     <!-- ko ifnot: $component.displayAddForm -->
-    <button
-      type="button"
-      class="btn btn-link btn-sm btn-block"
-      data-toggle="collapse"
-      data-target="#add-encounter"
-      data-bind="click: $component.toggleShowAddForm"
-    >
-      <i class="fa fa-plus"></i>
-      Add Encounter
-    </button>
+    <!-- ko ifnot: $component.displayImportForm -->
+    <div class="row">
+      <div class="col-xs-12 col-md-6">
+        <button
+          type="button"
+          class="btn btn-link btn-sm btn-block"
+          data-toggle="collapse"
+          data-target="#add-encounter"
+          data-bind="click: $component.toggleShowAddForm"
+        >
+          <i class="fa fa-plus"></i>
+          Add Encounter
+        </button>
+      </div>
+      <div class="col-xs-12 col-md-6">
+        <button
+          type="button"
+          class="btn btn-link btn-sm btn-block"
+          data-toggle="collapse"
+          data-target="#import-donjon-encounter"
+          data-bind="click: $component.toggleShowImportForm"
+        >
+          <i class="fa fa-upload"></i>
+          Import Encounter
+        </button>
+      </div>
+    </div>
+    <!-- /ko -->
     <!-- /ko -->
   </div>
   <!-- /ko -->
