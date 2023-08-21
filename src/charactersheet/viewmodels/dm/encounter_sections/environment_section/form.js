@@ -19,6 +19,7 @@ class EnvironmentFormViewModel extends AbstractEncounterFormViewModel {
         super(params);
         autoBind(this);
         this.entity = params.entity;
+        this.showElaboration = ko.observable(false);
     }
 
     formIsValid = ko.observable(false);
@@ -38,6 +39,15 @@ class EnvironmentFormViewModel extends AbstractEncounterFormViewModel {
         const index = Fixtures.encounter.sections.environment.index;
         return this.encounter().sections()[index].tagline();
     });
+
+    useElaboration(elaboration) {
+        this.entity().description(elaboration.description());
+        this.toggleElaboration();
+    }
+
+    toggleElaboration() {
+        this.showElaboration(!this.showElaboration());
+    }
 }
 
 ko.components.register('environment-form', {

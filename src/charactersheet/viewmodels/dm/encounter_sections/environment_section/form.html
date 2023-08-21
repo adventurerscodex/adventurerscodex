@@ -50,12 +50,41 @@
              data-bind="value: terrain">
     </div>
     <div class="form-group col-xs-12">
-      <label>Description</label>
+      <!-- ko if: $component.showElaboration -->
+      <elaboration
+        params="
+          onselect: $component.useElaboration,
+          oncancel: $component.toggleElaboration,
+          context: $component.elaborationContext,
+          uuid: $component.encounter().uuid(),
+          type: 'environment',
+        "
+      ></elaboration>
+      <!-- /ko -->
+      <!-- ko ifnot: $component.showElaboration -->
+      <div class="d-flex justify-content-between">
+        <label class="d-flex-1">
+          Description
+        </label>
+        <div class="d-flex-1 text-right">
+          <button
+            class="btn btn-xs btn-info"
+            data-bind="
+              click: $component.toggleElaboration,
+              visible: !$component.showElaboration(),
+            "
+          >
+            <i class="fa fa-magic" aria-hidden="true"></i>
+            Generate
+          </button>
+        </div>
+      </div>
       <textarea type="text"
               class="form-control" rows="4"
               name="description"
               data-bind="value: description, markdownEditor: true"></textarea>
       <markdown-help />
+      <!-- /ko -->
     </div>
   </div>
   <div class="modal-footer">

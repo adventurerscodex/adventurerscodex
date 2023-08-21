@@ -66,7 +66,35 @@
       <d20photos-help />
     </div>
     <div class="form-group col-xs-12">
-      <label>Description</label>
+      <div class="d-flex justify-content-between">
+        <label class="d-flex-1">
+          Description
+        </label>
+        <div class="d-flex-1 text-right">
+          <button
+            class="btn btn-xs btn-info"
+            data-bind="
+              click: $component.toggleElaboration,
+              visible: !$component.showElaboration(),
+            "
+          >
+            <i class="fa fa-magic" aria-hidden="true"></i>
+            Generate
+          </button>
+        </div>
+      </div>
+      <!-- ko if: $component.showElaboration -->
+      <elaboration
+        params="
+          onselect: $component.useElaboration,
+          oncancel: $component.toggleElaboration,
+          context: $component.elaborationContext,
+          uuid: encounterUuid,
+          type: 'npc',
+        "
+      ></elaboration>
+      <!-- /ko -->
+      <!-- ko ifnot: $component.showElaboration -->
       <textarea
         type="text"
         class="form-control"
@@ -79,6 +107,7 @@
           attr: { ...$component.validation.description },
         "></textarea>
         <markdown-help />
+      <!-- /ko -->
     </div>
     <div class="form-group col-xs-12">
       <div class="d-flex justify-content-between">
