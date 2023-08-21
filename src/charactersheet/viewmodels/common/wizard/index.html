@@ -1,56 +1,335 @@
-<div class="row">
-  <div class="col-sm-offset-1 col-sm-11 col-xs-12">
-    <div class="container-fluid">
-      <!-- ko if: currentStep() === 'WizardIntroStep' -->
-			<wizard-intro-step params="stepReady: stepReady, results: stepResult"></wizard-intro-step>
-      <!-- /ko -->
-      <!-- ko if: currentStep() === 'WizardFileImportErrorStep' -->
-			<wizard-file-import-error-step params="ticketNumber: ticketNumber"></wizard-file-import-error-step>
-      <!-- /ko -->
-      <!-- ko if: currentStep() === 'WizardPlayerTypeStep' -->
-			<wizard-player-type-step params="stepReady:stepReady, results: stepResult"></wizard-player-type-step>
-      <!-- /ko -->
-      <!-- ko if: currentStep() === 'WizardAbilityScoresStep' -->
-			<wizard-ability-score-step params="stepReady:stepReady, results: stepResult"></wizard-ability-score-step>
-      <!-- /ko -->
-      <!-- ko if: currentStep() === 'WizardCampaignStep' -->
-			<wizard-campaign-step params="stepReady:stepReady, results: stepResult"></wizard-campaign-step>
-      <!-- /ko -->
-      <!-- ko if: currentStep() === 'WizardProfileStep' -->
-			<wizard-profile-step params="stepReady:stepReady, results: stepResult"></wizard-profile-step>
-      <!-- /ko -->
-			<hr />
-      <div class="spacer"></div>
-      <div class="row">
-        <!-- ko if: shouldShowBackButton -->
-        <div class="col-xs-2 col-sm-offset-1">
-          <button data-bind="click: backButton" id="newCharCampaignBackButton" class="btn btn-default">
-            Back
-          </button>
-        </div>
-        <!-- /ko -->
-        <!-- ko if: shouldShowNextButton -->
-        <div class="col-2-xs col-sm-offset-7 col-xs-offset-10">
-          <button data-bind="click: nextButton" id="newCharCampaignNextButton" class="btn btn-primary">
-            Next
-          </button>
-        </div>
-        <!-- /ko -->
-        <!-- ko if: shouldShowStartButton -->
-        <div class="col-2-xs col-sm-offset-7 col-xs-offset-10">
-          <button data-bind="click: nextButton" class="btn btn-primary" id="newCharCampaignGetStartedButton">
-            Get Started
-          </button>
-        </div>
-        <!-- /ko -->
-        <!-- ko if: shouldShowFinishButton -->
-        <div class="col-2-xs col-sm-offset-7 col-xs-offset-10">
-          <button data-bind="click: finishButton" id="newCharCampaignFinishButton" class="btn btn-primary">
-            Finish
-          </button>
-        </div>
-        <!-- /ko -->
-      </div>
+<div class="container">
+  <div style="display: flex; align-items: center; justify-content: center;">
+    <img
+      data-bind="attr: { src: logo }"
+      class="rounded"
+      style="width: 100%; max-width: 10rem; flex: 1;"
+    />
+    <div class="ml-2" style="flex: 1;">
+      <h1>
+        Welcome to Adventurer's Codex
+      </h1>
+      <p class="lead">
+        Let's get you going with a new character or campaign!
+      </p>
     </div>
   </div>
+  <hr />
+  <form class="form-horizontal" data-bind="submit: save">
+    <!-- Player Type -->
+    <h3>What Are You?</h3>
+    <div role="group" style="display: flex; gap: 2rem;">
+      <label>
+        <input
+          type="radio"
+          name="player-type"
+          value="character"
+          data-bind="checked: playerType"
+        />
+        I'm a Player
+      </label>
+      <label>
+        <input
+          type="radio"
+          name="player-type"
+          value="dm"
+          data-bind="checked: playerType"
+        />
+        I'm a DM
+      </label>
+    </div>
+
+    <!-- ko if: playerType() == 'character' -->
+    <hr />
+    <h3>Tell Us About Yourself</h3>
+
+    <div class="form-group">
+      <label for="campaignName" class="col-sm-2 control-label">
+        Character Name<span class="text-danger">*</span>
+      </label>
+      <div class="col-sm-10">
+        <input
+          type="text"
+          class="form-control"
+          id="characterName"
+          placeholder=""
+          data-bind="value: characterName"
+          required
+        >
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="race" class="col-sm-2 control-label">
+        Race<span class="text-danger">*</span>
+      </label>
+      <div class="col-sm-10">
+        <input
+          type="text"
+          class="form-control"
+          id="race"
+          data-bind="
+            textInput: race,
+            autocomplete: { source: raceOptions, onselect: race }
+          "
+          required
+        >
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="class" class="col-sm-2 control-label">
+        Class<span class="text-danger">*</span>
+      </label>
+      <div class="col-sm-10">
+        <input
+          type="text"
+          class="form-control"
+          id="class"
+          data-bind="
+            textInput: characterClass,
+            autocomplete: { source: classOptions, onselect: characterClass }
+          "
+          required
+        >
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="background" class="col-sm-2 control-label">
+        Background<span class="text-danger">*</span>
+      </label>
+      <div class="col-sm-10">
+        <input
+          type="text"
+          class="form-control"
+          id="background"
+          data-bind="
+            textInput: background,
+            autocomplete: { source: backgroundOptions, onselect: background }
+          "
+          required
+        >
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="backpack" class="col-sm-2 control-label">
+        Backpack<span class="text-danger">*</span>
+      </label>
+      <div class="col-sm-10">
+        <select
+          class="form-control"
+          id="backpack"
+          data-bind="options: backpackOptions, value: backpack"
+          required
+        ></select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="level" class="col-sm-2 control-label">
+        Level<span class="text-danger">*</span>
+      </label>
+      <div class="col-sm-10">
+        <input
+          type="number"
+          class="form-control"
+          id="level"
+          data-bind="value: level"
+          min="1"
+          max="20"
+        >
+      </div>
+    </div>
+
+    <h3>Ability Scores</h3>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <ul class="nav nav-tabs nav-justified" role="tablist">
+          <li role="presentation" class="active">
+            <a
+              href="#point-buy"
+              aria-controls="point-buy"
+              role="tab"
+              data-toggle="tab"
+              data-bind="click: () => $component.active('point-buy')"
+            >
+              Point Buy
+            </a>
+          </li>
+          <li role="presentation">
+            <a
+              href="#4d6-drop-1"
+              aria-controls="4d6-drop-1"
+              role="tab"
+              data-toggle="tab"
+              data-bind="click: () => $component.active('4d6-drop-1')"
+            >
+              Roll 4d6 &amp; Drop the Lowest
+            </a>
+          </li>
+          <li role="presentation">
+            <a
+              href="#manual"
+              aria-controls="manual"
+              role="tab"
+              data-toggle="tab"
+              data-bind="click: () => $component.active('manual')"
+            >
+              Manual Entry
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-xs-12">
+        <div class="tab-content p-2">
+          <div role="tabpanel" class="tab-pane active" id="point-buy">
+            <!-- ko if: active() === 'point-buy' -->
+            <point-buy params="scores: scores"></point-buy>
+            <!-- /ko -->
+          </div>
+          <div role="tabpanel" class="tab-pane" id="4d6-drop-1">
+            <!-- ko if: active() === '4d6-drop-1' -->
+            <d6-drop-1 params="scores: scores"></d6-drop-1>
+            <!-- /ko -->
+          </div>
+          <div role="tabpanel" class="tab-pane" id="manual">
+            <!-- ko if: active() === 'manual' -->
+            <manual params="scores: scores"></manual>
+            <!-- /ko -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <h3>Additional Info</h3>
+
+    <div class="form-group">
+      <label for="alignment" class="col-sm-2 control-label">
+        Alignment<span style="visibility: hidden;">*</span>
+      </label>
+      <div class="col-sm-10">
+        <input
+          type="text"
+          class="form-control"
+          id="alignment"
+          data-bind="
+            textInput: alignment,
+            autocomplete: { source: alignmentOptions, onselect: alignment }
+          "
+        >
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="deity" class="col-sm-2 control-label">
+        Deity<span style="visibility: hidden;">*</span>
+      </label>
+      <div class="col-sm-10">
+        <input
+          type="text"
+          class="form-control"
+          id="deity"
+          data-bind="value: deity"
+        >
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="gender" class="col-sm-2 control-label">
+        Gender<span style="visibility: hidden;">*</span>
+      </label>
+      <div class="col-sm-10">
+        <input
+          type="text"
+          class="form-control"
+          id="gender"
+          data-bind="value: gender"
+        >
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="age" class="col-sm-2 control-label">
+        Age<span style="visibility: hidden;">*</span>
+      </label>
+      <div class="col-sm-10">
+        <input
+          type="number"
+          class="form-control"
+          id="age"
+          data-bind="value: gender"
+          min="1"
+          max="1500"
+        >
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="xp" class="col-sm-2 control-label">
+        Experience Points<span style="visibility: hidden;">*</span>
+      </label>
+      <div class="col-sm-10">
+        <input
+          type="number"
+          class="form-control"
+          id="xp"
+          data-bind="value: xp"
+          min="0"
+        >
+      </div>
+    </div>
+    <div class="text-right">
+      <button
+        type="submit"
+        class="btn btn-primary btn-sm"
+      >
+        Create Character
+      </button>
+    </div>
+    <!-- /ko -->
+    <!-- ko if: playerType() == 'dm' -->
+    <hr />
+
+    <h3>Tell Us About Your Campaign</h3>
+    <div class="form-group">
+      <label for="campaignName" class="col-sm-2 control-label">
+        Campaign Name<span class="text-danger">*</span>
+      </label>
+      <div class="col-sm-10">
+        <input
+          type="text"
+          class="form-control"
+          id="campaignName"
+          placeholder=""
+          data-bind="value: campaignName"
+          required
+        >
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="playerName" class="col-sm-2 control-label">
+        Your Name<span class="text-danger">*</span>
+      </label>
+      <div class="col-sm-10">
+        <input
+          type="text"
+          class="form-control"
+          id="playerName"
+          placeholder=""
+          data-bind="value: playerName"
+          required
+        >
+      </div>
+    </div>
+    <div class="text-right">
+      <button
+        type="submit"
+        class="btn btn-primary btn-sm"
+      >
+        Create Campaign
+      </button>
+    </div>
+    <!-- /ko -->
+  </form>
 </div>

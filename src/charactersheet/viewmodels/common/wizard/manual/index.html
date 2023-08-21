@@ -1,0 +1,15 @@
+<div data-bind="foreach: scores" style="display: flex; gap: 2rem; flex-wrap: wrap;">
+  <div style="flex: 1;">
+    <label data-bind="attr: { for: `manual-${name}` }">
+      <span data-bind="text: name"></span>
+    </label>
+    <input
+      data-bind="value: value, attr: { id: `manual-${name}` }"
+      type="number"
+      class="form-control"
+      min="0"
+      max="25"
+      required
+    />
+  </div>
+</div>
