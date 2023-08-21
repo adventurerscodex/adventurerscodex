@@ -47,7 +47,9 @@ class ElaborationViewModel extends ViewModel {
     ));
 
     remaining = ko.pureComputed(() => (
-        `You have ${this.remainingElaborations()} remaining uses.`
+        this.userIsPatron()
+        ? `You have ${this.remainingElaborations()} remaining uses this month.`
+        : `You have ${this.remainingElaborations()} remaining uses. Become a patron to increase this limit.`
     ));
 
     async elaborate() {
