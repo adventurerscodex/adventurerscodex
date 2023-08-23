@@ -1,4 +1,4 @@
-const MUNDANE_WEATHER = [
+const ALL_WEATHER = [
     'Light Wind',
     'Fog',
     'Hail',
@@ -26,9 +26,6 @@ const MUNDANE_WEATHER = [
     'Severe Thunderstorm',
     'Snowstorm',
     'Thunderstorm',
-];
-
-const ARCANE_WEATHER = [
     'Aberrant Sky',
     'Acid Rain',
     'Animus Blizzard',
@@ -58,16 +55,10 @@ const ARCANE_WEATHER = [
     'Whispering Wind',
 ];
 
-const ALL_WEATHER = [...MUNDANE_WEATHER, ...ARCANE_WEATHER];
-
 
 /**
- * Return a random description of the weather. Optionally this function
- * allows the user to specify weather that is arcane in nature or mundane.
+ * Return a random description of the weather.
  */
-export const randomWeather = (arcane=true) => {
-    if (!arcane) {
-        return MUNDANE_WEATHER[Math.floor(Math.random() * MUNDANE_WEATHER.length)];
-    }
+export const randomWeather = () => {
     return ALL_WEATHER[Math.floor(Math.random() * ALL_WEATHER.length)];
 }
