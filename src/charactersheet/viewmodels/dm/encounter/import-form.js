@@ -1,6 +1,6 @@
 import { CoreManager, Notifications, uploadFormData, Fixtures } from 'charactersheet/utilities';
 import { AbstractChildFormModel } from 'charactersheet/viewmodels/abstract';
-import { Encounter, EncounterSection } from 'charactersheet/models/dm';
+import { Encounter } from 'charactersheet/models/dm';
 import { UserServiceManager } from 'charactersheet/services';
 
 import autoBind from 'auto-bind';

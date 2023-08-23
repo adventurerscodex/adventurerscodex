@@ -1,5 +1,4 @@
 <form data-bind="submit: $component.submit">
-  <card-submit-actions params="{reset: $component.reset}"></card-submit-actions>
   <!-- ko if: $component.addForm -->
   <div class="h4 collapsable-card-title">
     Import Encounter
@@ -14,6 +13,21 @@
   </p>
   <!-- /ko -->
   <div class="row" data-bind="with: entity">
+    <!-- ko ifnot: $component.isActivePatron -->
+    <div class="col col-sm-12 alert alert-info">
+      <p>
+        Become a patron to import from Donjon. <a
+          href="https://www.patreon.com/bePatron?u=5313385"
+          target="_blank"
+          rel="noreferrer"
+          title="Patreon"
+        >
+          Check out our Patreon page &#8594;
+        </a>
+      </p>
+    </div>
+    <!-- /ko -->
+    <!-- ko if: $component.isActivePatron -->
     <!-- ko ifnot: $component.isUploading -->
     <div class="form-group col col-sm-12">
       <label for="name" class="control-label">
@@ -37,7 +51,7 @@
         accept=".png,.jpg,.jpeg"
         data-bind="
           event: { change: () => $component.mapImageFile($element.files[0]) },
-          enable: $component.isActivePatron() && $component.imagesRemaining() > 0
+          enable: $component.imagesRemaining() > 0
         "
       />
     </div>
@@ -73,32 +87,20 @@
       </div>
     </div>
     <!-- /ko -->
-    <!-- ko ifnot: $component.isActivePatron -->
-    <div class="col col-sm-12 alert alert-info">
-      <p>
-        Become a patron to upload images as part of your Donjon Import. <a
-        href="https://www.patreon.com/bePatron?u=5313385"
-        target="_blank"
-        rel="noreferrer"
-        title="Patreon"
-      >
-        Check out our Patreon page &#8594;
-      </a>
-      </p>
-    </div>
-    <!-- /ko -->
-    <!-- ko if: $component.isActivePatron() && $component.imagesRemaining() === 0 -->
+    <!-- ko if: $component.imagesRemaining() === 0 -->
     <div class="col col-sm-12 alert alert-warning">
       <p>
         You have uploaded the maximum number of images for your current Patreon Tier.
       </p>
     </div>
     <!-- /ko -->
+    <!-- /ko -->
     <form-submit-actions params="{
       reset: $component.reset,
       delete: $component.delete,
       addForm: $component.addForm,
       submitTitle: 'Import',
+      showSave: $component.isActivePatron,
     }"></form-submit-actions>
   </div>
 </form>
