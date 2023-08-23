@@ -1,33 +1,35 @@
-<!-- ko if: $component.userHasReachedLimits -->
-<!-- ko if: $component.userIsPatron -->
-<div class="alert alert-sm alert-warning mb-1">
-  <p>
-    You have reached the limit of your allowed use of this functionality.
-    Please subscribe to a higher Patreon tier to continue or wait until
-    next month to begin using this feature again.
-  </p>
-</div>
-<!-- /ko -->
-<!-- ko ifnot: $component.userIsPatron -->
-<div class="alert alert-sm alert-warning mb-1">
-  <p>
-    You have reached the limit of your allowed use of this functionality.
-    Please become a patron to increase your limits.
-  </p>
-</div>
-<!-- /ko -->
-<!-- /ko -->
 <div class="well mb-1">
   <div class="p-2">
+    <!-- ko if: $component.userHasReachedLimits -->
+    <!-- ko if: $component.userIsPatron -->
+    <div class="alert alert-sm alert-warning mb-1">
+      <p>
+        You have reached the limit of your allowed use of this functionality.
+        Please subscribe to a higher Patreon tier to continue or wait until
+        next month to begin using this feature again.
+      </p>
+    </div>
+    <!-- /ko -->
+    <!-- ko ifnot: $component.userIsPatron -->
+    <div class="alert alert-sm alert-warning mb-1">
+      <p>
+        You have reached the limit of your allowed use of this functionality.
+        Please become a patron to increase your limits.
+      </p>
+    </div>
+    <!-- /ko -->
+    <!-- /ko -->
     <!-- ko ifnot: $component.isLoading -->
     <!-- ko if: $component.elaboration -->
     <p data-bind="text: $component.elaboration().description"></p>
     <p data-bind="text: $component.elaboration().quirk"></p>
     <!-- /ko -->
     <!-- ko ifnot: $component.elaboration -->
+    <!-- ko ifnot: $component.userHasReachedLimits -->
     <p>
       There was an error processing your request. Please try again.
     </p>
+    <!-- /ko -->
     <!-- /ko -->
     <!-- /ko -->
     <!-- ko if: $component.isLoading -->
@@ -54,7 +56,7 @@
         type="button"
         data-bind="
           click: $component.elaborate,
-          enable: !$component.isLoading(),
+          enable: !$component.isLoading() && !$component.userHasReachedLimits(),
         "
       >
         Re-Generate
