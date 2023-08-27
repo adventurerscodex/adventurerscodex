@@ -6,7 +6,7 @@ import {
     Utility
 } from 'charactersheet/utilities';
 import { AbstractEncounterFormViewModel } from 'charactersheet/viewmodels/abstract';
-import { PartyService } from 'charactersheet/services';
+import { PartyService, randomWeather } from 'charactersheet/services';
 import { Environment } from 'charactersheet/models/dm';
 import ko from 'knockout';
 import { get } from 'lodash';
@@ -38,6 +38,10 @@ class EnvironmentFormViewModel extends AbstractEncounterFormViewModel {
         const index = Fixtures.encounter.sections.environment.index;
         return this.encounter().sections()[index].tagline();
     });
+
+    setRandomWeather() {
+        this.entity().weather(randomWeather());
+    }
 }
 
 ko.components.register('environment-form', {
