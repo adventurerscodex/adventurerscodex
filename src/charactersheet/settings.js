@@ -97,6 +97,9 @@ export var Settings = {
         }, {
             key: 'traps',
             url: 'https://adventurerscodex.com/data/v2/SRD/traps.min.json'
+        }, {
+            key: 'names',
+            url: 'https://adventurerscodex.com/data/misc/names.json'
         }
     ]
 };
