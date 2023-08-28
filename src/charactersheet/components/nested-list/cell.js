@@ -14,6 +14,7 @@ class CellViewModel {
         remove,
         levels,
         elementId,
+        select,
     }) {
         this.entity = entity;
         this.levels = levels;
@@ -25,6 +26,8 @@ class CellViewModel {
 
         this.canRemove = canRemove;
         this.remove = remove;
+
+        this.select = select;
 
         this.displayAddForm = ko.observable(false);
     }
