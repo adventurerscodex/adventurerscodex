@@ -48,14 +48,25 @@
         Character Name<span class="text-danger">*</span>
       </label>
       <div class="col-sm-10">
-        <input
-          type="text"
-          class="form-control"
-          id="characterName"
-          placeholder=""
-          data-bind="value: characterName"
-          required
-        >
+        <div class="input-group input-group-sm">
+          <input
+            type="text"
+            class="form-control"
+            id="characterName"
+            placeholder=""
+            data-bind="value: characterName"
+            required
+          >
+          <div class="input-group-btn">
+            <button
+              type="button"
+              class="btn btn-sm btn-info"
+              data-bind="click: $component.generateRandomName"
+            >
+              <i class="fa fa-random"></i>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
