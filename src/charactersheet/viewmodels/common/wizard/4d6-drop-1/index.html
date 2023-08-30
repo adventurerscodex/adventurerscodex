@@ -1,0 +1,45 @@
+<div style="display: flex; justify-content: end; gap: 1rem; align-items: center;" class="mb-3">
+  <button
+    class="btn btn-xs btn-info"
+    data-bind="click: reset"
+  >
+    <i class="fa fa-refresh"></i>
+    Reset
+  </button>
+</div>
+<div style="display: flex; gap: 2rem; flex-wrap: wrap; align-items: center;">
+  <button
+    style="flex: 1;"
+    class="btn btn-sm btn-primary"
+    data-bind="click: roll"
+  >
+    <i class="fa fa-random"></i>
+    Roll
+  </button>
+  <!-- ko foreach: scores -->
+  <div style="flex: 1;">
+    <label data-bind="attr: { for: `manual-${name}` }">
+      <span data-bind="text: name"></span>
+    </label>
+    <input
+      data-bind="value: value, attr: { id: `manual-${name}` }"
+      type="number"
+      class="form-control"
+      min="0"
+      max="25"
+      required
+    />
+    <div class="text-center" style="margin-bottom: 5px;">
+      <!-- ko foreach: $component.rolls()[$index()] -->
+      <!-- ko if: $index() < 3 -->
+      <span data-bind="text: $data"></span>,
+      <!-- /ko -->
+      <!-- ko if: $index() == 3 -->
+      <s data-bind="text: $data"></s>
+      <!-- /ko -->
+      <!-- /ko -->
+      &nbsp;
+    </div>
+  </div>
+  <!-- /ko -->
+</div>

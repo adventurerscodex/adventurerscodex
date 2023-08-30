@@ -1,0 +1,55 @@
+<div style="display: flex; justify-content: space-between; align-items: center;">
+  <p class="lead mt-2" style="flex: 1;">
+    Points Remaining:
+    <span data-bind="text: pointsLeft"></span>
+  </p>
+  <button
+    class="btn btn-xs btn-info"
+    data-bind="click: reset"
+  >
+    <i class="fa fa-refresh"></i>
+    Reset
+  </button>
+</div>
+<div data-bind="foreach: scores" style="display: flex; gap: 2rem; flex-wrap: wrap;">
+  <div style="flex: 1;">
+    <label data-bind="attr: { for: `point-buy-${name}` }">
+      <span data-bind="text: name"></span>
+    </label>
+    <div class="input-group">
+      <span class="input-group-btn">
+        <button
+          class="btn btn-default btn-sm"
+          type="button"
+          data-bind="click: () => value(Math.max(value() - 1, $component.pointBuyMin()))"
+        >
+          <i class="fa fa-minus"></i>
+        </button>
+      </span>
+      <input
+        data-bind="
+          value: value,
+          attr: {
+            id: `point-buy-${name}`,
+            min: $component.pointBuyMin(),
+            max: $component.pointBuyMax(),
+          }"
+        data-bind="value: value"
+        type="number"
+        class="form-control"
+      />
+      <span class="input-group-btn">
+        <button
+          class="btn btn-default btn-sm"
+          type="button"
+          data-bind="
+            click: () => value(Math.min(value() + 1, $component.pointBuyMax())),
+            enable: $component.pointsLeft() > 0
+          "
+        >
+          <i class="fa fa-plus"></i>
+        </button>
+      </span>
+    </div>
+  </div>
+</div>
