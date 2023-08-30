@@ -6,3 +6,4 @@ export { SortService } from './sort_service.js';
 export { StatusService } from './status_service.js';
 export { RandomNumberGeneratorService } from './rng_service.js';
 export * from './account';
+export * from './names';

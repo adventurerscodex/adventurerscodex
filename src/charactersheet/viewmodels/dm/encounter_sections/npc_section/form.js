@@ -5,6 +5,7 @@ import { NPC } from 'charactersheet/models/dm';
 import ko from 'knockout';
 import template from './form.html';
 import { SELECTDATA } from 'charactersheet/constants';
+import { generate_name } from 'charactersheet/services/common';
 
 
 class NPCFormViewModel extends AbstractChildEncounterFormModel {
@@ -16,6 +17,12 @@ class NPCFormViewModel extends AbstractChildEncounterFormModel {
 
     modelClass() {
         return NPC;
+    }
+
+    generateRandomName() {
+        const firstName = generate_name('firstName');
+        const lastName = generate_name('lastName');
+        this.entity().name(`${firstName} ${lastName}`);
     }
 }
 
