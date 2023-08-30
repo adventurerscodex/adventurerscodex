@@ -22,6 +22,7 @@ export class WizardViewModel {
         // Player Fields
 
         this.characterName = ko.observable();
+        this.playerName = ko.observable();
         this.race = ko.observable();
         this.characterClass = ko.observable();
         this.backpack = ko.observable();
@@ -111,6 +112,7 @@ export class WizardViewModel {
         const { data } = await Hypnos.client.action({
             keys: ['core', 'characters', 'create'],
             params: {
+                playerName: this.playerName(),
                 profile: {
                     characterName: this.characterName(),
                     level: this.level(),
