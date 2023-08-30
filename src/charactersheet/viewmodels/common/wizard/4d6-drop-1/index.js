@@ -27,6 +27,7 @@ export class D6Drop1ViewModel {
 
     reset() {
         this.scores().forEach(score => score.value(8));
+        this.rolls([]);
     }
 }
 
