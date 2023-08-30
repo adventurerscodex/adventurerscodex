@@ -1,4 +1,3 @@
-import { AbilityScore } from 'charactersheet/models';
 import { CoreManager } from 'charactersheet/utilities';
 import { Hypnos } from 'hypnos/lib/hypnos';
 import { DataRepository, Fixtures } from 'charactersheet/utilities';
@@ -10,17 +9,11 @@ import './manual';
 import './4d6-drop-1';
 
 
-const State = {
-    START: 'start',
-};
-
-
 export class WizardViewModel {
 
     constructor() {
         CoreManager.setActiveCoreFragment(null);
 
-        this.currentState = ko.observable(State.START);
         this.active = ko.observable('point-buy');
         this.logo = logo;
 
@@ -96,53 +89,68 @@ export class WizardViewModel {
 
     async save() {
         if (this.playerType() == 'character') {
-            const traits = Object.keys(DataRepository.traits).filter(key => (
-                DataRepository.traits[key].race.toLowerCase() === this.race().toLowerCase()
-            )).map((key) => ({ ...DataRepository.traits[key], tracked: null }));
-
-            const items = Object.keys(DataRepository.backpacks).filter(key => (
-                key.toLowerCase() === this.backpack().toLowerCase()
-            )).flatMap(
-                (key) => DataRepository.backpacks[key]
-            ).map(item => (
-                DataRepository.items[item.name]
-            ));
-
-            const { data } = await Hypnos.client.action({
-                keys: ['core', 'characters', 'create'],
-                params: {
-                    profile: {
-                        characterName: this.characterName(),
-                        level: this.level(),
-                    },
-                    abilityScores: ko.mapping.toJS(this.scores()),
-                    background: {
-                        name: this.background(),
-                        flaw: '',
-                        bond: '',
-                        ideal: '',
-                        personalityTrait: '',
-                    },
-                    profileImage: { type: 'email' },
-                    health: { maxHitPoints: 10 },
-                    traits: traits,
-                    items: items,
-                }
-            });
-            CoreManager.changeCore(data.uuid);
+            await this.saveCharacter();
         } else {
-            const { data } = await Hypnos.client.action({
-                keys: ['core', 'dms', 'create'],
-                params: {
-                    campaign: {
-                        name: this.campaignName(),
-                    },
-                    playerName: this.playerName(),
-                    profileImage: { type: 'email' },
-                },
-            });
-            CoreManager.changeCore(data.uuid);
+            await this.saveCampaign();
         }
+    }
+
+    async saveCharacter() {
+        const traits = Object.keys(DataRepository.traits).filter(key => (
+            DataRepository.traits[key].race.toLowerCase() === this.race().toLowerCase()
+        )).map((key) => ({ ...DataRepository.traits[key], tracked: null }));
+
+        const items = Object.keys(DataRepository.backpacks).filter(key => (
+            key.toLowerCase() === this.backpack().toLowerCase()
+        )).flatMap(
+            (key) => DataRepository.backpacks[key]
+        ).map(item => (
+            DataRepository.items[item.name]
+        ));
+
+        const { data } = await Hypnos.client.action({
+            keys: ['core', 'characters', 'create'],
+            params: {
+                profile: {
+                    characterName: this.characterName(),
+                    level: this.level(),
+                    age: this.age(),
+                    deity: this.deity(),
+                    gender: this.gender(),
+                    experience: this.experience(),
+                    race: this.race(),
+                    characterClass: this.characterClass(),
+                    alignment: this.alignment(),
+                },
+                abilityScores: ko.mapping.toJS(this.scores()),
+                background: {
+                    name: this.background(),
+                    flaw: '',
+                    bond: '',
+                    ideal: '',
+                    personalityTrait: '',
+                },
+                profileImage: { type: 'email' },
+                health: { maxHitPoints: 10 },
+                traits: traits,
+                items: items,
+            }
+        });
+        CoreManager.changeCore(data.uuid);
+    }
+
+    async saveCampaign() {
+        const { data } = await Hypnos.client.action({
+            keys: ['core', 'dms', 'create'],
+            params: {
+                campaign: {
+                    name: this.campaignName(),
+                },
+                playerName: this.playerName(),
+                profileImage: { type: 'email' },
+            },
+        });
+        CoreManager.changeCore(data.uuid);
     }
 }
 
