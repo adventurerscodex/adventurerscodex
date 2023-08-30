@@ -1,6 +1,7 @@
 import { CoreManager } from 'charactersheet/utilities';
 import { Hypnos } from 'hypnos/lib/hypnos';
 import { DataRepository, Fixtures } from 'charactersheet/utilities';
+import { generate_name } from 'charactersheet/services/common';
 import ko from 'knockout';
 import template from './index.html';
 import logo from 'images/logo-full-circle-icon.png'
@@ -86,6 +87,12 @@ export class WizardViewModel {
         this.alignmentOptions = Fixtures.profile.alignmentOptions;
         this.backgroundOptions = Fixtures.profile.backgroundOptions;
         this.backpackOptions = Fixtures.wizardProfile.backpackOptions;
+    }
+
+    generateRandomName() {
+        const firstName = generate_name('firstName');
+        const lastName = generate_name('lastName');
+        this.characterName(`${firstName} ${lastName}`);
     }
 
     async save() {
