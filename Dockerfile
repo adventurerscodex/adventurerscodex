@@ -29,6 +29,7 @@ ENV WS_URL ${WS_URL}
 
 # Copy in the dependencies first so Docker can cache them
 COPY package.json .
+COPY package-lock.json .
 RUN npm install
 
 # Build the project
