@@ -97,22 +97,29 @@ export class AbstractChildFormModel extends AbstractFormModel {
 
     }
 
-    prePopFilter = (request, response) => {
+    prePopFilter = async (request, response) => {
         if (!this.prePopSource) {
-            throw(`${this.constructor.name} must have a prePopSource`);
+            throw new Error(`${this.constructor.name} must have a prePopSource`);
         }
         const term = request.term.toLowerCase();
         let results = [];
         if (term && term.length >= (this.prePopLimit || 0)) {
-            const keys = DataRepository[this.prePopSource] ?
-                Object.keys(DataRepository[this.prePopSource]) : [];
-            results = keys.filter((name) => (name.toLowerCase().includes(term)));
+            const items = await DataRepository.listAll(
+                this.prePopSource,
+                CoreManager.activeCore().uuid(),
+            );
+            results = items.map(item => item.name).filter(name => name.toLowerCase().includes(term));
+            console.log({results})
         }
         response(results);
     };
 
-    populate = (label, value) => {
-        const item = DataRepository[this.prePopSource][label];
+    populate = async (label, value) => {
+        const items = await DataRepository.listAll(
+            this.prePopSource,
+            CoreManager.activeCore().uuid(),
+        );
+        const item = items.filter(item => item.name === label)[0];
         this.entity().importValues(item);
         this.showDisclaimer(true);
         this.forceCardResize();
