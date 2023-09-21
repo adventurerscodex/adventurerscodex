@@ -109,7 +109,6 @@ export class AbstractChildFormModel extends AbstractFormModel {
                 CoreManager.activeCore().uuid(),
             );
             results = items.map(item => item.name).filter(name => name.toLowerCase().includes(term));
-            console.log({results})
         }
         response(results);
     };
