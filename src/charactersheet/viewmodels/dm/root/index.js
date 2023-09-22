@@ -152,15 +152,12 @@ export function DMRootViewModel() {
         HotkeysService.registerHotkey('6', self.activateExhibitTab);
         HotkeysService.registerHotkey('7', self.activateInitiativeTrackerTab);
 
-        self.subscriptions.push(Notifications.dm.tabShouldChange.add(self._setActiveTab));
+        Notifications.dm.tabShouldChange.add(self._setActiveTab);
     };
 
     self.unload = () => {
         HotkeysService.flushHotkeys();
-
-        for (const subscription of self.subscriptions) {
-            subscription.dispose();
-        }
+        Notifications.dm.tabShouldChange.remove(self._setActiveTab);
     };
 
     //Private Methods
