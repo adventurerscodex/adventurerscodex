@@ -108,6 +108,12 @@ export class WizardViewModel {
             DataRepository.traits[key].race.toLowerCase() === this.race().toLowerCase()
         )).map((key) => ({ ...DataRepository.traits[key], tracked: null }));
 
+        const features = DataRepository.features.filter(feature => (
+            feature.characterClass.toLowerCase() === this.characterClass().toLowerCase()
+        )).filter(feature => (
+            parseInt(feature.level) <= parseInt(this.level())
+        )).map(feature => ({ ...feature, tracked: null }));
+
         const items = Object.keys(DataRepository.backpacks).filter(key => (
             key.toLowerCase() === this.backpack().toLowerCase()
         )).flatMap(
@@ -142,6 +148,7 @@ export class WizardViewModel {
                 profileImage: { type: 'email' },
                 health: { maxHitPoints: 10 },
                 traits: traits,
+                features: features,
                 items: items,
             }
         });
