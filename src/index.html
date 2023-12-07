@@ -29,6 +29,21 @@
 <!-- API Schema -->
 <script type="text/javascript" src="/static/rest_framework/js/coreapi-0.1.1.js"></script>
 <script type="text/javascript" src="/api/docs/schema.js"></script>
+<script type="text/javascript">
+    // Fix URLs in the schema in case we're not running on prod
+    if (window.location.host.indexOf('adventurerscodex.com') < 0) {
+        let fixURLs = function (obj) {
+            for (let i in obj) {
+                if (obj.hasOwnProperty(i) && typeof obj[i] === 'object') {
+                    fixURLs(obj[i]);
+                } else if (i === 'url' && typeof obj[i] === 'string') {
+                    obj[i] = obj[i].replace('https://app.adventurerscodex.com/', '/')
+                }
+            }
+        };
+        fixURLs(window.schema);
+    }
+</script>
 <!-- CDNs -->
 <script type="text/javascript"
   src="https://www.dropbox.com/static/api/2/dropins.js"
