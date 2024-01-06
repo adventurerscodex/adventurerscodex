@@ -71,6 +71,14 @@
           Description
         </label>
         <div class="d-flex-1 text-right">
+          <span
+            class="fa fa-info-circle mr-2"
+            role="button"
+            data-bind="popover: {
+              content: 'Generate a description of this NPC using the data from the encounter and name.',
+              trigger: 'click',
+            }"
+          ></span>
           <button
             class="btn btn-xs btn-info"
             title="Generate a description for this entry using the encounter information and the name."

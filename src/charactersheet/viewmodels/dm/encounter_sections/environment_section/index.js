@@ -2,11 +2,7 @@ import autoBind from 'auto-bind';
 import ko from 'knockout';
 import { AbstractEncounterFormViewModel } from 'charactersheet/viewmodels/abstract';
 import { Environment } from 'charactersheet/models/dm/encounter_sections';
-import {
-    CoreManager,
-    Fixtures,
-    Utility
-} from 'charactersheet/utilities';
+import { Utility } from 'charactersheet/utilities';
 import template from './index.html';
 import './form';
 import './view';

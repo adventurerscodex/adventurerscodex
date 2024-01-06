@@ -1,3 +1,4 @@
+import 'bin/popover_bind';
 import autoBind from 'auto-bind';
 import {
     CoreManager,

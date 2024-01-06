@@ -67,11 +67,20 @@
           Description
         </label>
         <div class="d-flex-1 text-right">
+          <span
+            class="fa fa-info-circle mr-2"
+            role="button"
+            data-bind="popover: {
+              content: 'Generate a description of this environment using the data from the encounter, weather, and terrain.',
+              trigger: 'click',
+            }"
+          ></span>
           <button
             class="btn btn-xs btn-info"
             data-bind="
               click: $component.toggleElaboration,
               visible: !$component.showElaboration(),
+              enable: !!$component.elaborationContext(),
             "
           >
             <i class="fa fa-magic" aria-hidden="true"></i>
@@ -80,7 +89,8 @@
         </div>
       </div>
       <textarea type="text"
-              class="form-control" rows="4"
+              class="form-control"
+              rows="4"
               name="description"
               data-bind="value: description, markdownEditor: true"></textarea>
       <markdown-help />
