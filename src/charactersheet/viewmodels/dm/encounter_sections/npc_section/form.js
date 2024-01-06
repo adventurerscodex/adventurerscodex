@@ -19,7 +19,9 @@ class NPCFormViewModel extends AbstractChildEncounterFormModel {
     }
 
     elaborationContext = ko.pureComputed(() => (
-        `${this.entity().race() || 'Human'} named ${this.entity().name()}`
+        this.entity().name()
+        ? `${this.entity().race() || 'Human'} named ${this.entity().name()}`
+        : ''
     ));
 
     useElaboration(elaboration) {

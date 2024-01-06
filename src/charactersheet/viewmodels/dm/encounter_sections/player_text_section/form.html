@@ -27,9 +27,11 @@
         <div class="d-flex-1 text-right">
           <button
             class="btn btn-xs btn-info"
+            title="Generate a description for this entry using the encounter information and the name."
             data-bind="
               click: $component.toggleElaboration,
               visible: !$component.showElaboration(),
+              enable: !!name(),
             "
           >
             <i class="fa fa-magic" aria-hidden="true"></i>

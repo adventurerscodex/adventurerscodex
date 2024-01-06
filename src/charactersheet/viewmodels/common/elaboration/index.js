@@ -52,6 +52,8 @@ class ElaborationViewModel extends ViewModel {
         : `You have ${this.remainingElaborations()} remaining uses.`
     ));
 
+    hasContext = ko.pureComputed(() => !!this.context());
+
     async elaborate() {
         this.isLoading(true);
         try {

@@ -56,7 +56,7 @@
         type="button"
         data-bind="
           click: $component.elaborate,
-          enable: !$component.isLoading() && !$component.userHasReachedLimits(),
+          enable: $component.hasContext() && !$component.isLoading() && !$component.userHasReachedLimits(),
         "
       >
         Re-Generate
