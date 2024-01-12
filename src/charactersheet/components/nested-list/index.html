@@ -2,11 +2,7 @@
   <!-- ko if: $component.shouldAllowSelection -->
   <div
     class="list-group-item"
-    role="button"
-    data-bind="
-      click: () => $component.selectCell($data),
-      css: $component.isActiveCSS($data),
-    "
+    data-bind="css: $component.isActiveCSS($data)"
   >
     <nested-list-cell params="
       entity: $data,
@@ -17,15 +13,14 @@
       canRemove: $component.canRemove(),
       remove: () => $component.deleteCell($data),
       addChild: () => $component.addCell($data),
+      select: () => $component.selectCell($data),
     "></nested-list-cell>
   </div>
   <!-- /ko -->
   <!-- ko ifnot: $component.shouldAllowSelection -->
   <div
     class="list-group-item"
-    data-bind="
-      css: $component.isActiveCSS($data),
-    "
+    data-bind="css: $component.isActiveCSS($data)"
   >
     <nested-list-cell params="
       entity: $data,

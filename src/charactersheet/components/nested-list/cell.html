@@ -1,73 +1,87 @@
-<!-- Disclosure Indicator -->
-<!-- ko if: hasChildren() -->
-<div class="d-inline-block" data-bind="with: entity">
+<div style="
+  display: flex;
+  gap: 1rem;
+">
+  <!-- Disclosure Indicator -->
+  <!-- ko if: hasChildren() -->
   <div
+    class="d-flex-1"
+    data-bind="with: entity"
+    style="max-width: 2rem;"
+  >
+    <div
+      role="button"
+      data-toggle="collapse"
+      data-bind="
+        click: toggleIsOpen,
+        attr: {
+          'aria-expanded': isOpen() ? 'true' : 'false'
+        }
+      "
+    >
+      <i data-bind="css: arrowIconClass" aria-hidden="true"></i>&nbsp;
+    </div>
+  </div>
+  <!-- /ko -->
+
+  <!-- Name -->
+  <div
+    class="d-flex-1"
     role="button"
-    class="toggle-arrow-container"
-    data-toggle="collapse"
+    data-bind="with: entity, click: $component.select"
+  >
+    <span data-bind="html: name"></span>
+    <!-- ko if: $data.badge -->
+    <span class="badge" style="float:none;" data-bind="text: badge"></span>
+    <!-- /ko -->
+  </div>
+  </div>
+
+  <!-- Add/Edit Form Action Row -->
+  <!-- ko if: $component.shouldShowAdd() || $component.shouldShowDelete() -->
+  <div class="mt-1 d-flex justify-content-between">
+    <!-- ko if: $component.shouldShowAdd() -->
+    <button
+      type="button"
+      class="d-flex-1 btn btn-xs btn-primary ml-2"
+      aria-expanded="false"
+      data-toggle="collapse"
+      data-bind="click: () => $component.toggleAddForm()"
+    >
+      <i class="fa fa-plus fa-lg"></i>
+      Add Child
+    </button>
+    <!-- /ko -->
+    <!-- ko if: $component.shouldShowDelete() -->
+    <button
+      type="button"
+      class="d-flex-1 btn btn-xs btn-danger ml-2"
+      data-bind="click: $component.remove"
+    >
+      <i class="fa fa-trash-o fa-lg"></i>
+      Delete
+    </button>
+    <!-- /ko -->
+  </div>
+  <!-- /ko -->
+
+  <!-- Add Form Well -->
+  <!-- ko if: $component.shouldShowAdd() -->
+  <div
+    class="collapse position-relative pt-2"
     data-bind="
-      click: toggleIsOpen,
-      attr: {
-        'aria-expanded': isOpen() ? 'true' : 'false'
-      }
+      well: { open: displayAddForm },
+      attr: { id: `${$component.elementId}-add-child-${entity.uuid()}` },
     "
   >
-    <i data-bind="css: arrowIconClass" aria-hidden="true"></i>&nbsp;
+    <div data-bind="component: {
+      name: $component.addComponent,
+      params: {
+        containerId: `${$component.elementId}-add-child-${entity.uuid()}`,
+        show: $component.displayAddForm,
+        parent: entity,
+        flip: () => $component.cancel(),
+      }
+    }"></div>
   </div>
-</div>
-<!-- /ko -->
-
-<!-- Name -->
-<div class="d-inline-block" data-bind="with: entity">
-  <span data-bind="html: name"></span>
-  <!-- ko if: $data.badge -->
-  <span class="badge" style="float:none;" data-bind="text: badge"></span>
-  <!-- /ko -->
-</div>
-
-<!-- Add/Edit Form Action Row -->
-<div class="mt-1 d-flex justify-content-between">
-  <!-- ko if: $component.shouldShowAdd() -->
-  <button
-    type="button"
-    class="d-flex-1 btn btn-xs btn-primary ml-2"
-    aria-expanded="false"
-    data-toggle="collapse"
-    data-bind="click: () => $component.toggleAddForm()"
-  >
-    <i class="fa fa-plus fa-lg"></i>
-    Add Child
-  </button>
-  <!-- /ko -->
-  <!-- ko if: $component.shouldShowDelete() -->
-  <button
-    type="button"
-    class="d-flex-1 btn btn-xs btn-danger ml-2"
-    data-bind="click: $component.remove"
-  >
-    <i class="fa fa-trash-o fa-lg"></i>
-    Delete
-  </button>
-  <!-- /ko -->
-</div>
-
-<!-- Add Form Well -->
-<!-- ko if: $component.shouldShowAdd() -->
-<div
-  class="collapse position-relative pt-2"
-  data-bind="
-    well: { open: displayAddForm },
-    attr: { id: `${$component.elementId}-add-child-${entity.uuid()}` },
-  "
->
-  <div data-bind="component: {
-    name: $component.addComponent,
-    params: {
-      containerId: `${$component.elementId}-add-child-${entity.uuid()}`,
-      show: $component.displayAddForm,
-      parent: entity,
-      flip: () => $component.cancel(),
-    }
-  }"></div>
-</div>
 <!-- /ko -->

@@ -3,6 +3,7 @@ import { AbstractChildEncounterFormModel } from 'charactersheet/viewmodels/abstr
 import { NPC } from 'charactersheet/models/dm';
 import ko from 'knockout';
 import template from './form.html';
+import { generate_name } from 'charactersheet/services/common';
 
 
 class NPCFormViewModel extends AbstractChildEncounterFormModel {
@@ -31,6 +32,12 @@ class NPCFormViewModel extends AbstractChildEncounterFormModel {
 
     toggleElaboration() {
         this.showElaboration(!this.showElaboration());
+    }
+
+    generateRandomName() {
+        const firstName = generate_name('firstName');
+        const lastName = generate_name('lastName');
+        this.entity().name(`${firstName} ${lastName}`);
     }
 }
 

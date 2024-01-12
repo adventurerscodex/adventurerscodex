@@ -46,6 +46,7 @@ export class InitiativeTrackerViewModel extends AbstractTabularViewModel {
         this.currentTurn = observable(null);
         this.rounds = observable(1);
         this.exclusions = observableArray([]);
+        this.includeBonuses = observable(true);
     }
 
     refresh() {
@@ -123,7 +124,11 @@ export class InitiativeTrackerViewModel extends AbstractTabularViewModel {
 
     totalInitiativeFor(item) {
         const roll = parseInt(item.initiative()) || 0;
-        return roll + this.modifierFor(item);
+        if (this.includeBonuses()) {
+            return roll + this.modifierFor(item);
+        } else {
+            return roll;
+        }
     }
 
     isPlayer(participant) {
@@ -242,6 +247,10 @@ export class InitiativeTrackerViewModel extends AbstractTabularViewModel {
         this.order(this.order().filter(item => item.uuid() !== entry.uuid()));
         this.exclusions.push(entry);
         this.updateInitiativeIfNeeded(true);
+    }
+
+    toggleIncludeBonuses() {
+        this.includeBonuses(!this.includeBonuses());
     }
 
     // Data Methods

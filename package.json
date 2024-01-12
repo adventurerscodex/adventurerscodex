@@ -7,7 +7,7 @@
     "url": "https://github.com/adventurerscodex/adventurerscodex"
   },
   "devDependencies": {
-    "babel-eslint": "^8.2.3",
+    "babel-eslint": "^10.1.0",
     "clean-webpack-plugin": "^0.1.19",
     "compression-webpack-plugin": "^1.1.11",
     "coveralls": "^3.0.0",
@@ -64,7 +64,7 @@
     "lodash": "^4.17.21",
     "lz-string": "^1.4.4",
     "node-uuid": "^1.4.8",
-    "progressbar.js": "^1.0.1",
+    "progressbar.js": "^1.1.1",
     "random-js": "^1.0.8",
     "save-as": "^0.1.8",
     "select2": "^4.0.7-rc.0",

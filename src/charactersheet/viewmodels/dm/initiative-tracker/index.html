@@ -35,22 +35,43 @@
       <table class="table table-responsive table-ac-bordered table-hover">
         <thead class="ac-table-header">
           <tr>
-            <th class="col-xs-7 col-md-8 col-lg-9">
-              <!-- ko if: state() === State.called -->
-              Participants (unsorted)
-              <!-- /ko -->
-              <!-- ko if: state() === State.started -->
-              Initiative Order
-              <!-- /ko -->
-            </th>
-            <th class="col-xs-4 col-md-3 col-lg-2 text-center">
-              <button
-                class="btn btn-xs btn-info"
-                data-bind="click: rollForInitiative, enable: canReRoll"
-                type="button"
-              >
-                Roll for Initiative
-              </button>
+            <th class="col-xs-11" colspan="2">
+              <div class="d-flex" style="width: 100%; justify-content: space-between;">
+                <div>
+                  <!-- ko if: state() === State.called -->
+                  Participants (unsorted)
+                  <!-- /ko -->
+                  <!-- ko if: state() === State.started -->
+                  Initiative Order
+                  <!-- /ko -->
+                </div>
+                <div class="text-right">
+                  <button
+                    class="btn btn-xs btn-default mr-1"
+                    data-bind="
+                      click: toggleIncludeBonuses,
+                      state() === State.called,
+                    "
+                    type="button"
+                  >
+                    <!-- ko if: includeBonuses -->
+                    <i class="fa fa-times-circle"></i>
+                    Exclude Bonuses
+                    <!-- /ko -->
+                    <!-- ko ifnot: includeBonuses -->
+                    <i class="fa fa-plus-circle"></i>
+                    Include Bonuses
+                    <!-- /ko -->
+                  </button>
+                  <button
+                    class="btn btn-xs btn-info"
+                    data-bind="click: rollForInitiative, enable: canReRoll"
+                    type="button"
+                  >
+                    Roll for Initiative
+                  </button>
+                </div>
+              </div>
             </th>
             <th class="col-xs-1 text-right">
               <a href="#" data-bind="click: collapseAll">
@@ -211,7 +232,7 @@
       id: `#initiative_row_${uuid}`
     }"
   >
-    <td>
+    <td class="col-xs-7 col-md-8 col-lg-9">
       <div
         class="d-flex"
         data-toggle="collapse"
@@ -249,10 +270,15 @@
         </div>
       </div>
     </td>
-    <td>
+    <td class="col-xs-4 col-md-3 col-lg-2">
       <div
         class="d-flex"
-        style="gap: 0.3rem; align-content: center; align-items: center;"
+        style="
+          gap: 0.3rem;
+          align-content: center;
+          align-items: center;
+          justify-content: space-between;
+        "
       >
         <input
           type="number"
@@ -260,6 +286,7 @@
           class="form-control"
           style="width: 6rem;"
         />
+        <!-- ko if: $component.includeBonuses -->
         &nbsp;+&nbsp;
         <span>
           <!-- ko if: $component.modifierFor($data) >= 0 -->
@@ -274,6 +301,7 @@
           data-bind="text: $component.totalInitiativeFor($data)"
           style="font-size: 16px;"
         ></b>
+        <!-- /ko -->
       </div>
     </td>
     <td class="col-xs-1 text-right">
