@@ -43,7 +43,7 @@ export class ItemsViewModel extends AbstractTabularViewModel {
     }
 
     totalCost = ko.pureComputed(() => (
-        calculateTotalValue(this.entities(), 'totalCalculatedCost', null)
+        calculateTotalValue(this.entities(), 'totalCalculatedCost', null, null)
     ));
 
     totalWeight = ko.pureComputed(() => (
