@@ -100,6 +100,9 @@ export var Settings = {
         }, {
             key: 'names',
             url: 'https://adventurerscodex.com/data/misc/names.json'
+        }, {
+            key: 'pointsOfInterest',
+            url: 'https://adventurerscodex.com/data/misc/points_of_interest.json'
         }
     ]
 };
