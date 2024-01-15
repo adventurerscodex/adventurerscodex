@@ -648,7 +648,6 @@ ul.footer-icons li {
 }
 
 .preview-modal-overflow-sm {
-  max-height: 225px;
   overflow-y: auto;
 }
 
