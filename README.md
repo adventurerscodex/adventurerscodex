@@ -4,10 +4,6 @@
 Welcome to Adventurer&rsquo;s&nbsp;Codex</h1>
 </div>
 
-[![Build Status](https://travis-ci.org/adventurerscodex/adventurerscodex.svg?branch=develop)](https://travis-ci.org/adventurerscodex/adventurerscodex)
-[![Coverage Status](https://coveralls.io/repos/github/adventurerscodex/adventurerscodex/badge.svg?branch=develop)](https://coveralls.io/github/adventurerscodex/adventurerscodex?branch=develop)
-[![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/Sonictherocketman/adventurerscodex)
-
 Experience the next step in tabletop RPGs
 
 
@@ -19,19 +15,19 @@ A fun, easy to use, Open Source tool for tabletop RPG players to manage their ch
 Check out the [site][ac], or follow our [blog][blog].
 
 
-FOR PLAYERS
+For Players
 -----------
 
 Keep track of you character's equipment, skills, spells, saving throws, and more. Say goodbye to that eraser-marked character sheet, and say hello to the future!
 
 
-FOR DMS
+For DMs
 -------
 
 Manage your campaign by keeping track of enemies, and friendly NPCs, as well as any notes, maps, custom items, and whatever else you've created!
 
 
-FOR ENTIRE PARTIES
+For Entire Parties
 ------------------
 
 Take advantage of innovative features like group chat, party dashboard, and a combat management tool!
@@ -40,13 +36,13 @@ Take advantage of innovative features like group chat, party dashboard, and a co
 Getting Started
 ===============
 
-Adventurer's Codex is hosted at [adventurerscodex.com](https://adventurerscodex.com), and you can use the app for free there. If you're looking to host the application yourself, either locally or on a server, then checkout our [Getting Started][gs] instructions.
+Adventurer's Codex is hosted at [adventurerscodex.com](https://adventurerscodex.com), and you can use the app for free there.
 
 
 Have questions or just want to chat?
 =====================
 
-Join the conversations on [Gitter](https://gitter.im/Sonictherocketman/adventurerscodex) or chat with us in the issues. We tend to hold a lot of discussions there and new features are always being hashed out. We'd love your feedback.
+Join the conversations on [Discord](https://discord.gg/fjX62Gf) or chat with us in the issues. We tend to hold a lot of discussions there and new features are always being hashed out. We'd love your feedback.
 
 
 How can I contribute?
