@@ -8,11 +8,25 @@ import { PersistenceService } from 'charactersheet/services';
  * The optional progress handler returns a value of 1-100 whenever the
  * percent progress of the upload changes.
  */
-const uploadFile = (file, url, progressHandler=undefined) => (
+const uploadFile = (file, url, progressHandler=undefined) => {
+    let formData = new FormData();
+    formData.append('file', file);
+    return uploadFormData(formData, url, progressHandler);
+};
+
+
+
+/**
+ * Upload the given form data object to the endpoint at the given URL.
+ * Because files are handled differently from JSON APIs, we need to
+ * have a separate way to upload them than via Hypnos.
+ *
+ * The optional progress handler returns a value of 1-100 whenever the
+ * percent progress of the upload changes.
+ */
+const uploadFormData = (formData, url, progressHandler=undefined) => (
     new Promise((resolve, reject) => {
         let req = new XMLHttpRequest();
-        let formData = new FormData();
-        formData.append('file', file);
 
         if (!!progressHandler) {
             req.upload.addEventListener('progress', ({ loaded, total }) => {
@@ -43,3 +57,4 @@ const uploadFile = (file, url, progressHandler=undefined) => (
 );
 
 export default uploadFile;
+export { uploadFile, uploadFormData };

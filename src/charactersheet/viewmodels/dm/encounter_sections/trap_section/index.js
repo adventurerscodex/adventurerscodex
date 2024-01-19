@@ -64,7 +64,6 @@ class TrapSectionViewModel extends AbstractEncounterTabularViewModel {
 
     async toggleArmed(trap, event) {
         event.stopPropagation();
-        console.log('armed', trap, event);
         trap.isActive(!trap.isActive());
         await trap.save();
     }

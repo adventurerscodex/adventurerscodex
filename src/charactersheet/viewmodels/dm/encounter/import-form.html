@@ -1,0 +1,106 @@
+<form data-bind="submit: $component.submit">
+  <!-- ko if: $component.addForm -->
+  <div class="h4 collapsable-card-title">
+    Import Encounter
+  </div>
+  <p class="text-muted">
+    <small>
+      Import a dungeon from
+      <a href="https://donjon.bin.sh/5e/dungeon/" title="donjon.bin.sh" target="_blank">
+        donjon.bin.sh</a>. Include the dungeon JSON file which can be downloaded
+      at the bottom of the page.
+    </small>
+  </p>
+  <!-- /ko -->
+  <div class="row" data-bind="with: entity">
+    <!-- ko ifnot: $component.isActivePatron -->
+    <div class="col col-sm-12 alert alert-info">
+      <p>
+        Become a patron to import from Donjon. <a
+          href="https://www.patreon.com/bePatron?u=5313385"
+          target="_blank"
+          rel="noreferrer"
+          title="Patreon"
+        >
+          Check out our Patreon page &#8594;
+        </a>
+      </p>
+    </div>
+    <!-- /ko -->
+    <!-- ko if: $component.isActivePatron -->
+    <!-- ko ifnot: $component.isUploading -->
+    <div class="form-group col col-sm-12">
+      <label for="name" class="control-label">
+        Dungeon JSON File
+      </label>
+      <input
+        type="file"
+        name="dataFile"
+        accept="application/json,.json"
+        required
+        data-bind="event: { change: () => $component.dataFile($element.files[0]) }"
+      />
+    </div>
+    <div class="form-group col col-sm-12">
+      <label for="name" class="control-label">
+        Dungeon Map Image File <small class="text-muted">Optional</small>
+      </label>
+      <input
+        type="file"
+        name="mapImageFile"
+        accept=".png,.jpg,.jpeg"
+        data-bind="
+          event: { change: () => $component.mapImageFile($element.files[0]) },
+          enable: $component.imagesRemaining() > 0
+        "
+      />
+    </div>
+    <!-- /ko -->
+    <!-- ko if: $component.isUploading -->
+    <div class="col col-sm-12">
+      <div class="bordered pt-2 pb-2 pl-2 pr-2 mb-2 rounded">
+        <div class="text-center text-muted mb-2">
+          <b>Uploading...</b>
+        </div>
+        <div data-bind="barProgress: {
+          data: {
+            value: $component.progress,
+            maxValue: 100
+          },
+          config: {
+            strokeWidth: 2,
+            trailWidth: 1,
+            svgStyle: {
+              display: 'block',
+              width: '100%',
+              minHeight: '5px',
+              maxHeight: '5px',
+            },
+            from: {
+              color: $component.barColor()
+            },
+            to: {
+              color: $component.barColor()
+            }
+          }
+        }"></div>
+      </div>
+    </div>
+    <!-- /ko -->
+    <!-- ko if: $component.imagesRemaining() === 0 -->
+    <div class="col col-sm-12 alert alert-warning">
+      <p>
+        You have uploaded the maximum number of images for your current Patreon Tier.
+      </p>
+    </div>
+    <!-- /ko -->
+    <!-- /ko -->
+    <form-submit-actions params="{
+      reset: $component.reset,
+      delete: $component.delete,
+      addForm: $component.addForm,
+      submitTitle: 'Import',
+      showSave: $component.isActivePatron,
+    }"></form-submit-actions>
+  </div>
+</form>
