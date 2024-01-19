@@ -7,7 +7,7 @@ export var DataRepository = {
      * @param value: value that key should equal
      */
     filterBy: function(arrayName, key, value){
-        return DataRepository[arrayName].filter(function(item, idx, _) {
+        return DataRepository[arrayName].filter(function(item, __, _) {
             return item[key] === value;
         });
     }
