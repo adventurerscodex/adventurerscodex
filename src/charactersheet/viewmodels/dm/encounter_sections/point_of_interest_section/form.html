@@ -6,18 +6,28 @@
   <div class="row">
     <div class="form-group col-xs-12">
       <label>Name<i class="required"></i></label>
-      <input
-        type="text"
-        class="form-control"
-        name="name"
-        placeholder="World Map"
-        data-bind="
-          textInput: name,
-          hasFocus: $component.formElementHasFocus,
-          event: { blur: $component.reviewInput, invalid: $component.invalidate },
-          attr: { ...$component.validation.name },
-        "
-      />
+      <div class="input-group input-group-sm">
+        <input
+          type="text"
+          class="form-control"
+          name="name"
+          placeholder="World Map"
+          data-bind="
+            textInput: name,
+            hasFocus: $component.formElementHasFocus,
+            event: { blur: $component.reviewInput, invalid: $component.invalidate },
+            attr: { ...$component.validation.name },
+          "
+        />
+        <div class="input-group-btn">
+          <button
+            class="btn btn-sm btn-info"
+            data-bind="click: $component.generateRandomName"
+          >
+            <i class="fa fa-random"></i>
+          </button>
+        </div>
+      </div>
     </div>
     <div class="form-group col-xs-12">
       <div class="d-flex justify-content-between">

@@ -1,6 +1,7 @@
 import autoBind from 'auto-bind';
 import { AbstractChildEncounterFormModel } from 'charactersheet/viewmodels/abstract';
 import { PointOfInterest } from 'charactersheet/models/dm';
+import { randomPointOfInterest } from 'charactersheet/services/dm';
 import ko from 'knockout';
 import template from './form.html';
 
@@ -29,6 +30,10 @@ class PointOfInterestFormViewModel extends AbstractChildEncounterFormModel {
 
     toggleElaboration() {
         this.showElaboration(!this.showElaboration());
+    }
+
+    generateRandomName() {
+        this.entity().name(randomPointOfInterest());
     }
 }
 

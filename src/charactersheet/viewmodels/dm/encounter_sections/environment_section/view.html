@@ -5,12 +5,13 @@
   <card-edit-actions params="{ flip: flip }"></card-edit-actions>
 </div>
 <hr class="ac-table-header">
-<div class="row pl-2">
-  <div class="col-xs-8">
+<div class="d-flex pl-2">
+  <div class="d-flex-6">
     <b>Weather:</b>&nbsp;<span data-bind="text: weatherLabel"></span><br>
     <b>Terrain:</b>&nbsp;<span data-bind="text: terrainLabel"></span>
   </div>
-  <div class="col-xs-4 text-right">
+  <!-- ko if: convertedImageLink -->
+  <div class="d-flex-6 text-right" data-bind="if: convertedImageLink">
     <!-- ko if: shouldShowExhibitButton -->
     <div class="text-center inline-block">
       <span style="font-weight: bold;">Exhibit</span><br>
@@ -33,6 +34,7 @@
     </div>
     <!-- /ko -->
   </div>
+  <!-- /ko -->
 </div>
 <hr data-bind="visible: shouldShowDividingMarker"/>
 
@@ -41,6 +43,7 @@
     data-bind="markdownPreview: entity().description"
     class="preview-modal-overflow-sm d-flex-1 pl-1"
   ></div>
+  <!-- ko if: convertedImageLink -->
   <div class="d-flex-1 text-right d-block">
     <img
       class="img-responsive img-rounded clickable embedded-image-right"
@@ -55,4 +58,5 @@
       </i></small>
     </div>
   </div>
+  <!-- /ko -->
 </div>

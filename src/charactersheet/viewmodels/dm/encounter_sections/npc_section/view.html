@@ -7,11 +7,14 @@
   </div>
   <div class="col-xs-12">
     <div class="d-flex">
-      <div class="hidden-xs hidden-sm d-flex-1" data-bind="visible: description">
+      <!-- ko if: description -->
+      <div class="hidden-xs hidden-sm d-flex-1">
         <label>Description</label>
         <div data-bind="markdownPreview: description"></div>
       </div>
-      <div class="d-flex-1 text-center ml-2" data-bind="visible: convertedDisplayUrl">
+      <!-- /ko -->
+      <!-- ko if: sourceUrl -->
+      <div class="d-flex-1 text-center ml-2">
         <div class="d-block">
           <img
             data-bind="
@@ -27,9 +30,13 @@
           </div>
         </div>
       </div>
+      <!-- /ko -->
     </div>
   </div>
-  <div class="col-xs-12 visible-xs visible-sm hidden-md hidden-lg" data-bind="visible: description">
+  <div
+    class="col-xs-12 visible-xs visible-sm hidden-md hidden-lg"
+    data-bind="visible: description"
+  >
     <label>Description</label>
     <div data-bind="markdownPreview: description"></div>
   </div>

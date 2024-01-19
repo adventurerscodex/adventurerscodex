@@ -14,11 +14,14 @@ class EncounterViewModel extends AbstractEncounterListViewModel {
         autoBind(this);
 
         this.addFormId = '#add-encounter';
+        this.importFormId = '#import-donjon-encounter';
         this.collapseAllId = '#encounter-pane';
         this.column = params.column;
         this.flip = params.flip;
         this.active = ko.observable();
         this.forceCardResize = params.forceCardResize;
+
+        this.displayImportForm = ko.observable(false);
     }
 
     async load() {
@@ -40,6 +43,22 @@ class EncounterViewModel extends AbstractEncounterListViewModel {
         // Pop off the children components so that there's
         // no legacy, deleted views displayed.
         this.column.popToRoot();
+    }
+
+    toggleShowAddForm() {
+        super.toggleShowAddForm();
+        setTimeout(this.forceCardResize, DELAY.LONG);
+    }
+
+    toggleShowImportForm() {
+        if (this.displayImportForm()) {
+            this.displayImportForm(false);
+            $(this.importFormId).collapse('hide');
+        } else {
+            this.displayImportForm(true);
+            $(this.importFormId).collapse('show');
+        }
+        setTimeout(this.forceCardResize, DELAY.LONG);
     }
 }
 

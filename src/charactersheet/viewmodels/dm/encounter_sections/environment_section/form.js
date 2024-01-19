@@ -1,7 +1,7 @@
 import autoBind from 'auto-bind';
 import { Fixtures } from 'charactersheet/utilities';
 import { AbstractEncounterFormViewModel } from 'charactersheet/viewmodels/abstract';
-import { PartyService, randomWeather } from 'charactersheet/services';
+import { randomWeather } from 'charactersheet/services';
 import { Environment } from 'charactersheet/models/dm';
 import ko from 'knockout';
 import template from './form.html';

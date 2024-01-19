@@ -20,7 +20,15 @@ export class PointOfInterest extends KOModel {
     LONG_DESCRIPTION_MAX_LENGTH = 200;
 
     static mapping = {
-        include: ['coreUuid', 'encounterUuid', 'name', 'sourceUrl', 'playerText', 'description', 'uuid']
+        include: [
+            'coreUuid',
+            'encounterUuid',
+            'name',
+            'sourceUrl',
+            'playerText',
+            'description',
+            'uuid',
+        ]
     };
 
     coreUuid = ko.observable();
