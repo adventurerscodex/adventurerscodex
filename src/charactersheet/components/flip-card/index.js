@@ -81,6 +81,8 @@ ko.bindingHandlers.collapseCard = {
     }
 };
 
+const DEFAULT_HEIGHT_MOD = 25;
+
 export class FlipCardComponentViewModel {
     constructor(params) {
         // Unique id for the card's data
@@ -97,6 +99,12 @@ export class FlipCardComponentViewModel {
 
         // contextual data to be passed to children objects
         this.context = params.context;
+
+        this.heightMod = (
+            params.heightMod === undefined
+            ? DEFAULT_HEIGHT_MOD
+            : params.heightMod
+        );
 
         // Whether or not this 'back' is displayed.
         this.showBack = ko.observable(false);
@@ -175,17 +183,16 @@ export class FlipCardComponentViewModel {
     setNewHeight = debounce((initialHeight) => {this._setNewHeight(initialHeight);});
 
     _setNewHeight = (initialSetHeight) => {
-        const HEIGHT_MOD = 25;
         let setHeight = 0;
         if (this.showBack()) {
             setHeight = $(`#${this.elementId}_card > .back`).outerHeight();
         } else {
             setHeight = $(`#${this.elementId}_card > .front`).outerHeight();
         }
-        if (setHeight && setHeight > 1 && setHeight !== this.elementMeasure()-HEIGHT_MOD ) {
+        if (setHeight && setHeight > 1 && setHeight !== this.elementMeasure()-this.heightMod) {
             // Add 25 to adjust for where in the dom the height has to be set to work with
             // collapse
-            this.elementMeasure(setHeight+HEIGHT_MOD);
+            this.elementMeasure(setHeight+this.heightMod);
             if (this.onResize) {
                 setTimeout(this.onResize, 350);
             }
