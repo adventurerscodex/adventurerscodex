@@ -1,49 +1,52 @@
-<div class="">
-  <div class="row">
-    <div class="col-xs-12 col-md-8 col-lg-6 col-lg-offset-2">
-      <div class="text-center">
-        <div class="h2">
-          Characters &amp; Games
-          <br />
-          <small>Which of your characters/campaigns would you like to use?</small>
-        </div>
+<!-- ko ifnot: loaded(), completeOn: 'render' -->
+<div class="loader-wrapper"><div class="loader"></div></div>
+<!-- /ko -->
+<!-- ko if: loaded(), completeOn: 'render' -->
+<div class="row">
+  <div class="col-xs-12 col-md-8 col-lg-6 col-lg-offset-2">
+    <div class="text-center">
+      <div class="h2">
+        Characters &amp; Games
+        <br />
+        <small>Which of your characters/campaigns would you like to use?</small>
       </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12 col-md-8 col-lg-6 col-lg-offset-2">
-      <div class="list-group">
-        <!-- ko template: { name: 'core-list-item', foreach: favorites } -->
-        <!-- /ko -->
-        <div
-          class="list-group-item"
-          data-bind="visible: hasFavorites"
-          style="height: 3rem;"
-        >
-          <!-- Spacer -->
-        </div>
-        <!-- ko template: { name: 'core-list-item', foreach: others } -->
-        <!-- /ko -->
-        <a class="list-group-item clickable" data-bind="click: showWizard">
-          <div class="row">
-            <div class="col-xs-12 text-center">
-              <i class="fa fa-plus"></i>&nbsp;
-              Create a new Character or Campaign
-            </div>
-          </div>
-        </a>
-      </div>
-    </div>
-    <div class="col-xs-12 col-md-4 text-center">
-      <img
-        class="img-rounded hidden-sm hidden-xs"
-        data-bind="attr: { src: logo }"
-        style="width:90%; max-width:400px;"
-      />
-      <patron-of-the-day></patron-of-the-day>
     </div>
   </div>
 </div>
+<div class="row">
+  <div class="col-xs-12 col-md-8 col-lg-6 col-lg-offset-2">
+    <div class="list-group">
+      <!-- ko template: { name: 'core-list-item', foreach: favorites } -->
+      <!-- /ko -->
+      <div
+        class="list-group-item"
+        data-bind="visible: hasFavorites"
+        style="height: 3rem;"
+      >
+        <!-- Spacer -->
+      </div>
+      <!-- ko template: { name: 'core-list-item', foreach: others } -->
+      <!-- /ko -->
+      <a class="list-group-item clickable" data-bind="click: showWizard">
+        <div class="row">
+          <div class="col-xs-12 text-center">
+            <i class="fa fa-plus"></i>&nbsp;
+            Create a new Character or Campaign
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-4 text-center">
+    <img
+      class="img-rounded hidden-sm hidden-xs"
+      data-bind="attr: { src: logo }"
+      style="width:90%; max-width:400px;"
+    />
+    <patron-of-the-day></patron-of-the-day>
+  </div>
+</div>
+<!-- /ko -->
 
 <template id="core-list-item">
   <div
@@ -92,9 +95,9 @@
             >
               <img
                 data-bind="attr: { src: displayImage }"
-                class="circular-profile no-padding center-block bordered"
-                width="50"
-                height="50"
+                class="img img-circle no-padding center-block bordered"
+                width="60"
+                height="60"
                 style="margin-top: 7px;"
               />
               <div class="core-type-indicator">
@@ -121,7 +124,7 @@
             >
               <span
                 class="d-block"
-                style="font-size: 2.5rem;"
+                style="font-size: 2rem;"
                 data-bind="text: title"
               ></span>
               <span
@@ -161,8 +164,8 @@
             <img
               data-bind="attr: { src: displayImage }"
               class="circular-profile no-padding center-block bordered"
-              width="50"
-              height="50"
+              width="60"
+              height="60"
               style="margin-top: 7px;"
             />
             <div class="core-type-indicator">
@@ -207,7 +210,7 @@
               </button>
               <button type="button"
                 class="btn btn-sm btn-danger"
-                data-bind="click: context.vm.removeCore"
+                data-bind="click: () => context.vm.removeCore(context.data)"
               >
                 <i class="fa fa-trash-o"></i>
                 Delete

@@ -1052,19 +1052,19 @@ div.toggle-arrow-container {
 
 .core-type-indicator {
   position: relative;
-  width: 35px;
+  width: 30px;
   margin-left:auto;
   margin-right:auto;
 }
 
 .core-type-indicator .circle {
   position: absolute;
-  width: 35px;
-  height: 35px;
-  margin-left: 28px;
-  margin-top: -28px;
+  width: 30px;
+  height: 30px;
+  margin-left: 20px;
+  margin-top: -20px;
   z-index:1000;
-  border-radius: 35px;
+  border-radius: 30px;
   background: #333;
   border: 2px solid var(--border-color);
 }

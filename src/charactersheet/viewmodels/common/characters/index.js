@@ -1,39 +1,58 @@
+import autoBind from 'auto-bind';
 import './style.css';
 import {
     CoreManager,
     Notifications
 } from 'charactersheet/utilities';
+import { ViewModel } from 'charactersheet/viewmodels/abstract';
 import { Core } from 'charactersheet/models/common/core';
 import ko from 'knockout';
 import template from './index.html';
 
-export function CharactersViewModel(params) {
-    var self = this;
+export class CharactersViewModel extends ViewModel {
 
-    self.cores = ko.observableArray([]);
-    self.componentStatus = params.modalStatus || ko.observable(false);
-    self.modalStatus = ko.observable(false);
-    self.selectedCharacter = ko.observable();
-    self.deleteCollapse = {
-        // Dynamically built map.
-    };
+    cores = ko.observableArray([]);
+    modalStatus = ko.observable(false);
+    selectedCharacter = ko.observable();
+    deleteCollapse = { /* Dynamically built map */ };
 
-    self.load = async () => {
+    constructor(params) {
+        super(params);
+        autoBind(this);
+        this.componentStatus = params.modalStatus || ko.observable(false);
+    }
+
+    // UI State
+
+    hasFavorites = ko.pureComputed(() => this.favorites().length > 0);
+
+    favorites = ko.pureComputed(() => (
+        this.cores().filter(core => core.isFavorite())
+    ));
+
+    others = ko.pureComputed(() => (
+        this.cores().filter(core => !core.isFavorite())
+    ));
+
+    // Methods
+
+    async load() {
         const response = await Core.ps.list();
         const cores = response.objects;
-        self.modalStatus(ko.utils.unwrapObservable(self.componentStatus));
+        this.modalStatus(ko.utils.unwrapObservable(this.componentStatus));
 
-        Notifications.coreManager.changed.add(self._updatedSelectedCharacter);
-        self._updatedSelectedCharacter();
+        Notifications.coreManager.changed.add(this._updatedSelectedCharacter);
+        this._updatedSelectedCharacter();
 
         // Build the hash of uuid -> modal open.
         cores.forEach(({uuid}) => {
-            self.deleteCollapse[uuid()] = ko.observable(false);
+            this.deleteCollapse[uuid()] = ko.observable(false);
         });
-        self.cores(cores);
-    };
+        this.cores(cores);
+        super.load();
+    }
 
-    self.changeCore = (core) => {
+    changeCore(core) {
         // Don't switch to the same core.
         var activeCharacterKey = null;
         if (CoreManager.activeCore()) {
@@ -44,68 +63,78 @@ export function CharactersViewModel(params) {
         if (core.uuid() !== activeCharacterKey) {
             CoreManager.changeCore(core.uuid());
         }
-        self.modalStatus(false);
-    };
+        this.modalStatus(false);
+    }
 
-    self.removeCore = async (core) => {
-        const deletedCharacterIndex = self.cores().indexOf(core);
+    async toggleFavorite(core) {
+        core.isFavorite(!core.isFavorite());
+        try {
+            await core.ps.save();
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
+    async removeCore(core) {
+        const deletedCharacterIndex = this.cores().indexOf(core);
 
         //Remove the core.
         await core.ps.delete();
-        self.cores.remove(core);
+        this.cores.remove(core);
 
         // Close the well.
-        self.deleteCollapse[core.uuid()](false);
+        this.deleteCollapse[core.uuid()](false);
 
-        if (self.cores().length === 0) {
-            self.modalStatus(false);
+        if (this.cores().length === 0) {
+            this.modalStatus(false);
         } else if (core.uuid() === CoreManager.activeCore().uuid()) {
             // If we've deleted the current core...
             // switch to the same index position bounded by list length.
             const index = (
-                deletedCharacterIndex < self.cores().length ?
+                deletedCharacterIndex < this.cores().length ?
                     deletedCharacterIndex :
-                    self.cores().length - 1
+                    this.cores().length - 1
             );
-            CoreManager.changeCore(self.cores()[index].uuid());
+            CoreManager.changeCore(this.cores()[index].uuid());
         }
-    };
+    }
 
-    self.toggleDeleteWell = ({uuid}) => {
-        // Set the others to close.
-        self.cores().forEach(({uuid}) => {
-            self.deleteCollapse[uuid()](false);
+    toggleDeleteWell({ uuid }) {
+        this.closeAll();
+
+        const value = !this.deleteCollapse[ko.unwrap(uuid)]();
+        this.deleteCollapse[ko.unwrap(uuid)](value);
+    }
+
+    closeAll() {
+        this.cores().forEach(({ uuid }) => {
+            this.deleteCollapse[ko.unwrap(uuid)](false);
         });
+    }
 
-        // Open the one we need.
-        const value = !self.deleteCollapse[uuid()]();
-        self.deleteCollapse[uuid()](value);
-    };
+    closeDeleteWell({ uuid }) {
+        this.deleteCollapse[ko.unwrap(uuid)](false);
+    }
 
-    self.closeDeleteWell = ({uuid}) => {
-        // Close the one we need.
-        self.deleteCollapse[uuid()](false);
-    };
-
-    self.modalFinishedClosing = () => {
-        if (self.cores().length === 0) {
+    modalFinishedClosing() {
+        if (this.cores().length === 0) {
             Notifications.characters.allRemoved.dispatch();
         }
-        self.componentStatus(false);
-    };
+        this.componentStatus(false);
+    }
 
-    self.playerSelectedCSS = (core) => {
-        if (core.uuid() === self.selectedCharacter().uuid()) {
+    playerSelectedCSS(core) {
+        if (core.uuid() === this.selectedCharacter().uuid()) {
             return 'light-active';
         }
         return '';
-    };
+    }
 
     // Private Methods
 
-    self._updatedSelectedCharacter = () => {
-        self.selectedCharacter(CoreManager.activeCore());
-    };
+    _updatedSelectedCharacter() {
+        this.selectedCharacter(CoreManager.activeCore());
+    }
 }
 
 ko.components.register('characters', {

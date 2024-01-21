@@ -41,6 +41,7 @@ export class CorePickerViewModel extends ViewModel {
     async load() {
         await this.refresh();
         Notifications.playerimage.changed.add(this.refresh);
+        await super.load();
     }
 
     async refresh() {
