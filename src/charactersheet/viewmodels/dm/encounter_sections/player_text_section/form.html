@@ -29,7 +29,13 @@
             class="fa fa-info-circle mr-2"
             role="button"
             data-bind="popover: {
-              content: 'Generate a the read aloud text using the data from the encounter and the name.',
+              content: `
+                Generate read aloud text using the data
+                from the encounter like weather, terrain, NPCs and more.
+                <a target='_blank' href='//adventurerscodex.com/dm.html#gpt'>
+                  More info here &#8594;
+                </a>
+              `,
               trigger: 'click',
             }"
           ></span>
