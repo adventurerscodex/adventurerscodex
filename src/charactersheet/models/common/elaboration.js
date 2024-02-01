@@ -9,7 +9,5 @@ export class Elaboration extends KOModel {
         include: []
     };
 
-    name = ko.observable();
     description = ko.observable();
-    quirk = ko.observable();
 }
