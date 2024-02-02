@@ -46,6 +46,7 @@ export class SkillsAddFormViewModel extends AbstractChildFormModel {
     async submit() {
         await super.submit();
         this.flipOnSave();
+        await this.refresh();
     }
 
     proficiencyOptions = [
