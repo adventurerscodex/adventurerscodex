@@ -1,4 +1,9 @@
-<column-navigation params="context: $data, collapseOn: 'sm'">
+<column-navigation params="
+  context: $data,
+  collapseOn: 'sm',
+  estimatedColumns: 2,
+  endColumnPadding: 6,
+">
   <!-- ko with: context -->
   <flip-card params="{
     tabId: 'encounter',

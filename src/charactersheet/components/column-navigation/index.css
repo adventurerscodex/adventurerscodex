@@ -9,7 +9,12 @@
   border-right: none;
 }
 
-.column-navigation .column .h4 {
+.column-navigation .column .h1,
+.column-navigation .column .h2,
+.column-navigation .column .h3,
+.column-navigation .column .h4,
+.column-navigation .column .h5,
+.column-navigation .column .h6 {
   margin-top: 0px;
 }
 

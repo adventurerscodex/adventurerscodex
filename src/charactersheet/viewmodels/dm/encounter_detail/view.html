@@ -1,6 +1,6 @@
 <!-- Encounter Sections -->
 <!-- ko if: encounter -->
-<div class="card-title h4 text-left">
+<div class="card-title h3 text-left">
   <back-button params="{ column: column }"></back-button>
   <span data-bind="text: encounter().name"></span><br />
   <!-- ko if: encounter().location -->
@@ -12,106 +12,43 @@
   <card-edit-actions params="{ flip: flip }"></card-edit-actions>
 </div>
 <hr class="ac-table-header">
-<!-- Encounter tabs -->
-<ul class="list-group master-list" role="tablist">
-  <button
-    class="list-group-item"
-    href="#environment"
-    data-bind="
-      click: () => push('environment-section', {encounter}),
-      visible: sectionIsVisible('environment'),
-      css: { 'active': sectionIsActive('environment-section') }
-    "
-  >
-    Environment
-  </button>
-  <button
-    class="list-group-item"
-    href="#traps"
-    data-bind="
-      click: () => push('traps-section', {encounter}),
-      visible: sectionIsVisible('traps'),
-      css: { 'active': sectionIsActive('traps-section') }
-    "
-  >
-    Traps
-  </button>
-  <button
-    class="list-group-item"
-    href="#moi"
-    data-bind="
-      click: () => push('maps-and-images-section', {encounter}),
-      visible: sectionIsVisible('mapsAndImages'),
-      css: { 'active': sectionIsActive('maps-and-images-section') }
-    "
-  >
-    Maps &amp; Images
-  </button>
-  <button
-    class="list-group-item"
-    href="#poi"
-    data-bind="
-      click: () => push('point-of-interest-section', {encounter}),
-      visible: sectionIsVisible('pointsOfInterest'),
-      css: { 'active': sectionIsActive('point-of-interest-section') }
-    "
-  >
-    Points of Interest
-  </button>
-  <button
-    class="list-group-item"
-    href="#player-text"
-    data-bind="
-      click: () => push('read-aloud-text-section', {encounter}),
-      visible: sectionIsVisible('readAloudText'),
-      css: { 'active': sectionIsActive('read-aloud-text-section') }
-    "
-  >
-    Read Aloud Text
-  </button>
-  <button
-    class="list-group-item"
-    href="#npcs"
-    data-bind="
-      click: () => push('npc-section', {encounter}),
-      visible: sectionIsVisible('npcs'),
-      css: { 'active': sectionIsActive('npc-section') }
-    "
-  >
-    NPCs
-  </button>
-  <button
-    class="list-group-item"
-    href="#monsters"
-    data-bind="
-      click: () => push('monster-section', {encounter}),
-      visible: sectionIsVisible('monsters'),
-      css: { 'active': sectionIsActive('monster-section') }
-    "
-  >
-    Monsters
-  </button>
-  <button
-    class="list-group-item"
-    href="#treasure"
-    data-bind="
-      click: () => push('treasure-section', {encounter}),
-      visible: sectionIsVisible('treasure'),
-      css: { 'active': sectionIsActive('treasure-section') }
-    "
-  >
-    Treasure
-  </button>
-  <button
-    class="list-group-item"
-    href="#notes"
-    data-bind="
-      click: () => push('notes-section', {encounter}),
-      visible: sectionIsVisible('notes'),
-      css: { 'active': sectionIsActive('notes-section') }
-    "
-  >
-    Notes
-  </button>
-</ul>
+
+<div data-bind="visible: sectionIsVisible('environment')" class="mt-3">
+  <environment-section params="encounter: encounter"></environment-section>
+</div>
+
+<div data-bind="visible: sectionIsVisible('traps')">
+  <traps-section params="encounter: encounter"></traps-section>
+</div>
+
+<div data-bind="visible: sectionIsVisible('mapsAndImages')">
+  <maps-and-images-section params="encounter: encounter"></maps-and-images-section>
+</div>
+
+<div data-bind="visible: sectionIsVisible('pointsOfInterest')">
+  <point-of-interest-section params="encounter: encounter"></point-of-interest-section>
+</div>
+
+<div data-bind="visible: sectionIsVisible('readAloudText')">
+  <read-aloud-text-section params="encounter: encounter"></read-aloud-text-section>
+</div>
+
+<div data-bind="visible: sectionIsVisible('npcs')">
+  <npc-section params="encounter: encounter"></npc-section>
+</div>
+
+<div data-bind="visible: sectionIsVisible('monsters')">
+  <monster-section params="encounter: encounter"></monster-section>
+</div>
+
+<div data-bind="visible: sectionIsVisible('treasure')">
+  <treasure-section params="encounter: encounter"></treasure-section>
+</div>
+
+<div data-bind="visible: sectionIsVisible('notes')">
+  <notes-section params="encounter: encounter"></notes-section>
+</div>
+
+
+
 <!-- /ko -->
