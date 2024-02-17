@@ -15,7 +15,8 @@
 <!-- Encounter tabs -->
 <ul class="list-group master-list" role="tablist">
   <button
-    class="list-group-item"
+    class="list-group-item d-flex"
+    style="justify-content: space-between;"
     href="#environment"
     data-bind="
       click: () => push('environment-section', {encounter}),
@@ -24,6 +25,7 @@
     "
   >
     Environment
+    <i class="fa fa-magic text-muted"></i>
   </button>
   <button
     class="list-group-item"
@@ -48,7 +50,8 @@
     Maps &amp; Images
   </button>
   <button
-    class="list-group-item"
+    class="list-group-item d-flex"
+    style="justify-content: space-between;"
     href="#poi"
     data-bind="
       click: () => push('point-of-interest-section', {encounter}),
@@ -57,9 +60,11 @@
     "
   >
     Points of Interest
+    <i class="fa fa-magic text-muted"></i>
   </button>
   <button
-    class="list-group-item"
+    class="list-group-item d-flex"
+    style="justify-content: space-between;"
     href="#player-text"
     data-bind="
       click: () => push('read-aloud-text-section', {encounter}),
@@ -68,9 +73,11 @@
     "
   >
     Read Aloud Text
+    <i class="fa fa-magic text-muted"></i>
   </button>
   <button
-    class="list-group-item"
+    class="list-group-item d-flex"
+    style="justify-content: space-between;"
     href="#npcs"
     data-bind="
       click: () => push('npc-section', {encounter}),
@@ -79,6 +86,7 @@
     "
   >
     NPCs
+    <i class="fa fa-magic text-muted"></i>
   </button>
   <button
     class="list-group-item"
