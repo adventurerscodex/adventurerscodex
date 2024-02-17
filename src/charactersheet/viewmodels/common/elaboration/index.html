@@ -1,0 +1,98 @@
+<div class="well mb-1">
+  <div class="p-2">
+    <!-- ko if: $component.userHasReachedLimits -->
+    <!-- ko if: $component.userIsPatron -->
+    <div class="alert alert-sm alert-warning mb-1">
+      <p>
+        You have reached the limit of your allowed use of this functionality.
+        Please subscribe to a higher Patreon tier to continue or wait until
+        next month to begin using this feature again.
+      </p>
+      <div class="text-center mt-1">
+        <a
+          href="https://www.patreon.com/bePatron?u=5313385"
+          target="_blank"
+          rel="noreferrer"
+          title="Patreon"
+          class="btn btn-default btn-xs"
+        >
+          Upgrade on Patreon &#8594;
+        </a>
+      </div>
+    </div>
+    <!-- /ko -->
+    <!-- ko ifnot: $component.userIsPatron -->
+    <div class="alert alert-sm alert-warning mb-1">
+      <p>
+        You have reached the limit of your allowed use of this functionality.
+        Please become a patron to increase your limits.
+      </p>
+      <div class="text-center mt-1">
+        <a
+          href="https://www.patreon.com/bePatron?u=5313385"
+          target="_blank"
+          rel="noreferrer"
+          title="Patreon"
+          class="btn btn-default btn-xs"
+        >
+          Check out our Patreon page &#8594;
+        </a>
+      </div>
+    </div>
+    <!-- /ko -->
+    <!-- /ko -->
+    <!-- ko ifnot: $component.isLoading -->
+    <!-- ko if: $component.elaboration -->
+    <p data-bind="text: $component.elaboration().description"></p>
+    <p data-bind="text: $component.elaboration().quirk"></p>
+    <!-- /ko -->
+    <!-- ko ifnot: $component.elaboration -->
+    <!-- ko ifnot: $component.userHasReachedLimits -->
+    <p>
+      There was an error processing your request. Please try again.
+    </p>
+    <!-- /ko -->
+    <!-- /ko -->
+    <!-- /ko -->
+    <!-- ko if: $component.isLoading -->
+    <p class="text-center text-muted">
+      <i class="fa fa-refresh fa-spin"></i>
+      Loading...
+    </p>
+    <!-- /ko -->
+  </div>
+  <div class="d-flex" style="justify-content: end;">
+    <div class="hidden-xs" style="flex: 1;">
+      <small class="text-muted" data-bind="text: remaining"></small>
+    </div>
+    <div class="text-right" style="flex: 1;">
+      <button
+        class="btn btn-xs btn-default mr-3"
+        type="button"
+        data-bind="click: $component.resetElaboration"
+      >
+        Cancel
+      </button>
+      <button
+        class="btn btn-xs btn-info mr-3"
+        type="button"
+        data-bind="
+          click: $component.elaborate,
+          enable: $component.hasContext() && !$component.isLoading() && !$component.userHasReachedLimits(),
+        "
+      >
+        Re-Generate
+      </button>
+      <button
+        class="btn btn-xs btn-primary"
+        type="button"
+        data-bind="
+          click: $component.useElaboration,
+          enable: $component.elaboration,
+        "
+      >
+        Apply
+      </button>
+    </div>
+  </div>
+</div>

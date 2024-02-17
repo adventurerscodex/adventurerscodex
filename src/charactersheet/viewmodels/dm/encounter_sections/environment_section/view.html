@@ -25,8 +25,11 @@
     <!-- ko ifnot: shouldShowExhibitButton -->
     <div class="text-center inline-block">
       <span style="font-weight: bold;">Exhibit</span><br>
-      <span class="fa fa-desktop fa-disabled" style="cursor:pointer;"
-        data-bind="popover: { content: 'Join a Party in order to send to Exhibit' }">
+      <span class="fa fa-desktop fa-disabled" role="button"
+        data-bind="popover: {
+          content: 'Join a Party in order to send to Exhibit',
+          trigger: 'click',
+        }">
       </span>
     </div>
     <!-- /ko -->

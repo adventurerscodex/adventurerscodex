@@ -1,7 +1,5 @@
 import autoBind from 'auto-bind';
-import { get } from 'lodash';
 import {
-    CoreManager,
     Notifications,
     Fixtures,
     uploadFile

@@ -2,6 +2,7 @@ export { Armor } from './armor';
 export { AuthenticationToken } from './authentication_token';
 export { Character } from './character';
 export { Core } from './core';
+export { Elaboration } from './elaboration';
 export { EncounterImage } from './image';
 export { ImageMedia } from './image_media';
 export { Item } from './item';
