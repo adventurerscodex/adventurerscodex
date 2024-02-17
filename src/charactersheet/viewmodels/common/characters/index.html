@@ -1,7 +1,16 @@
-<div class="modal fade" id="charactersModal" tabindex="-1" role="dialog"
-  aria-labelledby="charactersModalLabel" data-bind="modal: {
-    open: modalStatus,
-    onclose: modalFinishedClosing }">
+<div
+  class="modal fade"
+  id="charactersModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="charactersModalLabel"
+  data-bind="
+    modal: {
+      open: modalStatus,
+      onclose: modalFinishedClosing,
+    }
+  "
+>
   <div class="modal-dialog" role="document">
     <div class="modal-content container-fluid">
       <div class="modal-header">
@@ -13,55 +22,22 @@
         </h4>
       </div>
       <div class="modal-body">
-        <div class="container-fluid text-left">
-          <div class="list-group">
-            <!-- ko foreach: cores -->
-            <a href="#" class="list-group-item" data-bind="css: $parent.playerSelectedCSS($data)">
-              <div class="row">
-                <div class="col-xs-3 col-sm-2" data-bind="click: $parent.changeCore">
-                  <img data-bind="attr: { src: displayImage }" class="img img-circle" width="60"
-                    height="60" style="margin-top: 7px;" />
-                </div>
-                <div class="col-xs-7 col-sm-8" style="padding-top: 5px" data-bind="click: $parent.changeCore">
-                  <span class="lead" data-bind='text: title'></span>
-                  <small>
-                    by <span data-bind='text: playerName'></span>
-                  </small>
-                  <div>
-                    <small data-bind='text: summary'></small>
-                  </div>
-                </div>
-                <div class="col-xs-2">
-                  <label type="button" class="close" style="padding-top: 20px"
-                    data-bind="click: $parent.toggleDeleteWell">
-                    <i class="fa fa-trash-o fa-color-hover"></i>
-                  </label>
-                </div>
-              </div>
-            </a>
-            <div class="collapse" data-bind="well: { open: $parent.deleteCollapse[uuid()] }">
-              <div class="well no-bottom-margin well-top-shadow text-center">
-                Are you sure you want to delete this Character or Campaign?
-                <div style="text-align: center">
-                  <i class="text-danger text-center">This action cannot be undone.</i>
-                </div>
-                <div class="row text-right">
-                  <button type="button"
-                    class="btn btn-sm btn-danger"
-                    data-bind="click: $parent.removeCore">
-                    Delete
-                  </button>
-                  <button type="button"
-                    class="btn btn-sm btn-default"
-                    data-bind="click: $parent.closeDeleteWell">
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            </div>
-            <!-- /ko -->
-          </div>
+        <!-- ko ifnot: loaded(), completeOn: 'render' -->
+        <div class="loader-wrapper"><div class="loader"></div></div>
+        <!-- /ko -->
+        <!-- ko if: loaded(), completeOn: 'render' -->
+        <!-- ko template: { name: 'core-list-item', foreach: favorites } -->
+        <!-- /ko -->
+        <div
+          class="list-group-item"
+          data-bind="visible: hasFavorites"
+          style="height: 3rem;"
+        >
+          <!-- Spacer -->
         </div>
+        <!-- ko template: { name: 'core-list-item', foreach: others } -->
+        <!-- /ko -->
+        <!-- /ko -->
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary pull-right"
@@ -72,3 +48,179 @@
     </div>
   </div>
 </div>
+
+<template id="core-list-item">
+  <div
+    class="list-group-item"
+    data-bind="class: isFavorite() ? 'border-left-4 border-left-primary' : ''"
+  >
+    <flip-card params="{
+      tabId: 'core_picker',
+      dataId: `core_picker_${uuid()}`,
+      context: {
+        data: $data,
+        vm: $component,
+      },
+      defaultHeight: 90,
+      heightMod: 0,
+    }">
+      <div class="front clickable">
+        <div class="d-flex mb-2">
+          <div
+            data-bind="with: context.data"
+            class="d-flex"
+            style="align-items: center;"
+          >
+            <button
+              type="button"
+              class="btn btn-link"
+              style="padding: 1rem;"
+              data-bind="click: $parent.context.vm.toggleFavorite"
+            >
+              <!-- ko if: isFavorite -->
+              <i class="fa fa-lg fa-star fa-color-hover"></i>
+              <!-- /ko -->
+              <!-- ko ifnot: isFavorite -->
+              <i class="fa fa-lg fa-star-o fa-color-hover"></i>
+              <!-- /ko -->
+            </button>
+
+          </div>
+          <div
+            class="d-flex-5 d-flex align-items-center"
+            data-bind="click: () => context.vm.changeCore(context.data)"
+          >
+            <div
+              data-bind="with: context.data"
+              class="d-flex-1"
+            >
+              <img
+                data-bind="attr: { src: displayImage }"
+                class="img img-circle no-padding center-block bordered"
+                width="60"
+                height="60"
+                style="margin-top: 7px;"
+              />
+              <div class="core-type-indicator">
+                <div
+                  class="circle d-flex"
+                  style="
+                    justify-content: center;
+                    align-items: center;
+                    color: white;
+                  "
+                >
+                  <!-- ko if: type.name() === 'character' -->
+                  <i class="fa fa-lg fa-user"></i>
+                  <!-- /ko -->
+                  <!-- ko if: type.name() === 'dm' -->
+                  <i class="fa fa-lg fa-book"></i>
+                  <!-- /ko -->
+                </div>
+              </div>
+            </div>
+            <div
+              data-bind="with: context.data"
+              class="d-flex-5 pl-3"
+            >
+              <span
+                class="d-block"
+                style="font-size: 2rem;"
+                data-bind="text: title"
+              ></span>
+              <span
+                class="d-block"
+                data-bind="text: summary"
+              ></span>
+              <small
+                class="d-block text-muted"
+                data-bind="text: localizedDate"
+              ></small>
+            </div>
+          </div>
+          <div
+            class="d-flex-1 d-flex"
+            style="
+              align-items: center;
+              justify-content: end;
+            "
+          >
+            <button
+              type="button"
+              class="btn btn-link"
+              style="padding: 1rem;"
+              data-bind="click: flip"
+            >
+                <i class="fa fa-lg fa-pencil-square-o fa-color-hover"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="back">
+        <div class="d-flex p-3">
+          <div
+            data-bind="with: context.data"
+            class="d-flex-1"
+          >
+            <img
+              data-bind="attr: { src: displayImage }"
+              class="img img-circle no-padding center-block bordered"
+              width="60"
+              height="60"
+              style="margin-top: 7px;"
+            />
+            <div class="core-type-indicator">
+              <div
+                class="circle d-flex"
+                style="
+                  justify-content: center;
+                  align-items: center;
+                  color: white;
+                "
+              >
+                <!-- ko if: type.name() === 'character' -->
+                <i class="fa fa-lg fa-user"></i>
+                <!-- /ko -->
+                <!-- ko if: type.name() === 'dm' -->
+                <i class="fa fa-lg fa-book"></i>
+                <!-- /ko -->
+              </div>
+            </div>
+          </div>
+          <div class="d-flex-5 pl-3">
+            <h3>Delete this <span data-bind="text: context.data.description"></span>?</h3>
+            <p>
+              Are you sure you want to delete this
+              <span data-bind="text: context.data.description"></span>?
+              All data associated with this <span data-bind="text: context.data.description"></span>
+              will be lost.
+            </p>
+            <div class="text-danger text-right p-1">
+              This action cannot be undone.
+            </div>
+            <div
+              class="d-flex"
+              style="justify-content: end; gap: 1rem;"
+            >
+              <button type="button"
+                class="btn btn-sm btn-default"
+                data-bind="click: flip"
+              >
+                <i class="fa fa-times"></i>
+                Cancel
+              </button>
+              <button type="button"
+                class="btn btn-sm btn-danger"
+                data-bind="click: () => context.vm.removeCore(context.data)"
+              >
+                <i class="fa fa-trash-o"></i>
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </flip-card>
+    </div>
+  </div>
+</template>

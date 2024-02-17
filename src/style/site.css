@@ -1,6 +1,7 @@
 :root {
   --footer-height: 178px;
   --border-color: #ecf0f1;
+  --primary-color: #2c3e50;
 }
 
 /*
@@ -1048,6 +1049,26 @@ div.toggle-arrow-container {
 .close:hover {
   color: #1a242f;
 }
+
+.core-type-indicator {
+  position: relative;
+  width: 30px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.core-type-indicator .circle {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  margin-left: 20px;
+  margin-top: -20px;
+  z-index:1000;
+  border-radius: 30px;
+  background: #333;
+  border: 2px solid var(--border-color);
+}
+
 
 /*
  * jQuery Autocomplete
@@ -2389,12 +2410,20 @@ tr .panel {
   border-left: 1px solid var(--border-color);
 }
 
+.border-left-4 {
+  border-left: 4px solid var(--border-color);
+}
+
 .border-right {
   border-right: 1px solid var(--border-color);
 }
 
 .border-bottom {
   border-bottom: 1px solid var(--border-color);
+}
+
+.border-left-primary {
+  border-left-color: var(--primary-color) !important;
 }
 
 .stretched-link::after {
