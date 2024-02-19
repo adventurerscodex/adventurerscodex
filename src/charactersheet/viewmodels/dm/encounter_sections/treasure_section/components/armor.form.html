@@ -6,22 +6,52 @@
   <div class="row">
     <div class="form-group col-xs-12">
       <label>Name</label>
-      <input
-        type="text"
-        class="form-control"
-        name="name"
-        placeholder="Chain Mail"
-        data-bind="
-          textInput: name,
-          hasFocus: $component.formElementHasFocus,
-          event: { blur: $component.reviewInput, invalid: $component.invalidate },
-          attr: { ...$component.validation.name },
-          autocomplete: {
-            source: $component.prePopFilter,
-            onselect: $component.populate,
-          }
-        "
-      />
+      <div class="input-group">
+        <input
+          type="text"
+          class="form-control"
+          name="name"
+          placeholder="Chain Mail"
+          data-bind="
+            textInput: name,
+            hasFocus: $component.formElementHasFocus,
+            event: { blur: $component.reviewInput, invalid: $component.invalidate },
+            attr: { ...$component.validation.name },
+            autocomplete: {
+              source: $component.prePopFilter,
+              onselect: $component.populate,
+            }
+          "
+        />
+        <div class="input-group-btn">
+          <button
+            class="btn btn-info btn-sm dropdown-toggle"
+            type="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            <!-- ko if: includeInAutoComplete -->
+            <i class="fa fa-star" aria-hidden="true"></i> <span class="caret"></span>
+            <!-- /ko -->
+            <!-- ko ifnot: includeInAutoComplete -->
+            <i class="fa fa-star-o" aria-hidden="true"></i> <span class="caret"></span>
+            <!-- /ko -->
+          </button>
+          <ul class="dropdown-menu dropdown-menu-right">
+            <li>
+              <a href="#" data-bind="click: toggleAutoCompleteStatus">
+                <!-- ko ifnot: includeInAutoComplete -->
+                <i class="fa fa-star"></i>&nbsp;Add to Auto-Complete
+                <!-- /ko -->
+                <!-- ko if: includeInAutoComplete -->
+                <i class="fa fa-star-o"></i>&nbsp;Remove from Auto-Complete
+                <!-- /ko -->
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
       <!-- ko if: $component.addForm -->
       <compendium-help />
       <!-- /ko -->
