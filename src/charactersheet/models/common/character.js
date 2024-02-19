@@ -107,14 +107,6 @@ export function Character() {
         var blob = new Blob([self.exportCharacter()], { type: 'application/json' });
         saveAs(blob, filename);
     };
-
-    self.saveToDropbox = function () {
-        var token = PersistenceService.findAll(AuthenticationToken)[0];
-        var data = { data: self.exportCharacter() };
-        var url = Utility.oauth.postData(self.saveApi, data, function (url) {
-            Dropbox.save(JSON.parse(url).url, self.playerTitle() + '.json', Settings.dropboxSaveOptions);
-        }, null, token.accessToken());
-    };
 }
 
 Character.exportCharacter = function (characterId) {

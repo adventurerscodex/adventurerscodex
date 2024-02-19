@@ -22,15 +22,49 @@
     <div class="form-group col-xs-12">
       <div class="d-flex justify-content-between">
         <label class="d-flex-1">
-          Read Aloud Text
+          Description
         </label>
-        <div class="d-flex-1 text-right text-muted">
-          <i
-            class="fa fa-info-circle"
-            title="This field will be sent to the players via the exhibit."
-          ></i>&nbsp; Exhibit
+        <div class="d-flex-1 text-right">
+          <span
+            class="fa fa-info-circle mr-2"
+            role="button"
+            data-bind="popover: {
+              content: `
+                Generate read aloud text using the data
+                from the encounter like weather, terrain, NPCs and more.
+                <a target='_blank' href='//adventurerscodex.com/dm.html#gpt'>
+                  More info here &#8594;
+                </a>
+              `,
+              trigger: 'click',
+            }"
+          ></span>
+          <button
+            class="btn btn-xs btn-info"
+            title="Generate a description for this entry using the encounter information and the name."
+            data-bind="
+              click: $component.toggleElaboration,
+              visible: !$component.showElaboration(),
+              enable: !!name(),
+            "
+          >
+            <i class="fa fa-magic" aria-hidden="true"></i>
+            Generate
+          </button>
         </div>
       </div>
+      <!-- ko if: $component.showElaboration -->
+      <elaboration
+        params="
+          onselect: $component.useElaboration,
+          oncancel: $component.toggleElaboration,
+          context: name,
+          uuid: encounterUuid,
+          type: 'read-aloud-text',
+        "
+      ></elaboration>
+      <!-- /ko -->
+      <!-- ko ifnot: $component.showElaboration -->
       <textarea
         type="text"
         class="form-control"
@@ -41,10 +75,11 @@
           value: description,
           event: { blur: $component.reviewInput, invalid: $component.invalidate },
           attr: { ...$component.validation.description },
-        "></textarea>
-        <markdown-help />
+        "
+      ></textarea>
+      <markdown-help />
+      <!-- /ko -->
       </div>
-    </div>
   </div>
   <div class="modal-footer">
     <form-submit-actions params="{

@@ -58,6 +58,9 @@ export var DataRepository = {
             names: {
                 url: 'https://adventurerscodex.com/data/misc/names.json',
             },
+            pointsOfInterest: {
+                url: 'https://adventurerscodex.com/data/misc/points_of_interest.json',
+            },
         },
     },
 

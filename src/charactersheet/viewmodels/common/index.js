@@ -1,6 +1,7 @@
 export * from './character_picker';
 export * from './chat';
 export * from './characters';
+export * from './elaboration';
 export * from './exhibit';
 export * from './login';
 export * from './media';

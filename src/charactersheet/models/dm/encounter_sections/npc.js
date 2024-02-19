@@ -19,7 +19,16 @@ export class NPC extends KOModel {
     ];
 
     static mapping = {
-        include: ['coreUuid', 'encounterUuid', 'name', 'race', 'sourceUrl', 'playerText', 'description', 'uuid']
+        include: [
+            'coreUuid',
+            'encounterUuid',
+            'name',
+            'race',
+            'sourceUrl',
+            'playerText',
+            'description',
+            'uuid',
+        ]
     };
 
     uuid = ko.observable();

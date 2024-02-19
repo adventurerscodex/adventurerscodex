@@ -14,14 +14,21 @@ export class Core extends KOModel {
     playerName = ko.observable();
     name = ko.observable();
     createdAt = ko.observable();
+    isFavorite = ko.observable();
 
-    title = ko.pureComputed(() => {
-        return `${this.name()}`;
-    });
+    title = ko.pureComputed(() => `${this.name()}`);
+
+    description = ko.pureComputed(() => (
+        this.type.name() === 'dm' ? 'campaign' : this.type.name()
+    ));
 
     summary = ko.pureComputed(() => {
-        return `${this.playerName()}: a ${this.type.description()}.`;
+        return `${this.playerName()}: a ${this.description()}.`;
     });
+
+    localizedDate = ko.pureComputed(() =>
+        (new Date(this.createdAt())).toLocaleDateString()
+    );
 
     displayImage = ko.pureComputed(() => {
         if (this.profileImage().url()) {

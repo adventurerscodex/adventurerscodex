@@ -110,7 +110,6 @@ module.exports = {
     coreapi: 'coreapi',
     schema: 'schema',
     jquery: 'jQuery',
-    dropbox: 'Dropbox',
     marked: 'marked',
   }
 }
