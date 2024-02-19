@@ -25,8 +25,7 @@ export class WizardViewModel extends ViewModel {
 
         this.playerType = ko.observable();
 
-        this.profileSuggestionIsVisible = ko.observable(false);
-        this.isLoading = ko.observable(true);
+        this.isLoading = ko.observable(false);
         this.elaboration = ko.observable();
         this.remainingElaborations = ko.observable(false);
         this.userIsPatron = ko.observable(false);
@@ -122,7 +121,6 @@ export class WizardViewModel extends ViewModel {
     }
 
     async elaborate() {
-        this.toggleProfileSuggestionIsVisible();
         this.isLoading(true);
 
         try {
@@ -136,6 +134,11 @@ export class WizardViewModel extends ViewModel {
                     age: this.age(),
                     gender: this.gender(),
                     background: this.background(),
+                    flaws: this.flaws(),
+                    bonds: this.bonds(),
+                    ideals: this.ideals(),
+                    personalityTraits: this.personalityTraits(),
+                    backstory: this.backstory(),
                 },
             });
             this.elaboration(response.data);
@@ -148,6 +151,12 @@ export class WizardViewModel extends ViewModel {
 
     hasContext = ko.pureComputed(() => (
         ko.unwrap(this.characterName) && ko.unwrap(this.race) && ko.unwrap(this.characterClass)
+    ));
+
+    hasFieldsToGenerate = ko.pureComputed(() => !(
+        ko.unwrap(this.alignment) && ko.unwrap(this.gender) && ko.unwrap(this.background)
+        && ko.unwrap(this.ideals) && ko.unwrap(this.flaws) && ko.unwrap(this.bonds)
+        && ko.unwrap(this.personalityTraits) && ko.unwrap(this.backstory)
     ));
 
     userHasReachedLimits = ko.pureComputed(() => (
@@ -174,12 +183,7 @@ export class WizardViewModel extends ViewModel {
     }
 
     resetElaboration() {
-        this.toggleProfileSuggestionIsVisible();
         this.elaboration(null);
-    }
-
-    toggleProfileSuggestionIsVisible() {
-        this.profileSuggestionIsVisible(!this.profileSuggestionIsVisible());
     }
 
     async save() {

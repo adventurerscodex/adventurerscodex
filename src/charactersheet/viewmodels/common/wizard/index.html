@@ -219,7 +219,8 @@
               We use the data you provide to generate the profile. You can improve
               the quality of the generated results by adding additional information.
               Once you have something you like, click Apply to add it to your character.
-              (Name, Race &amp; Class are required for generation).
+              (Name, Race &amp; Class are required for generation). At least one generated
+              field must be empty to use this feature.
             `,
             trigger: 'click',
           }"
@@ -229,8 +230,8 @@
           type="button"
           data-bind="
             click: elaborate,
-            hidden: profileSuggestionIsVisible,
-            enable: hasContext,
+            hidden: isLoading() || elaboration(),
+            enable: hasContext() && hasFieldsToGenerate(),
           "
         >
           <i class="fa fa-magic"></i>&nbsp;Generate
@@ -239,7 +240,7 @@
     </div>
     <fieldset
       class="additional-info-fields"
-      data-bind="hidden: profileSuggestionIsVisible"
+      data-bind="hidden: isLoading() || elaboration()"
     >
       <div class="form-group">
         <label for="background" class="col-sm-2 control-label">
@@ -424,7 +425,7 @@
     </fieldset>
     <div
       class="mb-3 well"
-      data-bind="visible: profileSuggestionIsVisible"
+      data-bind="visible: isLoading() || elaboration()"
     >
       <div class="p-2">
         <!-- ko if: $component.userHasReachedLimits -->
@@ -595,7 +596,7 @@
       <button
         type="submit"
         class="btn btn-primary btn-sm"
-        data-bind="disable: profileSuggestionIsVisible"
+        data-bind="disable: isLoading() || elaboration()"
       >
         Create Character
       </button>
