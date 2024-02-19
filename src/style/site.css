@@ -339,11 +339,11 @@ small {
 }
 
 .circular-profile {
-  width: 80px;
-  height: 80px;
-  border-radius: 40px;
-  -webkit-border-radius: 40px;
-  -moz-border-radius: 40px;
+  width: 84px;
+  height: 84px;
+  border-radius: 42px;
+  -webkit-border-radius: 42px;
+  -moz-border-radius: 42px;
   overflow:hidden;
 }
 
