@@ -1,3 +1,4 @@
+import autoBind from 'auto-bind';
 import 'bin/popover_bind';
 import { CoreManager } from 'charactersheet/utilities';
 import { Hypnos } from 'hypnos/lib/hypnos';
@@ -19,6 +20,7 @@ export class WizardViewModel extends ViewModel {
     constructor() {
         CoreManager.setActiveCoreFragment(null);
         super();
+        autoBind(this);
 
         this.active = ko.observable('point-buy');
         this.logo = logo;
@@ -146,6 +148,9 @@ export class WizardViewModel extends ViewModel {
             this.elaboration({});
         }
         this.isLoading(false);
+
+        // Refresh the user's stats.
+        UserServiceManager.sharedService().getAccount();
     }
 
     hasContext = ko.pureComputed(() => (
