@@ -47,9 +47,7 @@ class ElaborationViewModel extends ViewModel {
     ));
 
     remaining = ko.pureComputed(() => (
-        this.userIsPatron()
-        ? `You have ${this.remainingElaborations()} remaining uses this month.`
-        : `You have ${this.remainingElaborations()} remaining uses.`
+        `You have ${this.remainingElaborations()} remaining uses this month.`
     ));
 
     hasContext = ko.pureComputed(() => !!this.context());
