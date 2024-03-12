@@ -138,6 +138,49 @@
       </div>
     </div>
 
+    <div class="form-group">
+      <label for="xp" class="col-sm-2 control-label">
+        Experience Points<span style="visibility: hidden;">*</span>
+      </label>
+      <div class="col-sm-10">
+        <input
+          type="number"
+          class="form-control"
+          id="xp"
+          data-bind="value: experience"
+          min="0"
+        >
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="backpack" class="col-sm-2 control-label">
+        Backpack<span style="visibility: hidden;">*</span>
+      </label>
+      <div class="col-sm-10">
+        <select
+          class="form-control"
+          id="backpack"
+          data-bind="options: backpackOptions, value: backpack"
+          required
+        ></select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="deity" class="col-sm-2 control-label">
+        Deity<span style="visibility: hidden;">*</span>
+      </label>
+      <div class="col-sm-10">
+        <input
+          type="text"
+          class="form-control"
+          id="deity"
+          data-bind="value: deity"
+        >
+      </div>
+    </div>
+
     <h3>Ability Scores</h3>
 
     <div class="row">
@@ -261,20 +304,6 @@
       </div>
 
       <div class="form-group">
-        <label for="backpack" class="col-sm-2 control-label">
-          Backpack<span style="visibility: hidden;">*</span>
-        </label>
-        <div class="col-sm-10">
-          <select
-            class="form-control"
-            id="backpack"
-            data-bind="options: backpackOptions, value: backpack"
-            required
-          ></select>
-        </div>
-      </div>
-
-      <div class="form-group">
         <label for="alignment" class="col-sm-2 control-label">
           Alignment<span style="visibility: hidden;">*</span>
         </label>
@@ -287,19 +316,6 @@
               textInput: alignment,
               autocomplete: { source: alignmentOptions, onselect: alignment }
             "
-          >
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="deity" class="col-sm-2 control-label">
-          Deity<span style="visibility: hidden;">*</span>
-        </label>
-        <div class="col-sm-10">
-          <input
-            type="text"
-            class="form-control"
-            id="deity"
-            data-bind="value: deity"
           >
         </div>
       </div>
@@ -330,21 +346,6 @@
             data-bind="value: age"
             min="1"
             max="1500"
-          >
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="xp" class="col-sm-2 control-label">
-          Experience Points<span style="visibility: hidden;">*</span>
-        </label>
-        <div class="col-sm-10">
-          <input
-            type="number"
-            class="form-control"
-            id="xp"
-            data-bind="value: experience"
-            min="0"
           >
         </div>
       </div>
@@ -469,6 +470,7 @@
         </div>
         <!-- /ko -->
         <!-- /ko -->
+        <!-- ko ifnot: $component.userHasReachedLimits -->
         <!-- ko ifnot: $component.isLoading -->
         <!-- ko if: $component.elaboration -->
         <div class="form-group">
@@ -511,6 +513,7 @@
             <p data-bind="text: $component.elaboration().personalityTraits"></p>
           </div>
         </div>
+
         <div class="form-group pt-2">
           <label for="xp" class="col-sm-2 control-label">
             Ideals<span style="visibility: hidden;">*</span>
@@ -518,6 +521,7 @@
           <div class="col-sm-10 pt-2" data-bind="text: $component.elaboration().ideals">
           </div>
         </div>
+
         <div class="form-group">
           <label for="xp" class="col-sm-2 control-label">
             Flaws<span style="visibility: hidden;">*</span>
@@ -525,6 +529,7 @@
           <div class="col-sm-10 pt-2" data-bind="text: $component.elaboration().flaws">
           </div>
         </div>
+
         <div class="form-group">
           <label for="xp" class="col-sm-2 control-label">
             Bonds<span style="visibility: hidden;">*</span>
@@ -532,6 +537,7 @@
           <div class="col-sm-10 pt-2" data-bind="text: $component.elaboration().bonds">
           </div>
         </div>
+
         <div class="form-group">
           <label for="xp" class="col-sm-2 control-label">
             Backstory<span style="visibility: hidden;">*</span>
@@ -540,11 +546,14 @@
           </div>
         </div>
         <!-- /ko -->
+        <!-- /ko -->
+        <!-- ko ifnot: $component.isLoading -->
         <!-- ko ifnot: $component.elaboration -->
         <!-- ko ifnot: $component.userHasReachedLimits -->
         <p>
           There was an error processing your request. Please try again.
         </p>
+        <!-- /ko -->
         <!-- /ko -->
         <!-- /ko -->
         <!-- /ko -->

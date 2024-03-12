@@ -143,8 +143,7 @@ export class WizardViewModel extends ViewModel {
             });
             this.elaboration(response.data);
         } catch(err) {
-            console.log(err);
-            // TODO
+            this.elaboration({});
         }
         this.isLoading(false);
     }
