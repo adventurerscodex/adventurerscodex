@@ -542,7 +542,9 @@
           <label for="xp" class="col-sm-2 control-label">
             Backstory<span style="visibility: hidden;">*</span>
           </label>
-          <div class="col-sm-10 pt-2" data-bind="text: $component.elaboration().backstory">
+          <div class="col-sm-10 pt-2">
+            <p data-bind="text: $component.elaboration().backstory"></p>
+            <p data-bind="text: $component.elaboration().goals"></p>
           </div>
         </div>
         <!-- /ko -->

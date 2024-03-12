@@ -182,7 +182,7 @@ export class WizardViewModel extends ViewModel {
         this.ideals(this.elaboration().ideals);
         this.flaws(this.elaboration().flaws);
         this.bonds(this.elaboration().bonds);
-        this.backstory(this.elaboration().backstory);
+        this.backstory(`${this.elaboration().backstory}\n\n${this.elaboration().goals}`);
         this.resetElaboration();
     }
 
