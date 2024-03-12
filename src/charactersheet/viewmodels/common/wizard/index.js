@@ -28,6 +28,7 @@ export class WizardViewModel extends ViewModel {
         this.playerType = ko.observable();
 
         this.isLoading = ko.observable(false);
+        this.showElaboration = ko.observable(false);
         this.elaboration = ko.observable();
         this.remainingElaborations = ko.observable(false);
         this.userIsPatron = ko.observable(false);
@@ -123,6 +124,7 @@ export class WizardViewModel extends ViewModel {
     }
 
     async elaborate() {
+        this.showElaboration(true);
         this.isLoading(true);
 
         try {
@@ -145,7 +147,7 @@ export class WizardViewModel extends ViewModel {
             });
             this.elaboration(response.data);
         } catch(err) {
-            this.elaboration({});
+            this.elaboration(null);
         }
         this.isLoading(false);
 
@@ -186,6 +188,7 @@ export class WizardViewModel extends ViewModel {
 
     resetElaboration() {
         this.elaboration(null);
+        this.showElaboration(false);
     }
 
     async save() {

@@ -273,7 +273,7 @@
           type="button"
           data-bind="
             click: elaborate,
-            hidden: isLoading() || elaboration(),
+            hidden: showElaboration,
             enable: hasContext() && hasFieldsToGenerate(),
           "
         >
@@ -283,7 +283,7 @@
     </div>
     <fieldset
       class="additional-info-fields"
-      data-bind="hidden: isLoading() || elaboration()"
+      data-bind="hidden: showElaboration"
     >
       <div class="form-group">
         <label for="background" class="col-sm-2 control-label">
@@ -426,7 +426,7 @@
     </fieldset>
     <div
       class="mb-3 well"
-      data-bind="visible: isLoading() || elaboration()"
+      data-bind="visible: showElaboration"
     >
       <div class="p-2">
         <!-- ko if: $component.userHasReachedLimits -->
@@ -470,7 +470,6 @@
         </div>
         <!-- /ko -->
         <!-- /ko -->
-        <!-- ko ifnot: $component.userHasReachedLimits -->
         <!-- ko ifnot: $component.isLoading -->
         <!-- ko if: $component.elaboration -->
         <div class="form-group">
@@ -547,7 +546,6 @@
             <p data-bind="text: $component.elaboration().goals"></p>
           </div>
         </div>
-        <!-- /ko -->
         <!-- /ko -->
         <!-- ko ifnot: $component.isLoading -->
         <!-- ko ifnot: $component.elaboration -->
