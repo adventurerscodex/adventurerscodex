@@ -58,6 +58,7 @@ export class EncounterWeapon extends KOModel {
     description = ko.observable('');
     quantity = ko.observable(1);
     hitBonusLabel = ko.observable();
+    autofillType = ko.observable();
 
     proficiencyOptions = ko.observableArray(Fixtures.weapon.weaponProficiencyOptions);
     handednessOptions = ko.observableArray(Fixtures.weapon.weaponHandednessOptions);
@@ -116,6 +117,18 @@ export class EncounterWeapon extends KOModel {
     weightLabel = ko.pureComputed(() => {
         return this.weight() !== '' && this.weight() >= 0 ? this.weight() + ' lbs.' : '0 lbs.';
     });
+
+    includeInAutoComplete = ko.pureComputed(() => (
+        this.autofillType() === 'self'
+    ));
+
+    toggleAutoCompleteStatus = () => {
+        this.autofillType(
+            this.includeInAutoComplete()
+            ? 'none'
+            : 'self'
+        )
+    };
 }
 
 

@@ -13,7 +13,11 @@
     </div>
     <div class="d-flex-5 d-flex align-items-center">
       <div class="h4">
-        <span data-bind="text: name"></span><br />
+        <span data-bind="text: name"></span>
+        <!-- ko ifnot: autofillType() === 'none' -->
+        <small class="fa fa-star"></small>
+        <!-- /ko -->
+        <br />
         <small data-bind="text: nameLabel"></small>
       </div>
     </div>

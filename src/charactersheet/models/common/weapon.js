@@ -1,13 +1,7 @@
 import 'bin/knockout-mapping-autoignore';
 import 'knockout-mapping';
-import {
-    CoreManager,
-    Fixtures,
-    Notifications
-} from 'charactersheet/utilities';
-import { AbilityScore } from 'charactersheet/models/character/ability_score';
+import { Notifications } from 'charactersheet/utilities';
 import { KOModel } from 'hypnos';
-import { ProficiencyService } from 'charactersheet/services/character/proficiency_service';
 
 import ko from 'knockout';
 
