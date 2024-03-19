@@ -12,7 +12,23 @@ module.exports = merge(common, {
     devtool: 'cheap-module-eval-source-map',
     devServer: {
         contentBase: './dist',
-        port: 3000
+        port: 3000,
+        proxy: [
+            {
+                context: ['/api', '/accounts', '/static', '/favicon.ico'],
+                target: 'https://app.adventurerscodex.com',
+                secure: false,
+                changeOrigin: true,
+                onProxyReq: function(proxyReq) {
+                    proxyReq.setHeader('Referer', 'https://app.adventurerscodex.com');
+                },
+                onProxyRes: function(proxyRes) {
+                    delete proxyRes.headers['x-frame-options'];
+                    if ('location' in proxyRes.headers)
+                        proxyRes.headers['location'] = proxyRes.headers['location'].replace('https://app.adventurerscodex.com/core/', '/')
+                }
+            }
+        ],
     },
     plugins: [
         new webpack.DefinePlugin({
