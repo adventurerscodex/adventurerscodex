@@ -454,9 +454,6 @@ export var Fixtures = {
             'Noir/Mystery',
             'Magic Punk',
             'Modern/Urban',
-            ''
-
-
         ],
 
         settingOptions: [
