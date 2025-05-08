@@ -447,6 +447,23 @@ export var Fixtures = {
             'Explorer\'s Pack',
             'Priest\'s Pack',
             'Scholar\'s  Pack'
+        ],
+
+        motifOptions: [
+            'Fantasy/Adventure',
+            'Noir/Mystery',
+            'Magic Punk',
+            'Modern/Urban',
+            ''
+
+
+        ],
+
+        settingOptions: [
+            'Forgotten Realms',
+            'Eberron',
+            'Homebrew',
+            'Other',
         ]
     },
     statusPhraseWordMap: {
