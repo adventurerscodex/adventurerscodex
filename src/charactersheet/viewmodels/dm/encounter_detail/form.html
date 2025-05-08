@@ -39,6 +39,31 @@
         "
       />
     </div>
+    <div class="form-group">
+      <label for="encounter.location">
+        Goal
+      </label>
+      <input
+        type="text"
+        class="form-control"
+        data-bind="
+          value: objective,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.objective },
+        "
+      />
+    </div>
+    <div class="form-group">
+      <input
+        type="checkbox"
+        class="mr-1"
+        id="encounter.complete"
+        data-bind="checked: isComplete"
+      />
+      <label for="encounter.complete">
+        Complete
+      </label>
+    </div>
     <hr />
     <div class="h4">
       Sections<br />
