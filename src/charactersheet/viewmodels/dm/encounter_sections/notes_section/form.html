@@ -1,10 +1,11 @@
 <form data-bind="submit: $component.submit">
-  <div class="card-title h4">
+  <div class="card-title h4 mb-0 pb-0">
     <back-button params="{ column: $parents[5] }"></back-button>
     <span data-bind="text: name"></span><br />
     <small data-bind="text: tagline"></small>
     <card-submit-actions params="{ reset: $component.reset }"></card-submit-actions>
   </div>
+  <small>&nbsp;</small>
   <hr class="ac-table-header">
   <div class="row">
     <div class="form-group col-xs-12">

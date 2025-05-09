@@ -22,6 +22,9 @@ class EncounterViewModel extends AbstractEncounterListViewModel {
         this.forceCardResize = params.forceCardResize;
 
         this.displayImportForm = ko.observable(false);
+        this.filtered = ko.observable(false);
+        this.sortAttribute = ko.observable();
+        this.sortAsc = ko.observable(true);
     }
 
     async load() {
@@ -50,6 +53,8 @@ class EncounterViewModel extends AbstractEncounterListViewModel {
         setTimeout(this.forceCardResize, DELAY.LONG);
     }
 
+    filteredAndSortedEntities = ko.pureComputed(() => this.entities());
+
     toggleShowImportForm() {
         if (this.displayImportForm()) {
             this.displayImportForm(false);
@@ -59,6 +64,41 @@ class EncounterViewModel extends AbstractEncounterListViewModel {
             $(this.importFormId).collapse('show');
         }
         setTimeout(this.forceCardResize, DELAY.LONG);
+    }
+
+    sortBy(columnName) {
+        super.sortBy(columnName);
+
+        // We can't use the Sort Service to sort because of the encounter nesting.
+        // Though we still use it for managing UI state.
+        // The sort is done here.
+
+        const { field, direction } = this.sort();
+
+        const sorter = (left, right) => (
+            left[field]() == right[field]()
+            ? 0
+            : (
+                left[field]() > right[field]()
+                ? 1
+                : -1
+
+            )
+        );
+
+        const applySort = entities => {
+            if (direction === 'asc') {
+                entities.sort(sorter);
+            } else {
+                entities.reverse(sorter);
+            }
+
+            entities().forEach(entity => applySort(entity.children));
+        };
+
+        // Apply the sort at the top.
+        applySort(this.entities);
+
     }
 }
 
