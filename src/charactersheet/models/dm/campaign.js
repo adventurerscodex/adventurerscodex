@@ -17,6 +17,8 @@ export class Campaign extends KOModel {
 
     coreUuid = ko.observable(null);
     setting = ko.observable();
+    motif = ko.observable();
+    description = ko.observable();
     name = ko.observable();
     createdAt = ko.observable();
 
@@ -60,6 +62,12 @@ Campaign.validationConstraints = {
         },
         setting: {
             maxlength: 128
-        }
+        },
+        description: {
+            maxlength: 1000
+        },
+        motif: {
+            maxlength: 128
+        },
     }
 };

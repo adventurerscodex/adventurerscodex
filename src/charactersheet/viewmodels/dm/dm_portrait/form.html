@@ -39,6 +39,30 @@
                event: { blur: $component.reviewInput, invalid: $component.invalidate },
                attr: { ...$component.validation.Campaign.setting }">
     </div>
+    <div class="form-group col-xs-12 col-sm-6"
+        data-bind="with: campaign">
+      <label class="control-label">Motif</label>
+      <input class="form-control"
+          placeholder="Motif/Theme"
+          name="motif"
+          data-bind="value: motif,
+               event: { blur: $component.reviewInput, invalid: $component.invalidate },
+               attr: { ...$component.validation.Campaign.motif }">
+    </div>
+    <div class="form-group col-xs-12"
+        data-bind="with: campaign">
+      <label class="control-label">Description</label>
+      <textarea class="form-control"
+        placeholder="..."
+        rows="4"
+        name="description"
+        data-bind="
+          value: description,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.Campaign.description }
+        "
+      ></textarea>
+    </div>
     <!-- ko with: entity -->
     <div class="col-xs-12">
       <div class="row">
