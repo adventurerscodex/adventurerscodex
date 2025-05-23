@@ -3,11 +3,12 @@
   submit: $component.submit,
   with: entity,
 ">
-  <div class="card-title h4 text-left">
+  <div class="card-title h4 text-left mb-0 pb-0">
     <card-submit-actions params="{reset: $component.reset}"></card-submit-actions>
     Edit Encounter<br />
     <small>Rename it, or toggle sections.</small>
   </div>
+  <small>&nbsp;</small>
   <hr class="ac-table-header">
   <div class="ml-2 mr-2 mt-1 mb-2">
     <div class="form-group">
@@ -38,6 +39,31 @@
           attr: { ...$component.validation.location },
         "
       />
+    </div>
+    <div class="form-group">
+      <label for="encounter.location">
+        Goal
+      </label>
+      <input
+        type="text"
+        class="form-control"
+        data-bind="
+          value: objective,
+          event: { blur: $component.reviewInput, invalid: $component.invalidate },
+          attr: { ...$component.validation.objective },
+        "
+      />
+    </div>
+    <div class="form-group">
+      <input
+        type="checkbox"
+        class="mr-1"
+        id="encounter.complete"
+        data-bind="checked: isComplete"
+      />
+      <label for="encounter.complete">
+        Complete
+      </label>
     </div>
     <hr />
     <div class="h4">
