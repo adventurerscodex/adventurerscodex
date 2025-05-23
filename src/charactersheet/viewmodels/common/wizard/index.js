@@ -98,6 +98,9 @@ export class WizardViewModel extends ViewModel {
 
         this.campaignName = ko.observable();
         this.playerName = ko.observable();
+        this.setting = ko.observable();
+        this.motif = ko.observable();
+        this.description = ko.observable();
 
         //Static Data
 
@@ -106,6 +109,8 @@ export class WizardViewModel extends ViewModel {
         this.alignmentOptions = Fixtures.profile.alignmentOptions;
         this.backgroundOptions = Fixtures.profile.backgroundOptions;
         this.backpackOptions = Fixtures.wizardProfile.backpackOptions;
+        this.motifOptions = Fixtures.wizardProfile.motifOptions;
+        this.settingOptions = Fixtures.wizardProfile.settingOptions;
     }
 
     setUpSubscriptions() {
@@ -264,6 +269,9 @@ export class WizardViewModel extends ViewModel {
             params: {
                 campaign: {
                     name: this.campaignName(),
+                    setting: this.setting(),
+                    motif: this.motif(),
+                    description: this.description(),
                 },
                 playerName: this.playerName(),
                 profileImage: { type: 'email' },
