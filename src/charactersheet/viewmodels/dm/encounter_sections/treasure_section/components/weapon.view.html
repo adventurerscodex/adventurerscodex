@@ -3,6 +3,9 @@
   <div class="h3">
     <span data-bind="text: name"></span>
     <small data-bind="text: magicalModifierLabel"></small>
+    <!-- ko ifnot: autofillType() === 'none' -->
+    <small class="fa fa-star"></small>
+    <!-- /ko -->
   </div>
 
   <hr />
