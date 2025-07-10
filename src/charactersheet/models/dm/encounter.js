@@ -24,7 +24,7 @@ export class Encounter extends KOModel {
     notes = ko.observable();
     isComplete = ko.observable();
     completedAt = ko.observable();
-    objective = ko.observable();
+    goal = ko.observable();
 
     //Collapse Properties
     isOpen = ko.observable(false);
@@ -65,8 +65,8 @@ export class Encounter extends KOModel {
         this.completedAt() ? new Date(this.completedAt()).toLocaleDateString() : ''
     ));
 
-    hasObjective = ko.pureComputed(() => (
-        !!this.objective()
+    hasGoal = ko.pureComputed(() => (
+        !!this.goal()
     ));
 
     /**
@@ -137,9 +137,9 @@ Encounter.validationConstraints = {
             required: false,
             maxlength: 256
         },
-        objective: {
+        goal: {
             required: false,
-            maxlength: 500
+            maxlength: 256
         }
     },
     rules: {
@@ -151,9 +151,9 @@ Encounter.validationConstraints = {
             required: false,
             maxlength: 256
         },
-        objective: {
+        goal: {
             required: false,
-            maxlength: 500
+            maxlength: 256
         }
     }
 };

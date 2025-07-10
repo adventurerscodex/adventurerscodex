@@ -20,12 +20,12 @@
     data-bind=""
   >
     <i class="fa fa-trophy mr-1"></i>
-    <!-- ko if: hasObjective -->
-    <span data-bind="text: objective"></span>
+    <!-- ko if: hasGoal -->
+    <span data-bind="text: goal"></span>
     <!-- /ko -->
-    <!-- ko ifnot: hasObjective -->
+    <!-- ko ifnot: hasGoal -->
     <span class="text-muted">
-      Add a goal or objective for this encounter
+      Add a goal for this encounter
     </span>
     <!-- /ko -->
   </small>
