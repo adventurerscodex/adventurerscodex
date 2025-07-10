@@ -1,5 +1,4 @@
 import autoBind from 'auto-bind';
-import { debounce } from 'lodash';
 import { Encounter } from 'charactersheet/models/dm';
 import { AbstractEncounterListViewModel } from 'charactersheet/viewmodels/abstract';
 import ko from 'knockout';
@@ -75,16 +74,23 @@ class EncounterViewModel extends AbstractEncounterListViewModel {
 
         const { field, direction } = this.sort();
 
-        const sorter = (left, right) => (
-            left[field]() == right[field]()
-            ? 0
-            : (
-                left[field]() > right[field]()
-                ? 1
-                : -1
+        const sorter = (left, right) => {
+            const l = ko.unwrap(left[field]),
+                  r = ko.unwrap(right[field]);
 
-            )
-        );
+            if (r == l) {
+                return 0;
+            }
+            if (r === null) {
+                return 1;
+            }
+            if (l === null) {
+                return -1;
+            }
+
+            return l > r ? 1 : -1;
+
+        };
 
         const applySort = entities => {
             if (direction === 'asc') {
