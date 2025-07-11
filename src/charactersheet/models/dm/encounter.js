@@ -122,7 +122,7 @@ export class Encounter extends KOModel {
 
     markAsComplete = async () => {
         this.isComplete(true);
-        await this.save()
+        await this.save();
     }
 
 }

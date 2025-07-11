@@ -43,7 +43,7 @@
     <!-- /ko -->
     <!-- ko ifnot: $component.isLoading -->
     <!-- ko if: $component.elaboration -->
-    <p data-bind="text: $component.elaboration().description"></p>
+    <p data-bind="markdownPreview: $component.elaboration().description"></p>
     <p data-bind="text: $component.elaboration().quirk"></p>
     <!-- /ko -->
     <!-- ko ifnot: $component.elaboration -->

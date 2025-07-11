@@ -1,6 +1,6 @@
 <!-- Encounter Sections -->
 <!-- ko if: encounter -->
-<div class="card-title h4 text-left">
+<div class="card-title h4 text-left mb-0 pb-0">
   <back-button params="{ column: column }"></back-button>
   <span data-bind="text: encounter().name"></span><br />
   <!-- ko if: encounter().location -->
@@ -11,6 +11,7 @@
   <!--/ko -->
   <card-edit-actions params="{ flip: flip }"></card-edit-actions>
 </div>
+<small>&nbsp;</small>
 <hr class="ac-table-header">
 <!-- Encounter tabs -->
 

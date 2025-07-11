@@ -1,5 +1,4 @@
 import autoBind from 'auto-bind';
-import { debounce } from 'lodash';
 import { Encounter } from 'charactersheet/models/dm';
 import { AbstractEncounterListViewModel } from 'charactersheet/viewmodels/abstract';
 import ko from 'knockout';
@@ -22,6 +21,9 @@ class EncounterViewModel extends AbstractEncounterListViewModel {
         this.forceCardResize = params.forceCardResize;
 
         this.displayImportForm = ko.observable(false);
+        this.filtered = ko.observable(false);
+        this.sortAttribute = ko.observable();
+        this.sortAsc = ko.observable(true);
     }
 
     async load() {
@@ -50,6 +52,8 @@ class EncounterViewModel extends AbstractEncounterListViewModel {
         setTimeout(this.forceCardResize, DELAY.LONG);
     }
 
+    filteredAndSortedEntities = ko.pureComputed(() => this.entities());
+
     toggleShowImportForm() {
         if (this.displayImportForm()) {
             this.displayImportForm(false);
@@ -59,6 +63,48 @@ class EncounterViewModel extends AbstractEncounterListViewModel {
             $(this.importFormId).collapse('show');
         }
         setTimeout(this.forceCardResize, DELAY.LONG);
+    }
+
+    sortBy(columnName) {
+        super.sortBy(columnName);
+
+        // We can't use the Sort Service to sort because of the encounter nesting.
+        // Though we still use it for managing UI state.
+        // The sort is done here.
+
+        const { field, direction } = this.sort();
+
+        const sorter = (left, right) => {
+            const l = ko.unwrap(left[field]),
+                  r = ko.unwrap(right[field]);
+
+            if (r == l) {
+                return 0;
+            }
+            if (r === null) {
+                return 1;
+            }
+            if (l === null) {
+                return -1;
+            }
+
+            return l > r ? 1 : -1;
+
+        };
+
+        const applySort = entities => {
+            if (direction === 'asc') {
+                entities.sort(sorter);
+            } else {
+                entities.reverse(sorter);
+            }
+
+            entities().forEach(entity => applySort(entity.children));
+        };
+
+        // Apply the sort at the top.
+        applySort(this.entities);
+
     }
 }
 

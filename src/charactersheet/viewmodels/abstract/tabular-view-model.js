@@ -73,6 +73,14 @@ export class AbstractTabularViewModel {
             'name desc': {
                 field: 'name',
                 direction: 'desc'
+            },
+            'completedAt asc': {
+                field: 'completedAt',
+                direction: 'asc'
+            },
+            'completedAt desc': {
+                field: 'completedAt',
+                direction: 'desc'
             }
         };
     }
