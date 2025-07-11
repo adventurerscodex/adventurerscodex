@@ -1,6 +1,6 @@
 <!-- Encounter Sections -->
 <!-- ko if: encounter -->
-<div class="card-title h4 text-left">
+<div class="card-title h4 text-left mb-0 pb-0">
   <back-button params="{ column: column }"></back-button>
   <span data-bind="text: encounter().name"></span><br />
   <!-- ko if: encounter().location -->
@@ -11,8 +11,46 @@
   <!--/ko -->
   <card-edit-actions params="{ flip: flip }"></card-edit-actions>
 </div>
+<small>&nbsp;</small>
 <hr class="ac-table-header">
 <!-- Encounter tabs -->
+
+<div class="pl-3 pr-3" data-bind="with: encounter">
+  <small
+    class="d-block"
+    data-bind=""
+  >
+    <i class="fa fa-trophy mr-1"></i>
+    <!-- ko if: hasObjective -->
+    <span data-bind="text: objective"></span>
+    <!-- /ko -->
+    <!-- ko ifnot: hasObjective -->
+    <span class="text-muted">
+      Add a goal or objective for this encounter
+    </span>
+    <!-- /ko -->
+  </small>
+  <!-- ko if: isComplete -->
+  <small class="d-block">
+    <i class="fa fa-check-circle-o mr-1"></i>
+    Completed <span data-bind="text: completedOn"></span>
+  </small>
+  <!-- /ko -->
+  <!-- ko ifnot: isComplete -->
+  <button
+    class="btn btn-xs btn-primary text-center d-block mt-1"
+    style="width: 100%;"
+    data-bind="click: async () => await markAsComplete()"
+  >
+    <i class="fa fa-check-circle-o mr-1"></i>
+    Mark as Complete
+  </button>
+  <!-- /ko -->
+</div>
+
+<hr class="ac-table-header mt-2 mb-2" />
+
+<h4 class="ml-2">Sections</h4>
 <ul class="list-group master-list" role="tablist">
   <button
     class="list-group-item d-flex"

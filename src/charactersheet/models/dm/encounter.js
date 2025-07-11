@@ -22,6 +22,9 @@ export class Encounter extends KOModel {
     location = ko.observable();
     sections = ko.observableArray([]);
     notes = ko.observable();
+    isComplete = ko.observable();
+    completedAt = ko.observable();
+    objective = ko.observable();
 
     //Collapse Properties
     isOpen = ko.observable(false);
@@ -34,11 +37,17 @@ export class Encounter extends KOModel {
 
     id = ko.pureComputed(() => (this.uuid()));
 
-    displayName = ko.pureComputed(function() {
-        if (!ko.unwrap(self.name)) {
-            return 'Untitled Encounter';
+    cellContent = ko.pureComputed(() => {
+        const suffix = (
+            this.isComplete()
+            ? '<i class="fa fa-check-circle-o ml-1"></i>'
+            : '<i class="fa fa-circle-o ml-1"></i>'
+        );
+
+        if (!ko.unwrap(this.name)) {
+            return `<div class="d-flex" style="justify-content: space-between"><span>Untitled Encounter</span> ${suffix}</div>`;
         }
-        return this.name();
+        return `<div class="d-flex" style="justify-content: space-between"><span>${this.name()}</span> ${suffix}</div>`;
     });
 
     toggleIsOpen = async () => {
@@ -49,6 +58,15 @@ export class Encounter extends KOModel {
 
     arrowIconClass = ko.pureComputed(() => (
         this.isOpen() ? 'fa fa-caret-down' : 'fa fa-caret-right'
+    ));
+
+    // Convert the timestamp to a human readable date string.
+    completedOn = ko.pureComputed(() => (
+        this.completedAt() ? new Date(this.completedAt()).toLocaleDateString() : ''
+    ));
+
+    hasObjective = ko.pureComputed(() => (
+        !!this.objective()
     ));
 
     /**
@@ -101,6 +119,12 @@ export class Encounter extends KOModel {
         await this.ps.delete();
         Notifications.encounter.deleted.dispatch(this);
     }
+
+    markAsComplete = async () => {
+        this.isComplete(true);
+        await this.save();
+    }
+
 }
 
 Encounter.validationConstraints = {
@@ -112,6 +136,10 @@ Encounter.validationConstraints = {
         location: {
             required: false,
             maxlength: 256
+        },
+        objective: {
+            required: false,
+            maxlength: 500
         }
     },
     rules: {
@@ -122,6 +150,10 @@ Encounter.validationConstraints = {
         location: {
             required: false,
             maxlength: 256
+        },
+        objective: {
+            required: false,
+            maxlength: 500
         }
     }
 };

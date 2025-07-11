@@ -30,7 +30,7 @@
     role="button"
     data-bind="with: entity, click: $component.select"
   >
-    <span data-bind="html: name"></span>
+    <span data-bind="html: cellContent"></span>
     <!-- ko if: $data.badge -->
     <span class="badge" style="float:none;" data-bind="text: badge"></span>
     <!-- /ko -->

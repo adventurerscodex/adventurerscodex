@@ -1,19 +1,29 @@
 <div id="encounter-pane">
-  <div class="card-title h4">
+  <div class="card-title h4 mb-0 pb-0">
     Encounters<br />
     <small>
       Track Events and Places
     </small>
     <card-edit-actions params="{ flip: flip }" />
   </div>
-  <hr class="ac-table-header">
+  <div class="d-flex pl-2 pr-2" style="justify-content: space-between;">
+    <span role="button" data-bind="click: () => sortBy('name')">
+      <span data-bind="css: sortArrow('name')"></span>
+      <small>Name</small>
+    </span>
+    <span role="button" data-bind="click: () => sortBy('completedAt')">
+      <small>Complete</small>
+      <span data-bind="css: sortArrow('completedAt')"></span>
+    </span>
+  </div>
+  <hr class="ac-table-header mt-1">
   <!-- ko ifnot: loaded(), completeOn: 'render' -->
   <div class="loader-wrapper"><div class="loader"></div></div>
   <!-- /ko -->
   <!-- ko if: loaded(), completeOn: 'render' -->
   <nested-list params="
     elementId: 'encounter-view-list',
-    cells: entities,
+    cells: filteredAndSortedEntities,
     onload: forceCardResize,
     onselect: entity => {
       active(entity);
