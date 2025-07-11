@@ -1,5 +1,5 @@
 import autoBind from 'auto-bind';
-import { CoreManager, Notifications, Fixtures } from 'charactersheet/utilities';
+import { Notifications, Fixtures } from 'charactersheet/utilities';
 import { Encounter } from 'charactersheet/models/dm';
 import { AbstractEncounterFormViewModel } from 'charactersheet/viewmodels/abstract';
 import ko from 'knockout';
