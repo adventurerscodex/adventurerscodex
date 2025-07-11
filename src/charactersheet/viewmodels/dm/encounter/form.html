@@ -40,7 +40,7 @@
       />
     </div>
     <div class="form-group col col-sm-12">
-      <label for="encounter.location">
+      <label for="encounter.goal">
         Goal
       </label>
       <input
@@ -48,9 +48,9 @@
         class="form-control"
         placeholder="Find the sacred shrub"
         data-bind="
-          value: objective,
+          value: goal,
           event: { blur: $component.reviewInput, invalid: $component.invalidate },
-          attr: { ...$component.validation.objective },
+          attr: { ...$component.validation.goal },
         "
       />
     </div>
