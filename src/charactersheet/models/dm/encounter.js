@@ -1,4 +1,5 @@
 import { Notifications } from 'charactersheet/utilities';
+import { KOModel } from 'hypnos/lib/models/ko';
 import ko from 'knockout';
 
 /**
