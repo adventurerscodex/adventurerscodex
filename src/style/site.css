@@ -2250,6 +2250,10 @@ tr .panel {
   align-items: center;
 }
 
+.align-items-stretch {
+  align-items: stretch;
+}
+
 .pt-0 {
   padding-top: 0rem;
 }
