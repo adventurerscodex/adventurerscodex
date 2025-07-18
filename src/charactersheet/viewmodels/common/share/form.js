@@ -11,6 +11,7 @@ export class ShareKeyFormViewModel extends AbstractChildFormModel {
         autoBind(this);
 
         this.core = params.core;
+        this.userIsPatron = params.userIsPatron;
     }
 
     modelClass () {

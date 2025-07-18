@@ -17,6 +17,7 @@ export class ShareViewModel extends AbstractTabularViewModel {
         autoBind(this);
         this.modalStatus = params.modalStatus || ko.observable(false);
         this.core = params.core;
+        this.userIsPatron = params.userIsPatron;
     }
 
     closeModal() {

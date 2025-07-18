@@ -82,7 +82,11 @@
           </div>
           <div class="collapse" data-bind="attr: { id: `share-settings-${uuid()}` }">
             <div class="well">
-              <sharekey-form params="{ data: $data, core: $component.core }">
+              <sharekey-form params="{
+                data: $data,
+                core: $component.core,
+                userIsPatron: $component.userIsPatron,
+               }">
             </div>
           </div>
           <!-- /ko -->
