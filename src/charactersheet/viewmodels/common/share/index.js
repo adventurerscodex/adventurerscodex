@@ -18,6 +18,7 @@ export class ShareViewModel extends AbstractTabularViewModel {
         this.modalStatus = params.modalStatus || ko.observable(false);
         this.core = params.core;
         this.userIsPatron = params.userIsPatron;
+        this.setupClipboard();
     }
 
     closeModal() {
