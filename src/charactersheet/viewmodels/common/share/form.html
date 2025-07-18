@@ -1,0 +1,89 @@
+<h3 class="mt-0">
+  <i class="fa fa-gear"></i>&nbsp;
+  Share Link Settings
+</h3>
+<!-- ko if: $component.userIsPatron -->
+<p class="text-muted">
+  The following settings apply only to this share link. Other links for this
+  character/campaign might have other settings.
+</p>
+<!-- /ko -->
+<!-- ko ifnot: $component.userIsPatron -->
+<div class="dashed-border p-2 rounded text-center">
+  <div>
+    <b>Become a Patron to Customize Sharing Settings</b>
+  </div>
+  <a
+    href="https://www.patreon.com/bePatron?u=5313385"
+    target="_blank"
+    rel="noreferrer"
+    title="Patreon"
+  >
+    Check out our Patreon page &#8594;
+  </a>
+</div>
+<!-- /ko -->
+
+<form class="form-horizontal" data-bind="submit: $component.submit, with: entity">
+  <h4 class="mb-0">Access</h4>
+  <fieldset data-bind="attr: { disabled: !$component.userIsPatron() }">
+    <div class="radio">
+      <label>
+        <input type="radio" name="accessMode" value="private" data-bind="checked: accessMode">
+        Private
+      </label>
+    </div>
+    <small>Anyone with the link can access.</small>
+    <div class="radio">
+      <label>
+        <input type="radio" name="accessMode" value="restricted" data-bind="checked: accessMode">
+        Restricted
+      </label>
+    </div>
+    <small>Anyone with the link <i>and the password</i> can access.</small>
+    <!-- ko if: accessMode() === 'restricted' && !hasPassword() -->
+    <input
+      type="password"
+      class="form-control mt-1"
+      required
+      placeholder="Password"
+      data-bind="value: password"
+    />
+    <!-- /ko -->
+    <!-- ko if: accessMode() === 'restricted' && hasPassword() -->
+    <input
+      type="password"
+      class="form-control mt-1"
+      placeholder="Change Password"
+      data-bind="value: password"
+    />
+    <!-- /ko -->
+    <!-- ko if: $component.core().type.name() === 'dm' -->
+    <h4 class="mb-0">Content</h4>
+    <div class="radio">
+      <label>
+        <input type="radio" name="dataVisibilityMode" value="all" data-bind="checked: dataVisibilityMode">
+        DM Mode
+      </label>
+    </div>
+    <small>Include all data. This is suitable for sharing outside your party.</small>
+    <div class="radio">
+      <label>
+        <input type="radio" name="dataVisibilityMode" value="player" data-bind="checked: dataVisibilityMode">
+        Player Mode
+      </label>
+    </div>
+    <small>
+      Include only data that can be shown to players.
+      This will only include information pertaining to encounters marked as complete and will include data that can be pushed to the <span style="white-space: nowrap"><i class="fa fa-desktop"></i>&nbsp;Exhibit</span> as well as the names of NPCs and Monsters. For a full list of what is shown, <a href="https://adventurerscodex.com/dm.html#sharing">check out this page</a>.
+    </small>
+    <!-- /ko -->
+  </fieldset>
+  <!-- ko if: $component.userIsPatron -->
+  <div class="text-right">
+    <button class="btn btn-sm btn-secondary">
+      <i class="fa fa-save"></i>&nbsp;Save
+    </button>
+  </div>
+  <!-- /ko -->
+</form>

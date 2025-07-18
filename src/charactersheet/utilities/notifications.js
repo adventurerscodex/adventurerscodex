@@ -295,6 +295,12 @@ export var Notifications = {
         changed: new Signal()
     },
 
+    sharekey: {
+        added: new Signal(),
+        changed: new Signal(),
+        deleted: new Signal()
+    },
+
     skill: {
         added: new Signal(),
         changed: new Signal(),
