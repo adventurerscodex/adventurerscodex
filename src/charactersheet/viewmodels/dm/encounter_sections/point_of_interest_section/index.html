@@ -83,17 +83,19 @@
                   elementId: 'poi_list',
                   context: {
                     data: $data,
+                    viewMode: $component.viewMode,
                     encounter: $component.encounter,
                     fullScreen: $component.fullScreen,
                   }
                 }">
             <div class="front">
               <div>
-                <card-edit-actions params="{ flip: flip }"></card-edit-actions>
+                <card-edit-actions params="{ flip: flip, mode: context.viewMode }"></card-edit-actions>
               </div>
               <point-of-interest-view
                 params="
                   poi: context.data,
+                  viewMode: context.viewMode,
                   fullScreen: context.fullScreen,
                 "
               ></point-of-interest-view>

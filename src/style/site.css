@@ -2506,6 +2506,14 @@ tr .panel {
   position: relative;
 }
 
+.text-hover-only span {
+  display: none;
+}
+
+.text-hover-only:hover span{
+  display: inline;
+}
+
 @keyframes pulse {
 	0% {
 		transform: scale(0.95);

@@ -1,14 +1,21 @@
 <div class="row" data-bind="with: poi">
   <div class="col-xs-12">
+    <!-- ko if: $component.viewMode() !== 'exhibit' -->
     <h4 data-bind="text: name"></h4>
+    <!-- /ko -->
+    <!-- ko ifnot: $component.viewMode() !== 'exhibit' -->
+    <h4><!-- We need a blank header for the UI. -->&nbsp;</h4>
+    <!-- /ko -->
+    <!-- ko if: $component.viewMode() === 'all' -->
     <p class="text-muted" data-bind="visible: difficultyCheckValue() || difficultyCheckSkill()">
       DC <span data-bind="text: difficultyCheckValue"></span>&nbsp;
       <span data-bind="text: difficultyCheckSkill"></span>
     </p>
+    <!-- /ko -->
   </div>
   <div class="col-xs-12">
     <div class="d-flex">
-      <!-- ko if: description -->
+      <!-- ko if: description() && $component.viewMode() === 'all' -->
       <div class="hidden-xs hidden-sm d-flex-1">
         <label>Description</label>
         <div data-bind="markdownPreview: description"></div>
@@ -42,7 +49,9 @@
     <div data-bind="markdownPreview: description"></div>
   </div>
   <div class="col-xs-12" data-bind="visible: playerText">
+    <!-- ko if: description() && $component.viewMode() === 'all' -->
     <label>Read Aloud Text</label>
+    <!-- /ko -->
     <div data-bind="markdownPreview: playerText"></div>
   </div>
 </div>
