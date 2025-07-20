@@ -65,6 +65,56 @@ export var Fixtures = {
             image: 'https://app.adventurerscodex.com/images/sample-headshots/troll-head.png'
         }
     ],
+    defaultHeaderImages: [
+        {
+            name: '',
+            image: 'https://p.d20.photos/file/d20-photos/finalized-media/4f5a566a-122b-49bf-9ac3-4937708d822b-4f5a566a-122b-49bf-9ac3-4937708d822b_lg7a81.jpg'
+        },
+        {
+            name: '',
+            image: 'https://p.d20.photos/file/d20-photos/finalized-media/0f92476e-2a06-46e9-9c46-58474ca05d99-0f92476e-2a06-46e9-9c46-58474ca05d99_lgb65c.jpg'
+        },
+        {
+            name: '',
+            image: 'https://p.d20.photos/file/d20-photos/finalized-media/5ba7a985-f563-4470-bd61-b14795aa81f7-5ba7a985-f563-4470-bd61-b14795aa81f7_lg2f46.jpg'
+        },
+        {
+            name: '',
+            image: 'https://p.d20.photos/file/d20-photos/finalized-media/1a71a8ed-74fe-46f6-91f0-a2b62ae29fa6-1a71a8ed-74fe-46f6-91f0-a2b62ae29fa6_lg2142.jpg'
+        },
+        {
+            name: '',
+            image: 'https://p.d20.photos/file/d20-photos/finalized-media/1aa02929-2d43-423d-a529-018f27cd0d71-1aa02929-2d43-423d-a529-018f27cd0d71_lg64fa.jpg'
+        },
+        {
+            name: '',
+            image: 'https://p.d20.photos/file/d20-photos/finalized-media/6e153b6d-94e5-4232-8673-f914d31c0e49-6e153b6d-94e5-4232-8673-f914d31c0e49_lgd8dd.jpg'
+        },
+        {
+            name: '',
+            image: 'https://p.d20.photos/file/d20-photos/finalized-media/4458e08f-1694-440e-8e43-8d969d07ec52-4458e08f-1694-440e-8e43-8d969d07ec52_lg2ea5.jpg'
+        },
+        {
+            name: '',
+            image: 'https://p.d20.photos/file/d20-photos/finalized-media/b3e6e62d-653d-47ba-a224-f3476b94bdd5-b3e6e62d-653d-47ba-a224-f3476b94bdd5_lgcd0b.jpg'
+        },
+        {
+            name: '',
+            image: 'https://p.d20.photos/file/d20-photos/finalized-media/20097e1f-1490-48e4-9ecd-0585f6176a9a-20097e1f-1490-48e4-9ecd-0585f6176a9a_lgdd83.jpg'
+        },
+        {
+            name: '',
+            image: 'https://p.d20.photos/file/d20-photos/finalized-media/58a41894-afe2-4fbc-96fe-2fb7c0a98d58-58a41894-afe2-4fbc-96fe-2fb7c0a98d58_lg8831.jpg'
+        },
+        {
+            name: '',
+            image: 'https://p.d20.photos/file/d20-photos/finalized-media/56c62a9b-5342-4c53-b23f-0cac8843d2c6-56c62a9b-5342-4c53-b23f-0cac8843d2c6_lgc37a.jpg'
+        },
+        {
+            name: '',
+            image: 'https://p.d20.photos/file/d20-photos/finalized-media/05422d20-f39e-4e8f-a254-255281204f65-05422d20-f39e-4e8f-a254-255281204f65_lgce47.jpg'
+        },
+    ],
     general : {
         currencyDenominationList : [
             'PP', 'GP', 'SP', 'EP', 'CP'],

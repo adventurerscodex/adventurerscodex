@@ -1,43 +1,53 @@
-<div id="dm-portrait" data-bind="visible: show">
-  <flip-card params="{
-        elementId: 'dm-portrait',
-        defaultHeight: 150,
+<div data-bind="attr: { style: show() ? background : '' }">
+  <div
+    id="dm-portrait"
+    class="d-flex justify-content-center"
+    data-bind="visible: show"
+  >
+    <div class="col-xs-12 col-sm-10 col-md-9 position-relative bg-transparent pt-3 mt-2 mb-3 rounded">
+    <flip-card params="{
+          elementId: 'dm-portrait',
+          defaultHeight: 150,
+          context: { background: background },
+          }">
+      <div class="front">
+        <dm-portrait-view params="{
+         containerId: elementId,
+         show: showFront,
+         background: context.background,
+         forceCardResize: forceCardResize,
+         flip: flip
+       }">
+        </dm-portrait-view>
+      </div>
+      <div class="back rounded bg-white">
+        <dm-portrait-form params="{
+          containerId: elementId,
+          show: showBack,
+          forceCardResize: forceCardResize,
+          flip: flip
         }">
-    <div class="front">
-      <dm-portrait-view params="{
-       containerId: elementId,
-       show: showFront,
-       forceCardResize: forceCardResize,
-       flip: flip
-     }">
-      </dm-portrait-view>
+        </dm-portrait-form>
+      </div>
+    </flip-card>
     </div>
-    <div class="back">
-      <dm-portrait-form params="{
-        containerId: elementId,
-        show: showBack,
-        forceCardResize: forceCardResize,
-        flip: flip
-      }">
-      </dm-portrait-form>
-    </div>
-  </flip-card>
-</div>
-<div class="pull-right text-right" data-bind="visible: show">
-  <button
-    class="btn btn-xs btn-link"
-    data-bind="click: toggleShow"
-    role="button"
-  >
-    <i class="fa fa-chevron-up"></i>&nbsp;Hide
-  </button>
-</div>
-<div class="text-right" data-bind="hidden: show">
-  <button
-    class="btn btn-xs btn-link"
-    data-bind="click: toggleShow"
-    role="button"
-  >
-    <i class="fa fa-chevron-down"></i>&nbsp;Show
-  </button>
+  </div>
+  <div class="pull-right text-right" data-bind="visible: show">
+    <button
+      class="btn btn-xs btn-link"
+      data-bind="click: toggleShow"
+      role="button"
+    >
+      <i class="fa fa-chevron-up"></i>&nbsp;Hide
+    </button>
+  </div>
+  <div class="text-right" data-bind="hidden: show">
+    <button
+      class="btn btn-xs btn-link"
+      data-bind="click: toggleShow"
+      role="button"
+    >
+      <i class="fa fa-chevron-down"></i>&nbsp;Show
+    </button>
+  </div>
 </div>

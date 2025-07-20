@@ -16,7 +16,7 @@
 <!-- /ko -->
 <div id="content">
   <!-- Begin Nav -->
-  <nav class="navbar navbar-default navbar-static-top">
+  <nav class="navbar navbar-default navbar-static-top mb-0">
     <div class="container-fluid">
       <div style="padding-left: 5%; padding-right: 5%"
           class="col-xs-12 ">
@@ -87,6 +87,39 @@
   <!-- Chat Flyout -->
   <chat></chat>
 
+  <user-notifications></user-notifications>
+  <div class="container-fluid pl-0 pr-0">
+    <!-- ko if: shouldShowApp -->
+      <!-- ko if: selectedCore() && selectedCore().type.name() == 'character' -->
+      <character-root
+        params="activeCharacter: selectedCore"
+      ></character-root>
+      <!-- /ko -->
+      <!-- ko if: selectedCore() && selectedCore().type.name() == 'dm' -->
+      <dm-root params="activeCharacter: selectedCore"></dm-root>
+      <!-- /ko -->
+    <!-- /ko -->
+    <!-- ko if: shouldShowWizard -->
+    <wizard></wizard>
+    <!-- /ko -->
+    <!-- ko if: shouldShowPicker -->
+    <core-picker params="state: state"></core-picker>
+    <!-- /ko -->
+  </div>
+
+  <!-- Additional Core-Related Modals -->
+  <!-- ko if: shouldShowApp -->
+    <!-- Switch Characters Modal -->
+    <!-- ko if: characterAndGamesModalStatus -->
+    <characters params="modalStatus: characterAndGamesModalStatus"></characters>
+    <!-- /ko -->
+    <!-- Share Modal -->
+    <!-- ko if: shareModalStatus -->
+    <share params="modalStatus: shareModalStatus"></share>
+    <!-- /ko -->
+  <!-- /ko -->
+</div>
+
   <!-- Session expiry modal -->
   <div class="modal fade"
       tabindex="-1"
@@ -139,38 +172,7 @@
       </div>
     </div>
   </div>
-  <user-notifications></user-notifications>
-  <div class="container-fluid main pl-3 pr-3">
-    <!-- ko if: shouldShowApp -->
-      <!-- ko if: selectedCore() && selectedCore().type.name() == 'character' -->
-      <character-root
-        params="activeCharacter: selectedCore"
-      ></character-root>
-      <!-- /ko -->
-      <!-- ko if: selectedCore() && selectedCore().type.name() == 'dm' -->
-      <dm-root params="activeCharacter: selectedCore"></dm-root>
-      <!-- /ko -->
-    <!-- /ko -->
-    <!-- ko if: shouldShowWizard -->
-    <wizard></wizard>
-    <!-- /ko -->
-    <!-- ko if: shouldShowPicker -->
-    <core-picker params="state: state"></core-picker>
-    <!-- /ko -->
-  </div>
 
-  <!-- Additional Core-Related Modals -->
-  <!-- ko if: shouldShowApp -->
-    <!-- Switch Characters Modal -->
-    <!-- ko if: characterAndGamesModalStatus -->
-    <characters params="modalStatus: characterAndGamesModalStatus"></characters>
-    <!-- /ko -->
-    <!-- Share Modal -->
-    <!-- ko if: shareModalStatus -->
-    <share params="modalStatus: shareModalStatus"></share>
-    <!-- /ko -->
-  <!-- /ko -->
-</div>
 <!-- Footer -->
 <div id="footer" class="footer mt-3 pt-3 pb-3">
   <div class="container">

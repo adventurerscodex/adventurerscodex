@@ -63,9 +63,12 @@
         "
       ></textarea>
     </div>
-    <!-- ko with: entity -->
     <div class="col-xs-12">
       <div class="row">
+
+        <!-- Profile Image -->
+        <!-- ko with: entity -->
+
         <div class="col-sm-2 hidden-xs">
           <div style="margin-top: 15%;" class="circular-profile center-block"
               data-bind="attr: {
@@ -90,8 +93,8 @@
             </div>
           </div>
         </div>
-        <div class="col-sm-10">
-          <div class="form-group col-xs-12 col-lg-6">
+        <div class="col-xs-12 col-sm-4 pr-2 border-right">
+          <div class="form-group">
             <!-- Image URL -->
             <label class="control-label"> Image Link </label>
             <div class="input-group">
@@ -117,8 +120,6 @@
               "
             />
             <!-- /ko -->
-          </div>
-          <div class="form-group  col-xs-12 col-lg-6">
             <!-- Image URL -->
             <label class="control-label"> Gravatar Email </label>
             <div class="input-group">
@@ -142,20 +143,92 @@
             <!-- Picker URL -->
             <label class="control-label">
               <input type="radio"
+                  class="mr-1"
                   name="imageType"
                   value="picker"
-                  data-bind="checked: $component.imageType"> Choose a default </label>
+                  data-bind="checked: $component.imageType">Choose a default </label>
             <small class="help-block">Choose from a set of default images.</small>
           </div>
+          <!-- ko if: $component.imageType() === 'picker' -->
+          <image-picker params="
+            cells: $component.stockImages,
+            selectedCells: $component.selectedStockImage,
+            multiselect: false
+          "></image-picker>
+          <!-- /ko -->
         </div>
+
+        <!-- /ko -->
+
+        <!-- Header Image -->
+        <!-- ko with: campaign -->
+
+        <div class="col-xs-12 col-sm-4">
+          <div class="form-group">
+            <!-- Header Image URL -->
+            <label class="control-label"> Header Image Link </label>
+            <div class="input-group">
+              <span class="input-group-addon"
+                  style="line-height: 0.75">
+                <input type="radio"
+                    name="headerImageType"
+                    value="url"
+                    data-bind="checked: $component.headerImageType">
+              </span>
+              <input
+                type="url"
+                class="form-control"
+                data-bind="
+                  event: { blur: $component.reviewInput, invalid: $component.invalidate },
+                  value: $component.headerImageType() === 'url' ? headerImageUrl() : '',
+                  enable: $component.headerImageType() === 'url'
+                "
+              >
+            </div>
+            <small class="help-block">Paste in a link to your header image. Make sure it's the full image link though.</small>
+            <d20photos-help />
+            <!-- ko if: $component.headerImageType() === 'url' -->
+            <media-manager
+              params="
+                forceCardResize: $parents[1].forceCardResize,
+                setImageUrl: headerImageUrl,
+                tabId: 'dm_portrait',
+              "
+            />
+            <!-- /ko -->
+          </div>
+          <div class="form-group">
+            <!-- Default Picker URL -->
+            <label class="control-label">
+              <input type="radio"
+                  class="mr-1"
+                  name="headerImageType"
+                  value="picker"
+                  data-bind="checked: $component.headerImageType">Choose a default </label>
+            <small class="help-block">Choose from a set of default images.</small>
+          </div>
+          <!-- ko if: $component.headerImageType() === 'picker' -->
+          <image-picker params="
+            cells: $component.stockHeaderImages,
+            selectedCells: $component.selectedStockHeaderImage,
+            multiselect: false,
+            style: 'thumbnail',
+          "></image-picker>
+          <!-- /ko -->
+        </div>
+        <div class="col-sm-2 hidden-xs">
+          <div class="center-block pl-2 pr-2">
+            <div class="image-upload-preview text-center">
+              <!-- ko if: headerImageUrl -->
+              <img class="img-thumbnail" data-bind="attr: {src: headerImageUrl}">
+              <!-- /ko -->
+            </div>
+          </div>
+        </div>
+
+        <!-- /ko -->
       </div>
     </div>
-    <!-- ko if: $component.imageType() === 'picker' -->
-    <div class="col-xs-12">
-      <image-picker params="cells: $component.stockImages, selectedCells: $component.selectedStockImage, multiselect: false"></image-picker>
-    </div>
-    <!-- /ko -->
-    <!-- /ko -->
     <form-submit-actions params="{reset: $component.reset}"></form-submit-actions>
   </div>
   <!-- /ko -->

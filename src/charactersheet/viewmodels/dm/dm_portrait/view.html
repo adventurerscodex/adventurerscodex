@@ -1,14 +1,13 @@
 <card-edit-actions params="{ flip: $component.flip }"></card-edit-actions>
-<div id="characters"
-    class="container-fluid characters-module-style">
-  <div class="row" style="padding-right: 15px"> <!-- padding for edit button -->
+<div id="characters">
+  <div class="d-flex justify-content-center" style="gap: 2rem;"> <!-- padding for edit button -->
     <!-- ko ifnot: loaded(), completeOn: 'render' -->
-    <div style="hieight: 100px" class="loader-wrapper"><div style="width: 75px; height:75px; margin: 25px auto" class="loader"></div></div>
+    <div style="height: 100px" class="loader-wrapper"><div style="width: 75px; height:75px; margin: 25px auto" class="loader"></div></div>
     <!-- /ko -->
     <!-- ko if: loaded(), completeOn: 'render' -->
-    <div class="col-sm-2 col-xs-12">
+    <div class="ml-3 mr-3">
       <div
-        class="circular-profile no-padding center-block bordered"
+        class="circular-profile no-padding center-block bordered bg-white"
         data-bind="attr: { css: imageBorderClass }"
       >
         <div class="image-upload-preview text-center" data-bind="with: profileImage">
@@ -40,46 +39,44 @@
         ></div>
       </div>
     </div>
-    <div class="col-sm-10 col-xs-12 characters-player-name">
-      <div class="row">
-        <div class="col-xs-12 col-md-12 text-center-xs text-left-sm">
-          <div class="row" data-bind="with: $component.core">
-            <div class="col-xs-12 h3">
-              <span id="nameLabel" data-bind="text: $component.campaign().name"></span>
-              <!-- ko if: playerName -->
-              <small>by <span data-bind="text: playerName"></span></small>
-              <!-- /ko -->
-            </div>
-            <!-- ko with: $component.campaign -->
-            <div class="col-xs-12 col-sm-8">
-                <div>
-                  <span data-bind="text: setting" />
-                  <!-- ko if: motif -->
-                  (<span data-bind="text: motif" />)
-                  <!-- /ko -->
-                  <!-- ko if: description -->
-                  <hr class="mt-2 mb-1"/>
-                  <div
-                    style="font-size: small;"
-                    data-bind="text: description"
-                  ></div>
-                  <hr class="mt-1 mb-2"/>
-                  <!-- /ko -->
-                </div>
-            </div>
-            <!-- /ko -->
-          </div>
-        </div>
-        <div class="col-xs-12">
-          <party-status-line></party-status-line>
-        </div>
-        <div class="col-xs-12" data-bind="if: timeSinceLabel">
-          <small data-bind="text: timeSinceLabel" />
-        </div>
-        <div class="col-xs-12">
-          <party-status></party-status>
-        </div>
+    <div>
+      <!-- ko with: $component.core -->
+      <div class="h3 mt-0 mb-0">
+        <span id="nameLabel" data-bind="text: $component.campaign().name"></span>
+        <!-- ko if: playerName -->
+        <small>by <span data-bind="text: playerName"></span></small>
+        <!-- /ko -->
       </div>
+      <!-- ko with: $component.campaign -->
+      <div>
+        <span data-bind="text: setting" />
+        <!-- ko if: motif -->
+        (<span data-bind="text: motif" />)
+        <!-- /ko -->
+        <!-- ko if: description -->
+        <hr class="mt-2 mb-1"/>
+        <div
+          style="font-size: small;"
+          data-bind="text: description"
+        ></div>
+        <hr class="mt-1 mb-2"/>
+        <!-- /ko -->
+      </div>
+      <!-- /ko -->
+      <!-- /ko -->
+      <div>
+        <party-status-line></party-status-line>
+      </div>
+      <!-- ko if: timeSinceLabel -->
+      <small class="d-block" data-bind="text: timeSinceLabel"></small>
+      <!-- /ko -->
+      <div>
+        <party-status></party-status>
+      </div>
+    </div>
+    <div class="d-flex-1">
+      <!-- Spacer -->
+      &nbsp;
     </div>
     <!-- /ko -->
   </div>

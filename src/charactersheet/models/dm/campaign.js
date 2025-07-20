@@ -20,6 +20,7 @@ export class Campaign extends KOModel {
     motif = ko.observable();
     description = ko.observable();
     name = ko.observable();
+    headerImageUrl = ko.observable();
     createdAt = ko.observable();
 
     summary = function() {
