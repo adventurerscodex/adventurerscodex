@@ -13,6 +13,7 @@ export class CharacterPortraitViewModel {
     constructor(params) {
         this.loaded = ko.observable(false);
         this.forceCardResize = params.forceCardResize;
+        this.background = params.background
         this.flip = params.flip;
         this.subscriptions = [];
         this.core = ko.observable(new Core());
@@ -34,6 +35,7 @@ export class CharacterPortraitViewModel {
         await this.profileImage().load({uuid: key});
         this.loaded(true);
         this.forceCardResize();
+        this.updateBackground();
     }
 
     refresh = async () => {
@@ -41,6 +43,7 @@ export class CharacterPortraitViewModel {
         this.core().importValues(CoreManager.activeCore().exportValues());
         await this.campaign().load({uuid: key});
         await this.profileImage().load({uuid: key});
+        this.updateBackground();
     };
 
     setUpSubscriptions = () => {
@@ -106,6 +109,25 @@ export class CharacterPortraitViewModel {
         return Math.round((now-day.getTime())/(1000*60*60*24));
     };
 
+    updateBackground() {
+        this.background(this._headerBackgroundStyle());
+    }
+
+    _headerBackgroundStyle() {
+        if (!this.campaign().headerImageUrl()) {
+            return;
+        }
+
+        return `
+          background-image:
+            linear-gradient(to bottom, transparent, white),
+            url('${this.campaign().headerImageUrl()}');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+        `;
+    }
+
     // Events
 
     partyDidChange() {
@@ -122,6 +144,7 @@ export class CharacterPortraitViewModel {
 
     campaignDidUpdate = (campaign) => {
         this.campaign().importValues(campaign.exportValues());
+        this.updateBackground();
     };
 }
 

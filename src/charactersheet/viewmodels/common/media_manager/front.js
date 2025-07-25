@@ -6,7 +6,7 @@ import {
 } from 'charactersheet/utilities';
 import { ViewModel } from 'charactersheet/viewmodels/abstract';
 import { UserServiceManager } from 'charactersheet/services';
-import { observable, components, pureComputed, computed } from 'knockout';
+import { observable, components, pureComputed } from 'knockout';
 import template from './front.html';
 
 export class MediaManagerViewModel extends ViewModel {

@@ -13,6 +13,7 @@ export function ImagePickerComponentViewModel(params) {
     self.cells = params.cells || ko.observableArray();
     self.selectedCells = params.selectedCells || ko.observableArray();
     self.multiselect = params.multiselect == undefined ? true: params.multiselect;
+    self.style = params.style === undefined ? 'circle': params.style;
 
     self.selectCell = function(cell) {
         if (self.selectedCells().indexOf(cell) == -1) {
@@ -32,12 +33,14 @@ export function ImagePickerComponentViewModel(params) {
      * Returns the correct active css for a given cell.
      */
     self.isActiveCSS = function(cell) {
+        const base = ` img img-${ko.unwrap(self.style)} img-padded`;
+
         var selected = self.selectedCells();
         if (selected && selected.indexOf(cell) > -1) {
-            return 'active';
+            return 'active' + base;
         }
-        return '';
-    };
+        return base;
+    }
 
     // Clear the selected cells when the cells list changes.
     self.cells.subscribe(() => {
@@ -51,7 +54,7 @@ ko.components.register('image-picker', {
         <div data-bind="foreach: cells" class="row row-padded">\
           <div class="col-md-3 col-xs-6 text-center col-padded">\
             <img data-bind="attr: { src: image }, css: $parent.isActiveCSS($data), click: $parent.selectCell"\
-                width="80" height="80" class="img img-circle img-padded" /><br />\
+                width="80" height="80" style="height: 80px; width: 80px; object-fit: cover;" /><br />\
             <p class="text-muted" data-bind="text: name"></p>\
           </div>\
         </div>\

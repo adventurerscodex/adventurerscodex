@@ -339,12 +339,13 @@ small {
 }
 
 .circular-profile {
-  width: 84px;
-  height: 84px;
+  width: 80px;
+  height: 80px;
   border-radius: 42px;
   -webkit-border-radius: 42px;
   -moz-border-radius: 42px;
   overflow:hidden;
+  background-color: #ccc;
 }
 
 .no-padding {
@@ -527,6 +528,10 @@ textarea.dark-area {
 
 .img-circle.active {
   border-radius: 50%;
+  border: 5px solid #18bc9c;
+}
+
+.img-thumbnail.active {
   border: 5px solid #18bc9c;
 }
 
@@ -2172,7 +2177,7 @@ tr .panel {
 }
 
 .patron-circle {
-  border: 4px solid transparent;
+  border: 3px solid transparent;
 }
 
 .patron-circle.gold {
@@ -2242,6 +2247,10 @@ tr .panel {
   justify-content: space-between;
 }
 
+.justify-content-start {
+  justify-content: start;
+}
+
 .justify-content-center {
   justify-content: center;
 }
@@ -2270,6 +2279,10 @@ tr .panel {
   padding-top: 1.5rem;
 }
 
+.pt-4 {
+  padding-top: 2rem;
+}
+
 .pb-0 {
   padding-bottom: 0rem;
 }
@@ -2284,6 +2297,10 @@ tr .panel {
 
 .pb-3 {
   padding-bottom: 1.5rem;
+}
+
+.pb-4 {
+  padding-bottom: 2rem;
 }
 
 .pl-0 {
@@ -2302,6 +2319,10 @@ tr .panel {
   padding-left: 1.5rem;
 }
 
+.pl-4 {
+  padding-left: 2rem;
+}
+
 .pr-0 {
   padding-right: 0rem;
 }
@@ -2316,6 +2337,10 @@ tr .panel {
 
 .pr-3 {
   padding-right: 1.5rem;
+}
+
+.pr-4 {
+  padding-right: 2rem;
 }
 
 .p-auto {
@@ -2346,6 +2371,14 @@ tr .panel {
   margin-left: 1.5rem !important;
 }
 
+.ml-4 {
+  margin-left: 2rem !important;
+}
+
+.ml-5 {
+  margin-left: 2.5rem !important;
+}
+
 .mr-auto {
   margin-right: auto !important;
 }
@@ -2360,6 +2393,14 @@ tr .panel {
 
 .mr-3 {
   margin-right: 1.5rem !important;
+}
+
+.mr-4 {
+  margin-right: 2rem !important;
+}
+
+.mr-5 {
+  margin-right: 2.5rem !important;
 }
 
 .mt-auto {
@@ -2458,6 +2499,10 @@ tr .panel {
   border: 2px solid var(--border-color);
 }
 
+.bordered-transparent {
+  border: 2px solid rgba(255, 255, 255, 0.4);
+}
+
 .rounded {
   border-radius: 4px;
 }
@@ -2484,6 +2529,14 @@ tr .panel {
 
 .bg-danger {
   background-color: #925d07;
+}
+
+.bg-white {
+  background-color: white;
+}
+
+.bg-transparent {
+  background-color: rgba(255, 255, 255, 0.65);
 }
 
 .text-white {

@@ -1,6 +1,5 @@
-
 <div id="companions-pane">
-  <div class="h4 card-title"> Companions <br />
+  <div class="h4 card-title mt-0"> Companions <br />
     <small>A companion could be a follower, a Ranger&apos;s beast companion, or a familiar. You can also track your Druid's wildshape or Polymorph shapes.</small>
   </div>
   <table class="table table-responsive table-ac-bordered table-hover">
@@ -16,7 +15,7 @@
         AC
         <span data-bind="css: sortArrow('armorClass')"></span>
       </th>
-       <th 
+       <th
           data-bind="click: ()=> {sortBy('maxHitPoints');}"
           class="col-xs-4 col-sm-8 text-center">
           Hit Points
@@ -35,8 +34,8 @@
       <tr
         class="clickable companionRow"
         data-bind="attr: { id: `#companion_row_${uuid()}` }">
-        <td 
-          data-toggle="collapse" 
+        <td
+          data-toggle="collapse"
           data-bind="attr: {
           'data-target': `#companion_list_${uuid()}`,
           }">
@@ -59,11 +58,11 @@
             </div>
           </div>
         </td>
-        <td 
-          data-toggle="collapse" 
+        <td
+          data-toggle="collapse"
           data-bind="
           attr: { 'data-target': `#companion_list_${uuid()}` }">
-          <div 
+          <div
             id="ArmorClassShield"
             class="defenseShield"
             style="
@@ -77,22 +76,22 @@
         </td>
         <td>
           <div class="row d-flex">
-            <div data-toggle="collapse" data-bind="attr: { 'data-target': `#companion_list_${uuid()}` }" 
+            <div data-toggle="collapse" data-bind="attr: { 'data-target': `#companion_list_${uuid()}` }"
               class="hidden-xs col-sm-4 col-md-6 col-lg-8" style="padding: 6px;">
               <div style="padding: 10px"
               data-bind="barProgress: $component.mapToChart($data)"> </div>
             </div>
-            <div  
+            <div
               class="col-xs-12 visible-xs hidden-md hidden-lg text-center">
               <span data-toggle="collapse" data-bind="attr: { 'data-target': `#companion_list_${uuid()}` }, text: usesDisplay()"></span>
-              <mini-health-input 
+              <mini-health-input
               params="id: uuid,
               valueInput: damage,
               max: maxHitPoints,
               onChange: ()=>{$component.onUsedChange($data)}"></mini-health-input>
             </div>
             <div class="hidden-xs col-sm-4 col-md-3 col-lg-2" style="padding: 6px;">
-              <mini-health-input 
+              <mini-health-input
                 params="id: uuid,
                 valueInput: damage,
                 max: maxHitPoints,
@@ -237,7 +236,7 @@
                         </td>
                       </tr>
                     </tbody>
-                    
+
                   </table>
                 </div>
                 <div class="col-xs-12 col-md-6">
@@ -285,7 +284,7 @@
                 <div class="col-xs-12 col-md-6" data-bind="description">
                   <label>Description</label>
                   <div data-bind="markdownPreview: description"></div>
-                </div>              
+                </div>
               </div>
             </div>
             <div class="back">

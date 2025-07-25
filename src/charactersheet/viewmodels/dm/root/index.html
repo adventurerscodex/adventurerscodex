@@ -1,5 +1,4 @@
 <dm-portrait></dm-portrait>
-<party-manager></party-manager>
 <div class="navbar-header tab-actions"><button type="button"
           class="btn btn-block navbar-toggle collapsed"
           data-toggle="collapse"
@@ -12,7 +11,7 @@
     <span class="icon-bar"></span>
   </button>
 </div>
-<div class="navbar-collapse collapse" id="dm-tab-list">
+<div class="navbar-collapse collapse main pl-3 pr-3" id="dm-tab-list">
   <ul class="nav nav-tabs tabs">
     <li role="presentation" id="tabEncountersLink" data-bind="click: activateEncounterTab">
       <a href="#encounter" aria-controls="encounter-tab" role="tab" data-toggle="tab" class="tab-subtext">
@@ -58,7 +57,7 @@
     </li>
   </ul>
 </div>
-<div class="tab-content">
+<div class="tab-content main pl-3 pr-3">
   <div role="tabpanel" class="tab-pane" id="encounter" data-bind="css: encounterTabStatus">
     <encounter params="{tabId: 'encounter-tab'}"></encounter>
   </div>

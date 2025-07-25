@@ -11,6 +11,7 @@ class CharacterPortraitModel {
         this.resize = params.resize;
         this.flip = params.flip;
         this.show = ko.observable(true);
+        this.background = ko.observable();
     }
 
     toggleShow() {
