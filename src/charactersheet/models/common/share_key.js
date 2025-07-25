@@ -11,7 +11,7 @@ export class ShareKey extends KOModel {
     coreUuid = ko.observable(null);
     link = ko.observable(null);
     accessMode = ko.observable('private');
-    dataMode = ko.observable('all');
+    dataVisibilityMode = ko.observable('all');
     password = ko.observable(null);
     createdAt = ko.observable(null);
 

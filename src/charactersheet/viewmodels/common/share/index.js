@@ -30,7 +30,6 @@ export class ShareViewModel extends AbstractTabularViewModel {
     }
 
     setupClipboard() {
-        // Clipboard initialization.
         const clipboard = new Clipboard('.copy', {
             container: document.getElementById('shareModal')
         });
