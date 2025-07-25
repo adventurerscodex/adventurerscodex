@@ -2,7 +2,6 @@ import autoBind from 'auto-bind';
 import {
     Fixtures,
     Notifications,
-    Utility
 } from 'charactersheet/utilities';
 import { AbstractEncounterTabularViewModel } from 'charactersheet/viewmodels/abstract';
 import { PartyService, SortService } from 'charactersheet/services/common';
@@ -27,6 +26,7 @@ class PointOfInterestSectionViewModel extends AbstractEncounterTabularViewModel 
     }
 
     fullScreen = ko.observable(false);
+    viewMode = ko.observable('all');
     shouldShowExhibitButton = ko.observable(!!PartyService.party);
 
     modelClass() {

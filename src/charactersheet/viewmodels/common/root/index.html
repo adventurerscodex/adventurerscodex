@@ -57,7 +57,7 @@
                   href="#">
                 <i class="fa fa-address-card"></i>&nbsp;&nbsp;Characters &amp; Games </a>
             </li>
-            <!-- ko if: selectedCore() && selectedCore().type.name() != 'dm' -->
+            <!-- ko if: selectedCore() -->
             <li>
               <a data-bind="click: toggleShareModal"
                   href="#">
@@ -115,7 +115,7 @@
     <!-- /ko -->
     <!-- Share Modal -->
     <!-- ko if: shareModalStatus -->
-    <share params="modalStatus: shareModalStatus"></share>
+    <share params="core: selectedCore, modalStatus: shareModalStatus, userIsPatron: userIsPatron"></share>
     <!-- /ko -->
   <!-- /ko -->
 </div>
@@ -172,7 +172,7 @@
       </div>
     </div>
   </div>
-
+</div>
 <!-- Footer -->
 <div id="footer" class="footer mt-3 pt-3 pb-3">
   <div class="container">

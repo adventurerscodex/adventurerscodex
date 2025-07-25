@@ -2255,6 +2255,10 @@ tr .panel {
   align-items: center;
 }
 
+.align-items-stretch {
+  align-items: stretch;
+}
+
 .pt-0 {
   padding-top: 0rem;
 }
@@ -2549,6 +2553,14 @@ tr .panel {
 
 .position-relative {
   position: relative;
+}
+
+.text-hover-only span {
+  display: none;
+}
+
+.text-hover-only:hover span{
+  display: inline;
 }
 
 @keyframes pulse {

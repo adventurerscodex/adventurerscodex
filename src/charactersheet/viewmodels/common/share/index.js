@@ -1,33 +1,36 @@
+import Clipboard from 'clipboard';
+import { ShareKey } from 'charactersheet/models/common';
 import {
     CoreManager,
     Notifications
 } from 'charactersheet/utilities';
-import Clipboard from 'clipboard';
-import { ShareKey } from 'charactersheet/models/common';
+import { AbstractTabularViewModel } from 'charactersheet/viewmodels/abstract';
+
+import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './index.html';
+import './form';
 
-export function ShareViewModel(params) {
-    var self = this;
+export class ShareViewModel extends AbstractTabularViewModel {
+    constructor(params) {
+        super(params);
+        autoBind(this);
+        this.modalStatus = params.modalStatus || ko.observable(false);
+        this.core = params.core;
+        this.userIsPatron = params.userIsPatron;
+        this.setupClipboard();
+    }
 
-    self.shareKeys = ko.observableArray([]);
-    self.modalStatus = params.modalStatus || ko.observable(false);
-
-    self.load = async () => {
-        self.shareKeys(await self.getShareKeys());
+    closeModal() {
+        this.modalStatus(false);
     };
 
-    self.unload = function() {
-        self.modalStatus(false);
-    };
+    modelClass () {
+        return ShareKey;
+    }
 
-    self.closeModal = function() {
-        self.modalStatus(false);
-    };
-
-    self.setupClipboard = function() {
-        // Clipboard initialization.
-        var clipboard = new Clipboard('.copy', {
+    setupClipboard() {
+        const clipboard = new Clipboard('.copy', {
             container: document.getElementById('shareModal')
         });
 
@@ -37,23 +40,19 @@ export function ShareViewModel(params) {
         });
     };
 
-    self.getShareKeys = async function() {
-        var key = CoreManager.activeCore().uuid();
-        const response = await ShareKey.ps.list({coreUuid: key});
-        return response.objects;
-    };
-
-    self.deleteLink = async function(link) {
+    deleteLink = async function(link) {
         await link.ps.delete();
-        self.shareKeys(await self.getShareKeys());
+        this.entities(this.entities().filter(({ uuid }) => (
+            ko.unwrap(uuid) !== ko.unwrap(link.uuid)
+        )));
     };
 
-    self.createSharableLink = async function() {
-        var key = CoreManager.activeCore().uuid();
+    async createSharableLink() {
+        const key = CoreManager.activeCore().uuid();
         let sharableKey = new ShareKey();
         sharableKey.coreUuid(key);
         const newKey = await sharableKey.ps.create();
-        self.shareKeys.push(newKey.object);
+        this.entities.push(newKey.object);
     };
 }
 
