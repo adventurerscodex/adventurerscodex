@@ -13,13 +13,14 @@ export class CharacterPortraitViewModel {
     constructor(params) {
         this.loaded = ko.observable(false);
         this.forceCardResize = params.forceCardResize;
+        this.background = params.background
         this.flip = params.flip;
         this.subscriptions = [];
         this.core = ko.observable(new Core());
         this.profile = ko.observable(new Profile());
         this.otherStats = ko.observable(new OtherStats());
         this.profileImage = ko.observable(new ProfileImage());
-        this.isConnectedToParty = ko.observable(!!PartyService.party);
+        this.party = ko.observable(PartyService.party);
         this.user = UserServiceManager.sharedService().user;
 
         this.imageHeight = 80;
@@ -36,6 +37,7 @@ export class CharacterPortraitViewModel {
         await this.profileImage().load({uuid: key});
         this.loaded(true);
         this.forceCardResize();
+        this.updateBackground();
     }
 
     refresh = async () => {
@@ -44,7 +46,10 @@ export class CharacterPortraitViewModel {
         await this.profile().load({uuid: key});
         await this.otherStats().load({uuid: key});
         await this.profileImage().load({uuid: key});
+        this.updateBackground();
     };
+
+    isConnectedToParty = ko.pureComputed(() => !!this.party());
 
     imageDidUpdate = (image) => {
         this.profileImage().importValues(image.exportValues());
@@ -105,8 +110,30 @@ export class CharacterPortraitViewModel {
         this.isConnectedToParty() ? 'success' : 'failure'
     ));
 
+    updateBackground() {
+        this.background(this._headerBackgroundStyle());
+    }
+
+    _headerBackgroundStyle() {
+        if (!this.party().campaign.headerImageUrl) {
+            return;
+        }
+
+        return `
+          background-image:
+            linear-gradient(to bottom, transparent, white),
+            url('${this.party().campaign.headerImageUrl}');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+        `;
+    }
+
+    // Events
+
     partyDidChange() {
-        this.isConnectedToParty(!!PartyService.party);
+        this.party(PartyService.party);
+        this.updateBackground();
     }
 }
 

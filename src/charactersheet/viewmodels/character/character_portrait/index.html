@@ -1,25 +1,35 @@
-<div id="character-portrait">
-  <flip-card params="{
+<div data-bind="attr: { style: background }">
+  <div
+    id="character-portrait"
+    class="d-flex justify-content-center"
+  >
+    <div class="col-xs-12 col-sm-10 col-md-9 position-relative bg-transparent pt-3 mt-2 mb-3 rounded bordered-transparent">
+      <flip-card params="{
         elementId: 'character-portrait',
         defaultHeight: 150,
-        }">
-    <div class="front">
-      <character-portrait-view params="{
-       containerId: elementId,
-       show: showFront,
-       forceCardResize: forceCardResize,
-       flip: flip
-     }">
-      </character-portrait-view>
-    </div>
-    <div class="back">
-      <character-portrait-form params="{
-        containerId: elementId,
-        show: showBack,
-        forceCardResize: forceCardResize,
-        flip: flip
+        context: { background: background },
       }">
-      </character-portrait-form>
+        <div class="front">
+          <character-portrait-view params="{
+           containerId: elementId,
+           show: showFront,
+           forceCardResize: forceCardResize,
+           background: context.background,
+           flip: flip
+         }">
+          </character-portrait-view>
+        </div>
+        <div class="back">
+          <character-portrait-form params="{
+            containerId: elementId,
+            show: showBack,
+            forceCardResize: forceCardResize,
+            flip: flip
+          }">
+          </character-portrait-form>
+        </div>
+      </flip-card>
+      <party-manager></party-manager>
     </div>
-  </flip-card>
+  </div>
 </div>

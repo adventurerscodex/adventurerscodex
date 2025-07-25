@@ -4,32 +4,33 @@
     class="d-flex justify-content-center"
     data-bind="visible: show"
   >
-    <div class="col-xs-12 col-sm-10 col-md-9 position-relative bg-transparent pt-3 mt-2 mb-3 rounded">
-    <flip-card params="{
-          elementId: 'dm-portrait',
-          defaultHeight: 150,
-          context: { background: background },
+    <div class="col-xs-12 col-sm-10 col-md-9 position-relative bg-transparent pt-3 mt-2 mb-3 rounded bordered-transparent">
+      <flip-card params="{
+            elementId: 'dm-portrait',
+            defaultHeight: 150,
+            context: { background: background },
+            }">
+        <div class="front">
+          <dm-portrait-view params="{
+           containerId: elementId,
+           show: showFront,
+           background: context.background,
+           forceCardResize: forceCardResize,
+           flip: flip
+         }">
+          </dm-portrait-view>
+        </div>
+        <div class="back rounded bg-white">
+          <dm-portrait-form params="{
+            containerId: elementId,
+            show: showBack,
+            forceCardResize: forceCardResize,
+            flip: flip
           }">
-      <div class="front">
-        <dm-portrait-view params="{
-         containerId: elementId,
-         show: showFront,
-         background: context.background,
-         forceCardResize: forceCardResize,
-         flip: flip
-       }">
-        </dm-portrait-view>
-      </div>
-      <div class="back rounded bg-white">
-        <dm-portrait-form params="{
-          containerId: elementId,
-          show: showBack,
-          forceCardResize: forceCardResize,
-          flip: flip
-        }">
-        </dm-portrait-form>
-      </div>
-    </flip-card>
+          </dm-portrait-form>
+        </div>
+      </flip-card>
+      <party-manager></party-manager>
     </div>
   </div>
   <div class="pull-right text-right" data-bind="visible: show">

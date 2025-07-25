@@ -1,5 +1,6 @@
 import { Core, ProfileImage } from 'charactersheet/models/common';
 import { CoreManager, Fixtures, Notifications } from 'charactersheet/utilities';
+import { PartyService } from 'charactersheet/services/common/account/party_service';
 import { AbstractFormModel } from 'charactersheet/viewmodels/abstract';
 import { Campaign } from 'charactersheet/models/dm';
 import autoBind from 'auto-bind';
@@ -159,6 +160,10 @@ export class CampaignPortraitFormModel extends AbstractFormModel {
         CoreManager.activeCore().playerName(this.core().playerName());
         this.selectedStockImage([]);
         Notifications.campaign.playerName.changed.dispatch(this.core());
+
+        // Poke the party to notify of any out-of-band changes
+        // like the header image changing that needs refresh.
+        PartyService.updatePresence();
     }
 
     validation = {
