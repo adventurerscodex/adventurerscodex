@@ -115,7 +115,7 @@ export class CharacterPortraitViewModel {
     }
 
     _headerBackgroundStyle() {
-        if (!this.party().campaign.headerImageUrl) {
+        if (!this.party() || !this.party().campaign.headerImageUrl) {
             return;
         }
 

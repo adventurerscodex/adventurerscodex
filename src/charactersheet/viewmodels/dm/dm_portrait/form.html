@@ -180,7 +180,7 @@
                 class="form-control"
                 data-bind="
                   event: { blur: $component.reviewInput, invalid: $component.invalidate },
-                  value: $component.headerImageType() === 'url' ? headerImageUrl() : '',
+                  value: $component.headerImageType() === 'url' ? headerImageUrl : '',
                   enable: $component.headerImageType() === 'url'
                 "
               >

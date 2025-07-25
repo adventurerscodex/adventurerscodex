@@ -33,7 +33,7 @@ export function ImagePickerComponentViewModel(params) {
      * Returns the correct active css for a given cell.
      */
     self.isActiveCSS = function(cell) {
-        const base = `img img-${ko.unwrap(self.style)} img-padded`;
+        const base = ` img img-${ko.unwrap(self.style)} img-padded`;
 
         var selected = self.selectedCells();
         if (selected && selected.indexOf(cell) > -1) {

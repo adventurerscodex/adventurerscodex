@@ -49,7 +49,7 @@ export class CampaignPortraitFormModel extends AbstractFormModel {
         await this.campaign().load({uuid: CoreManager.activeCore().uuid()});
         await this.core().importValues(CoreManager.activeCore().exportValues());
         this.selectedStockImage([]);
-        this.selectedStockImage([]);
+        this.selectedStockHeaderImage([]);
         this.configureImages();
         this.configureHeaderImages();
     }
@@ -73,6 +73,16 @@ export class CampaignPortraitFormModel extends AbstractFormModel {
             if (stockImage) {
                 this.selectedStockImage().push(stockImage);
                 this.imageType('picker');
+            }
+        }
+
+        this.headerImageType('url');
+        if (this.campaign().headerImageUrl()) {
+            const stockImage = find(this.stockHeaderImages(), {'image': this.campaign().headerImageUrl()});
+            if (stockImage) {
+                console.log(stockImage)
+                this.selectedStockHeaderImage.push(stockImage);
+                this.headerImageType('picker');
             }
         }
     }
@@ -122,7 +132,7 @@ export class CampaignPortraitFormModel extends AbstractFormModel {
         if (type === 'picker') {
             this.entity().type('url');
         } else {
-            this.entity().type(this.imageType());
+            this.entity().type(this.headerImageType());
         }
         if (type === 'picker' && !this.showStockImages()) {
             this.showStockImages(true);

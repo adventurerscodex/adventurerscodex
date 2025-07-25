@@ -339,13 +339,13 @@ small {
 }
 
 .circular-profile {
-  width: 84px;
-  height: 84px;
+  width: 80px;
+  height: 80px;
   border-radius: 42px;
   -webkit-border-radius: 42px;
   -moz-border-radius: 42px;
   overflow:hidden;
-  background: #ccc;
+  background-color: #ccc;
 }
 
 .no-padding {
@@ -528,6 +528,10 @@ textarea.dark-area {
 
 .img-circle.active {
   border-radius: 50%;
+  border: 5px solid #18bc9c;
+}
+
+.img-thumbnail.active {
   border: 5px solid #18bc9c;
 }
 
@@ -2173,7 +2177,7 @@ tr .panel {
 }
 
 .patron-circle {
-  border: 2px solid transparent;
+  border: 3px solid transparent;
 }
 
 .patron-circle.gold {
