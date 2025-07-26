@@ -41,10 +41,15 @@ export function DMRootViewModel() {
     self.partyTabImage = partyTabImage;
     self.exhibitTabImage = exhibitTabImage;
     self.initiativeTrackerTabImage = initiativeTabImage;
+    self.settingsWellState = ko.observable(false);
 
     self.subscriptions = [];
 
     //UI Methods
+
+    self.activeCampaign = ko.pureComputed(() => {
+        return CoreManager.activeCore();
+    });
 
     self.playerSummary = ko.pureComputed(() => {
         var key = CoreManager.activeCore().uuid();
@@ -75,31 +80,31 @@ export function DMRootViewModel() {
     // Tab statuses
 
     self.encounterTabStatus = ko.pureComputed(() => {
-        return self._tabIsVisible('encounter');
+        return self.tabIsVisible('encounter');
     });
 
     self.mapsTabStatus = ko.pureComputed(() => {
-        return self._tabIsVisible('maps');
+        return self.tabIsVisible('maps');
     });
 
     self.dmscreenTabStatus = ko.pureComputed(() => {
-        return self._tabIsVisible('dmscreen');
+        return self.tabIsVisible('dmscreen');
     });
 
     self.notesTabStatus = ko.pureComputed(() => {
-        return self._tabIsVisible('notes');
+        return self.tabIsVisible('notes');
     });
 
     self.partyTabStatus = ko.pureComputed(() => {
-        return self._tabIsVisible('party');
+        return self.tabIsVisible('party');
     });
 
     self.exhibitTabStatus = ko.pureComputed(() => {
-        return self._tabIsVisible('exhibit');
+        return self.tabIsVisible('exhibit');
     });
 
     self.initiativeTrackerTabStatus = ko.pureComputed(() => {
-        return self._tabIsVisible('initiative');
+        return self.tabIsVisible('initiative');
     });
 
     self.activateEncounterTab = () => {
@@ -107,7 +112,7 @@ export function DMRootViewModel() {
     };
 
     self.activateMapsTab = () => {
-        self._setActiveTab('maps');
+        self._setActiveTab('mapsImages');
     };
 
     self.activateDmScreenTab = () => {
@@ -129,6 +134,16 @@ export function DMRootViewModel() {
     self.activateInitiativeTrackerTab = () => {
         self._setActiveTab('initiative');
     };
+
+    // Settings
+
+    self.toggleSettingsWell = () => {
+        self.settingsWellState(!self.settingsWellState());
+    };
+
+    self.settingsArrowIconClass = ko.pureComputed(() => {
+        return self.settingsWellState() ? 'fa fa-caret-up' : 'fa fa-caret-down';
+    });
 
     //Public Methods
 
@@ -162,19 +177,30 @@ export function DMRootViewModel() {
 
     //Private Methods
 
-    self._tabIsVisible = (tabName) => {
-        if (self.playerType().visibleTabs.indexOf(tabName) > -1) {
-            return self.activeTab() === tabName ? 'active' : '';
-        } else {
+    self.tabIsVisible = (tabName) => {
+        // This tab is not in the list of approved tabs for this core type.
+        if (self.playerType().visibleTabs.indexOf(tabName) === -1) {
             return 'hidden';
         }
+
+        // This tab has been hidden by the user settings
+        const settingName = `show${tabName.toLowerCase()}Tab`;
+        const settingKey = Object.keys(self.activeCampaign().settings()).filter(key => (
+            key.toLowerCase() === settingName.toLowerCase()
+        ))[0];
+        if (settingKey !== undefined && !self.activeCampaign().settings()[settingKey]()) {
+            return 'hidden';
+        }
+
+        // This tab is visible, determine if it is active.
+        return self.activeTab() === tabName ? 'active' : '';
     };
 
-    self._updateCurrentNode = (node, success) => {
+    self._updateCurrentNode = (node, _) => {
         self.currentPartyNode(node);
     };
 
-    self._removeCurrentNode = (node, success) => {
+    self._removeCurrentNode = (_, __) => {
         self.currentPartyNode(null);
     };
 
