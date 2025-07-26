@@ -14,5 +14,6 @@ export * from './party_status';
 export * from './patron_of_the_day';
 export * from './root';
 export * from './share';
+export * from './settings';
 export * from './user_notification';
 export * from './wizard';

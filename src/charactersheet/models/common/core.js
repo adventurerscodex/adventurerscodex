@@ -7,7 +7,7 @@ export class Core extends KOModel {
     static __skeys__ = ['core'];
 
     static mapping = {
-        include: []
+        include: ['allowedOptions']
     };
 
     profileImage = ko.observable();
@@ -15,6 +15,7 @@ export class Core extends KOModel {
     name = ko.observable();
     createdAt = ko.observable();
     isFavorite = ko.observable();
+    settings = ko.observable();
 
     title = ko.pureComputed(() => `${this.name()}`);
 

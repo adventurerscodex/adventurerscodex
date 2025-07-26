@@ -12,58 +12,118 @@
     <span class="icon-bar"></span>
   </button>
 </div>
+<div role="presentation"
+     class="secondary-nav visible-xs">
+  <button class="btn btn-sm btn-secondary"
+          id="settingsMobileButton"
+          data-toggle="collapse"
+          data-bind="click: toggleSettingsWell"
+          data-target="#settingsCollapse"
+          aria-expanded="false"
+          aria-controls="settingsCollapse">
+    <i class="fa fa-lg fa-gear"></i>
+    <span class="sr-only">Settings</span>
+    <i data-bind="css: settingsArrowIconClass"
+       aria-hidden="true"></i>
+  </button>
+</div>
+<div class="navbar-header tab-actions"><button type="button"
+          class="btn btn-block navbar-toggle collapsed"
+          data-toggle="collapse"
+          data-target="#descriptionTab"
+          aria-expanded="false"
+          aria-controls="navbar">
+    <span class="sr-only">Toggle navigation</span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+</div>
 <div class="navbar-collapse collapse" id="dm-tab-list">
   <ul class="nav nav-tabs tabs">
+    <!-- ko if: activeCampaign().settings().showEncounterTab -->
     <li role="presentation" id="tabEncountersLink" data-bind="click: activateEncounterTab">
       <a href="#encounter" aria-controls="encounter-tab" role="tab" data-toggle="tab" class="tab-subtext">
         <img class="tab-icon" data-bind="attr: { src: encounterTabImage }"></img></br>
         <span class="text-center" id="tabEncountersSpan"><small>Encounters</small></span>
       </a>
     </li>
+    <!-- /ko -->
+    <!-- ko if: activeCampaign().settings().showMapsImagesTab -->
     <li role="presentation" id="tabMapsLink" data-bind="click: activateMapsTab">
       <a href="#maps" aria-controls="maps" role="tab" data-toggle="tab" class="tab-subtext">
         <img class="tab-icon" data-bind="attr: { src: mapsTabImage }"></img></br>
         <span class="text-center" id="tabMapsSpan"><small>Maps &amp; Images</small></span>
       </a>
     </li>
+    <!-- /ko -->
+    <!-- ko if: activeCampaign().settings().showDmscreenTab -->
     <li role="presentation" id="tabScreenLink" data-bind="click: activateDmScreenTab">
       <a href="#dmscreen" aria-controls="dmscreen-tab" role="tab" data-toggle="tab" class="tab-subtext">
         <img class="tab-icon" data-bind="attr: { src: dmScreenTabImage }"></img></br>
         <span class="text-center" id="tabScreenSpan"><small>Screen</small></span>
       </a>
     </li>
+    <!-- /ko -->
+    <!-- ko if: activeCampaign().settings().showNotesTab -->
     <li role="presentation" id="tabNotesLink" data-bind="click: activateNotesTab">
       <a href="#notes" aria-controls="notes" role="tab" data-toggle="tab" class="tab-subtext">
         <img class="tab-icon" data-bind="attr: { src: notesTabImage }"></img></br>
         <span class="text-center" id="tabNotesSpan"><small>Notes</small></span>
       </a>
     </li>
+    <!-- /ko -->
+    <!-- ko if: activeCampaign().settings().showPartyTab -->
     <li role="presentation" id="tabPartyLink" data-bind="click: activatePartyTab">
       <a href="#party" aria-controls="party-tab" role="tab" data-toggle="tab" class="tab-subtext">
         <img class="tab-icon" data-bind="attr: { src: partyTabImage }"></img></br>
         <span class="text-center" id="tabPartySpan"><small>Party</small></span>
       </a>
     </li>
+    <!-- /ko -->
+    <!-- ko if: activeCampaign().settings().showExhibitTab -->
     <li role="presentation" id="tabExhibitLink" data-bind="click: activateExhibitTab">
       <a href="#exhibit" aria-controls="exhibit-tab" role="tab" data-toggle="tab" class="tab-subtext">
         <img class="tab-icon" data-bind="attr: { src: exhibitTabImage }"></img></br>
         <span class="text-center" id="tabExhibitSpan"><small>Exhibit</small></span>
       </a>
     </li>
+    <!-- /ko -->
+    <!-- ko if: activeCampaign().settings().showInitiativeTab -->
     <li role="presentation" id="tabInitiativeTrackerLink" data-bind="click: activateInitiativeTrackerTab">
       <a href="#initiative" aria-controls="initiative-tracker-tab" role="tab" data-toggle="tab" class="tab-subtext">
         <img class="tab-icon" data-bind="attr: { src: initiativeTrackerTabImage }"></img></br>
         <span class="text-center" id="tabInitiativeTrackerSpan"><small>Initiative</small></span>
       </a>
     </li>
+    <!-- /ko -->
+    <li role="presentation" class="secondary-nav hidden-xs">
+      <button
+        class="btn btn-sm btn-secondary"
+        id="settingsCollapseButton"
+        data-toggle="collapse"
+        data-bind="click: toggleSettingsWell"
+        data-target="#settingsCollapse"
+        aria-expanded="false"
+        aria-controls="settingsCollapse"
+      >
+        <i class="fa fa-lg fa-gear"></i>
+        <span class="sr-only">Settings</span>
+        <i data-bind="css: settingsArrowIconClass" aria-hidden="true"></i>
+      </button>
+    </li>
   </ul>
 </div>
 <div class="tab-content">
+  <settings params="
+    core: activeCampaign,
+    isOpen: settingsWellState
+  "></settings>
   <div role="tabpanel" class="tab-pane" id="encounter" data-bind="css: encounterTabStatus">
     <encounter params="{tabId: 'encounter-tab'}"></encounter>
   </div>
   <!-- End Encounters Tab -->
-  <div role="tabpanel" class="tab-pane" id="maps" data-bind="css: mapsTabStatus">
+  <div role="tabpanel" class="tab-pane" id="mapsImages" data-bind="css: mapsTabStatus">
     <campaign-maps-and-images></campaign-maps-and-images>
   </div>
   <!-- End Maps Tab -->

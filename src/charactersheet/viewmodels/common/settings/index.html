@@ -1,0 +1,33 @@
+<div class="collapse" data-bind="well: { open: isOpen }">
+  <div class="well well-no-padding well-top-shadow">
+    <h3 class="mt-0">
+      Settings
+    </h3>
+    <form data-bind="submit: save">
+      <fieldset data-bind="enable: isActivePatron, with: core().settings">
+        <h4>Show/Hide Tabs</h4>
+        <p>
+          Uncheck boxes below to hide tabs you're not using.
+        </p>
+        <!-- ko foreach: $component.SETTINGS_TABS -->
+        <!-- ko if: $parent[$data] !== undefined -->
+        <div class="checkbox">
+          <label>
+            <input
+              type="checkbox"
+              data-bind="checked: $parent[$data]"
+            >
+            <span data-bind="text: $component.getSettingName($data)"></span>
+          </label>
+        </div>
+        <!-- /ko -->
+        <!-- /ko -->
+        <div class="text-right">
+          <button type="submit" class="btn btn-sm btn-primary">
+            <i class="fa fa-save mr-1"></i>Save
+          </button>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</div>
