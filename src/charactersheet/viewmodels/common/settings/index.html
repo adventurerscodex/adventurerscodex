@@ -3,6 +3,21 @@
     <h3 class="mt-0">
       Settings
     </h3>
+    <!-- ko ifnot: isActivePatron -->
+    <div class="alert alert-warning text-center text-muted">
+      <div>
+        <b>Become a patron to change these settings</b>
+      </div>
+      <a
+        href="https://www.patreon.com/bePatron?u=5313385"
+        target="_blank"
+        rel="noreferrer"
+        title="Patreon"
+      >
+        Check out our Patreon page &#8594;
+      </a>
+    </div>
+    <!-- /ko -->
     <form data-bind="submit: save">
       <fieldset data-bind="enable: isActivePatron, with: core().settings">
         <h4>Show/Hide Tabs</h4>
