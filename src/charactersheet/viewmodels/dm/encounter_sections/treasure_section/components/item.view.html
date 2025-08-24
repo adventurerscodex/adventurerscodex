@@ -1,6 +1,9 @@
 <!-- ko with: entity.value -->
 <div class="h3">
   <span data-bind="text: name"></span>&nbsp;
+  <!-- ko ifnot: autofillType() === 'none' -->
+  <small class="fa fa-star"></small>
+  <!-- /ko -->
 </div>
 
 <hr />

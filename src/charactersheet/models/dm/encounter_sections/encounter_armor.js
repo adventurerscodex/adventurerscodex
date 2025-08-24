@@ -43,6 +43,7 @@ export class EncounterArmor extends KOModel {
     stealth = ko.observable('');
     description = ko.observable('');
     equipped = ko.observable(false);
+    autofillType = ko.observable();
 
     acLabel = ko.pureComputed(() => {
         if (this.armorClass()) {
@@ -111,6 +112,18 @@ export class EncounterArmor extends KOModel {
         let treasure = pick(params, EncounterArmor.mapping.include);
         treasure.value = pick(params, EncounterArmor.armorFields);
         return treasure;
+    };
+
+    includeInAutoComplete = ko.pureComputed(() => (
+        this.autofillType() === 'self'
+    ));
+
+    toggleAutoCompleteStatus = () => {
+        this.autofillType(
+            this.includeInAutoComplete()
+            ? 'none'
+            : 'self'
+        )
     };
 }
 

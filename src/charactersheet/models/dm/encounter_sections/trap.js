@@ -46,6 +46,7 @@ export class Trap extends KOModel {
     dynamicElements = ko.observable();
     constantElements = ko.observable();
     isActive = ko.observable(true);
+    autofillType = ko.observable();
 
     /* UI Methods */
 
@@ -111,6 +112,18 @@ export class Trap extends KOModel {
             || this.constantElements()
         );
     });
+
+    includeInAutoComplete = ko.pureComputed(() => (
+        this.autofillType() === 'self'
+    ));
+
+    toggleAutoCompleteStatus = () => {
+        this.autofillType(
+            this.includeInAutoComplete()
+            ? 'none'
+            : 'self'
+        )
+    }
 
     // Helpers
 

@@ -42,6 +42,7 @@ export class EncounterMagicItem extends KOModel {
     usedCharges = ko.observable(0);
     weight = ko.observable(0);
     description = ko.observable('');
+    autofillType = ko.observable();
     SHORT_DESCRIPTION_MAX_LENGTH = 100;
     DESCRIPTION_MAX_LENGTH = 200;
 
@@ -73,6 +74,18 @@ export class EncounterMagicItem extends KOModel {
         let treasure = pick(params, EncounterMagicItem.mapping.include);
         treasure.value = pick(params, EncounterMagicItem.magicItemFields);
         return treasure;
+    };
+
+    includeInAutoComplete = ko.pureComputed(() => (
+        this.autofillType() === 'self'
+    ));
+
+    toggleAutoCompleteStatus = () => {
+        this.autofillType(
+            this.includeInAutoComplete()
+            ? 'none'
+            : 'self'
+        )
     };
 }
 

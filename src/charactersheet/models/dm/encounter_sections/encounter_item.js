@@ -37,6 +37,7 @@ export class EncounterItem extends KOModel {
     weight = ko.observable(0);
     cost = ko.observable(0);
     currencyDenomination = ko.observable('');
+    autofillType = ko.observable();
 
     SHORT_DESCRIPTION_MAX_LENGTH = 100;
     DESCRIPTION_MAX_LENGTH = 200;
@@ -97,6 +98,18 @@ export class EncounterItem extends KOModel {
     totalWeightLabel = ko.pureComputed(() => {
         return  this.totalWeight() >= 0 ? this.totalWeight() + ' lbs.' : '0 lbs.';
     }, this);
+
+    includeInAutoComplete = ko.pureComputed(() => (
+        this.autofillType() === 'self'
+    ));
+
+    toggleAutoCompleteStatus = () => {
+        this.autofillType(
+            this.includeInAutoComplete()
+            ? 'none'
+            : 'self'
+        )
+    };
 }
 
 

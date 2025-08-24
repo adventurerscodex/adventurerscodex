@@ -1,4 +1,4 @@
-import { DataRepository } from 'charactersheet/utilities';
+import { CoreManager, DataRepository } from 'charactersheet/utilities';
 import { AbstractChildEncounterFormModel } from 'charactersheet/viewmodels/abstract';
 import ko from 'knockout';
 import { get } from 'lodash';
@@ -26,8 +26,12 @@ export class AbstractTreasureFormViewModel extends AbstractChildEncounterFormMod
         return newEntity;
     }
 
-    populate = (label, value) => {
-        const item = DataRepository[this.prePopSource][label];
+    populate = async (label, value) => {
+        const items = await DataRepository.listAll(
+            this.prePopSource,
+            CoreManager.activeCore().uuid(),
+        );
+        const item = items.filter(item => item.name === label)[0];
         this.entity().value().importValues(item);
         this.showDisclaimer(true);
         this.forceCardResize();

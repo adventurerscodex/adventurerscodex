@@ -15,7 +15,7 @@ export class Monster extends KOModel {
     ];
 
     static mapping = {
-        include: ['coreUuid', 'encounterUuid', 'uuid', 'name', 'size', 'type', 'alignment', 
+        include: ['coreUuid', 'encounterUuid', 'uuid', 'name', 'size', 'type', 'alignment',
             'armorClass', 'hitPoints', 'speed', 'savingThrows',
             'skills', 'senses', 'damageVulnerabilities', 'damageImmunities', 'damageResistances',
             'conditionImmunities', 'languages', 'challenge', 'experience', 'description',
@@ -47,6 +47,7 @@ export class Monster extends KOModel {
     playerText = ko.observable();
     isExhibited = ko.observable(false);
     description = ko.observable();
+    autofillType = ko.observable();
 
     // UI Stuff
 
@@ -69,7 +70,6 @@ export class Monster extends KOModel {
     };
 
     modifierLabel = (score) => {
-        let modifier = '+ 0';
         let bonusNumber = parseInt(this.modifier(score));
         if (bonusNumber && !isNaN(bonusNumber)) {
             if (bonusNumber < 0) {
@@ -84,6 +84,10 @@ export class Monster extends KOModel {
         Utility.string.createDirectDropboxLink(this.sourceUrl())
     ));
 
+    includeInAutoComplete = ko.pureComputed(() => (
+        this.autofillType() === 'self'
+    ));
+
     // Public Methods
 
     findAbilityScoreByName = function(name) {
@@ -95,6 +99,14 @@ export class Monster extends KOModel {
         });
         return foundScore;
     };
+
+    toggleAutoCompleteStatus = () => {
+        this.autofillType(
+            this.includeInAutoComplete()
+            ? 'none'
+            : 'self'
+        )
+    }
 
     // Helpers
 

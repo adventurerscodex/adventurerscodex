@@ -1,6 +1,11 @@
 <div class="row" data-bind="with: trap">
   <div class="col-xs-12">
-    <h4 data-bind="text: name"></h4>
+    <div class="h4">
+      <span data-bind="text: name"></span>
+      <!-- ko ifnot: autofillType() === 'none' -->
+      <small class="fa fa-star"></small>
+      <!-- /ko -->
+    </div>
     <small class="text-muted" data-bind="visible: level">
       Level&nbsp;<span data-bind="text: level"</span>,
       <span data-bind="text: nameLabel"></span>

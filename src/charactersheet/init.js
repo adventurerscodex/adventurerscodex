@@ -25,7 +25,6 @@ import {
 import $ from 'jquery';
 import { AuthenticationToken } from 'charactersheet/models/common/authentication_token';
 import Clipboard from 'clipboard';
-import { DELAY } from 'charactersheet/constants';
 
 import { Hypnos } from 'hypnos';
 import { Settings } from 'charactersheet/settings';
@@ -116,22 +115,8 @@ export var init = function(viewModel) {
     window.Hypnos = Hypnos;
 
     // Import static data
-    $(() => {
-        Settings.srdDataRepositoryLocations.forEach(function(location, idx, _) {
-            setTimeout(()=> {$.ajax({
-                url: location.url,
-                dataType: 'json',
-                async: true,
-                success: function(data) {
-                    DataRepository[location.key] = data.values;
-                    if (location.key === 'features') {
-                        data.values.map(function(item, idx, _) {
-                            DataRepository[location.key][item.displayName] = item;
-                        });
-                    }
-                }
-            });}, DELAY.LONG);
-        });
+    ko.tasks.schedule(async () => {
+        await DataRepository.initialize();
     });
 
 };
