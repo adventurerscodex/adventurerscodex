@@ -66,6 +66,7 @@ export function CharacterRootViewModel(params) {
     self.isConnectedAndInAParty = ko.observable(false);
     self.currentPartyNode = ko.observable(null);
     self.wellState = ko.observable(false);
+    self.settingsWellState = ko.observable(false);
 
     /* Services */
 
@@ -149,12 +150,24 @@ export function CharacterRootViewModel(params) {
         self._setActiveTab('exhibit');
     };
 
+    // Actions
+
     self.toggleWellOpen = () => {
         self.wellState(!self.wellState());
     };
 
     self.arrowIconClass = ko.pureComputed(() => {
         return self.wellState() ? 'fa fa-caret-up' : 'fa fa-caret-down';
+    });
+
+    // Settings
+
+    self.toggleSettingsWell = () => {
+        self.settingsWellState(!self.settingsWellState());
+    };
+
+    self.settingsArrowIconClass = ko.pureComputed(() => {
+        return self.settingsWellState() ? 'fa fa-caret-up' : 'fa fa-caret-down';
     });
 
     /* Public Methods */
@@ -172,30 +185,67 @@ export function CharacterRootViewModel(params) {
         self.proficiencyService.init();
         self.armorClassService.init();
 
-        //Subscriptions
-        HotkeysService.registerHotkey('1', self.activateStatsTab);
-        HotkeysService.registerHotkey('2', self.activateSkillsTab);
-        HotkeysService.registerHotkey('3', self.activateSpellsTab);
-        HotkeysService.registerHotkey('4', self.activateEquipmentTab);
-        HotkeysService.registerHotkey('5', self.activateInventoryTab);
-        HotkeysService.registerHotkey('6', self.activateCompanionsTab);
-        HotkeysService.registerHotkey('7', self.activateNotesTab);
-        HotkeysService.registerHotkey('8', self.activatePartyTab);
-        HotkeysService.registerHotkey('9', self.activateExhibitTab);
+        // Subscriptions
+        HotkeysService.registerHotkey('1', () => self.activateTabByAllowedIndex(0));
+        HotkeysService.registerHotkey('2', () => self.activateTabByAllowedIndex(1));
+        HotkeysService.registerHotkey('3', () => self.activateTabByAllowedIndex(2));
+        HotkeysService.registerHotkey('4', () => self.activateTabByAllowedIndex(3));
+        HotkeysService.registerHotkey('5', () => self.activateTabByAllowedIndex(4));
+        HotkeysService.registerHotkey('6', () => self.activateTabByAllowedIndex(5));
+        HotkeysService.registerHotkey('7', () => self.activateTabByAllowedIndex(6));
+        HotkeysService.registerHotkey('8', () => self.activateTabByAllowedIndex(7));
+        HotkeysService.registerHotkey('9', () => self.activateTabByAllowedIndex(8));
+    };
+
+    self.activateTabByAllowedIndex = tabId => {
+        // Activate the tab, taking into account which tabs are actually visible.
+        const allTabs = PlayerTypes.character.visibleTabs;
+        const settingsKeys = Object.keys(self.activeCharacter().settings());
+        const visibleTabsAccordingToPlayerSettings = (
+            settingsKeys
+            // Keep only the active tabs
+            .filter(key => ko.unwrap(self.activeCharacter().settings()[key]))
+            // Map the setting name to the tab name. This will not preserve the
+            // ordering so we need to fix that later.
+            .map(key => key.toLowerCase())
+            .flatMap(key => (allTabs
+                .map(tabName => tabName.toLowerCase())
+                // Some active setting contains the tab name
+                .filter(tabName => key.indexOf(tabName) > -1)[0]
+            ))
+        );
+
+        // Filter the tabs by which ones are allowed and then activate that tab
+        const allowedTabs = allTabs.filter(tab => visibleTabsAccordingToPlayerSettings.indexOf(tab) > -1);
+        const tabIdToActivate = allowedTabs[tabId];
+        if (tabIdToActivate !== undefined) {
+            self._setActiveTab(tabIdToActivate);
+        }
     };
 
     self.unload = () => {
         HotkeysService.flushHotkeys();
     };
 
-    //Private Methods
+    // Private Methods
 
     self._tabIsVisible = (tabName) => {
-        if (self.playerType().visibleTabs.indexOf(tabName) > -1) {
-            return self.activeTab() === tabName ? 'active' : '';
-        } else {
+        // This tab is not in the list of approved tabs for this core type.
+        if (self.playerType().visibleTabs.indexOf(tabName) === -1) {
             return 'hidden';
         }
+
+        // This tab has been hidden by the user settings
+        const settingName = `show${tabName.toLowerCase()}Tab`;
+        const settingKey = Object.keys(self.activeCharacter().settings()).filter(key => (
+            key.toLowerCase() === settingName.toLowerCase()
+        ))[0];
+        if (settingKey !== undefined && !self.activeCharacter().settings()[settingKey]()) {
+            return 'hidden';
+        }
+
+        // This tab is visible, determine if it is active.
+        return self.activeTab() === tabName ? 'active' : '';
     };
 
     self._tabIsVisibleAndConnected = (tabName) => {
@@ -206,11 +256,11 @@ export function CharacterRootViewModel(params) {
         }
     };
 
-    self._updateCurrentNode = (node, success) => {
+    self._updateCurrentNode = (node, _) => {
         self.currentPartyNode(node);
     };
 
-    self._removeCurrentNode = (node, success) => {
+    self._removeCurrentNode = (_, __) => {
         self.currentPartyNode(null);
     };
 

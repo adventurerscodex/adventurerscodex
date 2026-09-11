@@ -14,6 +14,18 @@
     <i data-bind="css: arrowIconClass"
        aria-hidden="true"></i>
   </button>
+  <button class="btn btn-sm btn-secondary"
+          id="settingsMobileButton"
+          data-toggle="collapse"
+          data-bind="click: toggleSettingsWell"
+          data-target="#settingsCollapse"
+          aria-expanded="false"
+          aria-controls="settingsCollapse">
+    <i class="fa fa-lg fa-gear"></i>
+    <span class="sr-only">Settings</span>
+    <i data-bind="css: settingsArrowIconClass"
+       aria-hidden="true"></i>
+  </button>
 </div>
 <div class="navbar-header tab-actions"><button type="button"
           class="btn btn-block navbar-toggle collapsed"
@@ -30,6 +42,7 @@
 <div class="navbar-collapse collapse"
      id="descriptionTab">
   <ul class="nav nav-tabs tabs">
+    <!-- ko if: activeCharacter().settings().showStatsTab -->
     <li role="presentation"
         id="tabStatsLink">
       <a href="#stats"
@@ -56,6 +69,8 @@
         </div>
       </a>
     </li>
+    <!-- /ko -->
+    <!-- ko if: activeCharacter().settings().showSkillsTab -->
     <li role="presentation"
         id="tabSkillsLink">
       <a href="#skills"
@@ -82,6 +97,8 @@
         </div>
       </a>
     </li>
+    <!-- /ko -->
+    <!-- ko if: activeCharacter().settings().showSpellsTab -->
     <li role="presentation"
         id="tabSpellsLink">
       <a href="#spells"
@@ -108,6 +125,8 @@
         </div>
       </a>
     </li>
+    <!-- /ko -->
+    <!-- ko if: activeCharacter().settings().showEquipmentTab -->
     <li role="presentation"
         id="tabEquipmentLink">
       <a href="#equipment"
@@ -135,6 +154,8 @@
 
       </a>
     </li>
+    <!-- /ko -->
+    <!-- ko if: activeCharacter().settings().showInventoryTab -->
     <li role="presentation"
         id="tabInventoryLink">
       <a href="#inventory"
@@ -163,6 +184,8 @@
 
       </a>
     </li>
+    <!-- /ko -->
+    <!-- ko if: activeCharacter().settings().showCompanionsTab -->
     <li role="presentation"
         id="tabCompanionsLink">
       <a href="#companions"
@@ -189,6 +212,8 @@
         </div>
       </a>
     </li>
+    <!-- /ko -->
+    <!-- ko if: activeCharacter().settings().showNotesTab -->
     <li role="presentation"
         id="tabNotesLink">
       <a href="#notes"
@@ -216,6 +241,8 @@
         </div>
       </a>
     </li>
+    <!-- /ko -->
+    <!-- ko if: activeCharacter().settings().showPartyTab -->
     <li role="presentation"
         id="tabPartyLink">
       <a href="#party"
@@ -242,6 +269,8 @@
         </div>
       </a>
     </li>
+    <!-- /ko -->
+    <!-- ko if: activeCharacter().settings().showExhibitTab -->
     <li role="presentation"
         id="tabExhibitLink">
       <a href="#exhibit"
@@ -268,7 +297,25 @@
         </div>
       </a>
     </li>
+    <!-- /ko -->
     <!-- Right tabs -->
+    <li role="presentation"
+        class="secondary-nav hidden-xs">
+      <button
+        class="btn btn-sm btn-secondary"
+        id="settingsCollapseButton"
+        data-toggle="collapse"
+        data-bind="click: toggleSettingsWell"
+        data-target="#settingsCollapse"
+        aria-expanded="false"
+        aria-controls="settingsCollapse"
+      >
+        <i class="fa fa-lg fa-gear"></i>
+        <span class="sr-only">Settings</span>
+        <i data-bind="css: settingsArrowIconClass"
+           aria-hidden="true"></i>
+      </button>
+    </li>
     <li role="presentation"
         class="secondary-nav hidden-xs">
       <button class="btn btn-sm btn-primary"
@@ -287,6 +334,10 @@
 </div>
 <div class="tab-content">
   <actions-toolbar params="wellState: wellState"></actions-toolbar>
+  <settings params="
+    core: activeCharacter,
+    isOpen: settingsWellState
+  "></settings>
   <div role="tabpanel"
        class="tab-pane"
        id="stats"
