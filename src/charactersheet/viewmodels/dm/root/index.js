@@ -41,10 +41,15 @@ export function DMRootViewModel() {
     self.partyTabImage = partyTabImage;
     self.exhibitTabImage = exhibitTabImage;
     self.initiativeTrackerTabImage = initiativeTabImage;
+    self.settingsWellState = ko.observable(false);
 
     self.subscriptions = [];
 
     //UI Methods
+
+    self.activeCampaign = ko.pureComputed(() => {
+        return CoreManager.activeCore();
+    });
 
     self.playerSummary = ko.pureComputed(() => {
         var key = CoreManager.activeCore().uuid();
@@ -75,39 +80,65 @@ export function DMRootViewModel() {
     // Tab statuses
 
     self.encounterTabStatus = ko.pureComputed(() => {
-        return self._tabIsVisible('encounter');
+        return self.tabIsVisible('encounter');
     });
 
     self.mapsTabStatus = ko.pureComputed(() => {
-        return self._tabIsVisible('maps');
+        return self.tabIsVisible('maps');
     });
 
     self.dmscreenTabStatus = ko.pureComputed(() => {
-        return self._tabIsVisible('dmscreen');
+        return self.tabIsVisible('dmscreen');
     });
 
     self.notesTabStatus = ko.pureComputed(() => {
-        return self._tabIsVisible('notes');
+        return self.tabIsVisible('notes');
     });
 
     self.partyTabStatus = ko.pureComputed(() => {
-        return self._tabIsVisible('party');
+        return self.tabIsVisible('party');
     });
 
     self.exhibitTabStatus = ko.pureComputed(() => {
-        return self._tabIsVisible('exhibit');
+        return self.tabIsVisible('exhibit');
     });
 
     self.initiativeTrackerTabStatus = ko.pureComputed(() => {
-        return self._tabIsVisible('initiative');
+        return self.tabIsVisible('initiative');
     });
+
+    self.activateTabByAllowedIndex = tabId => {
+        // Activate the tab, taking into account which tabs are actually visible.
+        const allTabs = PlayerTypes.dm.visibleTabs;
+        const settingsKeys = Object.keys(self.activeCampaign().settings());
+        const visibleTabsAccordingToPlayerSettings = (
+            settingsKeys
+            // Keep only the active tabs
+            .filter(key => ko.unwrap(self.activeCampaign().settings()[key]))
+            // Map the setting name to the tab name. This will not preserve the
+            // ordering so we need to fix that later.
+            .map(key => key.toLowerCase())
+            .flatMap(key => (allTabs
+                .map(tabName => tabName.toLowerCase())
+                // Some active setting contains the tab name
+                .filter(tabName => key.indexOf(tabName) > -1)[0]
+            ))
+        );
+
+        // Filter the tabs by which ones are allowed and then activate that tab
+        const allowedTabs = allTabs.filter(tab => visibleTabsAccordingToPlayerSettings.indexOf(tab) > -1);
+        const tabIdToActivate = allowedTabs[tabId];
+        if (tabIdToActivate !== undefined) {
+            self._setActiveTab(tabIdToActivate);
+        }
+    };
 
     self.activateEncounterTab = () => {
         self._setActiveTab('encounter');
     };
 
     self.activateMapsTab = () => {
-        self._setActiveTab('maps');
+        self._setActiveTab('mapsImages');
     };
 
     self.activateDmScreenTab = () => {
@@ -130,6 +161,16 @@ export function DMRootViewModel() {
         self._setActiveTab('initiative');
     };
 
+    // Settings
+
+    self.toggleSettingsWell = () => {
+        self.settingsWellState(!self.settingsWellState());
+    };
+
+    self.settingsArrowIconClass = ko.pureComputed(() => {
+        return self.settingsWellState() ? 'fa fa-caret-up' : 'fa fa-caret-down';
+    });
+
     //Public Methods
 
     /**
@@ -144,13 +185,13 @@ export function DMRootViewModel() {
             $(`.nav-tabs a[href="#${self.activeTab()}"]`).tab('show');
         });
 
-        HotkeysService.registerHotkey('1', self.activateEncounterTab);
-        HotkeysService.registerHotkey('2', self.activateMapsTab);
-        HotkeysService.registerHotkey('3', self.activateDmScreenTab);
-        HotkeysService.registerHotkey('4', self.activateNotesTab);
-        HotkeysService.registerHotkey('5', self.activatePartyTab);
-        HotkeysService.registerHotkey('6', self.activateExhibitTab);
-        HotkeysService.registerHotkey('7', self.activateInitiativeTrackerTab);
+        HotkeysService.registerHotkey('1', () => self.activateTabByAllowedIndex(0));
+        HotkeysService.registerHotkey('2', () => self.activateTabByAllowedIndex(1));
+        HotkeysService.registerHotkey('3', () => self.activateTabByAllowedIndex(2));
+        HotkeysService.registerHotkey('4', () => self.activateTabByAllowedIndex(3));
+        HotkeysService.registerHotkey('5', () => self.activateTabByAllowedIndex(4));
+        HotkeysService.registerHotkey('6', () => self.activateTabByAllowedIndex(5));
+        HotkeysService.registerHotkey('7', () => self.activateTabByAllowedIndex(6));
 
         Notifications.dm.tabShouldChange.add(self._setActiveTab);
     };
@@ -162,19 +203,30 @@ export function DMRootViewModel() {
 
     //Private Methods
 
-    self._tabIsVisible = (tabName) => {
-        if (self.playerType().visibleTabs.indexOf(tabName) > -1) {
-            return self.activeTab() === tabName ? 'active' : '';
-        } else {
+    self.tabIsVisible = (tabName) => {
+        // This tab is not in the list of approved tabs for this core type.
+        if (self.playerType().visibleTabs.indexOf(tabName) === -1) {
             return 'hidden';
         }
+
+        // This tab has been hidden by the user settings
+        const settingName = `show${tabName.toLowerCase()}Tab`;
+        const settingKey = Object.keys(self.activeCampaign().settings()).filter(key => (
+            key.toLowerCase() === settingName.toLowerCase()
+        ))[0];
+        if (settingKey !== undefined && !self.activeCampaign().settings()[settingKey]()) {
+            return 'hidden';
+        }
+
+        // This tab is visible, determine if it is active.
+        return self.activeTab() === tabName ? 'active' : '';
     };
 
-    self._updateCurrentNode = (node, success) => {
+    self._updateCurrentNode = (node, _) => {
         self.currentPartyNode(node);
     };
 
-    self._removeCurrentNode = (node, success) => {
+    self._removeCurrentNode = (_, __) => {
         self.currentPartyNode(null);
     };
 
